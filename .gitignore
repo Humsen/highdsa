@@ -1,0 +1,12 @@
+# biuld files
+/build/
+
+# jrebel
+/src/rebel.xml
+
+# project files
+/.settings/
+.project
+
+## self
+##/.gitignore
