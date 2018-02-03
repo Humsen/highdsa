@@ -6,7 +6,12 @@
 
 # project files
 /.settings/
+/*/.settings
 .project
+/*/.classpath
+
+# log file
+/*/target/
 
 ## self
 ##/.gitignore
