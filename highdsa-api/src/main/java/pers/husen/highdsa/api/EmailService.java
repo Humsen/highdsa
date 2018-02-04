@@ -9,9 +9,9 @@ package pers.husen.highdsa.api;
  * 
  * @Version 1.0.0
  */
-public interface EmailServiceAPI {
+public interface EmailService {
 	/**
-	 * 发送验证码通用函数
+	 * 发送邮件给用户（发送验证码通用函数）
 	 * 
 	 * @param email
 	 * @param randomCode
@@ -22,7 +22,7 @@ public interface EmailServiceAPI {
 	public int sendEmail2User(String email, int randomCode, String subject, String mode);
 	
 	/**
-	 * 发邮件给站长
+	 * 发邮件给站长（联系站长）
 	 * 
 	 * @param name
 	 * @param email

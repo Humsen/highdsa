@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import pers.husen.highdsa.api.EmailServiceAPI;
+import pers.husen.highdsa.api.EmailService;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.email.constants.ResponseConstants;
 import pers.husen.highdsa.email.core.SendEmailCore;
@@ -28,7 +28,7 @@ import pers.husen.highdsa.email.core.SendEmailCore;
  * 
  * @Version 1.0.0
  */
-public class SendEmail implements EmailServiceAPI{
+public class SendEmail implements EmailService{
 	private final Logger logger = LogManager.getLogger(SendEmail.class.getName());
 	
 	@Override

@@ -9,6 +9,6 @@
     <module>highdsa-email</module>
     <module>highdsa-common</module>
     <module>highdsa-api</module>
-    <module>highdsa-test</module>
+    <module>highdsa-web-email</module>
   </modules>
 </project>
