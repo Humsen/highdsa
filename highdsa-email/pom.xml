@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-email</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
 	<name>highdsa-email</name>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>

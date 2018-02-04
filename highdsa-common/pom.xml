@@ -10,7 +10,6 @@
   
   <groupId>pers.husen.highdsa</groupId>
   <artifactId>highdsa-common</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   
   <name>highdsa-common</name>
