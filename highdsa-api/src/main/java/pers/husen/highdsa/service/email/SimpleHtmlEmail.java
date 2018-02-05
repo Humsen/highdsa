@@ -7,7 +7,7 @@ package pers.husen.highdsa.service.email;
  *
  * @Created at 2018年2月3日 下午7:37:37
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public interface SimpleHtmlEmail {
 	/**
@@ -50,9 +50,8 @@ public interface SimpleHtmlEmail {
 	 * 发送邮件给用户（发送验证码通用函数）
 	 * 
 	 * @param email
-	 * @param randomCode
 	 * @param subject
-	 * @param mode
+	 * @param content
 	 * @return
 	 */
 	public int sendEmail2User(String email, String subject, String content);

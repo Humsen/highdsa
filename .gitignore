@@ -4,6 +4,7 @@
 
 # jrebel
 /src/rebel.xml
+/*/src/main/resources/rebel.xml
 
 # project files
 /.settings/

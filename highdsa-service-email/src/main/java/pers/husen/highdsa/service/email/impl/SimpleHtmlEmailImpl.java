@@ -1,4 +1,4 @@
-package pers.husen.highdsa.email;
+package pers.husen.highdsa.service.email.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -16,9 +16,9 @@ import org.apache.logging.log4j.Logger;
 
 import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.email.constants.ResponseConstants;
-import pers.husen.highdsa.email.core.SendEmailCore;
 import pers.husen.highdsa.service.email.SimpleHtmlEmail;
+import pers.husen.highdsa.service.email.constants.ResponseConstants;
+import pers.husen.highdsa.service.email.core.SendEmailCore;
 
 /**
  * @Desc 发送邮件类，提供调用
@@ -27,7 +27,7 @@ import pers.husen.highdsa.service.email.SimpleHtmlEmail;
  *
  * @Created at 2018年2月3日 下午5:22:44
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	private final Logger logger = LogManager.getLogger(SimpleHtmlEmailImpl.class.getName());
@@ -86,7 +86,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 			MimeMessage message = new MimeMessage(session);
 			// Set From: 头部头字段
 			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(),
-					Encode.defaultEncode));
+					Encode.DEFAULT_ENCODE));
 			// 收件人电子邮箱 可用数组设置多个
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
 
@@ -126,7 +126,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	}
 
 	@Override
-	public int sendEmail2Admin(String name, String email, String phone, String content) {
+	public int sendEmail2Admin(String name, String senderEmail, String phone, String content) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			Session session = sendEmailCore.getSession("all2admin-mail.properties");
@@ -135,7 +135,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 			MimeMessage message = new MimeMessage(session);
 			// Set From: 头部头字段
 			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(),
-					Encode.defaultEncode));
+					Encode.DEFAULT_ENCODE));
 			// 收件人电子邮箱 可用数组设置多个
 			message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(sendEmailCore.getRecipients()));
 
@@ -149,11 +149,11 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 			Transport transport = session.getTransport();
 			transport.connect();
 			// 对方的地址
-			transport.sendMessage(message, InternetAddress.parse(sendEmailCore.getRecipients()));
+			transport.sendMessage(message, message.getAllRecipients());
 			// 关闭连接
 			transport.close();
 
-			logger.info("发送邮件给站长成功! 虚拟发件人：{}, 收件人：{}, 发件内容：{}", email, sendEmailCore.getRecipients(), content);
+			logger.info("发送邮件给站长成功! 虚拟发件人：{}, 收件人：{}, 发件内容：{}", senderEmail, sendEmailCore.getRecipients(), content);
 
 			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
 		} catch (MessagingException | UnsupportedEncodingException | GeneralSecurityException mex) {

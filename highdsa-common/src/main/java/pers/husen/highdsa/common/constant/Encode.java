@@ -11,5 +11,5 @@ package pers.husen.highdsa.common.constant;
  */
 public class Encode {
 	/** 工程默认编码 UTF-8 */
-	public static final String defaultEncode = "UTF-8";
+	public static final String DEFAULT_ENCODE = "UTF-8";
 }

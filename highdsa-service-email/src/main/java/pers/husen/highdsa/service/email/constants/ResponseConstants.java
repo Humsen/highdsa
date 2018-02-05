@@ -1,4 +1,4 @@
-package pers.husen.highdsa.email.constants;
+package pers.husen.highdsa.service.email.constants;
 
 /**
  * @Desc    发送邮件返回的常量

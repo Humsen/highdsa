@@ -1,4 +1,4 @@
-package pers.husen.highdsa.email.core;
+package pers.husen.highdsa.service.email.core;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,7 +25,7 @@ import pers.husen.highdsa.common.utils.VarHandle;
  *
  * @Created at 2018年2月3日 下午4:26:54
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class SendEmailCore {
 	private final Logger logger = LogManager.getLogger(SendEmailCore.class.getName());
@@ -64,7 +64,7 @@ public class SendEmailCore {
 
 		try {
 			properties.load(new InputStreamReader(SendEmailCore.class.getClassLoader().getResourceAsStream(configFile),
-					Encode.defaultEncode));
+					Encode.DEFAULT_ENCODE));
 
 			this.mailHost = properties.getProperty("mail.smtp.host");
 			this.senderEamilAddr = properties.getProperty("mail.sender.username");
