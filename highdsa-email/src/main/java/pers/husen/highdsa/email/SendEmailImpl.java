@@ -28,8 +28,8 @@ import pers.husen.highdsa.email.core.SendEmailCore;
  * 
  * @Version 1.0.0
  */
-public class SendEmail implements EmailService{
-	private final Logger logger = LogManager.getLogger(SendEmail.class.getName());
+public class SendEmailImpl implements EmailService{
+	private final Logger logger = LogManager.getLogger(SendEmailImpl.class.getName());
 	
 	@Override
 	public int sendEmail2User(String email, int randomCode, String subject, String mode) {
