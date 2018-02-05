@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pers.husen.highdsa.service.EmailService;
+import pers.husen.highdsa.service.email.SimpleHtmlEmail;
 
 /**
  * @Desc 发送邮件消费者
@@ -20,12 +20,12 @@ import pers.husen.highdsa.service.EmailService;
 @RequestMapping("/service/email/v1")
 public class SendEmail {
 	@Autowired
-	private EmailService emailService;
+	private SimpleHtmlEmail simpleHtmlEmail;
 
 	@RequestMapping("/sendEmail2User.hms")
 	@ResponseBody
 	public String sendEmail2User(String email, String subject, String content) {
-		emailService.sendEmail2User(email, subject, content);
+		simpleHtmlEmail.sendEmail2User(email, subject, content);
 		
 		return "OK";
 	}
@@ -33,7 +33,7 @@ public class SendEmail {
 	@RequestMapping("/sendEmail2Admin.hms")
 	@ResponseBody
 	public String sendEmail2Admin(String name, String email, String phone, String content) {
-		emailService.sendEmail2Admin(name, email, phone, content);
+		simpleHtmlEmail.sendEmail2Admin(name, email, phone, content);
 		
 		return "OK";
 	}

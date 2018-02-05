@@ -6,9 +6,9 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>highdsa-email</module>
-    <module>highdsa-common</module>
     <module>highdsa-api</module>
+    <module>highdsa-common</module>
+    <module>highdsa-service-email</module>
     <module>highdsa-web-email</module>
     <module>highdsa-web-test</module>
   </modules>

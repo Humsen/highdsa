@@ -18,7 +18,7 @@ import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.email.constants.ResponseConstants;
 import pers.husen.highdsa.email.core.SendEmailCore;
-import pers.husen.highdsa.service.EmailService;
+import pers.husen.highdsa.service.email.SimpleHtmlEmail;
 
 /**
  * @Desc 发送邮件类，提供调用
@@ -29,8 +29,8 @@ import pers.husen.highdsa.service.EmailService;
  * 
  * @Version 1.0.1
  */
-public class SendEmailImpl implements EmailService {
-	private final Logger logger = LogManager.getLogger(SendEmailImpl.class.getName());
+public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
+	private final Logger logger = LogManager.getLogger(SimpleHtmlEmailImpl.class.getName());
 
 	@Override
 	public int sendEmail4RetrivePwd(String email, int randomCode) {

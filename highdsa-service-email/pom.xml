@@ -9,8 +9,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>pers.husen.highdsa</groupId>
-	<artifactId>highdsa-email</artifactId>
-	<name>highdsa-email</name>
+	<artifactId>highdsa-service-email</artifactId>
+	<name>highdsa-service-email</name>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -79,6 +79,8 @@
 					<!-- <include>**/*.xml</include> -->
 					<include>log4j2.xml</include>
 					<include>log4j.properties</include>
+					<include>all2admin-mail.properties</include>
+					<include>robot2user-mail.properties</include>
 				</includes>
 			</resource>
 			<resource>

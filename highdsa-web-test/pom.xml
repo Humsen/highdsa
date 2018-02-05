@@ -10,15 +10,9 @@
   <groupId>pers.husen.highdsa</groupId>
   <artifactId>highdsa-web-test</artifactId>
   <packaging>war</packaging>
-  <name>highdsa-web-test Maven Webapp</name>
+  <name>highdsa-web-tes</name>
   <url>http://maven.apache.org</url>
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <build>
     <finalName>highdsa-web-test</finalName>

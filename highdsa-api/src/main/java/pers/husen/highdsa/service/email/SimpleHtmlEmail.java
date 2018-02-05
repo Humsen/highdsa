@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service;
+package pers.husen.highdsa.service.email;
 
 /**
  * @Desc 服务器接口
@@ -9,7 +9,7 @@ package pers.husen.highdsa.service;
  * 
  * @Version 1.0.0
  */
-public interface EmailService {
+public interface SimpleHtmlEmail {
 	/**
 	 * 找回密码邮箱验证
 	 * 
