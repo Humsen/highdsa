@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pers.husen.highdsa.api.EmailService;
+import pers.husen.highdsa.service.EmailService;
 
 /**
  * @Desc 发送邮件消费者

@@ -14,10 +14,11 @@ import javax.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import pers.husen.highdsa.api.EmailService;
+import pers.husen.highdsa.common.encode.Encode;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.email.constants.ResponseConstants;
 import pers.husen.highdsa.email.core.SendEmailCore;
+import pers.husen.highdsa.service.EmailService;
 
 /**
  * @Desc    发送邮件类，提供调用
@@ -34,12 +35,13 @@ public class SendEmailImpl implements EmailService{
 	@Override
 	public int sendEmail2User(String email, int randomCode, String subject, String mode) {
 		try {
-			Session session = SendEmailCore.setupSession();
+			SendEmailCore sendEmailCore = new SendEmailCore();
+			Session session = sendEmailCore.getSession();
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
 			// Set From: 头部头字段
-			message.setFrom(new InternetAddress("yige_robot@foxmail.com", "一格网站机器人", "UTF-8"));
+			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(), Encode.defaultEncode));
 			// 收件人电子邮箱 可用数组设置多个
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 
@@ -74,12 +76,13 @@ public class SendEmailImpl implements EmailService{
 	@Override
 	public int sendEmail2Admin(String name, String email, String phone, String content) {
 		try {
-			Session session = SendEmailCore.setupSession();
+			SendEmailCore sendEmailCore = new SendEmailCore();
+			Session session = sendEmailCore.getSession();
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
 			// Set From: 头部头字段
-			message.setFrom(new InternetAddress("yige_robot@foxmail.com", "一格机器人", "UTF-8"));
+			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(), Encode.defaultEncode));
 			// 收件人电子邮箱 可用数组设置多个
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress("husen@hemingsheng.cn"));
 

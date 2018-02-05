@@ -1,5 +1,6 @@
 # biuld files
 /build/
+/*/target/
 
 # jrebel
 /src/rebel.xml
@@ -11,7 +12,7 @@
 /*/.classpath
 
 # log file
-/*/target/
+/*/logs/
 
 ## self
 ##/.gitignore

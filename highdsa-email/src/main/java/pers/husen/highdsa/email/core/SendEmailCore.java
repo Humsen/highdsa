@@ -1,5 +1,7 @@
 package pers.husen.highdsa.email.core;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
 
@@ -7,7 +9,14 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.sun.mail.util.MailSSLSocketFactory;
+
+import pers.husen.highdsa.common.encode.Encode;
+import pers.husen.highdsa.common.exception.StackTrace2Str;
+import pers.husen.highdsa.common.utils.VarHandle;
 
 /**
  * @Desc 发送邮件核心类
@@ -19,36 +28,179 @@ import com.sun.mail.util.MailSSLSocketFactory;
  * @Version 1.0.0
  */
 public class SendEmailCore {
+	private final Logger logger = LogManager.getLogger(SendEmailCore.class.getName());
+	/** 不设置静态，可以有任意多的Session */
+	public Session session = null;
+	/** 存储参数 */
+	private Properties properties = null;
+
+	/** 参数对应的变量 */
+	private String mailHost = null;
+	private String senderEamilAddr = null;
+	private String senderNickName = null;
+	private String senderEmailPwd = null;
+
+	public SendEmailCore() {
+		properties = new Properties();
+	}
+
+	/** 获取会话 */
+	public Session getSession() throws GeneralSecurityException {
+		if (session == null) {
+			this.setupSession();
+		}
+
+		return this.session;
+	}
+
 	/**
-	 * 获取邮箱机器人登录邮箱session（会话）
+	 * 登录邮箱获取session（会话）
 	 * 
 	 * @return
 	 * @throws GeneralSecurityException
 	 */
-	public static Session setupSession() throws GeneralSecurityException {
+	public Session setupSession() throws GeneralSecurityException {
+
+		try {
+			properties.load(new InputStreamReader(SendEmailCore.class.getClassLoader().getResourceAsStream("mail.properties"), Encode.defaultEncode));
+
+			this.mailHost = properties.getProperty("mail.smtp.host");
+			this.senderEamilAddr = properties.getProperty("mail.sender.username");
+			this.senderEmailPwd = properties.getProperty("mail.sender.password");
+			this.senderNickName = properties.getProperty("mail.sender.nickname");
+		} catch (IOException e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
+			this.setupDefaultSession();
+		}
+
+		if (VarHandle.isEmpty(mailHost) || VarHandle.isEmpty(senderEmailPwd) || VarHandle.isEmpty(senderEmailPwd)) {
+			logger.info("建立邮件会话：邮箱参数异常");
+			return setupDefaultSession();
+		}
+
 		// 建立属性对象
 		Properties properties = new Properties();
+		// 1、设置邮件服务器主机名，如 smtp.qq.com
+		properties.setProperty("mail.host", mailHost);
+
+		// 2、设置端口
+		properties.setProperty("mail.smtp.port", "465");
+
 		// 开启SSL
 		MailSSLSocketFactory sf = new MailSSLSocketFactory();
 		sf.setTrustAllHosts(true);
-		// 开启认证
+		// 3、开启认证
 		properties.put("mail.smtp.auth", "true");
-		// 开启SSL
+		// 4、开启SSL
 		properties.put("mail.smtp.ssl.enable", "true");
 		properties.put("mail.smtp.ssl.socketFactory", sf);
-		// 设置邮件服务器主机名
-		properties.setProperty("mail.host", "smtp.qq.com");
-		// 设置端口
-		properties.setProperty("mail.smtp.port", "465");
 
 		// 根据认证获取默认session对象
-		Session session = Session.getDefaultInstance(properties, new Authenticator() {
+		session = Session.getDefaultInstance(properties, new Authenticator() {
+			@Override
+			public PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(senderEamilAddr, senderEmailPwd);
+			}
+		});
+
+		logger.info("建立邮件会话：设置成功!  host:{},fromEamilAddr:{},fromEmailPwd:{}", mailHost, senderEamilAddr,
+				senderEmailPwd);
+		return session;
+	}
+
+	/**
+	 * 设置默认会话（通过QQ邮箱发送）
+	 * 
+	 * @return
+	 * @throws GeneralSecurityException
+	 */
+	public Session setupDefaultSession() throws GeneralSecurityException {
+		// 建立属性对象
+		Properties properties = new Properties();
+		// 1、设置邮件服务器主机名
+		properties.setProperty("mail.host", "smtp.qq.com");
+
+		// 2、设置端口
+		properties.setProperty("mail.smtp.port", "465");
+
+		// 开启SSL
+		MailSSLSocketFactory sf = new MailSSLSocketFactory();
+		sf.setTrustAllHosts(true);
+		// 3、开启认证
+		properties.put("mail.smtp.auth", "true");
+		// 4、开启SSL
+		properties.put("mail.smtp.ssl.enable", "true");
+		properties.put("mail.smtp.ssl.socketFactory", sf);
+
+		// 根据认证获取默认session对象
+		session = Session.getDefaultInstance(properties, new Authenticator() {
 			@Override
 			public PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("yige_robot@foxmail.com", "xjsvsdyrekodfiah");
 			}
 		});
 
+		logger.info("使用系统默认邮箱会话(yige_robot@foxmail.com)");
 		return session;
+	}
+
+	/**
+	 * @return the mailHost
+	 */
+	public String getMailHost() {
+		return mailHost;
+	}
+
+	/**
+	 * @param mailHost
+	 *            the mailHost to set
+	 */
+	public void setMailHost(String mailHost) {
+		this.mailHost = mailHost;
+	}
+
+	/**
+	 * @return the senderEamilAddr
+	 */
+	public String getSenderEamilAddr() {
+		return senderEamilAddr;
+	}
+
+	/**
+	 * @param senderEamilAddr
+	 *            the senderEamilAddr to set
+	 */
+	public void setSenderEamilAddr(String senderEamilAddr) {
+		this.senderEamilAddr = senderEamilAddr;
+	}
+
+	/**
+	 * @return the senderNickName
+	 */
+	public String getSenderNickName() {
+		return senderNickName;
+	}
+
+	/**
+	 * @param senderNickName
+	 *            the senderNickName to set
+	 */
+	public void setSenderNickName(String senderNickName) {
+		this.senderNickName = senderNickName;
+	}
+
+	/**
+	 * @return the senderEmailPwd
+	 */
+	public String getSenderEmailPwd() {
+		return senderEmailPwd;
+	}
+
+	/**
+	 * @param senderEmailPwd
+	 *            the senderEmailPwd to set
+	 */
+	public void setSenderEmailPwd(String senderEmailPwd) {
+		this.senderEmailPwd = senderEmailPwd;
 	}
 }

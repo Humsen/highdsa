@@ -1,4 +1,4 @@
-package pers.husen.highdsa.api;
+package pers.husen.highdsa.service;
 
 /**
  * @Desc    服务器接口
