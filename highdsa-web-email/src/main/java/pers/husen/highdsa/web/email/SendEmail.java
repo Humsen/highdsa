@@ -17,24 +17,24 @@ import pers.husen.highdsa.service.EmailService;
  * @Version 1.0.0
  */
 @Controller
+@RequestMapping("/service/email/v1")
 public class SendEmail {
 	@Autowired
 	private EmailService emailService;
 
 	@RequestMapping("/sendEmail2User.hms")
 	@ResponseBody
-	public String sendEmail2User(String email, int randomCode, String subject, String mode) {
-		System.out.println("开始发送--------------------");
-		int result = emailService.sendEmail2User(email, randomCode, subject, mode);
-		
-		System.out.println("---------------返回结果" + result);
+	public String sendEmail2User(String email, String subject, String content) {
+		emailService.sendEmail2User(email, subject, content);
 		
 		return "OK";
 	}
 	
 	@RequestMapping("/sendEmail2Admin.hms")
 	@ResponseBody
-	public int sendEmail2Admin(String name, String email, String phone, String content) {
-		return emailService.sendEmail2Admin(name, email, phone, content);
+	public String sendEmail2Admin(String name, String email, String phone, String content) {
+		emailService.sendEmail2Admin(name, email, phone, content);
+		
+		return "OK";
 	}
 }

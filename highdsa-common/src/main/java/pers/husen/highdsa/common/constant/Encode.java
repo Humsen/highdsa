@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.encode;
+package pers.husen.highdsa.common.constant;
 
 /**
  * @Desc 工程编码处理

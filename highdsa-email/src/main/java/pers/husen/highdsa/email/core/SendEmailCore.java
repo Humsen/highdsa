@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.sun.mail.util.MailSSLSocketFactory;
 
-import pers.husen.highdsa.common.encode.Encode;
+import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.utils.VarHandle;
 
@@ -25,7 +25,7 @@ import pers.husen.highdsa.common.utils.VarHandle;
  *
  * @Created at 2018年2月3日 下午4:26:54
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class SendEmailCore {
 	private final Logger logger = LogManager.getLogger(SendEmailCore.class.getName());
@@ -39,15 +39,16 @@ public class SendEmailCore {
 	private String senderEamilAddr = null;
 	private String senderNickName = null;
 	private String senderEmailPwd = null;
+	private String recipients = null;
 
 	public SendEmailCore() {
 		properties = new Properties();
 	}
 
 	/** 获取会话 */
-	public Session getSession() throws GeneralSecurityException {
+	public Session getSession(String configFile) throws GeneralSecurityException {
 		if (session == null) {
-			this.setupSession();
+			this.setupSession(configFile);
 		}
 
 		return this.session;
@@ -59,15 +60,17 @@ public class SendEmailCore {
 	 * @return
 	 * @throws GeneralSecurityException
 	 */
-	public Session setupSession() throws GeneralSecurityException {
+	public Session setupSession(String configFile) throws GeneralSecurityException {
 
 		try {
-			properties.load(new InputStreamReader(SendEmailCore.class.getClassLoader().getResourceAsStream("mail.properties"), Encode.defaultEncode));
+			properties.load(new InputStreamReader(SendEmailCore.class.getClassLoader().getResourceAsStream(configFile),
+					Encode.defaultEncode));
 
 			this.mailHost = properties.getProperty("mail.smtp.host");
 			this.senderEamilAddr = properties.getProperty("mail.sender.username");
 			this.senderEmailPwd = properties.getProperty("mail.sender.password");
 			this.senderNickName = properties.getProperty("mail.sender.nickname");
+			this.recipients = properties.getProperty("mail.recipients.username");
 		} catch (IOException e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 			this.setupDefaultSession();
@@ -75,24 +78,12 @@ public class SendEmailCore {
 
 		if (VarHandle.isEmpty(mailHost) || VarHandle.isEmpty(senderEmailPwd) || VarHandle.isEmpty(senderEmailPwd)) {
 			logger.info("建立邮件会话：邮箱参数异常");
-			return setupDefaultSession();
+			return this.setupDefaultSession();
 		}
-
-		// 建立属性对象
-		Properties properties = new Properties();
-		// 1、设置邮件服务器主机名，如 smtp.qq.com
-		properties.setProperty("mail.host", mailHost);
-
-		// 2、设置端口
-		properties.setProperty("mail.smtp.port", "465");
 
 		// 开启SSL
 		MailSSLSocketFactory sf = new MailSSLSocketFactory();
 		sf.setTrustAllHosts(true);
-		// 3、开启认证
-		properties.put("mail.smtp.auth", "true");
-		// 4、开启SSL
-		properties.put("mail.smtp.ssl.enable", "true");
 		properties.put("mail.smtp.ssl.socketFactory", sf);
 
 		// 根据认证获取默认session对象
@@ -115,10 +106,8 @@ public class SendEmailCore {
 	 * @throws GeneralSecurityException
 	 */
 	public Session setupDefaultSession() throws GeneralSecurityException {
-		// 建立属性对象
-		Properties properties = new Properties();
 		// 1、设置邮件服务器主机名
-		properties.setProperty("mail.host", "smtp.qq.com");
+		properties.setProperty("mail.smtp.host", "smtp.qq.com");
 
 		// 2、设置端口
 		properties.setProperty("mail.smtp.port", "465");
@@ -139,6 +128,9 @@ public class SendEmailCore {
 				return new PasswordAuthentication("yige_robot@foxmail.com", "xjsvsdyrekodfiah");
 			}
 		});
+
+		// 5、设置nickname
+		properties.put("mail.sender.nickname", "一格网站机器人");
 
 		logger.info("使用系统默认邮箱会话(yige_robot@foxmail.com)");
 		return session;
@@ -202,5 +194,20 @@ public class SendEmailCore {
 	 */
 	public void setSenderEmailPwd(String senderEmailPwd) {
 		this.senderEmailPwd = senderEmailPwd;
+	}
+
+	/**
+	 * @return the recipients
+	 */
+	public String getRecipients() {
+		return recipients;
+	}
+
+	/**
+	 * @param recipients
+	 *            the recipients to set
+	 */
+	public void setRecipients(String recipients) {
+		this.recipients = recipients;
 	}
 }

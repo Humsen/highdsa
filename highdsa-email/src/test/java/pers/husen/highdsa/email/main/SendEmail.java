@@ -15,22 +15,22 @@ public class SendEmail {
 	public static void main(String[] args) {
 		SendEmail main = new SendEmail();
 
-		main.sendEmail2Register("940706904@qq.com", 123123);
+		//main.sendEmail2Register("940706904@qq.com", 123123);
 		main.sendEmail2Admin();
 	}
 
 	public int sendEmail2Register(String email, int randomCode) {
 		String subject = "【何明胜的个人网站】新用户注册邮箱验证";
-		String mode = "欢迎在【何明胜的个人网站】注册账号。";
+		String content = "欢迎在【何明胜的个人网站】注册账号。";
 
-		return new SendEmailImpl().sendEmail2User(email, randomCode, subject, mode);
+		return new SendEmailImpl().sendEmail2User(email, subject, content);
 	}
 
 	public void sendEmail2Admin() {
 		String name = "何明胜";
 		String email = "1123767053@qq.com";
 		String phone = "18626422426";
-		String content = "测试发送给管理员";
+		String content = "测试给管理员";
 
 		new SendEmailImpl().sendEmail2Admin(name, email, phone, content);
 	}
