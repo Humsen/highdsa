@@ -1,5 +1,6 @@
 package pers.husen.highdsa.service.email.impl;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 
@@ -107,7 +108,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 			logger.info("发送邮件成功! 主题：{}, 收件人：{}, 内容：{}", subject, userEmail, content);
 
 			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
-		} catch (MessagingException | UnsupportedEncodingException | GeneralSecurityException mex) {
+		} catch (MessagingException | GeneralSecurityException | IOException mex) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(mex));
 		}
 

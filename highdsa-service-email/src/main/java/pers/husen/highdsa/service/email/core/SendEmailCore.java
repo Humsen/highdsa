@@ -210,4 +210,18 @@ public class SendEmailCore {
 	public void setRecipients(String recipients) {
 		this.recipients = recipients;
 	}
+
+	/**
+	 * @return the properties
+	 */
+	public Properties getProperties() {
+		return properties;
+	}
+
+	/**
+	 * @param properties the properties to set
+	 */
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
 }

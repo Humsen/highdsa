@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.email.EmailWithAttachment;
+import pers.husen.highdsa.service.email.core.SaveEmail;
 import pers.husen.highdsa.service.email.core.SendEmailCore;
 
 /**
@@ -90,6 +91,8 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 
 			logger.info("发送邮件成功! 主题：{}, 收件人：{}, 内容：{}, 附件名称：{}", subject, userEmail, content, attachment.getName());
 
+			new SaveEmail(message, sendEmailCore.getProperties());
+			logger.info("保存邮件成功");
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
