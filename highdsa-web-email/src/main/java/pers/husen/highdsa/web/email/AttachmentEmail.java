@@ -52,7 +52,8 @@ public class AttachmentEmail {
 	
 	@RequestMapping("/formal/2user.hms")
 	@ResponseBody
-	public ResponseResult sendAttachmentEmail2User(String email, String subject, String content, File file) {
+	public ResponseResult sendAttachmentEmail2User(String email, String subject, String content, String filepath) {
+		File file = new File(filepath);
 		emailWithAttachment.sendEmail2User(email, subject, content, file);
 
 		//return "OK";
@@ -61,8 +62,9 @@ public class AttachmentEmail {
 	
 	@RequestMapping("/formal/2admin.hms")
 	@ResponseBody
-	public ResponseResult sendEmail2Admin(String name, String senderEmail, String phone, String content, File attachment) {
-		//emailWithAttachment.sendEmail2Admin(name, senderEmail, phone, content, attachment);
+	public ResponseResult sendEmail2Admin(String name, String senderEmail, String phone, String content, String filepath) {
+		//File file = new File(filepath);
+		//emailWithAttachment.sendEmail2Admin(name, senderEmail, phone, content, file);
 
 		//return "OK";
 		
