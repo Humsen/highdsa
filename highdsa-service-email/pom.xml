@@ -8,63 +8,64 @@
 		<artifactId>highdsa</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-service-email</artifactId>
 	<name>highdsa-service-email</name>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<pers.husen.highdsa.version>0.0.1-SNAPSHOT</pers.husen.highdsa.version>
+		<com.sun.mail.version>1.6.0</com.sun.mail.version>
 	</properties>
+
 	<dependencies>
-		<!-- 公共组件 -->
+		<!-- 自建 -->
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
+		<!-- dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
-			<version>2.6.0</version>
 		</dependency>
 		<!-- 注册中心zookeeper -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
-			<version>3.3.6</version>
 		</dependency>
 		<dependency>
-			<groupId>com.github.sgroschupf</groupId>
+			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
-			<version>0.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<!-- log4j2 -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.9.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.9.0</version>
 		</dependency>
+		<!-- javamail -->
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
-			<version>1.6.0</version>
+			<version>${com.sun.mail.version}</version>
 		</dependency>
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>4.2.5.RELEASE</version>
 		</dependency>
 	</dependencies>
 

@@ -12,14 +12,14 @@
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-api</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<name>highdsa-api</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 	<dependencies>
 	</dependencies>
 </project>

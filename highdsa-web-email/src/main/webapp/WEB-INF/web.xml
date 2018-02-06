@@ -29,6 +29,7 @@
 
 	<servlet-mapping>
 		<servlet-name>sendEmailServlet</servlet-name>
-		<url-pattern>*.hms</url-pattern>
+		<!-- <url-pattern>*.hms</url-pattern> -->
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 </web-app>
