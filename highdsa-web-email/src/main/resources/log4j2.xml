@@ -4,15 +4,13 @@
 <!-- status : 这个用于设置log4j2自身内部的信息输出,可以不设置 -->
 <!-- 当设置成trace时,会看到log4j2内部各种详细输出 monitorInterval -->
 <!-- monitorInterval="60"表示每60秒配置文件会动态加载一次。在程序运行过程中，如果修改配置文件，程序会随之改变。 -->
-<Configuration monitorInterval="60" status="WARN">
+<Configuration monitorInterval="60" status="warn">
 	<!-- 定义通用的属性 -->
 	<Properties>
 		<!-- 云端部署 这里的logs为项目根目录下的logs文件夹 -->
 		<!-- web:rootDir指向web应用根目录，需使用log4j-web.jar -->
-        <!-- <Property name="log_path">F:\workspace\workspace pers\web/logs</Property> -->
-        <Property name="log_path">logs/self</Property>
-        <!-- 本地开发使用绝对路径定义日志 -->
-        <!-- <Property name="log_path">${web:rootDir}\logs</Property> -->
+        <!-- <Property name="log_path">logs/highdsa</Property> -->
+        <Property name="log_path">${web:rootDir}/logs/highdsa</Property>
         
         <!-- 定义统一的日志输出格式 -->
         <Property name="log_pattern">[%-5p] &lt;%d{yyyy-MM-dd HH:mm:ss,sss}&gt; at [%C.%M] |--- %m ---| click goto-&gt; (%F:%L)%n</Property>

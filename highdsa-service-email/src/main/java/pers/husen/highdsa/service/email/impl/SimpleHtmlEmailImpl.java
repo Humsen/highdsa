@@ -34,6 +34,8 @@ import pers.husen.highdsa.service.email.core.SendEmailCore;
 public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	private final Logger logger = LogManager.getLogger(SimpleHtmlEmailImpl.class.getName());
 
+	/** ------------ 发送给用户  --------------- */
+	
 	@Override
 	public int sendEmail4RetrivePwd(String email, int randomCode) {
 		String subject = "【highdsa项目组】找回密码邮箱验证";
@@ -125,14 +127,16 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 
 	/** ------------------------- 分割线 ----------------------- */
 
+	/** ------------ 发送给管理员 --------------- */
+	
 	@Override
-	public int sendEmail4UserFeedback(String name, String email, String phone, String content) {
+	public int sendEmail4UserFeedback(String name, String userEmail, String phone, String content) {
 		content = "highdsa项目组：<br/>&emsp;&emsp;你好! 我是您的机器人。<br/>&emsp;&emsp;现在有人通过您的\"联系管理员\"功能给您发邮件，详情如下：" + "<br/>"
-				+ "<br/>&emsp;&emsp;姓名：" + name + "<br/>&emsp;&emsp;手机：" + phone + "<br/>&emsp;&emsp;邮箱：" + email
+				+ "<br/>&emsp;&emsp;姓名：" + name + "<br/>&emsp;&emsp;手机：" + phone + "<br/>&emsp;&emsp;邮箱：" + userEmail
 				+ "<br/>&emsp;&emsp;邮件内容：<br/>&emsp;&emsp;&emsp;&emsp;" + content;
 
 		logger.info("发送邮件给管理员-->用户反馈 <method:sendEmail4UserFeedback>");
-		return sendEmail2Admin(name, email, phone, content);
+		return sendEmail2Admin(name, userEmail, phone, content);
 	}
 
 	@Override

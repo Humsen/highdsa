@@ -23,8 +23,9 @@ public interface EmailWithAttachment {
 	 *            内容
 	 * @param attachment
 	 *            附件
+	 * @return 
 	 */
-	public void sendEmail2User(String userEmail, String subject, String content, File attachment);
+	public int sendEmail2User(String userEmail, String subject, String content, File attachment);
 
 	/**
 	 * 发送带附件的邮件给管理员
@@ -39,6 +40,7 @@ public interface EmailWithAttachment {
 	 *            内容
 	 * @param attachment
 	 *            附件
+	 * @return 
 	 */
-	public void sendEmail2Admin(String name, String senderEmail, String phone, String content, File attachment);
+	public int sendEmail2Admin(String name, String senderEmail, String phone, String content, File attachment);
 }

@@ -12,5 +12,10 @@ import java.util.Map;
  * @Version 1.0.2
  */
 public interface ResponseResult {
+	/**
+	 * RESTful API返回json的公共接口
+	 * 
+	 * @param resultMap
+	 */
 	public void setResultMap(Map<String, Object> resultMap);
 }

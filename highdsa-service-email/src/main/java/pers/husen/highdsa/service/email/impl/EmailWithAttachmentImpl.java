@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import pers.husen.highdsa.common.constant.Encode;
+import pers.husen.highdsa.common.constant.ResponseConstants;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.email.EmailWithAttachment;
 import pers.husen.highdsa.service.email.core.SaveEmail;
@@ -38,7 +39,7 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 	private final Logger logger = LogManager.getLogger(EmailWithAttachmentImpl.class.getName());
 
 	@Override
-	public void sendEmail2User(String userEmail, String subject, String content, File attachment) {
+	public int sendEmail2User(String userEmail, String subject, String content, File attachment) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			// 获取配置文件
@@ -94,13 +95,17 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 
 			// 保存邮件
 			new SaveEmail(message);
+			
+			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
+		
+		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
 	}
 
 	@Override
-	public void sendEmail2Admin(String name, String senderEmail, String phone, String content, File attachment) {
+	public int sendEmail2Admin(String name, String senderEmail, String phone, String content, File attachment) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			Session session = sendEmailCore.getSession("all2admin-mail.properties");
@@ -156,8 +161,12 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 
 			// 保存邮件
 			new SaveEmail(message);
+			
+			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
+		
+		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
 	}
 }

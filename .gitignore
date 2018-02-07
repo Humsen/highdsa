@@ -14,6 +14,7 @@
 
 # log file
 /*/logs/
+/*/src/main/webapp/logs/
 
 ## self
 ##/.gitignore

@@ -82,6 +82,7 @@
 					<include>log4j.properties</include>
 					<include>all2admin-mail.properties</include>
 					<include>robot2user-mail.properties</include>
+					<include>savemail.properties</include>
 				</includes>
 			</resource>
 			<resource>
