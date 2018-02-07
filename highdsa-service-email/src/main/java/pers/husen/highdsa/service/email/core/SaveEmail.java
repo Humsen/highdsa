@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
-import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -84,7 +83,7 @@ public class SaveEmail {
 			// 以 都读写模式打开 已发送 文件夹
 			folder.open(Folder.READ_WRITE);
 			// 设置已读
-			msg.setFlag(Flags.Flag.SEEN, true);
+			//msg.setFlag(Flags.Flag.SEEN, true);
 			// 添加到 已发送
 			folder.appendMessages(new Message[] { msg });
 

@@ -7,38 +7,45 @@
 	<display-name>send email</display-name>
 	<description>发送邮件消费者</description>
 
-	<!-- 邮件消费者配置文件  -->
+	<welcome-file-list>
+		<welcome-file></welcome-file>
+	</welcome-file-list>
+
+	<!-- 邮件消费者配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath*:send-email-consumer.xml
-		</param-value>
+		classpath*:send-email-consumer.xml
+	</param-value>
 	</context-param>
-	<!-- logj4 日志存放 应用根目录  -->
+	<!-- logj4 日志存放 应用根目录 -->
 	<context-param>
 		<param-name>webAppRootKey</param-name>
 		<param-value>webapp.root</param-value>
 	</context-param>
-
-	<!-- 配置logj的监听器  -->
+	<!-- 配置log4j的监听器 -->
 	<listener>
-      <!-- <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> -->
-       <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>   
-   </listener>
+		<!-- <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> -->
+		<listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
+	</listener>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	<!-- html页面不进入SpringMVC -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+	<!-- SpringMVC servlet -->
 	<servlet>
 		<servlet-name>sendEmailServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath*:application.xml</param-value>
+			<param-value>classpath*:spring-mvc-servlet.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>sendEmailServlet</servlet-name>
 		<!-- <url-pattern>*.hms</url-pattern> -->

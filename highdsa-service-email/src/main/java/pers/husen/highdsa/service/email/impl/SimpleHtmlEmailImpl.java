@@ -62,7 +62,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 
 	@Override
 	public int sendEmail4ModufyEmailAuth(String email, int randomCode) {
-		String subject = "【何明胜的个人网站】用户修改邮箱验证原邮箱";
+		String subject = "【highdsa项目组】用户修改邮箱验证原邮箱";
 		String mode = "您正在使用修改邮箱功能。第一步，验证码您的原邮箱。";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>"
 				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】，请于10分钟内输入，任何人都不会向您索取，请勿泄露。"

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,7 +66,7 @@ public class AttachmentEmail {
 	
 	@RequestMapping("/formal/2admin.hms")
 	@ResponseBody
-	public ResponseResult sendEmail2Admin(String name, String senderEmail, String phone, String content, String filepath) {
+	public ResponseResult sendEmail2Admin(String name, @RequestParam(value="sender_email")String senderEmail, String phone, String content, String filepath) {
 		File file = new File(filepath);
 		int result = emailWithAttachment.sendEmail2Admin(name, senderEmail, phone, content, file);
 

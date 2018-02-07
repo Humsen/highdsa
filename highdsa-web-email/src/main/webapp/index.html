@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>测试发送邮件</title>
+</head>
+<body>
+	<h2>简单邮件</h2>
+	
+	<h3>发送给用户</h3>
+	<label>找回密码</label> <a href="email/simple/v1/code/retrive-pwd.hms?email=2796407738@qq.com&random_code=123123">highdsa-web-email/email/simple/v1/code/retrive-pwd.hms?email=2796407738@qq.com&random_code=123123</a>
+	<br>
+	<label>注册</label> <a href="email/simple/v1/code/register.hms?email=2796407738@qq.com&random_code=123123">highdsa-web-email/email/simple/v1/code/register.hms?email=2796407738@qq.com&random_code=123123</a>
+	<br>
+	<label>修改邮箱验证</label> <a href="email/simple/v1/code/modify-email-auth.hms?email=2796407738@qq.com&random_code=123123">highdsa-web-email/email/simple/v1/code/modify-email-auth.hms?email=2796407738@qq.com&random_code=123123</a>
+	<br>
+	<label>修改邮箱绑定新邮箱</label> <a href="email/simple/v1/code/modify-email-bind.hms?email=2796407738@qq.com&random_code=123123">highdsa-web-email/email/simple/v1/code/modify-email-bind.hms?email=2796407738@qq.com&random_code=123123</a>
+	<br>
+	<label>发送邮件给用户</label> <a href="email/simple/v1/formal/2user.hms?email=2796407738@qq.com&subject=标题：发送邮件给用户&content=这是一封测试邮件，发送给用户">email/simple/v1/formal/2user.hms?email=2796407738@qq.com&subject=标题：发送邮件给用户&content=这是一封测试邮件，发送给用户</a>
+	
+	<h3>发送给管理员</h3>
+	<label>用户反馈邮件</label> <a href="email/simple/v1/formal/user-feedback.hms?name=何明胜&user_email=3449394002@qq.com&user_phone=18626422426&content=这是一封用户反馈邮件">email/simple/v1/formal/user-feedback.hms?name=何明胜&user_email=3449394002@qq.com&user_phone=18626422426&content=这是一封用户反馈邮件</a>
+	<br>
+	<label>发送给管理员</label> <a href="email/simple/v1/formal/2admin.hms?name=何明胜&user_email=3449394002@qq.com&user_phone=18626422426&content=这是一封发送给管理员的邮件">email/simple/v1/formal/2admin.hms?name=何明胜&user_email=3449394002@qq.com&user_phone=18626422426&content=这是一封发送给管理员的邮件</a>
+	
+	
+	
+	<h2>带附件的邮件</h2>
+	
+	<h3>发送给用户</h3>
+	<label>发送给用户</label> <a href="email/attachment/v1/formal/2user.hms?email=2796407738@qq.com&subject=测试邮件给用户&content=这是一封带附件的测试邮件&filepath=F:/workspace/workspace bishe/highdsa/pom.xml">email/attachment/v1/formal/2user.hms?email=2796407738@qq.com&subject=测试邮件给用户&content=这是一封带附件的测试邮件&filepath=F:/workspace/workspace bishe/highdsa/pom.xml</a>
+	
+	<h3>发送给管理员</h3>
+	<label>发给管理员</label> <a href="email/attachment/v1/formal/2admin.hms?name=何明胜&sender_email=3449394002@qq.com&phone=18626422426&content=这是发送给管理员的带附件的邮件&filepath=F:/workspace/workspace bishe/highdsa/pom.xml">email/attachment/v1/formal/2admin.hms?name=何明胜&sender_email=3449394002@qq.com&phone=18626422426&content=这是发送给管理员的带附件的邮件&filepath=filepath=F:/workspace/workspace bishe/highdsa/pom.xml</a>
+</body>
+</html>

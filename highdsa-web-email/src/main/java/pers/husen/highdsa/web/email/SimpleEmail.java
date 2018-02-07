@@ -88,10 +88,10 @@ public class SimpleEmail {
 	
 	@RequestMapping("/formal/2user.hms")
 	@ResponseBody
-	public String sendEmail2User(String email, String subject, String content) {
-		simpleHtmlEmail.sendEmail2User(email, subject, content);
+	public ResponseResult sendEmail2User(String email, String subject, String content) {
+		int result = simpleHtmlEmail.sendEmail2User(email, subject, content);
 
-		return "OK";
+		return test(result);
 	}
 
 	/** --------------------- 分割线 ------------------------*/
@@ -100,14 +100,14 @@ public class SimpleEmail {
 	
 	@RequestMapping(value = "/formal/user-feedback.hms", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public ResponseResult sendEmail4UserFeedback(String name, String userEmail, String userPhone, String content) {
+	public ResponseResult sendEmail4UserFeedback(String name, @RequestParam(value="user_email")String userEmail, @RequestParam(value="user_phone")String userPhone, String content) {
 		int result = simpleHtmlEmail.sendEmail4UserFeedback(name, userEmail, userPhone, content);
 		return test(result);
 	}
 	
 	@RequestMapping("/formal/2admin.hms")
 	@ResponseBody
-	public ResponseResult sendEmail2Admin(String name, String userEmail, String userPhone, String content) {
+	public ResponseResult sendEmail2Admin(String name, @RequestParam(value="user_email")String userEmail, @RequestParam(value="user_phone") String userPhone, String content) {
 		int result = simpleHtmlEmail.sendEmail2Admin(name, userEmail, userPhone, content);
 
 		return test(result);
