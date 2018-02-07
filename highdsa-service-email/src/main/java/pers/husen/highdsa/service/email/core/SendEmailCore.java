@@ -81,10 +81,10 @@ public class SendEmailCore {
 			return this.setupDefaultSession();
 		}
 
-		// 开启SSL
-		MailSSLSocketFactory sf = new MailSSLSocketFactory();
-		sf.setTrustAllHosts(true);
-		properties.put("mail.smtp.ssl.socketFactory", sf);
+		// QQ邮箱开启SSL, 貌似去掉也可以
+		//MailSSLSocketFactory sf = new MailSSLSocketFactory();
+		//sf.setTrustAllHosts(true);
+		//properties.put("mail.smtp.ssl.socketFactory", sf);
 
 		// 根据认证获取默认session对象
 		session = Session.getDefaultInstance(properties, new Authenticator() {

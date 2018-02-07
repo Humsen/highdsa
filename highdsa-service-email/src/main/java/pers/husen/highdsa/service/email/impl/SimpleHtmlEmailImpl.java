@@ -19,6 +19,7 @@ import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.constant.ResponseConstants;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.email.SimpleHtmlEmail;
+import pers.husen.highdsa.service.email.core.SaveEmail;
 import pers.husen.highdsa.service.email.core.SendEmailCore;
 
 /**
@@ -41,6 +42,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】，请于10分钟内输入，任何人都不会向您索取，请勿泄露。"
 				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求，说明您的邮箱可能被人冒用或者存在风险，请留意。" + "<br/><br/><br/>此致，highdsa项目组";
 
+		logger.info("发送邮件给用户-->找回密码 <method:sendEmail4RetrivePwd>");
 		return sendEmail2User(email, subject, content);
 	}
 
@@ -52,6 +54,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】，请于10分钟内输入，任何人都不会向您索取，请勿泄露。"
 				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求，说明您的邮箱可能被人冒用或者存在风险，请留意。" + "<br/><br/><br/>此致，highdsa项目组";
 
+		logger.info("发送邮件给用户-->注册 <method:sendEmail4Register>");
 		return sendEmail2User(email, subject, content);
 	}
 
@@ -63,6 +66,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】，请于10分钟内输入，任何人都不会向您索取，请勿泄露。"
 				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求，说明您的邮箱可能被人冒用或者存在风险，请留意。" + "<br/><br/><br/>此致，highdsa项目组";
 
+		logger.info("发送邮件给用户-->修改邮箱验证 <method:sendEmail4ModufyEmailAuth>");
 		return sendEmail2User(email, subject, content);
 	}
 
@@ -74,6 +78,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】，请于10分钟内输入，任何人都不会向您索取，请勿泄露。"
 				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求，说明您的邮箱可能被人冒用或者存在风险，请留意。" + "<br/><br/><br/>此致，highdsa项目组";
 
+		logger.info("发送邮件给用户-->修改邮箱绑定新邮箱 <method:sendEmail4ModufyEmailBind>");
 		return sendEmail2User(email, subject, content);
 	}
 
@@ -107,9 +112,12 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 
 			logger.info("发送邮件成功! 主题：{}, 收件人：{}, 内容：{}", subject, userEmail, content);
 
+			// 保存邮件
+			new SaveEmail(message);
+
 			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
 		} catch (MessagingException | GeneralSecurityException | IOException mex) {
-			logger.error(StackTrace2Str.exceptionStackTrace2Str(mex));
+			logger.error("发送邮件给用户-->出错\n{}",StackTrace2Str.exceptionStackTrace2Str(mex));
 		}
 
 		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
@@ -123,6 +131,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 				+ "<br/>&emsp;&emsp;姓名：" + name + "<br/>&emsp;&emsp;手机：" + phone + "<br/>&emsp;&emsp;邮箱：" + email
 				+ "<br/>&emsp;&emsp;邮件内容：<br/>&emsp;&emsp;&emsp;&emsp;" + content;
 
+		logger.info("发送邮件给管理员-->用户反馈 <method:sendEmail4UserFeedback>");
 		return sendEmail2Admin(name, email, phone, content);
 	}
 
@@ -156,9 +165,12 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 
 			logger.info("发送邮件给站长成功! 虚拟发件人：{}, 收件人：{}, 发件内容：{}", senderEmail, sendEmailCore.getRecipients(), content);
 
+			// 保存邮件
+			new SaveEmail(message);
+			
 			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
 		} catch (MessagingException | UnsupportedEncodingException | GeneralSecurityException mex) {
-			logger.error(StackTrace2Str.exceptionStackTrace2Str(mex));
+			logger.error("发送邮件给管理员-->出错\n{}", StackTrace2Str.exceptionStackTrace2Str(mex));
 		}
 
 		return ResponseConstants.RESPONSE_OPERATION_FAILURE;

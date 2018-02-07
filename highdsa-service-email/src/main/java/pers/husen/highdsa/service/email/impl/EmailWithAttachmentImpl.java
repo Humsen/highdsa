@@ -41,6 +41,7 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 	public void sendEmail2User(String userEmail, String subject, String content, File attachment) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
+			// 获取配置文件
 			Session session = sendEmailCore.getSession("robot2user-mail.properties");
 
 			// 创建默认的 MimeMessage 对象
@@ -77,12 +78,12 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 
 			// 将multipart对象放到message中
 			message.setContent(multipart);
-			// 保存邮件
+			// 保存邮件改变
 			message.saveChanges();
 
 			// 发送信息的工具
-			Transport transport = session.getTransport("smtp");
-			// smtp验证，就是你用来发邮件的邮箱用户名密码
+			Transport transport = session.getTransport(sendEmailCore.getProperties().getProperty("mail.smtp.protocol"));
+			// 连接
 			transport.connect();
 			// 发送
 			transport.sendMessage(message, message.getAllRecipients());
@@ -91,8 +92,8 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 
 			logger.info("发送邮件成功! 主题：{}, 收件人：{}, 内容：{}, 附件名称：{}", subject, userEmail, content, attachment.getName());
 
-			new SaveEmail(message, sendEmailCore.getProperties());
-			logger.info("保存邮件成功");
+			// 保存邮件
+			new SaveEmail(message);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
@@ -153,6 +154,8 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 			logger.info("发送邮件给站长成功! 虚拟发件人：{}, 收件人：{}, 发件内容：{}, 附件名称：{}", senderEmail, sendEmailCore.getRecipients(),
 					content, attachment);
 
+			// 保存邮件
+			new SaveEmail(message);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
