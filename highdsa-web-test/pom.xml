@@ -10,7 +10,7 @@
   <groupId>pers.husen.highdsa</groupId>
   <artifactId>highdsa-web-test</artifactId>
   <packaging>war</packaging>
-  <name>highdsa-web-tes</name>
+  <name>highdsa-web-test</name>
   <url>http://maven.apache.org</url>
   <dependencies>
   </dependencies>

@@ -101,6 +101,11 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${com.fasterxml.jackson.version}</version>
 		</dependency>
+		<!-- logstash-self -->
+		<dependency>
+			<groupId>biz.paluch.logging</groupId>
+			<artifactId>logstash-gelf</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>highdsa-web-email</finalName>

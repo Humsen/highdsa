@@ -22,6 +22,7 @@
 		<org.apache.logging.log4j.version>2.9.0</org.apache.logging.log4j.version>
 		<org.apache.zookeeper.version>3.4.11</org.apache.zookeeper.version>
 		<com.101tec.version>0.10</com.101tec.version>
+		<biz.paluch.logging.logstash-gelf.version>1.11.2</biz.paluch.logging.logstash-gelf.version>
 	</properties>
 
 	<!-- 依赖管理（实际没有导入，只是控制版本） -->
@@ -67,6 +68,12 @@
 				<groupId>com.101tec</groupId>
 				<artifactId>zkclient</artifactId>
 				<version>${com.101tec.version}</version>
+			</dependency>
+			<!-- logstash-self -->
+			<dependency>
+				<groupId>biz.paluch.logging</groupId>
+				<artifactId>logstash-gelf</artifactId>
+				<version>${biz.paluch.logging.logstash-gelf.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
