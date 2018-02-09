@@ -13,7 +13,7 @@
 		<Property name="log_path">${web:rootDir}/logs/highdsa</Property>
 
 		<!-- 定义统一的日志输出格式 -->
-		<Property name="log_pattern">[%-5p] &lt;%d{yyyy-MM-dd HH:mm:ss,sss}&gt; at [%C.%M] |--- %m ---| click goto-&gt; (%F:%L)%n</Property>
+		<Property name="log_pattern">[%-5p] &lt;%d{yyyy-MM-dd HH:mm:ss,SSS}&gt; at [%C.%M] |--- %m ---| click goto-&gt; (%F:%L)%n</Property>
 
 		<!-- 高亮控制台输出 -->
 		<Property name="log_pattern_highlight">%highlight{${log_pattern}}{FATAL=Bright Red,ERROR=Bright Magenta, WARN=Cyan, INFO=Green, DEBUG=Yellow,TRACE=Bright Blue}
@@ -22,7 +22,7 @@
 
 	<appenders>
 		<!-- Gelf输出到logstash -->
-		<Gelf name="logstash_gelf_appender" host="tcp:192.168.186.12"
+		<Gelf name="logstash_gelf_appender" host="udp:39.106.185.126"
 			port="12201" version="1.0" extractStackTrace="true" filterStackTrace="true"
 			mdcProfiling="true" includeFullMdc="true" maximumMessageSize="8192"
 			originHost="developer host" additionalFieldTypes="fieldName1=String,fieldName2=Double,fieldName3=Long"
