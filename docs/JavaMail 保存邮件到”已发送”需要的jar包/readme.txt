@@ -3,5 +3,5 @@
 将此目录下两个Jar包放到
 目录 %JAVA_HOME%\jre\lib\security里的local_policy.jar,US_export_policy.jar（JDK8有可能没有这两个Jar包）
 
-服务器部署 :
+本地部署 :
 	好像用java -jar ×.jar运行时，使用的是jre，所以jre（不是JDK下的那个，独立的那个）相应的目录下也要放这两个jar
