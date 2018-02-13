@@ -16,5 +16,8 @@
 /*/logs/
 /*/src/main/webapp/logs/
 
+# test file
+/*/src/main/resources/result.conf
+
 ## self
 ##/.gitignore
