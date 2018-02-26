@@ -1,6 +1,8 @@
 package pers.husen.highdsa.service.fastdfs;
 
-import java.io.File;
+
+
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,9 +33,9 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  *
  * @Created at 2018年2月13日 下午2:58:20
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
-public class FastDFSImpl {
+public class FastDFSImpl implements FastDFS {
 	private final Logger logger = LogManager.getLogger(FastDFSImpl.class.getName());
 
 	public void init() {
@@ -53,18 +55,44 @@ public class FastDFSImpl {
 		 * tracker_servers[0] = new InetSocketAddress("192.168.18.43", 22122);
 		 * ClientGlobal.setG_tracker_group(new TrackerGroup(tracker_servers));
 		 */
-		
-		logger.info("初始化完成");
-		logger.info("network_timeout=" + ClientGlobal.g_network_timeout + "ms");
-		logger.info("charset=" + ClientGlobal.g_charset);
+
+		logger.info("初始化完成.<network_timeout={}ms,charset={}>",ClientGlobal.g_network_timeout,ClientGlobal.g_charset);
 	}
 
-	/**
-	 * 上传文件
-	 */
-	public String[] uploadFile(File file, String uploadFileName, long fileLength) throws IOException {
+	private byte[] getFileBuffer(InputStream inStream) throws IOException {
+		logger.fatal(inStream.available());
+		byte[] buffer = new byte[256 * 1024];
+		//byte[] fileBuffer = new byte[(int) fileLength];
+		ByteArrayOutputStream bOutputStream = new ByteArrayOutputStream();
+        
+		//int count = 0;
+		int length = 0;
+
+		while ((length = inStream.read(buffer)) != -1) {
+			/*for (int i = 0; i < length; ++i) {
+				fileBuffer[count + i] = buffer[i];
+			}*/
+			logger.fatal(length);
+			bOutputStream.write(buffer,0,length);
+			//count += length;
+		}
+		
+		bOutputStream.close();
+		
+		return bOutputStream.toByteArray();
+	}
+
+	/* ------------------- 分割线 ------------------------ */
+
+	public String[] uploadFile(FileInputStream inStream, String uploadFileName) throws IOException{
+		return uploadFile(getFileBuffer(inStream), uploadFileName);
+	}
+	
+	public String[] uploadFile(byte[] fileBuff, String uploadFileName) throws IOException {
+		// 初始化
+		init();
 		logger.info("开始上传文件...");
-		byte[] fileBuff = getFileBuffer(new FileInputStream(file), fileLength);
+		//byte[] fileBuff = getFileBuffer(inputStream);
 		String[] files = null;
 		String fileExtName = "";
 		if (uploadFileName.contains(".")) {
@@ -85,7 +113,7 @@ public class FastDFSImpl {
 		NameValuePair[] metaList = new NameValuePair[3];
 		metaList[0] = new NameValuePair("fileName", uploadFileName);
 		metaList[1] = new NameValuePair("fileExtName", fileExtName);
-		metaList[2] = new NameValuePair("fileLength", String.valueOf(fileLength));
+		metaList[2] = new NameValuePair("fileLength", String.valueOf(fileBuff.length));
 
 		// 上传文件
 		try {
@@ -93,7 +121,7 @@ public class FastDFSImpl {
 		} catch (Exception e) {
 			logger.error("Upload file \" {} \"fails\n{}", uploadFileName, StackTrace2Str.exceptionStackTrace2Str(e));
 		}
-		
+
 		if (files == null) {
 			logger.error("upload file fail, error code: " + client.getErrorCode());
 			return null;
@@ -115,7 +143,7 @@ public class FastDFSImpl {
 				}
 			}
 		}
-		
+
 		if (files != null) {
 			String file_id;
 			int ts;
@@ -145,7 +173,7 @@ public class FastDFSImpl {
 				file_url += "?token=" + token + "&ts=" + ts;
 			}
 
-			logger.info("file url: " + file_url);
+			logger.info("上传文件成功, file http url:\t" + file_url);
 
 		}
 		trackerServer.close();
@@ -153,24 +181,9 @@ public class FastDFSImpl {
 		return files;
 	}
 
-	private static byte[] getFileBuffer(InputStream inStream, long fileLength) throws IOException {
-		byte[] buffer = new byte[256 * 1024];
-		byte[] fileBuffer = new byte[(int) fileLength];
-
-		int count = 0;
-		int length = 0;
-
-		while ((length = inStream.read(buffer)) != -1) {
-			for (int i = 0; i < length; ++i) {
-				fileBuffer[count + i] = buffer[i];
-			}
-			count += length;
-		}
-		return fileBuffer;
-	}
-
-	// 下载文件
 	public void downloadFile(String groupName, String filepath) throws Exception {
+		// 初始化
+		init();
 		logger.info("开始下载文件...");
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
@@ -178,22 +191,36 @@ public class FastDFSImpl {
 
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
 		byte[] b = storageClient.download_file(groupName, filepath);
-		
-		if(b == null) {
+
+		if (b == null) {
 			logger.error("下载失败");
-		}else {
-			logger.info("下载成功, 文件大小: "+ b.length);
+		} else {
+			logger.info("下载成功, 文件大小: " + b.length);
 		}
-		
+
 		String fileName = filepath.substring(filepath.lastIndexOf(".") + 1);
-		FileOutputStream out = new FileOutputStream("src/main/resources/result." +fileName);
+		FileOutputStream out = new FileOutputStream("src/main/resources/result." + fileName);
 		out.write(b);
 		out.flush();
 		out.close();
 	}
 
+	public void deleteFile(String groupName, String filepath) throws Exception {
+		// 初始化
+		init();
+		logger.info("开始删除文件");
+		TrackerClient tracker = new TrackerClient();
+		TrackerServer trackerServer = tracker.getConnection();
+		StorageServer storageServer = null;
+		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
+		int i = storageClient.delete_file(groupName, filepath);
+		logger.info(i == 0 ? "删除成功" : "删除失败:" + i);
+	}
+
 	// 获取文件信息
 	public void getFileInfo(String groupName, String filepath) throws Exception {
+		// 初始化
+		init();
 		logger.info("开始获取文件信息");
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
@@ -207,8 +234,9 @@ public class FastDFSImpl {
 		logger.info("文件CRC32 signature: {}", fi.getCrc32());
 	}
 
-	//获取文件Mate
 	public void getFileMate(String groupName, String filepath) throws Exception {
+		// 初始化
+		init();
 		logger.info("开始获取文件meta");
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
@@ -219,15 +247,5 @@ public class FastDFSImpl {
 		for (NameValuePair nvp : nvps) {
 			logger.info(nvp.getName() + ":" + nvp.getValue());
 		}
-	}
-	// 删除文件
-	public void deleteFile(String groupName, String filepath) throws Exception {
-		logger.info("开始删除文件");
-		TrackerClient tracker = new TrackerClient();
-		TrackerServer trackerServer = tracker.getConnection();
-		StorageServer storageServer = null;
-		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
-		int i = storageClient.delete_file(groupName, filepath);
-		logger.info(i == 0 ? "删除成功" : "删除失败:" + i);
 	}
 }

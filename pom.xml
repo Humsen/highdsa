@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pers.husen</groupId>
 	<artifactId>highdsa</artifactId>
@@ -10,10 +11,11 @@
 		<module>highdsa-api</module>
 		<module>highdsa-common</module>
 		<module>highdsa-service-email</module>
+		<module>highdsa-service-fastdfs</module>
 		<module>highdsa-web-email</module>
+		<module>highdsa-web-fastdfs</module>
 		<module>highdsa-web-test</module>
-    <module>highdsa-service-fastdfs</module>
-  </modules>
+	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

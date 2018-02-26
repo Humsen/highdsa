@@ -1,7 +1,7 @@
 package pers.husen.highdsa.service.email;
 
 /**
- * @Desc 服务器接口
+ * @Desc 简单邮件服务
  *
  * @Author 何明胜
  *

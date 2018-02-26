@@ -4,18 +4,18 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
 
-	<display-name>send email</display-name>
-	<description>发送邮件消费者</description>
+	<display-name>fastdfs</display-name>
+	<description>文件存储消费者</description>
 
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>upload_file.html</welcome-file>
 	</welcome-file-list>
 
-	<!-- 邮件消费者配置文件 -->
+	<!-- 文件消费者配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		classpath*:send-email-consumer.xml
+		classpath*:fastdfs-consumer.xml
 	</param-value>
 	</context-param>
 	<!-- logj4 日志存放 应用根目录 -->
@@ -31,14 +31,26 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<!-- html页面不进入SpringMVC -->
+	<!-- 静态页面不进入SpringMVC -->
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>*.html</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.map</url-pattern>
+    </servlet-mapping>
 	<!-- SpringMVC servlet -->
 	<servlet>
-		<servlet-name>sendEmailServlet</servlet-name>
+		<servlet-name>fastdfsServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -47,7 +59,7 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>sendEmailServlet</servlet-name>
+		<servlet-name>fastdfsServlet</servlet-name>
 		<!-- <url-pattern>*.hms</url-pattern> -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>

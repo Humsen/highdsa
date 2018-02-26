@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>上传文件</title>
+
+<!-- Bootstrap  -->
+<link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/upload-file.css">
+<!-- 库文件 -->
+<link href="plugins/webuploader/webuploader.css" rel="stylesheet" />
+
+<!-- jQuery -->
+<script src="plugins/jquery/js/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap -->
+<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/webuploader/webuploader.min.js"></script>
+<!-- 上传文件脚本  -->
+<script src="js/upload-file.js"></script>
+
+</head>
+<body>
+	<div class="form-horizontal upload-file-form">
+		<div class="form-group">
+			<!-- 上传文件列表  -->
+			<label class="col-sm-3 control-label">上传文件列表</label>
+			<div id="file_list" class="col-sm-5"></div>
+			<div class="btns col-sm-3">
+				<!-- 添加文件按钮  -->
+				<div id="file_choose">添加文件</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-2">
+				<button id="btn_uploadStart" class="btn btn-success">开始上传</button>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

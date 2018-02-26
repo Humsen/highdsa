@@ -5,7 +5,7 @@ import java.util.Map;
 import pers.husen.highdsa.web.response.ResponseResult;
 
 /**
- * @Desc 存放Json结果的vO
+ * @Desc 存放Json结果的vo
  *
  * @Author 何明胜
  *
