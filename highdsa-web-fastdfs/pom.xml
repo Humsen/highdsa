@@ -115,6 +115,11 @@
 			<version>${commons.fileupload.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>pers.husen.highdsa</groupId>
+			<artifactId>highdsa-web-exception</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>highdsa-web-fastdfs</finalName>

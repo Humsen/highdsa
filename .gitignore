@@ -9,8 +9,10 @@
 # project files
 /.settings/
 /*/.settings
+/*/*/.settings
 .project
 /*/.classpath
+/*/*/.classpath
 
 # log file
 /*/logs/

@@ -19,8 +19,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<pers.husen.highdsa.version>0.0.1-SNAPSHOT</pers.husen.highdsa.version>
-		<javax.servlet.version>3.1.0</javax.servlet.version>
-		<com.fasterxml.jackson.version>2.9.4</com.fasterxml.jackson.version>
 	</properties>
 
 	<dependencies>
@@ -30,28 +28,6 @@
 			<artifactId>highdsa-api</artifactId>
 			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax.servlet.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
 		<!-- jackson -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${com.fasterxml.jackson.version}</version>
-		</dependency>
 	</dependencies>
 </project>
