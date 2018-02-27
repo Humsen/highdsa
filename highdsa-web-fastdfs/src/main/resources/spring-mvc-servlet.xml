@@ -38,5 +38,10 @@
 		</property>
 	</bean>
 
+	<!-- 异常处理类 -->
+	<bean id="exceptionResolver"
+		class="pers.husen.highdsa.common.exception.ExceptionInterceptor">
+	</bean>
+
 	<context:component-scan base-package="pers.husen.highdsa.web" />
 </beans>

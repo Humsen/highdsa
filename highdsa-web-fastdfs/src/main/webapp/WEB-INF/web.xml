@@ -32,22 +32,22 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<!-- 静态页面不进入SpringMVC -->
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>*.html</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>*.js</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>*.css</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>*.map</url-pattern>
-    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.map</url-pattern>
+	</servlet-mapping>
 	<!-- SpringMVC servlet -->
 	<servlet>
 		<servlet-name>fastdfsServlet</servlet-name>
