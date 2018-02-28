@@ -29,12 +29,9 @@
 			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
+			<groupId>pers.husen.highdsa</groupId>
+			<artifactId>highdsa-common-log4j2</artifactId>
+			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

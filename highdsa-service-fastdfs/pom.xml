@@ -14,37 +14,24 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<pers.husen.highdsa.version>0.0.1-SNAPSHOT</pers.husen.highdsa.version>
 	</properties>
 	<dependencies>
 		<!-- 自带 -->
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.csource</groupId>
 			<artifactId>fastdfs-client-java</artifactId>
 			<version>1.28</version>
-		</dependency>
-		<!-- log4j2 -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-		</dependency>
-		<!-- logstash-self -->
-		<dependency>
-			<groupId>biz.paluch.logging</groupId>
-			<artifactId>logstash-gelf</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

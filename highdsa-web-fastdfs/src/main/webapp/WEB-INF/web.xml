@@ -23,6 +23,15 @@
 		<param-name>webAppRootKey</param-name>
 		<param-value>webapp.root</param-value>
 	</context-param>
+	<!-- 指定log4j2配置文件的位置 -->
+	<context-param>
+		<param-name>log4jConfiguration</param-name>
+		<param-value>classpath:log4j2-web.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>60000</param-value>
+	</context-param>
 	<!-- 配置log4j的监听器 -->
 	<listener>
 		<!-- <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> -->

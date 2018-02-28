@@ -33,6 +33,11 @@
 			<artifactId>highdsa-common</artifactId>
 			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>pers.husen.highdsa</groupId>
+			<artifactId>highdsa-web-exception</artifactId>
+			<version>${pers.husen.highdsa.version}</version>
+		</dependency>
 		<!-- web -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -59,7 +64,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
-
 		<!-- dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -83,14 +87,6 @@
 		<!-- log4j2 -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-web</artifactId>
 		</dependency>
 		<!-- jackson -->
@@ -98,16 +94,6 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${com.fasterxml.jackson.version}</version>
-		</dependency>
-		<!-- logstash-self -->
-		<dependency>
-			<groupId>biz.paluch.logging</groupId>
-			<artifactId>logstash-gelf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>pers.husen.highdsa</groupId>
-			<artifactId>highdsa-web-exception</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>
