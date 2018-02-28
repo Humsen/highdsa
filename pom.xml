@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pers.husen</groupId>
 	<artifactId>highdsa</artifactId>
@@ -13,6 +14,7 @@
 		<module>highdsa-common-web</module>
 		<module>highdsa-service-email</module>
 		<module>highdsa-service-fastdfs</module>
+		<module>highdsa-service-redis</module>
 		<module>highdsa-web-email</module>
 		<module>highdsa-web-fastdfs</module>
 		<module>highdsa-web-test</module>
@@ -77,6 +79,12 @@
 				<groupId>biz.paluch.logging</groupId>
 				<artifactId>logstash-gelf</artifactId>
 				<version>${biz.paluch.logging.logstash-gelf.version}</version>
+			</dependency>
+			<!-- java servlet -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>4.0.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
