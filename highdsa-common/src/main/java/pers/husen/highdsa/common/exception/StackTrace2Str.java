@@ -29,4 +29,22 @@ public class StackTrace2Str {
 
 		return sw.toString();
 	}
+
+	/**
+	 * 返回 自定义错误信息 + e.printStackTrace()的内容
+	 * 
+	 * @param errorMsg
+	 * @param e
+	 * @return
+	 */
+	public static String exceptionStackTrace2Str(String errorMsg, Exception e) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		// 将出错的栈信息输出到printWriter中
+		e.printStackTrace(pw);
+		pw.flush();
+		sw.flush();
+
+		return errorMsg + "\n" + sw.toString();
+	}
 }
