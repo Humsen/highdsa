@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.utils;
+package pers.husen.highdsa.common.utility;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,8 +27,8 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  * 
  * @Version 1.0.1
  */
-public class ReadH5 {
-	private static final Logger logger = LogManager.getLogger(ReadH5.class);
+public class ReadHtmlFile {
+	private static final Logger logger = LogManager.getLogger(ReadHtmlFile.class);
 
 	/**
 	 * 读取html文件

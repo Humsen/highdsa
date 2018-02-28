@@ -25,11 +25,6 @@
 		<!-- 自建 -->
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
-			<artifactId>highdsa-api</artifactId>
-			<version>${pers.husen.highdsa.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common</artifactId>
 			<version>${pers.husen.highdsa.version}</version>
 		</dependency>

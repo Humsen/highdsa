@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.common.utils.ReadConfigFile;
+import pers.husen.highdsa.common.utility.ReadConfigFile;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

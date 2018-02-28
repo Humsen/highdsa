@@ -25,12 +25,7 @@
 		<!-- 内部模块 -->
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
-			<artifactId>highdsa-api</artifactId>
-			<version>${pers.husen.highdsa.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>pers.husen.highdsa</groupId>
-			<artifactId>highdsa-common-log4j2</artifactId>
+			<artifactId>highdsa-common-exception</artifactId>
 			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<dependency>

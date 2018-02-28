@@ -16,7 +16,7 @@ import com.sun.mail.util.MailSSLSocketFactory;
 
 import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.common.utils.VarHandle;
+import pers.husen.highdsa.common.utility.VarHandle;
 
 /**
  * @Desc 发送邮件核心类

@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.utils;
+package pers.husen.highdsa.common.utility;
 
 /**
  * @Desc 获取指定长度的验证码

@@ -15,5 +15,6 @@
 	<modules>
 		<module>highdsa-common-exception</module>
 		<module>highdsa-common-log4j2</module>
+		<module>highdsa-common-utility</module>
 	</modules>
 </project>

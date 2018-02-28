@@ -10,8 +10,8 @@
 
 	<modules>
 		<module>highdsa-api</module>
-		<module>highdsa-common</module>
 		<module>highdsa-common-parent</module>
+		<module>highdsa-common</module>
 		<module>highdsa-service-email</module>
 		<module>highdsa-service-fastdfs</module>
 		<module>highdsa-service-redis</module>

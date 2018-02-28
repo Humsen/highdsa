@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.utils;
+package pers.husen.highdsa.common.utility;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

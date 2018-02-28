@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common;
+package pers.husen.highdsa.common.utility;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -6,7 +6,6 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 import pers.husen.highdsa.common.constant.Encode;
-import pers.husen.highdsa.common.utils.ReadConfigFile;
 
 /**
  * @Desc 测试读取配置文件

@@ -9,22 +9,26 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>highdsa-common-exception</artifactId>
-	<name>highdsa-common-exception</name>
+	<artifactId>highdsa-common-utility</artifactId>
+	<name>highdsa-common-utility</name>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<pers.husen.highdsa.version>0.0.1-SNAPSHOT</pers.husen.highdsa.version>
-		<com.fasterxml.jackson.version>2.9.4</com.fasterxml.jackson.version>
 	</properties>
 
 	<dependencies>
 		<!-- 内部模块 -->
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
-			<artifactId>highdsa-common-utility</artifactId>
+			<artifactId>highdsa-api</artifactId>
+			<version>${pers.husen.highdsa.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>pers.husen.highdsa</groupId>
+			<artifactId>highdsa-common-log4j2</artifactId>
 			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<dependency>
@@ -32,14 +36,9 @@
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-		<!-- jackson -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${com.fasterxml.jackson.version}</version>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.11.2</version>
 		</dependency>
 	</dependencies>
 </project>
