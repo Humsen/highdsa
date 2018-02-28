@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.3.1-SNAPSHOT</version>
 	</parent>
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-web-email</artifactId>
@@ -15,18 +15,11 @@
 	<name>highdsa-web-email</name>
 	<url>http://maven.apache.org</url>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<pers.husen.highdsa.version>0.0.1-SNAPSHOT</pers.husen.highdsa.version>
-		<com.fasterxml.jackson.version>2.9.4</com.fasterxml.jackson.version>
-	</properties>
-
 	<dependencies>
 		<!-- 自建 -->
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common</artifactId>
-			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<!-- web -->
 		<dependency>
@@ -65,7 +58,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- zookepper -->
+		<!-- zookeeper -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
@@ -83,10 +76,6 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${com.fasterxml.jackson.version}</version>
 		</dependency>
 	</dependencies>
-	<build>
-		<finalName>highdsa-web-email</finalName>
-	</build>
 </project>

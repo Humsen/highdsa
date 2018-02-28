@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-common-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.3.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>highdsa-common-exception</artifactId>
@@ -14,18 +14,11 @@
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<pers.husen.highdsa.version>0.0.1-SNAPSHOT</pers.husen.highdsa.version>
-		<com.fasterxml.jackson.version>2.9.4</com.fasterxml.jackson.version>
-	</properties>
-
 	<dependencies>
 		<!-- 内部模块 -->
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common-utility</artifactId>
-			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -39,7 +32,6 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${com.fasterxml.jackson.version}</version>
 		</dependency>
 	</dependencies>
 </project>

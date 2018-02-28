@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.3.1-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
@@ -16,19 +16,11 @@
 	<name>highdsa-web-fastdfs</name>
 	<url>http://maven.apache.org</url>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<pers.husen.highdsa.version>0.0.1-SNAPSHOT</pers.husen.highdsa.version>
-		<com.fasterxml.jackson.version>2.9.4</com.fasterxml.jackson.version>
-		<commons.fileupload.version>1.3.3</commons.fileupload.version>
-	</properties>
-
 	<dependencies>
 		<!-- 自建 -->
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common</artifactId>
-			<version>${pers.husen.highdsa.version}</version>
 		</dependency>
 		<!-- web -->
 		<dependency>
@@ -85,17 +77,11 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${com.fasterxml.jackson.version}</version>
 		</dependency>
-		<!-- logstash-self -->
 		<!-- 文件上传 -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
-			<version>${commons.fileupload.version}</version>
 		</dependency>
 	</dependencies>
-	<build>
-		<finalName>highdsa-web-fastdfs</finalName>
-	</build>
 </project>

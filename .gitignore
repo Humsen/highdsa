@@ -1,26 +1,23 @@
-# biuld files
-/build/
-/*/target/
-/*/*/target
+# build files
+build
+target
 
 # jrebel
-/src/rebel.xml
-/*/src/main/resources/rebel.xml
+rebel.xml
 
 # project files
-/.settings/
-/*/.settings
-/*/*/.settings
+.settings
 .project
-/*/.classpath
-/*/*/.classpath
+.classpath
 
 # log file
-/*/logs/
-/*/src/main/webapp/logs/
+logs
 
 # test file
-/*/src/main/resources/result.conf
+result.conf
+
+#backup file
+pom.xml.versionsBackup
 
 ## self
-##/.gitignore
+##.gitignore
