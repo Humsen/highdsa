@@ -17,7 +17,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<pers.husen.highdsa.version>0.0.1-SNAPSHOT</pers.husen.highdsa.version>
-		<javax.servlet.version>3.1.0</javax.servlet.version>
 		<com.fasterxml.jackson.version>2.9.4</com.fasterxml.jackson.version>
 	</properties>
 
@@ -36,7 +35,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax.servlet.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
