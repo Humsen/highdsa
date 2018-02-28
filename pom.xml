@@ -11,8 +11,7 @@
 	<modules>
 		<module>highdsa-api</module>
 		<module>highdsa-common</module>
-		<module>highdsa-common-web</module>
-		<module>highdsa-common-log4j2</module>
+		<module>highdsa-common-parent</module>
 		<module>highdsa-service-email</module>
 		<module>highdsa-service-fastdfs</module>
 		<module>highdsa-service-redis</module>

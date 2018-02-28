@@ -1,6 +1,7 @@
 # biuld files
 /build/
 /*/target/
+/*/*/target
 
 # jrebel
 /src/rebel.xml

@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
-		<artifactId>highdsa-common-web</artifactId>
+		<artifactId>highdsa-common-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
-	<artifactId>highdsa-web-exception</artifactId>
-	<name>highdsa-web-exception</name>
+
+	<artifactId>highdsa-common-exception</artifactId>
+	<name>highdsa-common-exception</name>
 	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 
