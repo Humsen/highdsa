@@ -12,7 +12,6 @@ import pers.husen.highdsa.common.utility.ReadConfigFile;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
  * @Desc redis连接池
@@ -83,12 +82,12 @@ public class RedisPools {
 			jedis = jedisPool.getResource();
 			logger.info("分配一个redis 连接池成功!");
 		} catch (Exception e) {
-			logger.error("分配连接池错误,开始重试", StackTrace2Str.exceptionStackTrace2Str(e));
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("分配连接池错误,开始重试", e));
 
 			try {
 				jedis = jedisPool.getResource();
-			} catch (JedisConnectionException jException) {
-				logger.error(StackTrace2Str.exceptionStackTrace2Str("第2次初始化连接池失败", jException));
+			} catch (Exception exception) {
+				logger.error(StackTrace2Str.exceptionStackTrace2Str("第2次初始化连接池失败", exception));
 			}
 		}
 
@@ -116,7 +115,7 @@ public class RedisPools {
 	}
 	
 	public static void main(String[] args) {
-		Jedis jedis = RedisPools.getJedis();
+		/*Jedis jedis = RedisPools.getJedis();
 		System.out.println(jedis.set("name", "何明胜"));
 		System.out.println(jedis.get("name"));
 		RedisPools.returnResource(jedis);
@@ -124,10 +123,13 @@ public class RedisPools {
 		RedisPools.closeRedisPool();
 		Jedis jedis1 = RedisPools.getJedis();
 		System.out.println(jedis1.set("name", "何明胜"));
-		System.out.println(jedis1.get("name"));
+		System.out.println(jedis1.get("name"));*/
 		
-		Jedis jedis2 = RedisPools.getJedis();
-		System.out.println(jedis2.set("name", "何明胜"));
-		System.out.println(jedis2.get("name1"));
+		for(int i=1; i<=26; i++) {
+			System.out.println("第" + i + "个");
+			Jedis jedis2 = RedisPools.getJedis();
+			System.out.println(jedis2.set("name", "何明胜"));
+			System.out.println(jedis2.get("name1"));
+		}
 	}
 }

@@ -8,12 +8,12 @@
 		<artifactId>highdsa</artifactId>
 		<version>0.3.1-SNAPSHOT</version>
 	</parent>
-	
+
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-service-redis</artifactId>
 	<name>highdsa-service-redis</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
@@ -22,6 +22,15 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -80,6 +89,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
 				<configuration>
 					<classesDirectory>target/classes/</classesDirectory>
 					<archive>
@@ -95,7 +105,6 @@
 						</manifestEntries>
 					</archive>
 				</configuration>
-				<version>3.0.2</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -117,6 +126,17 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- 解决maven test命令时console出现中文乱码乱码 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20.1</version>
+				<configuration>
+					<forkMode>once</forkMode>
+					<argLine>-Dfile.encoding=UTF-8</argLine>
+					<skipTests>true</skipTests> 
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
