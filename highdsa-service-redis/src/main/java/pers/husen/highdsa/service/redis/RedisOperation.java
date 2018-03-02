@@ -1,6 +1,7 @@
 package pers.husen.highdsa.service.redis;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,8 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
+import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.utility.TypeConvert;
 import redis.clients.jedis.Jedis;
 
@@ -21,7 +22,7 @@ import redis.clients.jedis.Jedis;
  *
  * @Created at 2018年2月28日 下午2:19:37
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class RedisOperation extends RedisPools {
 	private static final Logger logger = LogManager.getLogger(RedisOperation.class.getName());
@@ -37,7 +38,7 @@ public class RedisOperation extends RedisPools {
 		Jedis jedis = getJedis();
 		String statusCodeReply = jedis.set(key, value);
 
-		logger.info("redis cache set success, key={}, value={}", key, value);
+		logger.info("redis <String> cache set success, key={}, value={}", key, value);
 
 		return statusCodeReply;
 	}
@@ -58,8 +59,7 @@ public class RedisOperation extends RedisPools {
 		if (cacheSeconds != 0) {
 			jedis.expire(key, cacheSeconds);
 		}
-
-		logger.info("redis cache set success, key={}, value={}, expire={}s", key, value, cacheSeconds);
+		logger.info("redis <String> cache set success, key={}, value={}, expire={}s", key, value, cacheSeconds);
 
 		return statusCodeReply;
 	}
@@ -74,7 +74,7 @@ public class RedisOperation extends RedisPools {
 		Jedis jedis = getJedis();
 		String value = jedis.get(key);
 
-		logger.info("redis cache get success, key={}, value={}", key, value);
+		logger.info("redis <String> cache get success, key={}, value={}", key, value);
 
 		return value;
 	}
@@ -89,6 +89,8 @@ public class RedisOperation extends RedisPools {
 	public static Long append(String key, String addString) {
 		Jedis jedis = getJedis();
 		Long statusCodeReply = jedis.append(key, addString);
+
+		logger.info("redis <String> cache append success, key={}, value={}", key, addString);
 
 		return statusCodeReply;
 
@@ -106,13 +108,53 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			result = jedis.exists(key);
-			logger.debug("exists {}", key);
+			logger.info("redis <String> cache exists, key={}", key);
 		} catch (Exception e) {
-			logger.warn("exists {}", key, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
 		return result;
+	}
+
+	/**
+	 * 删除缓存
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public static long del(String key) {
+		long result = 0;
+		Jedis jedis = null;
+		try {
+			jedis = getJedis();
+			if (jedis.exists(key)) {
+				result = jedis.del(key);
+				logger.info("redis <String> cache delete success, key={}", key);
+			} else {
+				logger.warn("del {} not exists", key);
+			}
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
+		} finally {
+			returnResource(jedis);
+		}
+		return result;
+	}
+
+	/**
+	 * 删除多个
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public static long del(String... key) {
+		Jedis jedis = getJedis();
+		Long statusCodeReply = jedis.del(key);
+
+		logger.info("redis <String[]> cache delete success, key={}", TypeConvert.strArray2String(key));
+
+		return statusCodeReply;
 	}
 
 	/**
@@ -132,7 +174,7 @@ public class RedisOperation extends RedisPools {
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
 			}
-			logger.info("redis cache set success, key={}, value={}", key, value);
+			logger.info("redis <String> cache set success, key={}, value={}", key, value);
 		} catch (Exception e) {
 			logger.error("setObject {} = {}", key, value, e);
 		}
@@ -152,7 +194,7 @@ public class RedisOperation extends RedisPools {
 
 		if (jedis.exists(key.getBytes())) {
 			value = TypeConvert.unserialize(jedis.get(key.getBytes()));
-			logger.info("redis cache get success, key={}, value={}", key, value);
+			logger.info("redis <String> cache get success, key={}, value={}", key, value);
 		}
 
 		return value;
@@ -170,9 +212,34 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			result = jedis.exists(key.getBytes());
-			logger.debug("existsObject {}", key);
+			logger.info("redis <String> cache exists, key={}", key);
 		} catch (Exception e) {
-			logger.warn("existsObject {}", key, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
+		} finally {
+			returnResource(jedis);
+		}
+		return result;
+	}
+
+	/**
+	 * 删除缓存
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public static long delObject(String key) {
+		long result = 0;
+		Jedis jedis = null;
+		try {
+			jedis = getJedis();
+			if (jedis.exists(key.getBytes())) {
+				result = jedis.del(key.getBytes());
+				logger.info("redis <Object> cache delete success, key={}", key);
+			} else {
+				logger.warn("redis <Object> cache not exists, key={}", key);
+			}
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -199,9 +266,9 @@ public class RedisOperation extends RedisPools {
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
 			}
-			logger.info("redis cache set success, key={}, value={}", key, value);
+			logger.info("redis <List> cache set success, key={}", key);
 		} catch (Exception e) {
-			logger.warn("setList {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -222,9 +289,9 @@ public class RedisOperation extends RedisPools {
 				value = jedis.lrange(key, 0, -1);
 			}
 
-			logger.info("redis cache get success, key={}, value={}", key, value);
+			logger.info("redis <Object> cache get success, key={}, value={}", key, value);
 		} catch (Exception e) {
-			logger.warn("getList {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
 
 		return value;
@@ -243,9 +310,9 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			result = jedis.rpush(key, value);
-			logger.debug("listAdd {} = {}", key, value);
+			logger.info("redis <List> cache append success, key={}, value={}", key, value);
 		} catch (Exception e) {
-			logger.warn("listAdd {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -274,9 +341,9 @@ public class RedisOperation extends RedisPools {
 				jedis.expire(key, cacheSeconds);
 			}
 
-			logger.info("redis cache set success, key={}, value={}", key, value);
+			logger.info("redis <ObjectList> cache set success, key={}, value={}", key, value);
 		} catch (Exception e) {
-			logger.warn("setObjectList {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -287,7 +354,7 @@ public class RedisOperation extends RedisPools {
 	 * 获取List缓存
 	 * 
 	 * @param key
-	 * @return 
+	 * @return
 	 */
 	public static List<Object> getObjectList(String key) {
 		List<Object> value = null;
@@ -296,11 +363,11 @@ public class RedisOperation extends RedisPools {
 			if (jedis.exists(key.getBytes())) {
 				byte[] list = jedis.get(key.getBytes());
 				value = (List<Object>) TypeConvert.unserializeList(list);
-				
-				logger.info("redis cache get success, key={}, value={}", key, value);
+
+				logger.info("redis <ObjectList> cache get success, key={}, value={}", key, value);
 			}
 		} catch (Exception e) {
-			logger.warn("getObjectList {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -319,17 +386,21 @@ public class RedisOperation extends RedisPools {
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();
-			
+
 			byte[] listTemp = jedis.get(key.getBytes());
 			List<Object> list = (List<Object>) TypeConvert.unserializeList(listTemp);
+			if (list == null) {
+				list = new ArrayList<Object>();
+			}
+
 			for (Object o : value) {
 				list.add(o);
 			}
 			result = jedis.set(key.getBytes(), TypeConvert.serializeList(list));
-			
-			logger.info("redis cache append success, key={}, value={}", key, value);
+
+			logger.info("redis <ObjectList> cache append success, key={}, value={}", key, value);
 		} catch (Exception e) {
-			logger.warn("listObjectAdd {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -346,6 +417,8 @@ public class RedisOperation extends RedisPools {
 		Jedis jedis = getJedis();
 		String statusCodeReply = jedis.mset(keys3Values);
 
+		logger.info("redis <mset> cache set success, key3values={}", TypeConvert.strArray2String(keys3Values));
+
 		return statusCodeReply;
 	}
 
@@ -357,10 +430,13 @@ public class RedisOperation extends RedisPools {
 	 */
 	public static List<String> mget(String... keys) {
 		Jedis jedis = getJedis();
-		List<String> statusCodeReply = new ArrayList<String>();
-		statusCodeReply = jedis.mget(keys);
+		List<String> result = new ArrayList<String>();
+		result = jedis.mget(keys);
 
-		return statusCodeReply;
+		logger.info("redis <ObjectList> cache get success, keys={}, values={}", TypeConvert.strArray2String(keys),
+				result.toString());
+
+		return result;
 	}
 
 	/**
@@ -384,9 +460,9 @@ public class RedisOperation extends RedisPools {
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
 			}
-			logger.info("redis cache set success, key={}, value={}", key, value);
+			logger.info("redis <Set<String>> cache set success, key={}, value={}", key, value.toString());
 		} catch (Exception e) {
-			logger.warn("setSet {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -406,10 +482,10 @@ public class RedisOperation extends RedisPools {
 			jedis = getJedis();
 			if (jedis.exists(key)) {
 				value = jedis.smembers(key);
-				logger.info("redis cache get success, key={}, value={}", key, value);
+				logger.info("redis <Set<String>> cache get success, key={}, value={}", key, value);
 			}
 		} catch (Exception e) {
-			logger.warn("getSet {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -429,9 +505,10 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			result = jedis.sadd(key, value);
-			logger.info("redis cache append success, key={}, value={}", key, value);
+			logger.info("redis <Set<String>> cache append success, key={}, value={}", key,
+					TypeConvert.strArray2String(value));
 		} catch (Exception e) {
-			logger.warn("setSetAdd {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -439,7 +516,7 @@ public class RedisOperation extends RedisPools {
 	}
 
 	/**
-	 * 设置Set缓存
+	 * 设置ObjectSet缓存
 	 * 
 	 * @param key
 	 * @param value
@@ -447,25 +524,22 @@ public class RedisOperation extends RedisPools {
 	 *            超时时间，0为不超时
 	 * @return
 	 */
-	public static long setObjectSet(String key, Set<Object> value, int cacheSeconds) {
-		long result = 0;
+	public static String setObjectSet(String key, Set<Object> value, int cacheSeconds) {
+		String result = null;
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();
 			if (jedis.exists(key.getBytes())) {
 				jedis.del(key);
 			}
-			Set<byte[]> set = Sets.newHashSet();
-			for (Object o : value) {
-				set.add(TypeConvert.serialize(o));
-			}
-			result = jedis.sadd(key.getBytes(), (byte[][]) set.toArray());
+			result = jedis.set(key.getBytes(), TypeConvert.serializeSet(value));
+
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
 			}
-			logger.info("redis cache set success, key={}, value={}", key, value);
+			logger.info("redis <Set<Object>> cache set success, key={}, value={}", key, value.toString());
 		} catch (Exception e) {
-			logger.warn("setObjectSet {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -473,11 +547,10 @@ public class RedisOperation extends RedisPools {
 	}
 
 	/**
-	 * 获取缓存
+	 * 获取Object缓存
 	 * 
 	 * @param key
-	 *            键
-	 * @return 值
+	 * @return
 	 */
 	public static Set<Object> getObjectSet(String key) {
 		Set<Object> value = null;
@@ -485,15 +558,13 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			if (jedis.exists(key.getBytes())) {
-				value = Sets.newHashSet();
-				Set<byte[]> set = jedis.smembers(key.getBytes());
-				for (byte[] bs : set) {
-					value.add(TypeConvert.unserialize(bs));
-				}
-				logger.info("redis cache get success, key={}, value={}", key, value);
+				byte[] list = jedis.get(key.getBytes());
+				value = (Set<Object>) TypeConvert.unserializeSet(list);
+
+				logger.info("redis <Set<Object>> cache get success, key={}, value={}", key, value.toString());
 			}
 		} catch (Exception e) {
-			logger.warn("getObjectSet {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -501,25 +572,32 @@ public class RedisOperation extends RedisPools {
 	}
 
 	/**
-	 * 向Set缓存中添加值
+	 * 向ObjectSet缓存中添加值
 	 * 
-	 * @param key
-	 * @param value
+	 * @param
+	 * @param
 	 * @return
 	 */
-	public static long appendObjectSet(String key, Object... value) {
-		long result = 0;
+	public static String appendObjectSet(String key, Object... value) {
+		String result = null;
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();
-			Set<byte[]> set = Sets.newHashSet();
-			for (Object o : value) {
-				set.add(TypeConvert.serialize(o));
+
+			byte[] listTemp = jedis.get(key.getBytes());
+			Set<Object> set = (Set<Object>) TypeConvert.unserializeSet(listTemp);
+
+			if (set == null) {
+				set = new HashSet<Object>();
 			}
-			result = jedis.rpush(key.getBytes(), (byte[][]) set.toArray());
-			logger.debug("setSetObjectAdd {} = {}", key, value);
+			for (Object o : value) {
+				set.add(o);
+			}
+			result = jedis.set(key.getBytes(), TypeConvert.serializeSet(set));
+
+			logger.info("redis <Set<Object>> cache append success, key={}, value={}", key, value.toString());
 		} catch (Exception e) {
-			logger.warn("setSetObjectAdd {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -547,9 +625,9 @@ public class RedisOperation extends RedisPools {
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
 			}
-			logger.info("redis cache set success, key={}, value={}", key, value);
+			logger.info("redis <Map> cache set success, key={}, value={}", key, value);
 		} catch (Exception e) {
-			logger.warn("setMap {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -569,10 +647,10 @@ public class RedisOperation extends RedisPools {
 			jedis = getJedis();
 			if (jedis.exists(key)) {
 				value = jedis.hgetAll(key);
-				logger.info("redis cache get success, key={}, value={}", key, value);
+				logger.info("redis <Map> cache get success, key={}, value={}", key, value);
 			}
 		} catch (Exception e) {
-			logger.warn("getMap {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -592,9 +670,9 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			result = jedis.hmset(key, value);
-			logger.debug("mapPut {} = {}", key, value);
+			logger.info("redis <Map> cache append success, key={}, value={}", key, value);
 		} catch (Exception e) {
-			logger.warn("mapPut {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -614,9 +692,9 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			result = jedis.hdel(key, mapKey);
-			logger.debug("mapRemove {}  {}", key, mapKey);
+			logger.info("redis <Map> cache remove success, key={}", key);
 		} catch (Exception e) {
-			logger.warn("mapRemove {}  {}", key, mapKey, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -636,9 +714,9 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			result = jedis.hexists(key, mapKey);
-			logger.debug("mapExists {}  {}", key, mapKey);
+			logger.info("redis <Map> cache exists, key={}, mapkey={}", key, mapKey);
 		} catch (Exception e) {
-			logger.warn("mapExists {}  {}", key, mapKey, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -670,9 +748,9 @@ public class RedisOperation extends RedisPools {
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
 			}
-			logger.info("redis cache set success, key={}, value={}", key, value);
+			logger.info("redis <Map<String, Object>> cache set success, key={}, value={}", key, value);
 		} catch (Exception e) {
-			logger.warn("setObjectMap {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -683,8 +761,7 @@ public class RedisOperation extends RedisPools {
 	 * 获取Map缓存
 	 * 
 	 * @param key
-	 *            键
-	 * @return 值
+	 * @return
 	 */
 	public static Map<String, Object> getObjectMap(String key) {
 		Map<String, Object> value = null;
@@ -697,10 +774,10 @@ public class RedisOperation extends RedisPools {
 				for (Map.Entry<byte[], byte[]> e : map.entrySet()) {
 					value.put(TypeConvert.byteArray2String(e.getKey()), TypeConvert.unserialize(e.getValue()));
 				}
-				logger.info("redis cache get success, key={}, value={}", key, value);
+				logger.info("redis <Map<String, Object>> cache get success, key={}, value={}", key, value);
 			}
 		} catch (Exception e) {
-			logger.warn("getObjectMap {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -724,9 +801,10 @@ public class RedisOperation extends RedisPools {
 				map.put((e.getKey().getBytes()), TypeConvert.serialize(e.getValue()));
 			}
 			result = jedis.hmset(key.getBytes(), (Map<byte[], byte[]>) map);
-			logger.debug("mapObjectPut {} = {}", key, value);
+
+			logger.info("redis <Map<String, Object>> cache append success, key={}, value={}", key, value);
 		} catch (Exception e) {
-			logger.warn("mapObjectPut {} = {}", key, value, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -746,9 +824,10 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			result = jedis.hdel(key.getBytes(), mapKey.getBytes());
-			logger.debug("mapObjectRemove {}  {}", key, mapKey);
+
+			logger.info("redis <Map<String, Object>> cache remove success, key={}, mapKey={}", key, mapKey);
 		} catch (Exception e) {
-			logger.warn("mapObjectRemove {}  {}", key, mapKey, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -768,9 +847,10 @@ public class RedisOperation extends RedisPools {
 		try {
 			jedis = getJedis();
 			result = jedis.hexists(key.getBytes(), mapKey.getBytes());
-			logger.debug("mapObjectExists {}  {}", key, mapKey);
+			
+			logger.info("redis <Map<String, Object>> cache exists, key={}, mapKey={}", key, mapKey);
 		} catch (Exception e) {
-			logger.warn("mapObjectExists {}  {}", key, mapKey, e);
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} finally {
 			returnResource(jedis);
 		}
@@ -778,73 +858,14 @@ public class RedisOperation extends RedisPools {
 	}
 
 	/**
-	 * 删除缓存
-	 * 
-	 * @param key
-	 * @return
+	 * 清空整个 Redis 服务器的数据(删除所有数据库的所有 key )
 	 */
-	public static long del(String key) {
-		long result = 0;
-		Jedis jedis = null;
-		try {
-			jedis = getJedis();
-			if (jedis.exists(key)) {
-				result = jedis.del(key);
-				logger.debug("del {}", key);
-			} else {
-				logger.debug("del {} not exists", key);
-			}
-		} catch (Exception e) {
-			logger.warn("del {}", key, e);
-		} finally {
-			returnResource(jedis);
-		}
-		return result;
-	}
-
-	/**
-	 * 删除多个
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static long del(String... key) {
+	public static String deleteAll() {
 		Jedis jedis = getJedis();
-		Long statusCodeReply = jedis.del(key);
-
-		return statusCodeReply;
-	}
-
-	/**
-	 * 删除缓存
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static long delObject(String key) {
-		long result = 0;
-		Jedis jedis = null;
-		try {
-			jedis = getJedis();
-			if (jedis.exists(key.getBytes())) {
-				result = jedis.del(key.getBytes());
-				logger.debug("delObject {}", key);
-			} else {
-				logger.debug("delObject {} not exists", key);
-			}
-		} catch (Exception e) {
-			logger.warn("delObject {}", key, e);
-		} finally {
-			returnResource(jedis);
-		}
+		String result = jedis.flushAll();
+		
+		logger.info("redis all cache delete success!");
+		
 		return result;
-	}
-
-	/**
-	 * 刷新
-	 */
-	public static void flush() {
-		Jedis jedis = getJedis();
-		jedis.flushAll();
 	}
 }

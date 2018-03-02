@@ -24,13 +24,39 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  *
  * @Created at 2018年3月1日 下午1:01:47
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class TypeConvert {
 	private static final Logger logger = LogManager.getLogger(TypeConvert.class.getName());
 
 	/**
-	 * 序列化
+	 * 字符串数组转String
+	 * 
+	 * @param strArray
+	 * @return
+	 */
+	public static String strArray2String(String[] strArray) {
+		StringBuffer stringBuffer = new StringBuffer();
+		for (int i = 0; i < strArray.length; i++) {
+			stringBuffer.append(strArray[i]);
+		}
+
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * 字节数组转String
+	 * 
+	 * @param byteArray
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static String byteArray2String(byte[] byteArray) throws UnsupportedEncodingException {
+		return new String(byteArray, Encode.DEFAULT_ENCODE);
+	}
+	
+	/**
+	 * 序列化对象
 	 * 
 	 * @param object
 	 * @return 字节数组
@@ -55,7 +81,7 @@ public class TypeConvert {
 	}
 
 	/**
-	 * 反序列化
+	 * 反序列化成对象
 	 * 
 	 * @param byteArray
 	 * @return 对象
@@ -80,17 +106,6 @@ public class TypeConvert {
 	}
 
 	/**
-	 * 字节数组转String
-	 * 
-	 * @param byteArray
-	 * @return
-	 * @throws UnsupportedEncodingException
-	 */
-	public static String byteArray2String(byte[] byteArray) throws UnsupportedEncodingException {
-		return new String(byteArray, Encode.DEFAULT_ENCODE);
-	}
-
-	/**
 	 * 序列化 list 集合
 	 * 
 	 * @param list
@@ -102,25 +117,27 @@ public class TypeConvert {
 		}
 		ObjectOutputStream oos = null;
 		ByteArrayOutputStream baos = null;
-		byte[] bytes = null;
+		byte[] byteArray = null;
 		try {
 			baos = new ByteArrayOutputStream();
 			oos = new ObjectOutputStream(baos);
 			for (Object obj : list) {
 				oos.writeObject(obj);
 			}
-			bytes = baos.toByteArray();
+			byteArray = baos.toByteArray();
 		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("序列化失败", e));
+		}
+
+		logger.info("序列化成功, 结果字节数组长度={}", byteArray.length);
 		
-		return bytes;
+		return byteArray;
 	}
 
 	/**
 	 * 反序列化 list 集合
 	 * 
-	 * @param lb
+	 * @param
 	 * @return
 	 */
 	public static List<Object> unserializeList(byte[] bytes) {
@@ -143,12 +160,14 @@ public class TypeConvert {
 				list.add(obj);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("反序列化List<Object>失败", e));
+		}
+
+		logger.info("反序列化成功, 结果为：{}", list.toString());
 		
 		return list;
 	}
-	
+
 	/**
 	 * 序列化 set 集合
 	 * 
@@ -161,19 +180,21 @@ public class TypeConvert {
 		}
 		ObjectOutputStream oos = null;
 		ByteArrayOutputStream baos = null;
-		byte[] bytes = null;
+		byte[] byteArray = null;
 		try {
 			baos = new ByteArrayOutputStream();
 			oos = new ObjectOutputStream(baos);
 			for (Object obj : set) {
 				oos.writeObject(obj);
 			}
-			bytes = baos.toByteArray();
+			byteArray = baos.toByteArray();
 		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("序列化失败", e));
+		}
+
+		logger.info("序列化成功, 结果字节数组长度={}", byteArray.length);
 		
-		return bytes;
+		return byteArray;
 	}
 
 	/**
@@ -202,8 +223,10 @@ public class TypeConvert {
 				set.add(obj);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("反序列化Set<Object>失败", e));
+		}
+
+		logger.info("反序列化成功, 结果为：{}", set.toString());
 		
 		return set;
 	}
