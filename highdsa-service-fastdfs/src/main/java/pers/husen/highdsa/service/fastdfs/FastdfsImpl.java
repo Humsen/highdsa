@@ -35,8 +35,8 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  * 
  * @Version 1.0.1
  */
-public class FastDFSImpl implements FastDFS {
-	private final Logger logger = LogManager.getLogger(FastDFSImpl.class.getName());
+public class FastdfsImpl implements Fastdfs {
+	private final Logger logger = LogManager.getLogger(FastdfsImpl.class.getName());
 
 	public void init() {
 		try {
@@ -88,6 +88,7 @@ public class FastDFSImpl implements FastDFS {
 		return uploadFile(getFileBuffer(inStream), uploadFileName);
 	}
 	
+	@Override
 	public String[] uploadFile(byte[] fileBuff, String uploadFileName) throws IOException {
 		// 初始化
 		init();
@@ -95,8 +96,9 @@ public class FastDFSImpl implements FastDFS {
 		//byte[] fileBuff = getFileBuffer(inputStream);
 		String[] files = null;
 		String fileExtName = "";
-		if (uploadFileName.contains(".")) {
-			fileExtName = uploadFileName.substring(uploadFileName.lastIndexOf(".") + 1);
+		String period = ".";
+		if (uploadFileName.contains(period)) {
+			fileExtName = uploadFileName.substring(uploadFileName.lastIndexOf(period) + 1);
 		} else {
 			logger.error("Fail to upload file, because the format of filename is illegal.");
 
@@ -145,35 +147,36 @@ public class FastDFSImpl implements FastDFS {
 		}
 
 		if (files != null) {
-			String file_id;
+			String fileId;
 			int ts;
 			String token = null;
-			String file_url;
+			String fileUrl;
 			InetSocketAddress inetSockAddr;
 
-			String group_name = files[0];
-			String remote_filename = files[1];
-			file_id = group_name + StorageClient1.SPLIT_GROUP_NAME_AND_FILENAME_SEPERATOR + remote_filename;
+			String groupName = files[0];
+			String remoteFileName = files[1];
+			fileId = groupName + StorageClient1.SPLIT_GROUP_NAME_AND_FILENAME_SEPERATOR + remoteFileName;
 
 			inetSockAddr = trackerServer.getInetSocketAddress();
-			file_url = "http://" + inetSockAddr.getAddress().getHostAddress();
-			if (ClientGlobal.g_tracker_http_port != 80) {
-				file_url += ":" + ClientGlobal.g_tracker_http_port;
+			fileUrl = "http://" + inetSockAddr.getAddress().getHostAddress();
+			int port80 = 80;
+			if (ClientGlobal.g_tracker_http_port != port80) {
+				fileUrl += ":" + ClientGlobal.g_tracker_http_port;
 			}
-			file_url += "/" + file_id;
+			fileUrl += "/" + fileId;
 			if (ClientGlobal.g_anti_steal_token) {
 				ts = (int) (System.currentTimeMillis() / 1000);
 				try {
-					token = ProtoCommon.getToken(file_id, ts, ClientGlobal.g_secret_key);
+					token = ProtoCommon.getToken(fileId, ts, ClientGlobal.g_secret_key);
 				} catch (NoSuchAlgorithmException e) {
 					e.printStackTrace();
 				} catch (MyException e) {
 					e.printStackTrace();
 				}
-				file_url += "?token=" + token + "&ts=" + ts;
+				fileUrl += "?token=" + token + "&ts=" + ts;
 			}
 
-			logger.info("上传文件成功, file http url:\t" + file_url);
+			logger.info("上传文件成功, file http url:\t" + fileUrl);
 
 		}
 		trackerServer.close();
@@ -181,6 +184,7 @@ public class FastDFSImpl implements FastDFS {
 		return files;
 	}
 
+	@Override
 	public void downloadFile(String groupName, String filepath) throws Exception {
 		// 初始化
 		init();
@@ -205,6 +209,7 @@ public class FastDFSImpl implements FastDFS {
 		out.close();
 	}
 
+	@Override
 	public void deleteFile(String groupName, String filepath) throws Exception {
 		// 初始化
 		init();
@@ -217,7 +222,7 @@ public class FastDFSImpl implements FastDFS {
 		logger.info(i == 0 ? "删除成功" : "删除失败:" + i);
 	}
 
-	// 获取文件信息
+	@Override
 	public void getFileInfo(String groupName, String filepath) throws Exception {
 		// 初始化
 		init();
@@ -234,6 +239,7 @@ public class FastDFSImpl implements FastDFS {
 		logger.info("文件CRC32 signature: {}", fi.getCrc32());
 	}
 
+	@Override
 	public void getFileMate(String groupName, String filepath) throws Exception {
 		// 初始化
 		init();
@@ -243,7 +249,7 @@ public class FastDFSImpl implements FastDFS {
 		StorageServer storageServer = null;
 
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
-		NameValuePair nvps[] = storageClient.get_metadata(groupName, filepath);
+		NameValuePair[] nvps = storageClient.get_metadata(groupName, filepath);
 		for (NameValuePair nvp : nvps) {
 			logger.info(nvp.getName() + ":" + nvp.getValue());
 		}

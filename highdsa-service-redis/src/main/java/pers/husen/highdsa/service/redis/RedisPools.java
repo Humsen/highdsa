@@ -59,22 +59,22 @@ public class RedisPools {
 	 */
 	public synchronized static Jedis getJedis() {
 		Jedis jedis = null;
-		
+
 		if (jedisPool == null || jedisPool.isClosed()) {
 			logger.info("redis 连接池为空,开始初始化...");
 			try {
 				initRedis();
 			} catch (IOException e) {
 				logger.warn(StackTrace2Str.exceptionStackTrace2Str("初始化连接池错误,1秒后重试", e));
-				
+
 				try {
 					Thread.sleep(1000);
 					initRedis();
 				} catch (InterruptedException inException) {
 					logger.error(StackTrace2Str.exceptionStackTrace2Str("休眠1秒钟失败", inException));
-				}catch (IOException ioException) {
+				} catch (IOException ioException) {
 					logger.error(StackTrace2Str.exceptionStackTrace2Str("第2次初始化连接池失败", ioException));
-				} 
+				}
 			}
 		}
 
@@ -113,19 +113,20 @@ public class RedisPools {
 		jedisPool.close();
 		logger.info("关闭redis连接池成功!");
 	}
-	
+
 	public static void main(String[] args) {
-		/*Jedis jedis = RedisPools.getJedis();
-		System.out.println(jedis.set("name", "何明胜"));
-		System.out.println(jedis.get("name"));
-		RedisPools.returnResource(jedis);
-		
-		RedisPools.closeRedisPool();
-		Jedis jedis1 = RedisPools.getJedis();
-		System.out.println(jedis1.set("name", "何明胜"));
-		System.out.println(jedis1.get("name"));*/
-		
-		for(int i=1; i<=26; i++) {
+		/*
+		 * Jedis jedis = RedisPools.getJedis(); System.out.println(jedis.set("name",
+		 * "何明胜")); System.out.println(jedis.get("name"));
+		 * RedisPools.returnResource(jedis);
+		 * 
+		 * RedisPools.closeRedisPool(); Jedis jedis1 = RedisPools.getJedis();
+		 * System.out.println(jedis1.set("name", "何明胜"));
+		 * System.out.println(jedis1.get("name"));
+		 */
+
+		int maxTotal = 26;
+		for (int i = 1; i <= maxTotal; i++) {
 			System.out.println("第" + i + "个");
 			Jedis jedis2 = RedisPools.getJedis();
 			System.out.println(jedis2.set("name", "何明胜"));

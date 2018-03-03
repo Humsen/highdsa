@@ -148,7 +148,7 @@ public class RedisOperation extends RedisPools {
 	 * @param key
 	 * @return
 	 */
-	public static long del(String... key) {
+	public static Long del(String... key) {
 		Jedis jedis = getJedis();
 		Long statusCodeReply = jedis.del(key);
 

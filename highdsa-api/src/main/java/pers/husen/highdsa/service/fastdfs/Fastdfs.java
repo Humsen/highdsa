@@ -11,13 +11,12 @@ import java.io.IOException;
  * 
  * @Version 1.0.0
  */
-public interface FastDFS {
+public interface Fastdfs {
 	/**
 	 * 上传文件
 	 * 
-	 * @param file
+	 * @param fileBuff
 	 * @param uploadFileName
-	 * @param fileLength
 	 * @return
 	 * @throws IOException
 	 */

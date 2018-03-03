@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.service.fastdfs.FastDFS;
+import pers.husen.highdsa.service.fastdfs.Fastdfs;
 
 /**
  * @Desc 文件消费者
@@ -32,11 +32,11 @@ import pers.husen.highdsa.service.fastdfs.FastDFS;
  */
 @RestController
 @RequestMapping("/fastdfs/v1")
-public class FastDFSConsumer {
-	private final Logger logger = LogManager.getLogger(FastDFSConsumer.class.getName());
+public class FastdfsConsumer {
+	private final Logger logger = LogManager.getLogger(FastdfsConsumer.class.getName());
 
 	@Autowired
-	private FastDFS fastDFS;
+	private Fastdfs fastDFS;
 
 	@RequestMapping(value = "/upload.hms", produces = "application/json")
 	@ResponseBody

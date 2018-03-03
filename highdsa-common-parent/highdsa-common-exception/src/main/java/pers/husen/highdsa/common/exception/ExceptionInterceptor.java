@@ -36,13 +36,16 @@ public class ExceptionInterceptor implements HandlerExceptionResolver {
 			Exception exception) {
 		logger.fatal(StackTrace2Str.exceptionStackTrace2Str(exception));
 		// 判断是否ajax请求
-		if (!(request.getHeader("accept").indexOf("application/json") > -1
-				|| (request.getHeader("X-Requested-With") != null
-						&& request.getHeader("X-Requested-With").indexOf("XMLHttpRequest") > -1))) {
+		int acceptJson = request.getHeader("accept").indexOf("application/json");
+		String header = request.getHeader("X-Requested-With");
+		int xmlRequest = request.getHeader("X-Requested-With").indexOf("XMLHttpRequest");
+		boolean isAjax = (acceptJson > -1 || (header != null && xmlRequest > -1));
+		
+		if (!isAjax) {
 			logger.fatal("不是ajax");
 			// 如果不是ajax，JSP格式返回
 			// 为安全起见，只有业务异常我们对前端可见，否则否则统一归为系统异常
-			Map<String, Object> map = new HashMap<String, Object>();
+			Map<String, Object> map = new HashMap<String, Object>(200);
 			map.put("success", false);
 
 			if (exception instanceof SqlException) {
@@ -57,7 +60,7 @@ public class ExceptionInterceptor implements HandlerExceptionResolver {
 			return new ModelAndView("redirect:/error.jsp", map);
 		} else {
 			logger.fatal("是ajax");
-			Map<String, Object> map = new HashMap<String, Object>();
+			Map<String, Object> map = new HashMap<String, Object>(200);
 			// 如果是ajax请求，JSON格式返回
 			try {
 				response.setContentType("application/json;charset=UTF-8");
@@ -73,7 +76,7 @@ public class ExceptionInterceptor implements HandlerExceptionResolver {
 					map.put(JsonKey3Value.ERROR_MSG, JsonKey3Value.SYS_EXCEPTION);
 					logger.error("show exception:{}", JsonKey3Value.SYS_EXCEPTION);
 				}
-				
+
 				ObjectMapper mapper = new ObjectMapper();
 				writer.write(mapper.writeValueAsString(map));
 				writer.flush();

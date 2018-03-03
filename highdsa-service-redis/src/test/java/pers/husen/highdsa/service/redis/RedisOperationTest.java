@@ -24,7 +24,7 @@ import org.junit.runners.MethodSorters;
  * @Version 1.0.1
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestRedisOperation {
+public class RedisOperationTest {
 	@Test
 	public void test01Set() {
 		assertEquals(RedisOperation.set("username", "root"), "OK");
@@ -61,8 +61,8 @@ public class TestRedisOperation {
 		assertEquals(RedisOperation.set("username3", "root"), "OK");
 		assertEquals(RedisOperation.set("username4", "root"), "OK");
 		
-		assertEquals(RedisOperation.del(new String[] {"username3","username4"}), 2);
-		assertEquals(RedisOperation.del(new String[] {"username3","username4"}), 0);
+		assertEquals(RedisOperation.del(new String[] {"username3","username4"}), new Long(2));
+		assertEquals(RedisOperation.del(new String[] {"username3","username4"}), new Long(0));
 	}
 
 	@Test
@@ -290,7 +290,7 @@ public class TestRedisOperation {
 	
 	@Test
 	public void test26SetMap() {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(4);
 		map.put("redisSet", "java");
 		map.put("redisSet1", "js");
 		map.put("redisSet2", "python");
@@ -300,7 +300,7 @@ public class TestRedisOperation {
 	
 	@Test
 	public void test27GetMap() {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(4);
 		map.put("redisSet", "java");
 		map.put("redisSet1", "js");
 		map.put("redisSet2", "python");
@@ -310,7 +310,7 @@ public class TestRedisOperation {
 	
 	@Test
 	public void test28AppendMap() {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(4);
 		map.put("redisSet", "java");
 		map.put("redisSet1", "js");
 		map.put("redisSet2", "python");
@@ -335,7 +335,7 @@ public class TestRedisOperation {
 		userInfoPo.setUsername("何明胜");
 		userInfoPo.setPassword("123123");
 		
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(4);
 		map.put("uesrinfoMap", userInfoPo);
 		map.put("uesrinfoMap1", userInfoPo);
 		map.put("uesrinfoMap2", userInfoPo);
@@ -349,7 +349,7 @@ public class TestRedisOperation {
 		userInfoPo.setUsername("何明胜");
 		userInfoPo.setPassword("123123");
 		
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(4);
 		map.put("uesrinfoMap", userInfoPo);
 		map.put("uesrinfoMap1", userInfoPo);
 		map.put("uesrinfoMap2", userInfoPo);
@@ -363,14 +363,14 @@ public class TestRedisOperation {
 		userInfoPo.setUsername("何明胜");
 		userInfoPo.setPassword("123123");
 		
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(10);
 		map.put("uesrinfoMap", userInfoPo);
 		map.put("uesrinfoMap1", userInfoPo);
 		map.put("uesrinfoMap2", userInfoPo);
 		map.put("uesrinfoMap3", userInfoPo);
 		map.put("uesrinfoMap4", userInfoPo);
 
-		Map<String, Object> map1 = new HashMap<>();
+		Map<String, Object> map1 = new HashMap<>(4);
 		map1.put("uesrinfoMap3", userInfoPo);
 		map1.put("uesrinfoMap4", userInfoPo);
 		

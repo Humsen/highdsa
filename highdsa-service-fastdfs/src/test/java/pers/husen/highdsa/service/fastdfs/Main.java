@@ -3,7 +3,7 @@ package pers.husen.highdsa.service.fastdfs;
 import java.io.File;
 import java.io.FileInputStream;
 
-import pers.husen.highdsa.service.fastdfs.FastDFSImpl;
+import pers.husen.highdsa.service.fastdfs.FastdfsImpl;
 
 /**
  * @Desc 测试
@@ -16,7 +16,7 @@ import pers.husen.highdsa.service.fastdfs.FastDFSImpl;
  */
 public class Main {
 	public static void main(String[] args) throws Exception {
-		FastDFSImpl fastDFSImpl = new FastDFSImpl();
+		FastdfsImpl fastDFSImpl = new FastdfsImpl();
 		// 加载配置文件的方式
 		//fastDFSImpl.init();
 
