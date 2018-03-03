@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.3.6-SNAPSHOT</version>
+		<version>0.3.7-SNAPSHOT</version>
 	</parent>
-	
+
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-service-fastdfs</artifactId>
 	<name>highdsa-service-fastdfs</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<dependencies>
 		<!-- 自带 -->
@@ -64,79 +64,5 @@
 				</includes>
 			</resource>
 		</resources>
-
-		<pluginManagement>
-			<plugins>
-				<!-- 解决Maven插件在Eclipse内执行了一系列的生命周期引起冲突 -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-dependency-plugin</artifactId>
-										<versionRange>[2.0,)</versionRange>
-										<goals>
-											<goal>copy-dependencies</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<classesDirectory>target/classes/</classesDirectory>
-					<archive>
-						<manifest>
-							<mainClass>com.alibaba.dubbo.container.Main</mainClass>
-							<!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
-							<useUniqueVersions>false</useUniqueVersions>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-						</manifest>
-						<manifestEntries>
-							<Class-Path>.</Class-Path>
-						</manifestEntries>
-					</archive>
-				</configuration>
-				<version>3.0.2</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<type>jar</type>
-							<includeTypes>jar</includeTypes>
-							<useUniqueVersions>false</useUniqueVersions>
-							<outputDirectory>
-								${project.build.directory}/lib
-							</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
 	</build>
 </project>

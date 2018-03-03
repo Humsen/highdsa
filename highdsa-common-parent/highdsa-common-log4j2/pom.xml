@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-common-parent</artifactId>
-		<version>0.3.6-SNAPSHOT</version>
+		<version>0.3.7-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>highdsa-common-log4j2</artifactId>
 	<name>highdsa-common-log4j2</name>
 	<packaging>jar</packaging>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<dependencies>
 		<!-- log4j2 -->
@@ -31,18 +31,8 @@
 		</dependency>
 	</dependencies>
 
-	<!-- <build>
-		<finalName>highdsa-common-log4j2</finalName>
-		<resources>
-			指定 src/main/resources下所有文件及文件夹为资源文件
-			<resource>
-				<directory>src/main/resources</directory>
-				<targetPath>${project.build.directory}/classes</targetPath>
-				<filtering>true</filtering>
-				<includes>
-					<include>**/*</include>
-				</includes>
-			</resource>
-		</resources>
-	</build> -->
+	<!-- <build> <finalName>highdsa-common-log4j2</finalName> <resources> 指定 
+		src/main/resources下所有文件及文件夹为资源文件 <resource> <directory>src/main/resources</directory> 
+		<targetPath>${project.build.directory}/classes</targetPath> <filtering>true</filtering> 
+		<includes> <include>**/*</include> </includes> </resource> </resources> </build> -->
 </project>

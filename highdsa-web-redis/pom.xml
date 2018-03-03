@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.3.6-SNAPSHOT</version>
+		<version>0.3.7-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
@@ -14,6 +14,7 @@
 	<packaging>war</packaging>
 
 	<name>highdsa-web-redis</name>
+	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<dependencies>
 		<!-- 自建 -->
@@ -78,5 +79,4 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 	</dependencies>
-	<url>https://github.com/CrazyHusen/highdsa</url>
 </project>

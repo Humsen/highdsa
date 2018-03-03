@@ -5,12 +5,15 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.3.6-SNAPSHOT</version>
+		<version>0.3.7-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-common-parent</artifactId>
 	<packaging>pom</packaging>
+	
+	<name>highdsa-common-parent</name>
+	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<modules>
 		<module>highdsa-common-exception</module>

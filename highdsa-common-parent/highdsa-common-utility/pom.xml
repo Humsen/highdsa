@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-common-parent</artifactId>
-		<version>0.3.6-SNAPSHOT</version>
+		<version>0.3.7-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>highdsa-common-utility</artifactId>
 	<name>highdsa-common-utility</name>
 	<packaging>jar</packaging>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<dependencies>
 		<!-- 内部模块 -->

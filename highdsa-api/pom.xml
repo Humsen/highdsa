@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.3.6-SNAPSHOT</version>
+		<version>0.3.7-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
@@ -14,7 +14,7 @@
 	<packaging>jar</packaging>
 
 	<name>highdsa-api</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<dependencies>
 		<dependency>
