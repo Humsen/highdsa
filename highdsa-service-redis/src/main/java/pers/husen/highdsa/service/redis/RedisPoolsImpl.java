@@ -22,17 +22,11 @@ import redis.clients.jedis.JedisPoolConfig;
  * 
  * @Version 1.0.0
  */
-public class RedisPools {
+public class RedisPoolsImpl implements RedisPools{
 	protected static JedisPool jedisPool = null;
-	private static final Logger logger = LogManager.getLogger(RedisPools.class.getName());
+	private static final Logger logger = LogManager.getLogger(RedisPoolsImpl.class.getName());
 
-	/**
-	 * 初始化redis 连接池
-	 * 
-	 * @throws UnsupportedEncodingException
-	 * @throws IOException
-	 */
-	public static void initRedis() throws UnsupportedEncodingException, IOException {
+	public void initRedis() throws UnsupportedEncodingException, IOException {
 		ResourceBundle bundle = ReadConfigFile.readByClassPath("redis");
 		if (bundle == null) {
 			throw new IllegalArgumentException("[redis.properties] is not found!");
@@ -52,12 +46,7 @@ public class RedisPools {
 		logger.info("redis 连接池初始化成功!");
 	}
 
-	/**
-	 * 获取Jedis实例
-	 * 
-	 * @return
-	 */
-	public synchronized static Jedis getJedis() {
+	public synchronized Jedis getJedis() {
 		Jedis jedis = null;
 
 		if (jedisPool == null || jedisPool.isClosed()) {
@@ -94,22 +83,14 @@ public class RedisPools {
 		return jedis;
 	}
 
-	/**
-	 * 释放redis资源
-	 * 
-	 * @param jedis
-	 */
-	public static void returnResource(final Jedis jedis) {
+	public void returnResource(final Jedis jedis) {
 		if (jedis != null) {
 			jedis.close();
 			logger.info("redis 连接释放1个");
 		}
 	}
 
-	/**
-	 * 关闭连接池
-	 */
-	public static void closeRedisPool() {
+	public  void closeRedisPool() {
 		jedisPool.close();
 		logger.info("关闭redis连接池成功!");
 	}
@@ -126,9 +107,11 @@ public class RedisPools {
 		 */
 
 		int maxTotal = 26;
+		RedisPoolsImpl redisPoolsImpl = new RedisPoolsImpl();
+		
 		for (int i = 1; i <= maxTotal; i++) {
 			System.out.println("第" + i + "个");
-			Jedis jedis2 = RedisPools.getJedis();
+			Jedis jedis2 = redisPoolsImpl.getJedis();
 			System.out.println(jedis2.set("name", "何明胜"));
 			System.out.println(jedis2.get("name1"));
 		}

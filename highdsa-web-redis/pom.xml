@@ -10,11 +10,10 @@
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
-	<artifactId>highdsa-web-fastdfs</artifactId>
+	<artifactId>highdsa-web-redis</artifactId>
 	<packaging>war</packaging>
 
-	<name>highdsa-web-fastdfs</name>
-	<url>http://maven.apache.org</url>
+	<name>highdsa-web-redis</name>
 
 	<dependencies>
 		<!-- 自建 -->
@@ -78,10 +77,6 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
-		<!-- 文件上传 -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-		</dependency>
 	</dependencies>
+	<url>https://github.com/CrazyHusen/highdsa</url>
 </project>

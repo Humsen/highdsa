@@ -24,17 +24,10 @@ import redis.clients.jedis.Jedis;
  * 
  * @Version 1.0.2
  */
-public class RedisOperation extends RedisPools {
-	private static final Logger logger = LogManager.getLogger(RedisOperation.class.getName());
+public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation {
+	private static final Logger logger = LogManager.getLogger(RedisOperationImpl.class.getName());
 
-	/**
-	 * 设置String
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static String set(String key, String value) {
+	public String set(String key, String value) {
 		Jedis jedis = getJedis();
 		String statusCodeReply = jedis.set(key, value);
 
@@ -43,16 +36,7 @@ public class RedisOperation extends RedisPools {
 		return statusCodeReply;
 	}
 
-	/**
-	 * 设置String
-	 * 
-	 * @param key
-	 * @param value
-	 * @param cacheSeconds
-	 *            超时时间,0为不超时
-	 * @return
-	 */
-	public static String set(String key, String value, int cacheSeconds) {
+	public String set(String key, String value, int cacheSeconds) {
 		String statusCodeReply = null;
 		Jedis jedis = getJedis();
 		statusCodeReply = jedis.set(key, value);
@@ -64,13 +48,7 @@ public class RedisOperation extends RedisPools {
 		return statusCodeReply;
 	}
 
-	/**
-	 * 获取String
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static String get(String key) {
+	public String get(String key) {
 		Jedis jedis = getJedis();
 		String value = jedis.get(key);
 
@@ -79,14 +57,7 @@ public class RedisOperation extends RedisPools {
 		return value;
 	}
 
-	/**
-	 * 在key的值后面拼接字符串
-	 * 
-	 * @param key
-	 * @param addString
-	 * @return
-	 */
-	public static Long append(String key, String addString) {
+	public Long append(String key, String addString) {
 		Jedis jedis = getJedis();
 		Long statusCodeReply = jedis.append(key, addString);
 
@@ -96,13 +67,7 @@ public class RedisOperation extends RedisPools {
 
 	}
 
-	/**
-	 * 缓存是否存在
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static boolean exists(String key) {
+	public boolean exists(String key) {
 		boolean result = false;
 		Jedis jedis = null;
 		try {
@@ -117,13 +82,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 删除缓存
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static long del(String key) {
+	public long del(String key) {
 		long result = 0;
 		Jedis jedis = null;
 		try {
@@ -142,13 +101,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 删除多个
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static Long del(String... key) {
+	public Long del(String... key) {
 		Jedis jedis = getJedis();
 		Long statusCodeReply = jedis.del(key);
 
@@ -157,16 +110,7 @@ public class RedisOperation extends RedisPools {
 		return statusCodeReply;
 	}
 
-	/**
-	 * 设置对象
-	 * 
-	 * @param key
-	 * @param value
-	 * @param cacheSeconds
-	 *            超时时间，0为不超时
-	 * @return
-	 */
-	public static String setObject(String key, Object value, int cacheSeconds) {
+	public String setObject(String key, Object value, int cacheSeconds) {
 		String statusCodeReply = null;
 		Jedis jedis = getJedis();
 		try {
@@ -182,13 +126,7 @@ public class RedisOperation extends RedisPools {
 		return statusCodeReply;
 	}
 
-	/**
-	 * 获取对象
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static Object getObject(String key) {
+	public Object getObject(String key) {
 		Object value = null;
 		Jedis jedis = getJedis();
 
@@ -200,13 +138,7 @@ public class RedisOperation extends RedisPools {
 		return value;
 	}
 
-	/**
-	 * 缓存是否存在
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static boolean existsObject(String key) {
+	public boolean existsObject(String key) {
 		boolean result = false;
 		Jedis jedis = null;
 		try {
@@ -221,13 +153,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 删除缓存
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static long delObject(String key) {
+	public long delObject(String key) {
 		long result = 0;
 		Jedis jedis = null;
 		try {
@@ -246,16 +172,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 设置List缓存
-	 * 
-	 * @param key
-	 * @param value
-	 * @param cacheSeconds
-	 *            超时时间，0为不超时
-	 * @return
-	 */
-	public static long setList(String key, List<String> value, int cacheSeconds) {
+	public long setList(String key, List<String> value, int cacheSeconds) {
 		long result = 0;
 		Jedis jedis = getJedis();
 		try {
@@ -275,13 +192,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 获取List缓存
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static List<String> getList(String key) {
+	public List<String> getList(String key) {
 		List<String> value = null;
 		Jedis jedis = getJedis();
 		try {
@@ -297,14 +208,7 @@ public class RedisOperation extends RedisPools {
 		return value;
 	}
 
-	/**
-	 * 向List缓存中添加值
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static long appendList(String key, String... value) {
+	public long appendList(String key, String... value) {
 		long result = 0;
 		Jedis jedis = null;
 		try {
@@ -319,16 +223,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 设置List缓存
-	 * 
-	 * @param key
-	 * @param value
-	 * @param cacheSeconds
-	 *            超时时间，0为不超时
-	 * @return
-	 */
-	public static String setObjectList(String key, List<Object> value, int cacheSeconds) {
+	public String setObjectList(String key, List<Object> value, int cacheSeconds) {
 		String result = null;
 		Jedis jedis = getJedis();
 		try {
@@ -350,13 +245,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 获取List缓存
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static List<Object> getObjectList(String key) {
+	public List<Object> getObjectList(String key) {
 		List<Object> value = null;
 		Jedis jedis = getJedis();
 		try {
@@ -374,14 +263,7 @@ public class RedisOperation extends RedisPools {
 		return value;
 	}
 
-	/**
-	 * 向List缓存中添加值
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static String appendObjectList(String key, Object... value) {
+	public String appendObjectList(String key, Object... value) {
 		String result = null;
 		Jedis jedis = null;
 		try {
@@ -407,13 +289,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 一次设置多个 key 的值，成功返回 ok 表示所有的值都设置了，失败返回 0 表示没有任何值被设置 key1, value1, key2, value2
-	 * 
-	 * @param keys3Values
-	 * @return
-	 */
-	public static String mset(String... keys3Values) {
+	public String mset(String... keys3Values) {
 		Jedis jedis = getJedis();
 		String statusCodeReply = jedis.mset(keys3Values);
 
@@ -422,13 +298,7 @@ public class RedisOperation extends RedisPools {
 		return statusCodeReply;
 	}
 
-	/**
-	 * 返回所有(一个或多个)给定 key 的值
-	 * 
-	 * @param keys
-	 * @return
-	 */
-	public static List<String> mget(String... keys) {
+	public List<String> mget(String... keys) {
 		Jedis jedis = getJedis();
 		List<String> result = new ArrayList<String>();
 		result = jedis.mget(keys);
@@ -439,16 +309,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 设置Set缓存
-	 * 
-	 * @param key
-	 * @param value
-	 * @param cacheSeconds
-	 *            超时时间，0为不超时
-	 * @return
-	 */
-	public static long setSet(String key, Set<String> value, int cacheSeconds) {
+	public long setSet(String key, Set<String> value, int cacheSeconds) {
 		long result = 0;
 		Jedis jedis = null;
 		try {
@@ -469,13 +330,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 获取缓存
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static Set<String> getSet(String key) {
+	public Set<String> getSet(String key) {
 		Set<String> value = null;
 		Jedis jedis = null;
 		try {
@@ -492,14 +347,7 @@ public class RedisOperation extends RedisPools {
 		return value;
 	}
 
-	/**
-	 * 向Set缓存中添加值
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static long appendSet(String key, String... value) {
+	public long appendSet(String key, String... value) {
 		long result = 0;
 		Jedis jedis = null;
 		try {
@@ -515,16 +363,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 设置ObjectSet缓存
-	 * 
-	 * @param key
-	 * @param value
-	 * @param cacheSeconds
-	 *            超时时间，0为不超时
-	 * @return
-	 */
-	public static String setObjectSet(String key, Set<Object> value, int cacheSeconds) {
+	public String setObjectSet(String key, Set<Object> value, int cacheSeconds) {
 		String result = null;
 		Jedis jedis = null;
 		try {
@@ -546,13 +385,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 获取Object缓存
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static Set<Object> getObjectSet(String key) {
+	public Set<Object> getObjectSet(String key) {
 		Set<Object> value = null;
 		Jedis jedis = null;
 		try {
@@ -571,14 +404,7 @@ public class RedisOperation extends RedisPools {
 		return value;
 	}
 
-	/**
-	 * 向ObjectSet缓存中添加值
-	 * 
-	 * @param
-	 * @param
-	 * @return
-	 */
-	public static String appendObjectSet(String key, Object... value) {
+	public String appendObjectSet(String key, Object... value) {
 		String result = null;
 		Jedis jedis = null;
 		try {
@@ -604,16 +430,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 设置Map缓存
-	 * 
-	 * @param key
-	 * @param value
-	 * @param cacheSeconds
-	 *            超时时间，0为不超时
-	 * @return
-	 */
-	public static String setMap(String key, Map<String, String> value, int cacheSeconds) {
+	public String setMap(String key, Map<String, String> value, int cacheSeconds) {
 		String result = null;
 		Jedis jedis = null;
 		try {
@@ -634,13 +451,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 获取Map缓存
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static Map<String, String> getMap(String key) {
+	public Map<String, String> getMap(String key) {
 		Map<String, String> value = null;
 		Jedis jedis = null;
 		try {
@@ -657,14 +468,7 @@ public class RedisOperation extends RedisPools {
 		return value;
 	}
 
-	/**
-	 * 向Map缓存中添加值
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static String appendMap(String key, Map<String, String> value) {
+	public String appendMap(String key, Map<String, String> value) {
 		String result = null;
 		Jedis jedis = null;
 		try {
@@ -679,14 +483,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 移除Map缓存中的值
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static long removeMap(String key, String mapKey) {
+	public long removeMap(String key, String mapKey) {
 		long result = 0;
 		Jedis jedis = null;
 		try {
@@ -701,14 +498,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 判断Map缓存中的Key是否存在
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static boolean existsMap(String key, String mapKey) {
+	public boolean existsMap(String key, String mapKey) {
 		boolean result = false;
 		Jedis jedis = null;
 		try {
@@ -723,16 +513,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 设置Map缓存
-	 * 
-	 * @param key
-	 * @param value
-	 * @param cacheSeconds
-	 *            超时时间，0为不超时
-	 * @return
-	 */
-	public static String setObjectMap(String key, Map<String, Object> value, int cacheSeconds) {
+	public String setObjectMap(String key, Map<String, Object> value, int cacheSeconds) {
 		String result = null;
 		Jedis jedis = null;
 		try {
@@ -757,13 +538,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 获取Map缓存
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static Map<String, Object> getObjectMap(String key) {
+	public Map<String, Object> getObjectMap(String key) {
 		Map<String, Object> value = null;
 		Jedis jedis = null;
 		try {
@@ -784,14 +559,7 @@ public class RedisOperation extends RedisPools {
 		return value;
 	}
 
-	/**
-	 * 向Map缓存中添加值
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static String appendObjectMap(String key, Map<String, Object> value) {
+	public String appendObjectMap(String key, Map<String, Object> value) {
 		String result = null;
 		Jedis jedis = null;
 		try {
@@ -811,14 +579,7 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 移除Map缓存中的值
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static long removeObjectMap(String key, String mapKey) {
+	public long removeObjectMap(String key, String mapKey) {
 		long result = 0;
 		Jedis jedis = null;
 		try {
@@ -834,20 +595,13 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 判断Map缓存中的Key是否存在
-	 * 
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public static boolean existsObjectMap(String key, String mapKey) {
+	public boolean existsObjectMap(String key, String mapKey) {
 		boolean result = false;
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();
 			result = jedis.hexists(key.getBytes(), mapKey.getBytes());
-			
+
 			logger.info("redis <Map<String, Object>> cache exists, key={}, mapKey={}", key, mapKey);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
@@ -857,15 +611,12 @@ public class RedisOperation extends RedisPools {
 		return result;
 	}
 
-	/**
-	 * 清空整个 Redis 服务器的数据(删除所有数据库的所有 key )
-	 */
-	public static String deleteAll() {
+	public String deleteAll() {
 		Jedis jedis = getJedis();
 		String result = jedis.flushAll();
-		
+
 		logger.info("redis all cache delete success!");
-		
+
 		return result;
 	}
 }

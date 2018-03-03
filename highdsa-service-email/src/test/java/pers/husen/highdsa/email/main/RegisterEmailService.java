@@ -13,7 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 
  * @Version 1.0.0
  */
-public class RegisterService {
+public class RegisterEmailService {
 	public static void main(String[] args) throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("email-provider.xml");
         context.start();
