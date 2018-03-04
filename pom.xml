@@ -29,9 +29,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<junit.version>4.12</junit.version>
+		<aspectj.version>1.8.13</aspectj.version>
 		<com.101tec.version>0.10</com.101tec.version>
 		<org.jsoup.version>1.11.2</org.jsoup.version>
 		<com.sun.mail.version>1.6.0</com.sun.mail.version>
+		<org.javassist.version>3.22.0-GA</org.javassist.version>
 		<com.alibaba.dubbo.version>2.6.0</com.alibaba.dubbo.version>
 		<com.google.guava.version>24.0-jre</com.google.guava.version>
 		<commons.fileupload.version>1.3.3</commons.fileupload.version>
@@ -176,6 +178,24 @@
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
 				<scope>test</scope>
+			</dependency>
+			<!--使用AspectJ方式注解需要相应的包 -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+			<!--使用AspectJ方式注解需要相应的包 -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+			<!-- javassist -->
+			<dependency>
+				<groupId>org.javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>${org.javassist.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

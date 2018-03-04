@@ -119,7 +119,7 @@ public interface RedisOperation {
 	 *            超时时间，0为不超时
 	 * @return
 	 */
-	public long setList(String key, List<String> value, int cacheSeconds);
+	public Long setList(String key, List<String> value, int cacheSeconds);
 
 	/**
 	 * 获取List缓存
@@ -191,7 +191,7 @@ public interface RedisOperation {
 	 *            超时时间，0为不超时
 	 * @return
 	 */
-	public long setSet(String key, Set<String> value, int cacheSeconds);
+	public Long setSet(String key, Set<String> value, int cacheSeconds);
 
 	/**
 	 * 获取缓存

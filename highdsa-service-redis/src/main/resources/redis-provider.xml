@@ -18,6 +18,7 @@
     <!--使用 dubbo 协议实现定义好的 api.PermissionService 接口-->
     <dubbo:service interface="pers.husen.highdsa.service.redis.RedisPools" ref="redisPools" protocol="dubbo" timeout="100000"/>
     <dubbo:service interface="pers.husen.highdsa.service.redis.RedisOperation" ref="redisOperation" protocol="dubbo" timeout="100000"/>
+ 
     <!--具体实现该接口的 bean-->
     <bean id="redisPools" class="pers.husen.highdsa.service.redis.RedisPoolsImpl"/>
     <bean id="redisOperation" class="pers.husen.highdsa.service.redis.RedisOperationImpl"/>

@@ -49,6 +49,26 @@
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
 		</dependency>
+		<!-- spring aop -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<!--spring上下文包，在加载spring配置文件时用到 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<!--使用AspectJ方式注解需要相应的包 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<!--使用AspectJ方式注解需要相应的包 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -68,6 +88,7 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>redis-provider.xml</include>
+					<include>spring-context.xml</include>
 				</includes>
 			</resource>
 		</resources>

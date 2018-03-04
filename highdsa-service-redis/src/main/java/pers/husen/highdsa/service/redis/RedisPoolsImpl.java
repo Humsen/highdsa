@@ -26,6 +26,7 @@ public class RedisPoolsImpl implements RedisPools{
 	protected static JedisPool jedisPool = null;
 	private static final Logger logger = LogManager.getLogger(RedisPoolsImpl.class.getName());
 
+	@Override
 	public void initRedis() throws UnsupportedEncodingException, IOException {
 		ResourceBundle bundle = ReadConfigFile.readByClassPath("redis");
 		if (bundle == null) {
@@ -46,6 +47,7 @@ public class RedisPoolsImpl implements RedisPools{
 		logger.info("redis 连接池初始化成功!");
 	}
 
+	@Override
 	public synchronized Jedis getJedis() {
 		Jedis jedis = null;
 
@@ -83,6 +85,7 @@ public class RedisPoolsImpl implements RedisPools{
 		return jedis;
 	}
 
+	@Override
 	public void returnResource(final Jedis jedis) {
 		if (jedis != null) {
 			jedis.close();
@@ -90,6 +93,7 @@ public class RedisPoolsImpl implements RedisPools{
 		}
 	}
 
+	@Override
 	public  void closeRedisPool() {
 		jedisPool.close();
 		logger.info("关闭redis连接池成功!");

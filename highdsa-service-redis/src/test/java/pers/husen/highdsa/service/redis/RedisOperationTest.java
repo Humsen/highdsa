@@ -109,7 +109,7 @@ public class RedisOperationTest {
 		list.add("python");
 		list.add("c++");
 
-		assertEquals(redisOperationImpl.setList("language", list, 0), 3);
+		assertEquals(redisOperationImpl.setList("language", list, 0), new Long(3));
 	}
 
 	@Test
@@ -200,7 +200,7 @@ public class RedisOperationTest {
 		set.add("Struts");
 		set.add("Hibernate");
 
-		assertEquals(redisOperationImpl.setSet("javafarmwork", set, 0), 3);
+		assertEquals(redisOperationImpl.setSet("javafarmwork", set, 0), new Long(3));
 	}
 
 	@Test
