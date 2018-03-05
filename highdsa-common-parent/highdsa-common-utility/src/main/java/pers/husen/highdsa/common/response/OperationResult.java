@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.response.json;
+package pers.husen.highdsa.common.response;
 
 import java.util.Map;
 

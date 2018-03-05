@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pers.husen.highdsa.common.constant.ResponseConstants;
-import pers.husen.highdsa.common.response.json.OperationResult;
+import pers.husen.highdsa.common.response.OperationResult;
 import pers.husen.highdsa.common.vo.ResultFailureJsonVo;
 import pers.husen.highdsa.common.vo.ResultSuccessJsonVo;
 import pers.husen.highdsa.service.email.EmailWithAttachment;

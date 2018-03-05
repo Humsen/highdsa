@@ -36,11 +36,9 @@ public class ExceptionInterceptor implements HandlerExceptionResolver {
 			Exception exception) {
 		logger.fatal(StackTrace2Str.exceptionStackTrace2Str(exception));
 		// 判断是否ajax请求
-		int acceptJson = request.getHeader("accept").indexOf("application/json");
-		String header = request.getHeader("X-Requested-With");
-		int xmlRequest = request.getHeader("X-Requested-With").indexOf("XMLHttpRequest");
-		boolean isAjax = (acceptJson > -1 || (header != null && xmlRequest > -1));
-		
+		//int acceptJson = request.getHeader("accept").indexOf("application/json");
+		boolean isAjax = true;
+
 		if (!isAjax) {
 			logger.fatal("不是ajax");
 			// 如果不是ajax，JSP格式返回
@@ -49,6 +47,7 @@ public class ExceptionInterceptor implements HandlerExceptionResolver {
 			map.put("success", false);
 
 			if (exception instanceof SqlException) {
+				response.setStatus(400);
 				map.put(JsonKey3Value.ERROR_MSG, exception.getMessage());
 				logger.error("show business exception:{}", exception.getMessage());
 			} else {
