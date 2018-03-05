@@ -13,22 +13,22 @@ import pers.husen.highdsa.common.aop.BaseSpringAspect;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 
 /**
- * @Desc redis set操作切面通知
+ * @Desc redis append操作切面通知
  *
  * @Author 何明胜
  *
- * @Created at 2018年3月4日 下午6:20:59
+ * @Created at 2018年3月5日 上午8:35:26
  * 
  * @Version 1.0.0
  */
 @Aspect
-public class RedisSetOperationAdvice extends BaseSpringAspect {
-	private static final Logger logger = LogManager.getLogger(RedisSetOperationAdvice.class.getName());
-
+public class RedisAppendOperationAdvice extends BaseSpringAspect{
+	private static final Logger logger = LogManager.getLogger(RedisAppendOperationAdvice.class.getName());
+	
 	@Override
-	@Pointcut("execution(* pers.husen.highdsa.service.redis.RedisOperationImpl.set*(..))")
+	@Pointcut("execution(* pers.husen.highdsa.service.redis.RedisOperationImpl.append*(..))")
 	protected void aspectJMethod() {
-	};
+	}
 
 	@Override
 	@Before("aspectJMethod()")
@@ -36,7 +36,7 @@ public class RedisSetOperationAdvice extends BaseSpringAspect {
 		try {
 			String signatureMap = getFieldsNameValueString(joinPoint);
 
-			logger.info("redis cache [set]: {}", signatureMap);
+			logger.info("redis cache [append]: {}", signatureMap);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
@@ -48,14 +48,15 @@ public class RedisSetOperationAdvice extends BaseSpringAspect {
 		String methodName = getAimMethodName(joinPoint);
 		logger.info("<{}> reply: {}", methodName, returnValue);
 	}
-
+	
 	@Override
-	public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 		return null;
 	}
-
+	
 	@Override
 	public void doAfter(JoinPoint joinPoint) {
+		
 	}
 
 	@Override

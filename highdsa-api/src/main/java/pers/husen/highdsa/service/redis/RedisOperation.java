@@ -57,7 +57,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @return
 	 */
-	public boolean exists(String key);
+	public Boolean exists(String key);
 
 	/**
 	 * 删除缓存
@@ -65,7 +65,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @return
 	 */
-	public long del(String key);
+	public Long del(String key);
 
 	/**
 	 * 删除多个
@@ -100,7 +100,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @return
 	 */
-	public boolean existsObject(String key);
+	public Boolean existsObject(String key);
 
 	/**
 	 * 删除缓存
@@ -108,7 +108,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @return
 	 */
-	public long delObject(String key);
+	public Long delObject(String key);
 
 	/**
 	 * 设置List缓存
@@ -136,7 +136,7 @@ public interface RedisOperation {
 	 * @param value
 	 * @return
 	 */
-	public long appendList(String key, String... value);
+	public Long appendList(String key, String... value);
 
 	/**
 	 * 设置List缓存
@@ -208,7 +208,7 @@ public interface RedisOperation {
 	 * @param value
 	 * @return
 	 */
-	public long appendSet(String key, String... value);
+	public Long appendSet(String key, String... value);
 
 	/**
 	 * 设置ObjectSet缓存
@@ -232,8 +232,8 @@ public interface RedisOperation {
 	/**
 	 * 向ObjectSet缓存中添加值
 	 * 
-	 * @param
-	 * @param
+	 * @param key
+	 * @param value
 	 * @return
 	 */
 	public String appendObjectSet(String key, Object... value);
@@ -270,19 +270,28 @@ public interface RedisOperation {
 	 * 移除Map缓存中的值
 	 * 
 	 * @param key
-	 * @param value
+	 * @param mapKey
 	 * @return
 	 */
-	public long removeMap(String key, String mapKey);
+	public Long removeMap(String key, String mapKey);
+
+	/**
+	 * 删除map中的多个Key值
+	 * 
+	 * @param key
+	 * @param mapKeys
+	 * @return
+	 */
+	public Long removeMap(String key, String... mapKeys);
 
 	/**
 	 * 判断Map缓存中的Key是否存在
 	 * 
 	 * @param key
-	 * @param value
+	 * @param mapKey
 	 * @return
 	 */
-	public boolean existsMap(String key, String mapKey);
+	public Boolean existsMap(String key, String mapKey);
 
 	/**
 	 * 设置Map缓存
@@ -313,25 +322,27 @@ public interface RedisOperation {
 	public String appendObjectMap(String key, Map<String, Object> value);
 
 	/**
-	 * 移除Map缓存中的值
+	 * 移除ObjectMap缓存中的值
 	 * 
 	 * @param key
-	 * @param value
+	 * @param mapKey
 	 * @return
 	 */
-	public long removeObjectMap(String key, String mapKey);
+	public Long removeObjectMap(String key, String mapKey);
 
 	/**
-	 * 判断Map缓存中的Key是否存在
+	 * 判断ObjectMap缓存中的Key是否存在
 	 * 
 	 * @param key
-	 * @param value
+	 * @param mapKey
 	 * @return
 	 */
-	public boolean existsObjectMap(String key, String mapKey);
+	public Boolean existsObjectMap(String key, String mapKey);
 
 	/**
 	 * 清空整个 Redis 服务器的数据(删除所有数据库的所有 key )
+	 * 
+	 * @return
 	 */
 	public String deleteAll();
 }

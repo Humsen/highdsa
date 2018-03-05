@@ -55,8 +55,8 @@ public class RedisOperationTest {
 
 	@Test
 	public void test06Del() {
-		assertEquals(redisOperationImpl.del("username"), 1);
-		assertEquals(redisOperationImpl.del("username"), 0);
+		assertEquals(redisOperationImpl.del("username"), new Long(1));
+		assertEquals(redisOperationImpl.del("username"), new Long(0));
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class RedisOperationTest {
 
 		redisOperationImpl.setObject("userinfo123", userInfoPo, 0);
 
-		assertEquals(redisOperationImpl.delObject("userinfo123"), 1);
+		assertEquals(redisOperationImpl.delObject("userinfo123"), new Long(1));
 	}
 
 	@Test
@@ -130,7 +130,7 @@ public class RedisOperationTest {
 		list.add("c++");
 		list.add("js");
 
-		assertEquals(redisOperationImpl.appendList("language", "js"), 4);
+		assertEquals(redisOperationImpl.appendList("language", "js"), new Long(4));
 		assertEquals(redisOperationImpl.getList("language"), list);
 	}
 
@@ -216,7 +216,7 @@ public class RedisOperationTest {
 
 	@Test
 	public void test22AppendSet() {
-		assertEquals(redisOperationImpl.appendSet("javafarmwork", "servlet"), 1L);
+		assertEquals(redisOperationImpl.appendSet("javafarmwork", "servlet"), new Long(1));
 	}
 
 	@Test
@@ -323,7 +323,7 @@ public class RedisOperationTest {
 
 	@Test
 	public void test29removelMap() {
-		assertEquals(redisOperationImpl.removeMap("redisSet", "redisSet"), 1);
+		assertEquals(redisOperationImpl.removeMap("redisSet", "redisSet"), new Long(1));
 	}
 
 	@Test
@@ -382,8 +382,8 @@ public class RedisOperationTest {
 
 	@Test
 	public void test34appendObjectMap() {
-		assertEquals(redisOperationImpl.removeObjectMap("redisObjectMap", "uesrinfoMap4"), 1);
-		assertEquals(redisOperationImpl.removeObjectMap("redisObjectMap", "uesrinfoMap5"), 0);
+		assertEquals(redisOperationImpl.removeObjectMap("redisObjectMap", "uesrinfoMap4"), new Long(1));
+		assertEquals(redisOperationImpl.removeObjectMap("redisObjectMap", "uesrinfoMap5"), new Long(0));
 	}
 
 	@Test

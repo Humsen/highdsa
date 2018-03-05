@@ -160,7 +160,7 @@ public abstract class BaseSpringAspect {
 	 * @param joinPoint
 	 * @param returnValue
 	 */
-	public abstract void doReturn(JoinPoint joinPoint, String returnValue);
+	public abstract void doReturn(JoinPoint joinPoint, Object returnValue);
 
 	/**
 	 * 目标函数抛出异常之后

@@ -21,5 +21,8 @@
 	<!-- AOP切面注解类  -->
 	<bean id="redisSetOperationAdvice" class="pers.husen.highdsa.service.redis.aop.RedisSetOperationAdvice"></bean>
 	<bean id="redisGetOperationAdvice" class="pers.husen.highdsa.service.redis.aop.RedisGetOperationAdvice"></bean>
+	<bean id="redisAppendOperationAdvice" class="pers.husen.highdsa.service.redis.aop.RedisAppendOperationAdvice"></bean>
+	<bean id="redisExistsOperationAdvice" class="pers.husen.highdsa.service.redis.aop.RedisExistsOperationAdvice"></bean>
+	<bean id="redisDeleteOperationAdvice" class="pers.husen.highdsa.service.redis.aop.RedisDeleteOperationAdvice"></bean>
 
 </beans>  
