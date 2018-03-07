@@ -6,14 +6,23 @@
 
 	<!-- 全局配置 -->
 	<settings>
+		<!-- 启用二级缓存 -->
+		<setting name="cacheEnabled" value="true" />
 		<!--是否开启自动驼峰命名规则（camel case）映射，下划线到驼峰 -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
-		<!-- 指定日志为log4j2  -->
-		<setting name="logImpl" value="LOG4J2"/>
+		<!-- 指定日志为log4j2 -->
+		<setting name="logImpl" value="LOG4J2" />
+		<!-- 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果 -->
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<!-- 打开延迟加载的开关 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 将积极加载改为消极加载，即延迟加载 -->
+		<setting name="aggressiveLazyLoading" value="false" />
 	</settings>
 
 	<typeAliases>
-		<typeAlias alias="UserInfo" type="pers.husen.highdsa.common.entity.po.UserInfo" />
+		<typeAlias alias="UserInfo"
+			type="pers.husen.highdsa.common.entity.po.UserInfo" />
 	</typeAliases>
 
 	<!-- 配置mybatis运行环境 -->

@@ -312,7 +312,7 @@ public class RedisConsumer extends BaseController {
 	public String deleteAll() {
 		String reply = null;
 
-		reply = redisOperation.deleteAll();
+		reply = redisOperation.flushAll();
 		logger.info("删除所有缓存, 返回{}", reply);
 
 		return getReplyJson(reply);

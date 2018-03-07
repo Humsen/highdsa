@@ -31,12 +31,18 @@ public class RedisGetOperationAdvice extends BaseSpringAspect {
 	@Override
 	@Around("aspectJMethod()")
 	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-		Object key = getArgs(joinPoint)[0];
+		Object[] argsArray = getArgs(joinPoint);
+		
 		String methodName = getAimMethodName(joinPoint);
 		// 核心逻辑
 		Object retval = joinPoint.proceed();
 
-		logger.info("<{}> redis cache [get] success, key={},value={}", methodName, key, retval);
+		if(argsArray != null && argsArray.length != 0) {
+			Object key = getArgs(joinPoint)[0];
+			logger.info("<{}> redis cache [get] success, key={},value={}", methodName, key, retval);
+		}else {
+			logger.info("<{}> redis cache [get] success,value={}", methodName, retval);
+		}
 
 		return retval;
 	}

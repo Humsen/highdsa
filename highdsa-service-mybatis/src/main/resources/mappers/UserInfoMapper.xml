@@ -3,6 +3,9 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.husen.highdsa.service.mybatis.dao.UserInfoMapper">
+	<!-- 自定义缓存  -->
+	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
+	
 	<select id="selectById" parameterType="Integer" resultType="UserInfo">
 		select * from user_info where user_id=#{userId}
 	</select>
@@ -12,7 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<insert id="insertUserInfo" parameterType="UserInfo">
-		insert into user_info (
+		insert into user_info
+		(
 		user_name, user_password, user_create_date ) values
 		(#{userName},
 		#{userPassword}, #{userCreateDate} )
@@ -26,7 +30,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<delete id="deleteUserInfo" parameterType="Integer">
-		delete from user_info where
+		delete from user_info
+		where
 		user_id=#{userId}
 	</delete>
 </mapper>   

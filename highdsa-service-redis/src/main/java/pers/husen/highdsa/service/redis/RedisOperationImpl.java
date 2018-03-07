@@ -116,12 +116,12 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public Boolean exists(String key) {
 		Boolean reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
 			reply = jedis.exists(key);
-			
-			//logger.info("redis <String> cache exists, key={}", key);
+
+			// logger.info("redis <String> cache exists, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("判断redis缓存是否存在出错", e));
 		}
@@ -133,16 +133,16 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public Long del(String key) {
 		Long reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
 			if (!jedis.exists(key)) {
 				logger.warn("del key [{}] failed, caused by not exists", key);
-			} 
-			
+			}
+
 			reply = jedis.del(key);
-			
-			//logger.info("redis <String> cache delete success, key={}", key);
+
+			// logger.info("redis <String> cache delete success, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
 		}
@@ -154,13 +154,14 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public Long del(String... key) {
 		Long reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
-			
+
 			reply = jedis.del(key);
-			
-			//logger.info("redis <String[]> cache delete success, key={}", TypeConvert.strArray2String(key));
+
+			// logger.info("redis <String[]> cache delete success, key={}",
+			// TypeConvert.strArray2String(key));
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
 		}
@@ -216,12 +217,12 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public Boolean existsObject(String key) {
 		Boolean reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
 			reply = jedis.exists(key.getBytes());
-			
-			//logger.info("redis <String> cache exists, key={}", key);
+
+			// logger.info("redis <String> cache exists, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("判断redis缓存是否存在出错", e));
 		}
@@ -233,23 +234,88 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public Long delObject(String key) {
 		Long reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
-			
+
 			byte[] keyBytes = key.getBytes();
 			if (!jedis.exists(keyBytes)) {
 				logger.warn("del key [{}] failed, caused by not exists", key);
-			} 
-			
+			}
+
 			reply = jedis.del(keyBytes);
-			
-			//logger.info("redis <Object> cache delete success, key={}", key);
+
+			// logger.info("redis <Object> cache delete success, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
 		}
 
 		return reply;
+	}
+
+	@Override
+	public String setObject(Object key, Object value) {
+		String reply = null;
+		Jedis jedis = null;
+		try {
+			jedis = getJedis();
+			reply = jedis.set(TypeConvert.serialize(key), TypeConvert.serialize(value));
+
+			// logger.info("redis <Object> cache set success, key={}, value={}", key,
+			// value);
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("设置redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
+		}
+
+		return reply;
+
+	}
+
+	@Override
+	public Object getObject(Object key) {
+		Object value = null;
+		Jedis jedis = null;
+
+		try {
+			jedis = getJedis();
+
+			if (jedis.exists(TypeConvert.serialize(key))) {
+				value = TypeConvert.unserialize(jedis.get(TypeConvert.serialize(key)));
+
+				// logger.info("redis <Object> cache get success, key={}, value={}", key,
+				// value);
+			}
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
+		}
+
+		return value;
+	}
+
+	public Long removeObject(Object key) {
+		Long value = null;
+		Jedis jedis = null;
+
+		try {
+			jedis = getJedis();
+
+			if (jedis.exists(TypeConvert.serialize(key))) {
+				value = jedis.expire(TypeConvert.serialize(key), 0);
+
+				// logger.info("redis <Object> cache get success, key={}, value={}", key,
+				// value);
+			}
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
+		}
+
+		return value;
 	}
 
 	@Override
@@ -390,7 +456,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			}
 			reply = jedis.set(key.getBytes(), TypeConvert.serializeList(list));
 
-			//logger.info("redis <ObjectList> cache append success, key={}, value={}", key, value);
+			// logger.info("redis <ObjectList> cache append success, key={}, value={}", key,
+			// value);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("添加redis缓存出错", e));
 		} finally {
@@ -500,8 +567,9 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 			reply = jedis.sadd(key, value);
-			
-			//logger.info("redis <Set<String>> cache append success, key={}, value={}", key,TypeConvert.strArray2String(value));
+
+			// logger.info("redis <Set<String>> cache append success, key={}, value={}",
+			// key,TypeConvert.strArray2String(value));
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("添加redis缓存出错", e));
 		} finally {
@@ -582,7 +650,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			}
 			reply = jedis.set(key.getBytes(), TypeConvert.serializeSet(set));
 
-			//logger.info("redis <Set<Object>> cache append success, key={}, value={}", key, value.toString());
+			// logger.info("redis <Set<Object>> cache append success, key={}, value={}",
+			// key, value.toString());
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("添加redis缓存出错", e));
 		} finally {
@@ -648,8 +717,9 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 			reply = jedis.hmset(key, value);
-			
-			//logger.info("redis <Map> cache append success, key={}, value={}", key, value);
+
+			// logger.info("redis <Map> cache append success, key={}, value={}", key,
+			// value);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("添加redis缓存出错", e));
 		} finally {
@@ -663,31 +733,31 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public Long removeMap(String key, String mapKey) {
 		Long reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
-			
+
 			reply = jedis.hdel(key, mapKey);
-			
-			//logger.info("redis <Map> cache remove success, key={}", key);
+
+			// logger.info("redis <Map> cache remove success, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
 		}
 
 		return reply;
 	}
-	
+
 	@Override
 	public Long removeMap(String key, String... mapKeys) {
 		Long reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
-			
+
 			reply = jedis.hdel(key, mapKeys);
-			
-			//logger.info("redis <Map> cache remove success, key={}", key);
+
+			// logger.info("redis <Map> cache remove success, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
 		}
@@ -699,12 +769,12 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public Boolean existsMap(String key, String mapKey) {
 		Boolean reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
 			reply = jedis.hexists(key, mapKey);
-			
-			//logger.info("redis <Map> cache exists, key={}, mapkey={}", key, mapKey);
+
+			// logger.info("redis <Map> cache exists, key={}, mapkey={}", key, mapKey);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("判断redis缓存是否存在出错", e));
 		}
@@ -783,7 +853,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			}
 			reply = jedis.hmset(key.getBytes(), (Map<byte[], byte[]>) map);
 
-			//logger.info("redis <Map<String, Object>> cache append success, key={}, value={}", key, value);
+			// logger.info("redis <Map<String, Object>> cache append success, key={},
+			// value={}", key, value);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("添加redis缓存出错", e));
 		} finally {
@@ -797,13 +868,14 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public Long removeObjectMap(String key, String mapKey) {
 		Long reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
-			
+
 			reply = jedis.hdel(key.getBytes(), mapKey.getBytes());
 
-			//logger.info("redis <Map<String, Object>> cache remove success, key={}, mapKey={}", key, mapKey);
+			// logger.info("redis <Map<String, Object>> cache remove success, key={},
+			// mapKey={}", key, mapKey);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
 		}
@@ -815,12 +887,13 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public Boolean existsObjectMap(String key, String mapKey) {
 		Boolean reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
 			reply = jedis.hexists(key.getBytes(), mapKey.getBytes());
 
-			//logger.info("redis <Map<String, Object>> cache exists, key={}, mapKey={}", key, mapKey);
+			// logger.info("redis <Map<String, Object>> cache exists, key={}, mapKey={}",
+			// key, mapKey);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("判断redis缓存是否存在出错", e));
 		}
@@ -829,18 +902,54 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	}
 
 	@Override
-	public String deleteAll() {
+	public String flushAll() {
 		String reply = null;
 		Jedis jedis = null;
-		
+
 		try {
 			jedis = getJedis();
-			
+
 			reply = jedis.flushAll();
 
-			//logger.info("redis all cache delete success!");
+			// logger.info("redis all cache delete success!");
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		}
+
+		return reply;
+	}
+
+	@Override
+	public String flushDB() {
+		String reply = null;
+		Jedis jedis = null;
+
+		try {
+			jedis = getJedis();
+
+			reply = jedis.flushDB();
+
+			// logger.info("redis current db cache delete success!");
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		}
+
+		return reply;
+	}
+
+	@Override
+	public Integer getDbSize() {
+		Integer reply = null;
+		Jedis jedis = null;
+
+		try {
+			jedis = getJedis();
+
+			reply = new Integer(jedis.dbSize().toString());
+
+			// logger.info("redis current db cache delete success!");
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis数据库数量出错", e));
 		}
 
 		return reply;

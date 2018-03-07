@@ -24,7 +24,7 @@ public class RedisDeleteOperationAdvice extends BaseSpringAspect{
 	private static final Logger logger = LogManager.getLogger(RedisDeleteOperationAdvice.class.getName());
 
 	@Override
-	@Pointcut("execution(* pers.husen.highdsa.service.redis.RedisOperationImpl.del*(..)) || execution(* pers.husen.highdsa.service.redis.RedisOperationImpl.remove*(..))")
+	@Pointcut("execution(* pers.husen.highdsa.service.redis.RedisOperationImpl.del*(..)) || execution(* pers.husen.highdsa.service.redis.RedisOperationImpl.remove*(..)) || execution(* pers.husen.highdsa.service.redis.RedisOperationImpl.flush*(..))")
 	protected void aspectJMethod() {
 	}
 

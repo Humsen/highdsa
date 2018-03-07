@@ -394,6 +394,6 @@ public class RedisOperationTest {
 
 	@Test
 	public void test36DeleteAll() {
-		assertEquals(redisOperationImpl.deleteAll(), "OK");
+		assertEquals(redisOperationImpl.flushAll(), "OK");
 	}
 }

@@ -111,6 +111,30 @@ public interface RedisOperation {
 	public Long delObject(String key);
 
 	/**
+	 * 根据Object key设置对象
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public String setObject(Object key, Object value);
+
+	/**
+	 * 根据Object key 获取对象
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public Object getObject(Object key);
+
+	/**
+	 * 删除Object key的缓存
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public Long removeObject(Object key);
+
+	/**
 	 * 设置List缓存
 	 * 
 	 * @param key
@@ -344,5 +368,19 @@ public interface RedisOperation {
 	 * 
 	 * @return
 	 */
-	public String deleteAll();
+	public String flushAll();
+
+	/**
+	 * 清空当前数据库的所有key
+	 * 
+	 * @return
+	 */
+	public String flushDB();
+
+	/**
+	 * 获取数据库的数量
+	 * 
+	 * @return
+	 */
+	public Integer getDbSize();
 }
