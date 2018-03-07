@@ -1,6 +1,6 @@
 package pers.husen.highdsa.email.main;
 
-import pers.husen.highdsa.service.email.impl.SimpleHtmlEmailImpl;
+import pers.husen.highdsa.service.email.SimpleHtmlEmailImpl;
 
 /**
  * @Desc 发送邮件测试

@@ -1,5 +1,5 @@
 /**
- * @Desc PO 是持久层
+ * @Desc PO 是持久层，与数据库表一一对应
  *
  * @Author 何明胜
  *
@@ -7,4 +7,4 @@
  * 
  * @Version 1.0.0
  */
-package pers.husen.highdsa.common.po;
+package pers.husen.highdsa.common.entity.po;

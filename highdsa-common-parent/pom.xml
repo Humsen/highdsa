@@ -11,7 +11,7 @@
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-common-parent</artifactId>
 	<packaging>pom</packaging>
-	
+
 	<name>highdsa-common-parent</name>
 	<url>https://github.com/CrazyHusen/highdsa</url>
 
@@ -19,5 +19,6 @@
 		<module>highdsa-common-exception</module>
 		<module>highdsa-common-log4j2</module>
 		<module>highdsa-common-utility</module>
+		<module>highdsa-common-entity</module>
 	</modules>
 </project>

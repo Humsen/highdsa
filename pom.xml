@@ -18,6 +18,7 @@
 		<module>highdsa-service-email</module>
 		<module>highdsa-service-fastdfs</module>
 		<module>highdsa-service-redis</module>
+		<module>highdsa-service-mybatis</module>
 		<module>highdsa-web-email</module>
 		<module>highdsa-web-fastdfs</module>
 		<module>highdsa-web-redis</module>
@@ -33,8 +34,9 @@
 		<!-- 依赖版本管理 -->
 		<junit.version>4.12</junit.version>
 		<aspectj.version>1.8.13</aspectj.version>
-		<com.101tec.version>0.10</com.101tec.version>
 		<org.jsoup.version>1.11.2</org.jsoup.version>
+		<com.101tec.version>0.10</com.101tec.version>
+		<org.mybatis.version>3.4.5</org.mybatis.version>
 		<com.sun.mail.version>1.6.0</com.sun.mail.version>
 		<org.javassist.version>3.22.0-GA</org.javassist.version>
 		<com.alibaba.dubbo.version>2.6.0</com.alibaba.dubbo.version>
@@ -46,6 +48,7 @@
 		<org.springframework.version>4.3.14.RELEASE</org.springframework.version>
 		<org.apache.logging.log4j.version>2.9.0</org.apache.logging.log4j.version>
 		<javax.servlet.servlet-api.version>4.0.0</javax.servlet.servlet-api.version>
+		<mysql.mysql-connector-java.version>5.1.45</mysql.mysql-connector-java.version>
 		<org.csource.fastdfs-client-java.version>1.28</org.csource.fastdfs-client-java.version>
 		<biz.paluch.logging.logstash-gelf.version>1.11.2</biz.paluch.logging.logstash-gelf.version>
 
@@ -53,8 +56,8 @@
 		<org.eclipse.m2e.lifecycle-mapping.version>1.0.0</org.eclipse.m2e.lifecycle-mapping.version>
 		<org.apache.maven.plugins.maven-jar-plugin.version>3.0.2</org.apache.maven.plugins.maven-jar-plugin.version>
 		<org.apache.maven.plugins.maven-source-plugin.version>3.0.1</org.apache.maven.plugins.maven-source-plugin.version>
-		<org.apache.maven.plugins.maven-javadoc-plugin.version>3.0.0</org.apache.maven.plugins.maven-javadoc-plugin.version>
-		<org.apache.maven.plugins.maven-compiler-plugin.version>3.7.0</org.apache.maven.plugins.maven-compiler-plugin.version>
+		<org.apache.maven.plugins.maven-javadoc-plugin.version>2.10.4</org.apache.maven.plugins.maven-javadoc-plugin.version>
+		<org.apache.maven.plugins.maven-compiler-plugin.version>3.5.1</org.apache.maven.plugins.maven-compiler-plugin.version>
 		<org.apache.maven.plugins.maven-surefire-plugin.version>2.20.1</org.apache.maven.plugins.maven-surefire-plugin.version>
 		<org.apache.maven.plugins.maven-dependency-plugin.version>3.0.2</org.apache.maven.plugins.maven-dependency-plugin.version>
 	</properties>
@@ -86,6 +89,11 @@
 			<dependency>
 				<groupId>pers.husen.highdsa</groupId>
 				<artifactId>highdsa-common</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>pers.husen.highdsa</groupId>
+				<artifactId>highdsa-common-entity</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<!-- dubbo -->
@@ -206,6 +214,18 @@
 				<groupId>org.javassist</groupId>
 				<artifactId>javassist</artifactId>
 				<version>${org.javassist.version}</version>
+			</dependency>
+			<!-- mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${org.mybatis.version}</version>
+			</dependency>
+			<!-- mysql -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.mysql-connector-java.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

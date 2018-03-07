@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.email.impl;
+package pers.husen.highdsa.service.email;
 
 import java.io.File;
 

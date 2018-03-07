@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 引入外部配置文件 -->
+	<properties resource="mysql.properties"></properties>
+
+	<!-- 全局配置 -->
+	<settings>
+		<!--是否开启自动驼峰命名规则（camel case）映射，下划线到驼峰 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- 指定日志为log4j2  -->
+		<setting name="logImpl" value="LOG4J2"/>
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="UserInfo" type="pers.husen.highdsa.common.entity.po.UserInfo" />
+	</typeAliases>
+
+	<!-- 配置mybatis运行环境 -->
+	<environments default="development">
+		<environment id="development">
+			<!-- type="JDBC" 代表使用JDBC的提交和回滚来管理事务 -->
+			<transactionManager type="JDBC" />
+
+			<!-- mybatis提供了3种数据源类型，分别是：POOLED,UNPOOLED,JNDI -->
+			<!-- POOLED 表示支持JDBC数据源连接池 -->
+			<!-- UNPOOLED 表示不支持数据源连接池 -->
+			<!-- JNDI 表示支持外部数据源连接池 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${mysql.driver}" />
+				<property name="url" value="${mysql.url}" />
+				<property name="username" value="${mysql.username}" />
+				<property name="password" value="${mysql.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="mappers/UserInfoMapper.xml" />
+	</mappers>
+</configuration>

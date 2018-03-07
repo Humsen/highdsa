@@ -10,20 +10,35 @@
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
-	<artifactId>highdsa-api</artifactId>
-	<packaging>jar</packaging>
-
-	<name>highdsa-api</name>
+	<artifactId>highdsa-service-mybatis</artifactId>
+	<name>highdsa-service-mybatis</name>
 	<url>https://github.com/CrazyHusen/highdsa</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
+			<groupId>pers.husen.highdsa</groupId>
+			<artifactId>highdsa-common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common-entity</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 	</dependencies>
 </project>

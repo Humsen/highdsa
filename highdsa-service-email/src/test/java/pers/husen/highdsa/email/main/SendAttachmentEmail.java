@@ -2,7 +2,8 @@ package pers.husen.highdsa.email.main;
 
 import java.io.File;
 
-import pers.husen.highdsa.service.email.impl.EmailWithAttachmentImpl;
+import pers.husen.highdsa.service.email.EmailWithAttachmentImpl;
+
 
 /**
  * @Desc    测试发送带有附件的邮件
