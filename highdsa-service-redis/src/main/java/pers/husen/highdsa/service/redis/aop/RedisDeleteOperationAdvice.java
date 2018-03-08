@@ -31,12 +31,19 @@ public class RedisDeleteOperationAdvice extends BaseSpringAspect{
 	@Override
 	@Around("aspectJMethod()")
 	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-		Object key = getArgs(joinPoint)[0];
+		Object[] argsArr = getArgs(joinPoint);
+		
 		String methodName = getAimMethodName(joinPoint);
 		
 		Object retval = joinPoint.proceed();
 
-		logger.info("<{}> redis cache [delete], key={},reply={}", methodName, key, retval);
+		if(argsArr != null && argsArr.length != 0) {
+			Object key = argsArr[0];
+			logger.info("<{}> redis cache [delete], key={},reply={}", methodName, key, retval);
+		}else {
+			logger.info("<{}> redis cache [delete], reply={}", methodName, retval);
+		}
+		
 
 		return retval;
 	}

@@ -33,7 +33,7 @@ public class SqlSessionFactoryManager {
 		if (sqlSessionFactory == null) {
 			InputStream inputStream = null;
 			try {
-				inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+				inputStream = Resources.getResourceAsStream("mybatis/mybatis-config.xml");
 				sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			} catch (Exception e) {
 				logger.error(StackTrace2Str.exceptionStackTrace2Str(e));

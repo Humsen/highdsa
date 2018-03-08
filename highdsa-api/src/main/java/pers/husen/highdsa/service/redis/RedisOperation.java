@@ -116,7 +116,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @param value
 	 */
-	public String setObject(Object key, Object value);
+	public String setObject(Object key, Object value, int cacheSeconds);
 
 	/**
 	 * 根据Object key 获取对象

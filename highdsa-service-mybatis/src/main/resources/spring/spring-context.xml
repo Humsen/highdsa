@@ -12,14 +12,46 @@
            http://www.springframework.org/schema/context    
            http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+	<!-- 引入dbconfig.properties属性文件 -->
+	<context:property-placeholder location="classpath:mysql.properties" />
+
 	<!-- 采用注解的方式配置bean -->
 	<context:annotation-config />
 
 	<!-- 配置要扫描的包 -->
 	<context:component-scan base-package="pers.husen.highdsa.service.mybatis" />
 
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${mysql.driver}" />
+		<property name="url" value="${mysql.url}" />
+		<property name="username" value="${mysql.username}" />
+		<property name="password" value="${mysql.password}" />
+	</bean>
+
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- dataSource bean -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:mappers/*.xml" />
+		<property name="typeAliasesPackage" value="pers.husen.highdsa.common.entity.po" />
+		<!-- 可以单独指定mybatis的配置文件，或者写在本文件里面。 用下面的自动扫描装配(推荐)或者单独mapper -->
+		<property name="configLocation" value="classpath:mybatis/mybatis-spring-config.xml" />
+	</bean>
+
+	<bean id="userInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface"
+			value="pers.husen.highdsa.service.mybatis.dao.UserInfoMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使MyBatis实现第三方缓存 -->
+	<bean id="redisCacheTransfer" class="pers.husen.highdsa.service.mybatis.cache.RedisCacheTransfer">
+		<property name="redisOperation" ref="redisOperation" />
+	</bean>
+
+	<bean id="userInfoDbOperImpl" class="pers.husen.highdsa.service.mybatis.UserInfoDbOperImpl"></bean>
 	<!-- <bean id="redisCache" class="pers.husen.highdsa.service.mybatis.cache.RedisCache"></bean> -->
-
-	<!-- <import resource="dubbo-consumer.xml" /> -->
-
+	
+	<import resource="classpath:dubbo/mybatis-consumer.xml" />
 </beans> 

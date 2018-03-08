@@ -254,12 +254,16 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	}
 
 	@Override
-	public String setObject(Object key, Object value) {
+	public String setObject(Object key, Object value, int cacheSeconds) {
 		String reply = null;
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();
 			reply = jedis.set(TypeConvert.serialize(key), TypeConvert.serialize(value));
+
+			if (cacheSeconds != 0) {
+				jedis.expire(TypeConvert.serialize(key), cacheSeconds);
+			}
 
 			// logger.info("redis <Object> cache set success, key={}, value={}", key,
 			// value);

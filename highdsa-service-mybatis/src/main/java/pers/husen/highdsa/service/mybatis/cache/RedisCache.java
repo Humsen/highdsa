@@ -6,10 +6,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.apache.ibatis.cache.Cache;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.redis.RedisOperation;
 
 /**
@@ -25,9 +25,12 @@ import pers.husen.highdsa.service.redis.RedisOperation;
 public class RedisCache implements Cache {
 	private static final Logger logger = LogManager.getLogger(RedisCache.class.getName());
 
-	@Autowired
-	private RedisOperation redisOperation;
+	private static RedisOperation redisOperation;
 
+	public static void setRedisOperation(RedisOperation redisOperation) {
+        RedisCache.redisOperation = redisOperation;
+    }
+	
 	@Value(value = "1234")
 	private String id;
 
@@ -43,7 +46,7 @@ public class RedisCache implements Cache {
 		if (id == null) {
 			throw new IllegalArgumentException("Cache instances require an ID");
 		}
-		logger.info("MybatisRedisCache:id=" + id);
+		logger.info("RedisCache init: id=" + id);
 
 		this.id = id;
 	}
@@ -60,7 +63,14 @@ public class RedisCache implements Cache {
 
 	@Override
 	public Object getObject(Object key) {
-		return redisOperation.getObject(key);
+		Object object = null;
+		try {
+			 object = redisOperation.getObject(key);
+		} catch (Exception e) {
+			logger.fatal(StackTrace2Str.exceptionStackTrace2Str("出错", e));
+		}
+		
+		return object;
 	}
 
 	@Override
@@ -75,7 +85,7 @@ public class RedisCache implements Cache {
 
 	@Override
 	public void putObject(Object key, Object value) {
-		redisOperation.setObject(key, value);
+		redisOperation.setObject(key, value, 0);
 	}
 
 	@Override

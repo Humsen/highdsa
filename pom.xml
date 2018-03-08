@@ -48,6 +48,7 @@
 		<org.springframework.version>4.3.14.RELEASE</org.springframework.version>
 		<org.apache.logging.log4j.version>2.9.0</org.apache.logging.log4j.version>
 		<javax.servlet.servlet-api.version>4.0.0</javax.servlet.servlet-api.version>
+		<org.mybatis.mybatis-spring.version>1.3.1</org.mybatis.mybatis-spring.version>
 		<mysql.mysql-connector-java.version>5.1.45</mysql.mysql-connector-java.version>
 		<org.csource.fastdfs-client-java.version>1.28</org.csource.fastdfs-client-java.version>
 		<biz.paluch.logging.logstash-gelf.version>1.11.2</biz.paluch.logging.logstash-gelf.version>
@@ -226,6 +227,12 @@
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql.mysql-connector-java.version}</version>
+			</dependency>
+			<!-- mybatis-spring -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${org.mybatis.mybatis-spring.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

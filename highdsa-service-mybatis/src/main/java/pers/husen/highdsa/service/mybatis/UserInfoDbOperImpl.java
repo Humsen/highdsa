@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import pers.husen.highdsa.common.entity.po.UserInfo;
 import pers.husen.highdsa.service.mybatis.core.SqlSessionFactoryManager;
@@ -21,14 +22,13 @@ import pers.husen.highdsa.service.mybatis.dao.UserInfoMapper;
  */
 public class UserInfoDbOperImpl implements UserInfoDbOper {
 	private static final Logger logger = LogManager.getLogger(UserInfoDbOperImpl.class.getName());
+	
+	@Autowired
+	private UserInfoMapper userInfoMapper;
 
 	@Override
 	public UserInfo selectById(Integer userId) {
-		SqlSession sqlSession = SqlSessionFactoryManager.openSession();
-		UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
-
 		UserInfo userInfo = userInfoMapper.selectById(1);
-		sqlSession.commit();
 
 		logger.info("select by id[{}] reply: {}", userId, userInfo);
 
@@ -37,11 +37,7 @@ public class UserInfoDbOperImpl implements UserInfoDbOper {
 
 	@Override
 	public List<UserInfo> selectAll() {
-		SqlSession sqlSession = SqlSessionFactoryManager.openSession();
-		UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
-
 		List<UserInfo> userInfos = userInfoMapper.selectAll();
-		sqlSession.commit();
 
 		logger.info("select all reply: {}", userInfos);
 

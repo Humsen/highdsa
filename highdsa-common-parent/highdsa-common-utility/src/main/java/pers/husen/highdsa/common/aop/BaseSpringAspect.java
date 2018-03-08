@@ -39,6 +39,7 @@ public abstract class BaseSpringAspect {
 	 */
 	protected String getFieldsNameValueString(JoinPoint joinPoint) throws Exception {
 		Object[] args = joinPoint.getArgs();
+		
 		String classType = joinPoint.getTarget().getClass().getName();
 		Class<?> clazz = Class.forName(classType);
 		String clazzName = clazz.getName();
@@ -67,6 +68,8 @@ public abstract class BaseSpringAspect {
 			stringBuilder.append("=");
 			stringBuilder.append(args[i]);
 			stringBuilder.append(",");
+			
+			//System.out.println("参数键值对：" +attr.variableName(i + pos) + "=" + args[i]);
 		}
 		stringBuilder.append(attr.variableName(paramListLength - 1 + pos));
 		stringBuilder.append("=");
@@ -128,7 +131,13 @@ public abstract class BaseSpringAspect {
 	 * @return
 	 */
 	protected Object[] getArgs(JoinPoint joinPoint) {
-		return joinPoint.getArgs();
+		Object[] result = joinPoint.getArgs();
+		
+		if(result != null && result.length != 0) {
+			return result;
+		}
+		
+		return null;
 	}
 
 	/**
