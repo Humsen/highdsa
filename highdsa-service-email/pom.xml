@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.4.1-SNAPSHOT</version>
+		<version>0.4.5-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
@@ -49,27 +49,26 @@
 	</dependencies>
 
 	<build>
-		<!-- 配置文件 -->
 		<resources>
+			<!-- 配置文件 -->
 			<resource>
 				<targetPath>${project.build.directory}/classes</targetPath>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
 					<!-- <include>**/*.xml</include> -->
-					<include>log4j2.xml</include>
-					<include>log4j.properties</include>
-					<include>all2admin-mail.properties</include>
-					<include>robot2user-mail.properties</include>
-					<include>savemail.properties</include>
+					<include>email/all2admin-mail.properties</include>
+					<include>email/robot2user-mail.properties</include>
+					<include>email/savemail.properties</include>
 				</includes>
 			</resource>
+			<!-- spring相关配置文件 -->
 			<resource>
 				<targetPath>${project.build.directory}/classes/META-INF/spring</targetPath>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>email-provider.xml</include>
+					<include>dubbo/email-provider.xml</include>
 				</includes>
 			</resource>
 		</resources>

@@ -88,7 +88,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	public int sendEmail2User(String userEmail, String subject, String content) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
-			Session session = sendEmailCore.getSession("robot2user-mail.properties");
+			Session session = sendEmailCore.getSession("email/robot2user-mail.properties");
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
@@ -143,7 +143,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	public int sendEmail2Admin(String name, String senderEmail, String phone, String content) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
-			Session session = sendEmailCore.getSession("all2admin-mail.properties");
+			Session session = sendEmailCore.getSession("email/all2admin-mail.properties");
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.4.1-SNAPSHOT</version>
+		<version>0.4.5-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
@@ -43,24 +43,23 @@
 	</dependencies>
 
 	<build>
-		<!-- 配置文件 -->
 		<resources>
+			<!-- 配置文件 -->
 			<resource>
 				<targetPath>${project.build.directory}/classes</targetPath>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>log4j2.xml</include>
-					<include>log4j.properties</include>
 					<include>fdfs_client.conf</include>
 				</includes>
 			</resource>
+			<!-- spring相关配置文件 -->
 			<resource>
 				<targetPath>${project.build.directory}/classes/META-INF/spring</targetPath>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>fastdfs-provider.xml</include>
+					<include>dubbo/fastdfs-provider.xml</include>
 				</includes>
 			</resource>
 		</resources>

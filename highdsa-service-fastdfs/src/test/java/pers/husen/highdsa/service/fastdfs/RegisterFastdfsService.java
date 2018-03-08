@@ -13,9 +13,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 
  * @Version 1.0.0
  */
-public class RegisterService {
+public class RegisterFastdfsService {
 	public static void main(String[] args) throws IOException {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("fastdfs-provider.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("dubbo/fastdfs-provider.xml");
 		context.start();
 		System.out.println("服务已经启动...");
 		System.in.read();

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.4.1-SNAPSHOT</version>
+		<version>0.4.5-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
@@ -23,10 +23,6 @@
 			<artifactId>highdsa-common</artifactId>
 		</dependency>
 		<!-- web -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

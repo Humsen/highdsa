@@ -53,5 +53,5 @@
 	<bean id="userInfoDbOperImpl" class="pers.husen.highdsa.service.mybatis.UserInfoDbOperImpl"></bean>
 	<!-- <bean id="redisCache" class="pers.husen.highdsa.service.mybatis.cache.RedisCache"></bean> -->
 	
-	<import resource="classpath:dubbo/mybatis-consumer.xml" />
+	<import resource="classpath:dubbo/*.xml" />
 </beans> 

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.4.1-SNAPSHOT</version>
+		<version>0.4.5-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
@@ -56,9 +56,35 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 		</dependency>
-		<dependency>  
-            <groupId>org.springframework</groupId>  
-            <artifactId>spring-jdbc</artifactId>  
-        </dependency>  
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
 	</dependencies>
+
+	<build>
+		<resources>
+			<!-- 配置文件 -->
+			<resource>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>mysql.properties</include>
+					<include>mappers/*</include>
+					<include>mybatis/*</include>
+				</includes>
+			</resource>
+			<!-- spring相关配置文件 -->
+			<resource>
+				<targetPath>${project.build.directory}/classes/META-INF/spring</targetPath>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>dubbo/*</include>
+					<include>spring/*</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
 </project>

@@ -35,7 +35,7 @@ public class RegisterMybatisConsumer {
 
 		context = new ClassPathXmlApplicationContext(configLocation);
 		context.start();
-		System.out.println("=============== 消费者已经启动... ==================");
+		System.out.println("=============== dubbo已经启动... ==================");
 	}
 
 	@Test

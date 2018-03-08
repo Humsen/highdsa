@@ -56,7 +56,7 @@ public class SaveEmail {
 	public void saveIntoSent(MimeMessage msg) {
 		try {
 			properties.load(
-					new InputStreamReader(SaveEmail.class.getClassLoader().getResourceAsStream("savemail.properties"),
+					new InputStreamReader(SaveEmail.class.getClassLoader().getResourceAsStream("email/savemail.properties"),
 							Encode.DEFAULT_ENCODE));
 
 			// 获取会话

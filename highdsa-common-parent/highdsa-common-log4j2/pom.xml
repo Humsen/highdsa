@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-common-parent</artifactId>
-		<version>0.4.1-SNAPSHOT</version>
+		<version>0.4.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>highdsa-common-log4j2</artifactId>
@@ -31,8 +31,19 @@
 		</dependency>
 	</dependencies>
 
-	<!-- <build> <finalName>highdsa-common-log4j2</finalName> <resources> 指定 
-		src/main/resources下所有文件及文件夹为资源文件 <resource> <directory>src/main/resources</directory> 
-		<targetPath>${project.build.directory}/classes</targetPath> <filtering>true</filtering> 
-		<includes> <include>**/*</include> </includes> </resource> </resources> </build> -->
+	<build>
+		<resources>
+			<!-- 配置文件 -->
+			<resource>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>log4j.properties</include>
+					<include>log4j2-web.xml</include>
+					<include>log4j2.xml</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
 </project>

@@ -43,7 +43,7 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			// 获取配置文件
-			Session session = sendEmailCore.getSession("robot2user-mail.properties");
+			Session session = sendEmailCore.getSession("email/robot2user-mail.properties");
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
@@ -108,7 +108,7 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 	public int sendEmail2Admin(String name, String senderEmail, String phone, String content, File attachment) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
-			Session session = sendEmailCore.getSession("all2admin-mail.properties");
+			Session session = sendEmailCore.getSession("email/all2admin-mail.properties");
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);

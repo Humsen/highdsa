@@ -15,7 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class RegisterEmailService {
 	public static void main(String[] args) throws IOException {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("email-provider.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("dubbo/email-provider.xml");
         context.start();
         System.out.println("服务已经启动...");
         System.in.read();
