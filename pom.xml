@@ -40,6 +40,7 @@
 		<com.sun.mail.version>1.6.0</com.sun.mail.version>
 		<org.javassist.version>3.22.0-GA</org.javassist.version>
 		<com.alibaba.dubbo.version>2.6.0</com.alibaba.dubbo.version>
+		<com.alibaba.druid.version>1.1.8</com.alibaba.druid.version>
 		<com.google.guava.version>24.0-jre</com.google.guava.version>
 		<commons.fileupload.version>1.3.3</commons.fileupload.version>
 		<redis.clients.jedis.version>2.9.0</redis.clients.jedis.version>
@@ -234,6 +235,12 @@
 				<artifactId>mybatis-spring</artifactId>
 				<version>${org.mybatis.mybatis-spring.version}</version>
 			</dependency>
+			<!-- druid -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${com.alibaba.druid.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -275,7 +282,7 @@
 						<classesDirectory>target/classes/</classesDirectory>
 						<archive>
 							<manifest>
-								<!-- 指定dubbo main方法入口  -->
+								<!-- 指定dubbo main方法入口 -->
 								<mainClass>com.alibaba.dubbo.container.Main</mainClass>
 								<!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
 								<useUniqueVersions>false</useUniqueVersions>

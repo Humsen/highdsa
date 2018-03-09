@@ -14,7 +14,7 @@
 	<!-- <dubbo:registry address="zookeeper://39.106.185.126:2181"/> -->
 
 	<!-- 用dubbo协议在20880端口暴露服务 -->
-	<dubbo:protocol name="dubbo" port="20880" />
+	<dubbo:protocol name="dubbo" port="20881" />
 	<!--使用 dubbo 协议实现定义好的 api.PermissionService 接口 -->
 	<dubbo:service interface="pers.husen.highdsa.service.redis.RedisPools"
 		ref="redisPools" protocol="dubbo" timeout="100000" />

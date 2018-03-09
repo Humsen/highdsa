@@ -156,9 +156,10 @@
 		</root>
 
 		<!-- 过滤第三方日志系统 -->
-		<!-- <logger level="info" name="org.springframework.core"/> <logger level="info" 
-			name="org.springframework.beans"/> <logger level="info" name="org.springframework.context"/> 
-			<logger level="info" name="org.springframework.web"/> <logger level="warn" 
-			name="org.jboss.netty"/> -->
+		<!-- druid配置 -->
+        <logger name="druid.sql.DataSource" level="debug" ></logger>
+        <logger name="druid.sql.Connection" level="debug" ></logger>
+        <logger name="druid.sql.Statement" level="debug" ></logger>
+        <logger name="druid.sql.ResultSet" level="debug" ></logger>
 	</Loggers>
 </Configuration>
