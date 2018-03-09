@@ -4,12 +4,10 @@
 	xmlns:task="http://www.springframework.org/schema/task" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-     http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
-      http://www.springframework.org/schema/mvc
-      http://www.springframework.org/schema/mvc/spring-mvc.xsd
-      http://www.springframework.org/schema/tx
-      http://www.springframework.org/schema/tx/spring-tx.xsd"
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+      http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd"
 	default-lazy-init="false">
 
 	<mvc:annotation-driven>
@@ -42,6 +40,6 @@
 	<bean id="exceptionResolver"
 		class="pers.husen.highdsa.common.exception.ExceptionInterceptor">
 	</bean>
-	
+
 	<context:component-scan base-package="pers.husen.highdsa.web" />
 </beans>

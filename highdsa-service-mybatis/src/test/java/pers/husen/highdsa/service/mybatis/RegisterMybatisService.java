@@ -24,14 +24,12 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  * 
  * @Version 1.0.0
  */
-public class RegisterMybatisConsumer {
+public class RegisterMybatisService {
 	private ClassPathXmlApplicationContext context;
 
 	@Before
 	public void before() {
-		// String[] configLocation = new String[] {
-		// "dubbo/mybatis-consumer.xml","spring/spring-context.xml" };
-		String[] configLocation = new String[] { "spring/spring-context.xml" };
+		String[] configLocation = new String[] { "spring/mybatis-provider.xml", "spring/redis-consumer.xml","spring/spring-context.xml" };
 
 		context = new ClassPathXmlApplicationContext(configLocation);
 		context.start();
@@ -55,8 +53,8 @@ public class RegisterMybatisConsumer {
 	@Test
 	public void testUserInfoDbOperImpl() {
 		UserInfoDbOperImpl userInfoDbOperImpl = (UserInfoDbOperImpl) context.getBean("userInfoDbOperImpl");
-		
-		//userInfoDbOperImpl.deleteUserInfo(2);
+
+		// userInfoDbOperImpl.deleteUserInfo(2);
 		List<UserInfo> userInfos = userInfoDbOperImpl.selectAll();
 		System.out.println(userInfos);
 
@@ -90,7 +88,7 @@ public class RegisterMybatisConsumer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("=============== 消费者关闭... ==================");
 		context.close();
 	}
