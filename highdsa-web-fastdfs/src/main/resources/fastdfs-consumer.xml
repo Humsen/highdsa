@@ -13,6 +13,6 @@
 	<!-- <dubbo:registry address="zookeeper://39.106.185.126:2181"/> -->
 
 	<!-- 声明需要暴露的服务接口 -->
-	<dubbo:reference interface="pers.husen.highdsa.service.fastdfs.FastDFS"
+	<dubbo:reference interface="pers.husen.highdsa.service.fastdfs.Fastdfs"
 		id="fastdfsService" timeout="100000" check="false" />
 </beans>
