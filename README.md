@@ -27,3 +27,6 @@
 ├─`highdsa-web-redis` -> **redis消费者模块，对外提供RESTful API**   
 └─`highdsa-web-test` -> **消费者测试模块，以web形式整合所有RESTful API，方便测试**   
     
+ ### 工程Maven模块依赖关系图如下
+ 
+ ![image](https://github.com/CrazyHusen/highdsa/blob/master/docs/highdsa%E5%B7%A5%E7%A8%8B%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E5%9B%BE.jpg)
