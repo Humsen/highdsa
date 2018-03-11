@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-common-parent</artifactId>
-		<version>0.4.8-SNAPSHOT</version>
+		<version>0.5.3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>highdsa-common-utility</artifactId>

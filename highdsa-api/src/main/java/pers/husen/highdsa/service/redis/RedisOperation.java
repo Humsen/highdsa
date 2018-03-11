@@ -115,6 +115,8 @@ public interface RedisOperation {
 	 * 
 	 * @param key
 	 * @param value
+	 * @param cacheSeconds
+	 * @return
 	 */
 	public String setObject(Object key, Object value, int cacheSeconds);
 

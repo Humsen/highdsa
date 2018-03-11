@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pers.husen.highdsa.common.constant.ResponseConstants;
+import pers.husen.highdsa.common.entity.vo.ResultFailureJson;
+import pers.husen.highdsa.common.entity.vo.ResultSuccessJson;
 import pers.husen.highdsa.common.response.OperationResult;
-import pers.husen.highdsa.common.vo.ResultFailureJsonVo;
-import pers.husen.highdsa.common.vo.ResultSuccessJsonVo;
 import pers.husen.highdsa.service.email.EmailWithAttachment;
 import pers.husen.highdsa.web.response.ResponseResult;
 
@@ -40,13 +40,13 @@ public class AttachmentEmail {
 		OperationResult operationResult = null;
 		
 		if(isSuccess == ResponseConstants.RESPONSE_OPERATION_SUCCESS) {
-			operationResult = new OperationResult(new ResultSuccessJsonVo());
+			operationResult = new OperationResult(new ResultSuccessJson());
 			Map<String, Object> resultJson = new HashMap<>(10);
 			resultJson.put("测试", "成功");
 			operationResult.setResultJson(resultJson);
 			logger.info("发送成功");
 		}else {
-			operationResult = new OperationResult(new ResultFailureJsonVo());
+			operationResult = new OperationResult(new ResultFailureJson());
 			Map<String, Object> resultJson = new HashMap<>(10);
 			resultJson.put("测试", "失败");
 			operationResult.setResultJson(resultJson);

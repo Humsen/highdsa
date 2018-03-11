@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.vo;
+package pers.husen.highdsa.common.entity.vo;
 
 import java.util.Map;
 
@@ -13,7 +13,7 @@ import pers.husen.highdsa.web.response.ResponseResult;
  * 
  * @Version 1.0.2
  */
-public class ResultFailureJsonVo implements ResponseResult {
+public class ResultFailureJson implements ResponseResult {
 	private Map<String, Object> failure;
 
 	/**

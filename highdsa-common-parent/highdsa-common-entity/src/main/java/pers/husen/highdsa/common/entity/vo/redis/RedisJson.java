@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.vo;
+package pers.husen.highdsa.common.entity.vo.redis;
 
 /**
  * @Desc RESTful API返回json
@@ -9,13 +9,13 @@ package pers.husen.highdsa.common.vo;
  * 
  * @Version 1.0.0
  */
-public class RedisJsonVo {
+public class RedisJson {
 	private String msg;
 	
-	public RedisJsonVo() {
+	public RedisJson() {
 	}
 
-	public RedisJsonVo(String msg) {
+	public RedisJson(String msg) {
 		this.msg = msg;
 	}
 

@@ -2,7 +2,7 @@ package pers.husen.highdsa.common.response;
 
 import java.util.Map;
 
-import pers.husen.highdsa.common.vo.ResultSuccessJsonVo;
+import pers.husen.highdsa.common.entity.vo.ResultSuccessJson;
 import pers.husen.highdsa.web.response.ResponseResult;
 
 /**
@@ -31,7 +31,7 @@ public class OperationResult {
 	public OperationResult(ResponseResult responseResult, Map<Object, Object> successJson) {
 		responseResultVo = responseResult;
 
-		responseResultVo = new ResultSuccessJsonVo();
+		responseResultVo = new ResultSuccessJson();
 	}
 
 	/**

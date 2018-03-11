@@ -7,4 +7,4 @@
  * 
  * @Version 1.0.0
  */
-package pers.husen.highdsa.common.vo;
+package pers.husen.highdsa.common.entity.vo;

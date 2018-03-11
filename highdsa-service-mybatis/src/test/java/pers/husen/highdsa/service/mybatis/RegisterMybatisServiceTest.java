@@ -24,7 +24,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  * 
  * @Version 1.0.0
  */
-public class RegisterMybatisService {
+public class RegisterMybatisServiceTest {
 	private ClassPathXmlApplicationContext context;
 
 	@Before

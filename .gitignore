@@ -19,5 +19,8 @@ result.conf
 #backup file
 pom.xml.versionsBackup
 
+#secret file
+highdsa-service-message/**/message.properties
+
 ## self
 ##.gitignore

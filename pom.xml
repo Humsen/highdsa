@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pers.husen</groupId>
 	<artifactId>highdsa</artifactId>
-	<version>0.4.8-SNAPSHOT</version>
+	<version>0.5.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>highdsa</name>
@@ -19,6 +19,7 @@
 		<module>highdsa-service-fastdfs</module>
 		<module>highdsa-service-redis</module>
 		<module>highdsa-service-mybatis</module>
+		<module>highdsa-service-message</module>
 		<module>highdsa-web-email</module>
 		<module>highdsa-web-fastdfs</module>
 		<module>highdsa-web-redis</module>
@@ -53,6 +54,8 @@
 		<mysql.mysql-connector-java.version>5.1.45</mysql.mysql-connector-java.version>
 		<org.csource.fastdfs-client-java.version>1.28</org.csource.fastdfs-client-java.version>
 		<biz.paluch.logging.logstash-gelf.version>1.11.2</biz.paluch.logging.logstash-gelf.version>
+		<com.aliyun.aliyun-java-sdk-dysmsapi.version>1.1.0</com.aliyun.aliyun-java-sdk-dysmsapi.version>
+		<com.aliyun.aliyun-java-sdk-core.version>3.5.1</com.aliyun.aliyun-java-sdk-core.version>
 
 		<!-- 插件版本管理 -->
 		<org.eclipse.m2e.lifecycle-mapping.version>1.0.0</org.eclipse.m2e.lifecycle-mapping.version>
@@ -242,6 +245,17 @@
 				<artifactId>druid</artifactId>
 				<version>${com.alibaba.druid.version}</version>
 			</dependency>
+			<!-- 阿里短信 -->
+			<dependency>
+				<groupId>com.aliyun</groupId>
+				<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+				<version>${com.aliyun.aliyun-java-sdk-dysmsapi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aliyun</groupId>
+				<artifactId>aliyun-java-sdk-core</artifactId>
+				<version>${com.aliyun.aliyun-java-sdk-core.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -317,24 +331,11 @@
 								</outputDirectory>
 							</configuration>
 						</execution>
-						<!-- <execution>
-							<id>unpack</id>
-							<phase>package</phase>
-							<goals>
-								<goal>unpack</goal>
-							</goals>
-							<configuration>
-								<artifactItems>
-									<artifactItem>
-										<groupId>pers.husen.highdsa</groupId>
-										<artifactId>highdsa-common-log4j2</artifactId>
-										<version>0.4.6-SNAPSHOT</version>
-										<outputDirectory>${project.build.directory}/classes</outputDirectory>
-										<includes>log4j-web.properties</includes>
-									</artifactItem>
-								</artifactItems>
-							</configuration>
-						</execution> -->
+						<!-- <execution> <id>unpack</id> <phase>package</phase> <goals> <goal>unpack</goal> 
+							</goals> <configuration> <artifactItems> <artifactItem> <groupId>pers.husen.highdsa</groupId> 
+							<artifactId>highdsa-common-log4j2</artifactId> <version>0.4.6-SNAPSHOT</version> 
+							<outputDirectory>${project.build.directory}/classes</outputDirectory> <includes>log4j-web.properties</includes> 
+							</artifactItem> </artifactItems> </configuration> </execution> -->
 					</executions>
 				</plugin>
 				<!-- 解决maven test命令时console出现中文乱码乱码 -->
@@ -401,14 +402,9 @@
 					</executions>
 				</plugin>
 				<!-- 加载依赖模块的resources -->
-				<!-- <plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>${org.apache.maven.plugins.maven-resources-plugin.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin> -->
+				<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
+					<version>${org.apache.maven.plugins.maven-resources-plugin.version}</version> 
+					<configuration> <encoding>UTF-8</encoding> </configuration> </plugin> -->
 			</plugins>
 		</pluginManagement>
 
@@ -441,10 +437,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-			</plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
+				</plugin> -->
 		</plugins>
 	</build>
 </project>

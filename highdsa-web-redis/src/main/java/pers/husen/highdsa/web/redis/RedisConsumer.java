@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import pers.husen.highdsa.common.entity.vo.redis.RedisJson;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.response.BaseController;
-import pers.husen.highdsa.common.vo.RedisJsonVo;
 import pers.husen.highdsa.service.redis.RedisOperation;
 import pers.husen.highdsa.service.redis.RedisPools;
 
@@ -358,7 +358,7 @@ public class RedisConsumer extends BaseController {
 		ObjectMapper mapper = new ObjectMapper();
 
 		try {
-			RedisJsonVo redisJsonVo = new RedisJsonVo(reply);
+			RedisJson redisJsonVo = new RedisJson(reply);
 			jsonStr = mapper.writeValueAsString(redisJsonVo);
 		} catch (JsonProcessingException e) {
 			StackTrace2Str.exceptionStackTrace2Str("对象序列化成json失败", e);
