@@ -18,12 +18,20 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>pers.husen.highdsa</groupId>
+			<artifactId>highdsa-common-entity</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>pers.husen.highdsa</groupId>
-			<artifactId>highdsa-common-entity</artifactId>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
 		</dependency>
 	</dependencies>
 </project>

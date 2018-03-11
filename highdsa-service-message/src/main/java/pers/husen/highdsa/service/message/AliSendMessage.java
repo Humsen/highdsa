@@ -30,10 +30,18 @@ import pers.husen.highdsa.common.utility.ReadConfigFile;
  * 
  * @Version 1.0.0
  */
-public class AliSendMessage {
+public class AliSendMessage implements Message{
 	private static final Logger logger = LogManager.getLogger(AliSendMessage.class.getName());
-	
-	public static IAcsClient initIAcsClient() throws ClientException, UnsupportedEncodingException, IOException {
+
+	/**
+	 * 初始化
+	 * 
+	 * @return
+	 * @throws ClientException
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 */
+	public IAcsClient initIAcsClient() throws ClientException, UnsupportedEncodingException, IOException {
 		// 可自助调整超时时间
 		System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
 		System.setProperty("sun.net.client.defaultReadTimeout", "10000");
@@ -48,40 +56,23 @@ public class AliSendMessage {
 		IAcsClient acsClient = new DefaultAcsClient(profile);
 
 		logger.info("初始化短信发送客户端完成");
-		
+
 		return acsClient;
 	}
 
-	/**
-	 * 发送短信
-	 * 
-	 * @param sendSmsRequest
-	 * @return
-	 * @throws ClientException
-	 * @throws IOException 
-	 * @throws UnsupportedEncodingException 
-	 */
-	public static SendSmsResponse sendSms(SendSmsRequest sendSmsRequest) throws ClientException, UnsupportedEncodingException, IOException {
+	public SendSmsResponse sendSms(SendSmsRequest sendSmsRequest)
+			throws ClientException, UnsupportedEncodingException, IOException {
 		IAcsClient acsClient = initIAcsClient();
 
 		// hint 此处可能会抛出异常，注意catch
 		SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(sendSmsRequest);
 
 		logger.info("发送短信成功");
-		
+
 		return sendSmsResponse;
 	}
 
-	/**
-	 * 查询发送结果详情
-	 * 
-	 * @param bizId
-	 * @return
-	 * @throws ClientException
-	 * @throws IOException 
-	 * @throws UnsupportedEncodingException 
-	 */
-	public static QuerySendDetailsResponse querySendDetails(QuerySendDetailsRequest querySendDetailsRequest)
+	public QuerySendDetailsResponse querySendDetails(QuerySendDetailsRequest querySendDetailsRequest)
 			throws ClientException, UnsupportedEncodingException, IOException {
 		IAcsClient acsClient = initIAcsClient();
 
@@ -89,7 +80,7 @@ public class AliSendMessage {
 		QuerySendDetailsResponse querySendDetailsResponse = acsClient.getAcsResponse(querySendDetailsRequest);
 
 		logger.info("查询短信成功");
-		
+
 		return querySendDetailsResponse;
 	}
 }
