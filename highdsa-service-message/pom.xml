@@ -16,7 +16,16 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<io.goeasy.goeasy-sdk.version>0.3.10</io.goeasy.goeasy-sdk.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>goeasy</id>
+			<name>goeasy</name>
+			<url>http://maven.goeasy.io/content/repositories/releases/</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -38,15 +47,35 @@
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
 		</dependency>
-		<!-- 这个好像不加, dubbo服务就无法启动  -->
+		<!-- 这个好像不加, dubbo服务就无法启动 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<!-- 以下是推送的jar包 -->
+		<dependency>
+			<groupId>io.goeasy</groupId>
+			<artifactId>goeasy-sdk</artifactId>
+			<version>${io.goeasy.goeasy-sdk.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
 		</dependency>
 	</dependencies>
 

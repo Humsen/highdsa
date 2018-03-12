@@ -18,7 +18,7 @@ import com.aliyuncs.exceptions.ClientException;
  * 
  * @Version 1.0.0
  */
-public interface Message {
+public interface SendSms {
 	/**
 	 * 发送短信
 	 * 

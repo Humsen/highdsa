@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.message.template;
+package pers.husen.highdsa.service.message.sms.template;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

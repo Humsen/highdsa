@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.message.template;
+package pers.husen.highdsa.service.message.sms.template;
 
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 

@@ -17,8 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.husen.highdsa.common.constant.MessageParams;
 import pers.husen.highdsa.common.entity.vo.message.UserAdvice;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.service.message.template.SmsQueryParams;
-import pers.husen.highdsa.service.message.template.SmsSendParams;
+import pers.husen.highdsa.service.message.sms.AliSendSms;
+import pers.husen.highdsa.service.message.sms.template.SmsQueryParams;
+import pers.husen.highdsa.service.message.sms.template.SmsSendParams;
 
 /**
  * @Desc 测试阿里大于发送短信
@@ -70,7 +71,7 @@ public class AliSendMessageTest {
 		SendSmsRequest request = smsSendParams.getRequest();
 
 		// 发短信
-		SendSmsResponse response = new AliSendMessage().sendSms(request);
+		SendSmsResponse response = new AliSendSms().sendSms(request);
 		System.out.println("短信接口返回的数据----------------");
 		System.out.println("Code=" + response.getCode());
 		System.out.println("Message=" + response.getMessage());
@@ -91,7 +92,7 @@ public class AliSendMessageTest {
 		// 查明细
 		String replyCode = "OK";
 		if (response.getCode() != null && response.getCode().equals(replyCode)) {
-			QuerySendDetailsResponse querySendDetailsResponse = new AliSendMessage()
+			QuerySendDetailsResponse querySendDetailsResponse = new AliSendSms()
 					.querySendDetails(querySendDetailsRequest);
 			System.out.println("短信明细查询接口返回数据----------------");
 			System.out.println("Code=" + querySendDetailsResponse.getCode());

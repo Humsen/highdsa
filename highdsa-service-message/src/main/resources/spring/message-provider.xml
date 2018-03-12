@@ -16,8 +16,8 @@
 	<!-- 用dubbo协议在20880端口暴露服务 -->
 	<dubbo:protocol name="dubbo" port="20880" payload="104857600" />
 	<!--使用 dubbo 协议实现定义好的 api.PermissionService 接口 -->
-	<dubbo:service interface="pers.husen.highdsa.service.message.Message"
+	<dubbo:service interface="pers.husen.highdsa.service.message.SendSms"
 		ref="aliSendMessage" protocol="dubbo" timeout="100000" />
 	<!--具体实现该接口的 bean -->
-	<bean id="aliSendMessage" class="pers.husen.highdsa.service.message.AliSendMessage" />
+	<bean id="aliSendMessage" class="pers.husen.highdsa.service.message.sms.AliSendSms" />
 </beans>

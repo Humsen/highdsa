@@ -21,6 +21,7 @@ pom.xml.versionsBackup
 
 #secret file
 highdsa-service-message/**/message.properties
+highdsa-service-message/**/appkey.properties
 
 ## self
 ##.gitignore

@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.message;
+package pers.husen.highdsa.service.message.sms;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -19,6 +19,7 @@ import com.aliyuncs.profile.IClientProfile;
 
 import pers.husen.highdsa.common.constant.MessageParams;
 import pers.husen.highdsa.common.utility.ReadConfigFile;
+import pers.husen.highdsa.service.message.SendSms;
 
 /**
  * 
@@ -30,8 +31,8 @@ import pers.husen.highdsa.common.utility.ReadConfigFile;
  * 
  * @Version 1.0.0
  */
-public class AliSendMessage implements Message{
-	private static final Logger logger = LogManager.getLogger(AliSendMessage.class.getName());
+public class AliSendSms implements SendSms{
+	private static final Logger logger = LogManager.getLogger(AliSendSms.class.getName());
 
 	/**
 	 * 初始化

@@ -42,9 +42,10 @@ public class ReadConfigFile {
 	}
 
 	/**
-	 * 读取类路径下的文件（需要指定相对类根目录路径）
+	 * 读取类路径下的文件（需要指定相对类根目录路径） 注意:只能读取类路径下的，不能读取resources下的。估计编译后能够读取。并且被读取的文件名称不加后缀
 	 * 
 	 * @param fileRelativePath
+	 *            无后缀的文件名称
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 * @throws IOException
