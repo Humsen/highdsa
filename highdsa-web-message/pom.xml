@@ -69,35 +69,4 @@
 			<artifactId>log4j-web</artifactId>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<!-- 解压log4j模块的log4j-web.properties到工程target\classes目录下, web不能加载jar里的配置文件 -->
-			<!-- web工程需要打包两次实现log4j-web.properties到war包里 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>package</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>pers.husen.highdsa</groupId>
-									<artifactId>highdsa-common-log4j2</artifactId>
-									<version>0.4.6-SNAPSHOT</version>
-									<outputDirectory>${project.build.directory}/classes</outputDirectory>
-									<includes>log4j-web.properties</includes>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>
