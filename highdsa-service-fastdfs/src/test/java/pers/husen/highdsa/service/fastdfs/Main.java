@@ -2,6 +2,7 @@ package pers.husen.highdsa.service.fastdfs;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Map;
 
 import pers.husen.highdsa.service.fastdfs.FastdfsImpl;
 
@@ -22,13 +23,13 @@ public class Main {
 
 		File file = new File("src/main/resources/fdfs_client.conf");
 		// 返回储存路径:group1 M00/00/00/wKhuW1Vmj6KAZ09pAAC9przUxEk788.jpg
-		String[] files = fastDFSImpl.uploadFile(new FileInputStream(file), "fdfs_client.conf");
+		Map<String, String> files = fastDFSImpl.uploadFile(new FileInputStream(file), "fdfs_client.conf");
 
 		// 下载文件
 		//fastDFSImpl.downloadFile(files[0], files[1]);
 		
 		// 查看文件信息
-		fastDFSImpl.getFileInfo(files[0], files[1]);
+		fastDFSImpl.getFileInfo(files.get("group_name"), files.get("remote_filename"));
 		//fastDFSImpl.getFileMate(files[0], files[1]);
 		
 		//删除文件

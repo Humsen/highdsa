@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pers.husen</groupId>
 	<artifactId>highdsa</artifactId>
-	<version>0.5.3-SNAPSHOT</version>
+	<version>0.5.6-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>highdsa</name>
@@ -23,6 +23,7 @@
 		<module>highdsa-web-email</module>
 		<module>highdsa-web-fastdfs</module>
 		<module>highdsa-web-redis</module>
+		<module>highdsa-web-message</module>
 		<module>highdsa-web-test</module>
 	</modules>
 

@@ -31,7 +31,8 @@ public class BaseController {
 		this.request = request;
 		this.response = response;
 		this.session = request.getSession();
-		
+
+		// 设置编码
 		response.setContentType("text/html;charset=UTF-8");
 	}
 }

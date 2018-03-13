@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.5.3-SNAPSHOT</version>
+		<version>0.5.6-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
@@ -47,12 +47,12 @@
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
-			<exclusions>
+			<!-- <exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-log4j12</artifactId>
 				</exclusion>
-			</exclusions>
+			</exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>com.101tec</groupId>
@@ -73,10 +73,10 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>

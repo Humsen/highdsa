@@ -3,7 +3,9 @@ package pers.husen.highdsa.web.fastdfs;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,33 +16,34 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.fastdfs.Fastdfs;
 
 /**
- * @Desc 文件消费者
+ * @Desc 文件存储服务 业务调用
  *
  * @Author 何明胜
  *
- * @Created at 2018年2月26日 上午11:10:36
+ * @Created at 2018年3月13日 下午8:41:55
  * 
  * @Version 1.0.0
  */
-@RestController
-@RequestMapping("/fastdfs/v1")
-public class FastdfsConsumer {
-	private final Logger logger = LogManager.getLogger(FastdfsConsumer.class.getName());
-
+@Service
+public class FastdfsSvc {
+	private final Logger logger = LogManager.getLogger(FastdfsSvc.class.getName());
+	ObjectMapper objectMapper = new ObjectMapper();
+	
 	@Autowired
 	private Fastdfs fastDFS;
-
-	@RequestMapping(value = "/upload.hms", produces = "application/json")
-	@ResponseBody
-	public String fileUpload(HttpServletRequest request, HttpServletResponse response) {
+	
+	public String fileUpload(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+		Map<String, String> replyMap = new HashMap<>(20);
+		
 		try {
 			// 使用Apache文件上传组件处理文件上传步骤：
 			// 1、创建一个DiskFileItemFactory工厂
@@ -76,23 +79,24 @@ public class FastdfsConsumer {
 					// 获取item中的上传文件的输入流
 					InputStream in = item.getInputStream();
 
-					fastDFS.uploadFile(getFileBuffer(in), filename);
+					replyMap = fastDFS.uploadFile(getFileBuffer(in), filename);
 
 					// 关闭输入流
 					in.close();
 					// 删除处理文件上传时生成的临时文件
 					item.delete();
 					logger.info("上传文件名称：" + filename);
-					return "1";
+					
+					return objectMapper.writeValueAsString(replyMap);
 				}
 			}
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
 
-		return "0";
+		return objectMapper.writeValueAsString(replyMap);
 	}
-
+	
 	/**
 	 * 将文件输入流转换成字节数组
 	 * 

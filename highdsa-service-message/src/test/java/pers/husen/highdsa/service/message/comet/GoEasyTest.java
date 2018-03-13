@@ -17,7 +17,7 @@ import org.junit.Test;
 public class GoEasyTest {
 	@Test
 	public void testGoeasy() {
-		GoEasyPush goEasyPush = new GoEasyPush();
+		GoEasyPushMsg goEasyPush = new GoEasyPushMsg();
 		
 		try {
 			goEasyPush.publish("uuid", "测试goeasy");

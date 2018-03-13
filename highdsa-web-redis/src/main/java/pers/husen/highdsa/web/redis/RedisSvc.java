@@ -10,30 +10,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pers.husen.highdsa.common.entity.vo.redis.RedisJson;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.common.response.BaseController;
 import pers.husen.highdsa.service.redis.RedisOperation;
 import pers.husen.highdsa.service.redis.RedisPools;
 
 /**
- * @Desc redis消费者
+ * @Desc redis调用 业务类
  *
  * @Author 何明胜
  *
- * @Created at 2018年3月3日 下午6:46:16
+ * @Created at 2018年3月13日 下午8:52:20
  * 
- * @Version 1.0.1
+ * @Version 1.0.0
  */
-@RestController
-@RequestMapping(value = "/redis/v1")
-public class RedisConsumer extends BaseController {
-	private final Logger logger = LogManager.getLogger(RedisConsumer.class.getName());
+public class RedisSvc {
+	private final Logger logger = LogManager.getLogger(RedisController.class.getName());
 
 	@Autowired
 	private RedisPools redisPools;
@@ -51,8 +47,6 @@ public class RedisConsumer extends BaseController {
 	 * @param cacheSeconds
 	 * @return
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/cache/string.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String setString(String key, String value,
 			@RequestParam(value = "expire", defaultValue = "-1") int cacheSeconds) {
 		String reply = null;
@@ -78,8 +72,6 @@ public class RedisConsumer extends BaseController {
 	 * @param cacheSeconds
 	 * @return
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/cache/object.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String setObject(String key, String value,
 			@RequestParam(value = "expire", defaultValue = "0") int cacheSeconds) {
 		String reply = null;
@@ -100,8 +92,6 @@ public class RedisConsumer extends BaseController {
 	 * @param cacheSeconds
 	 * @return
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/cache/string.hms", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String getString(String key) {
 		String reply = null;
 
@@ -278,9 +268,7 @@ public class RedisConsumer extends BaseController {
 		return getReplyJson(reply);
 	}
 
-	/*
-	 * ------------------------------- close pools -------------------------------
-	 */
+	/* ------------------------------ close pools ------------------------------ */
 
 	/**
 	 * 关闭redis连接池
@@ -289,7 +277,7 @@ public class RedisConsumer extends BaseController {
 	 */
 	@RequestMapping(value = "/pool.hms", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String cacheString() {
+	public String closeRedisPool() {
 		redisPools.closeRedisPool();
 
 		logger.info("关闭redis pool 成功!");

@@ -10,6 +10,12 @@ package pers.husen.highdsa.common.utility;
  * @Version 1.0.1
  */
 public class RandomCode {
+	/**
+	 * 返回int类型的验证码
+	 * 
+	 * @param length
+	 * @return
+	 */
 	public static int producedRandomCode(double length) {
 		int randomCode = (int) (Math.random() * Math.pow(10, length));
 		// 进制系统，这里是10进制
@@ -20,5 +26,15 @@ public class RandomCode {
 		}
 
 		return randomCode;
+	}
+
+	/**
+	 * 返回String类型的验证码
+	 * 
+	 * @param length
+	 * @return
+	 */
+	public static String producedRandomCodeStr(double length) {
+		return String.valueOf(producedRandomCode(length));
 	}
 }

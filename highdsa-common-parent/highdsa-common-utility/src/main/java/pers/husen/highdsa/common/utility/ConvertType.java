@@ -26,8 +26,8 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  * 
  * @Version 1.0.1
  */
-public class TypeConvert {
-	private static final Logger logger = LogManager.getLogger(TypeConvert.class.getName());
+public class ConvertType {
+	private static final Logger logger = LogManager.getLogger(ConvertType.class.getName());
 
 	/**
 	 * 字符串数组转String

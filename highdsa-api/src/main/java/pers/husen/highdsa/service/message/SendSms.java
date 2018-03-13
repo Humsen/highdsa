@@ -2,12 +2,12 @@ package pers.husen.highdsa.service.message;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
-import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsRequest;
-import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+
+import pers.husen.highdsa.common.entity.vo.message.SmsQueryRequest;
+import pers.husen.highdsa.common.entity.vo.message.SmsSendResponse;
 
 /**
  * @Desc 发送短信服务接口
@@ -16,30 +16,61 @@ import com.aliyuncs.exceptions.ClientException;
  *
  * @Created at 2018年3月11日 下午8:40:21
  * 
- * @Version 1.0.0
+ * @Version 1.0.3
  */
 public interface SendSms {
 	/**
-	 * 发送短信
+	 * 发送短信验证码
 	 * 
-	 * @param sendSmsRequest
+	 * @param phoneNumber
+	 * @param templateId
+	 * @param chptcha
+	 *            验证码
 	 * @return
-	 * @throws ClientException
 	 * @throws IOException
+	 * @throws ClientException
 	 * @throws UnsupportedEncodingException
 	 */
-	public SendSmsResponse sendSms(SendSmsRequest sendSmsRequest)
-			throws ClientException, UnsupportedEncodingException, IOException;
+	public SmsSendResponse sendSmsCaptcha(String phoneNumber, String templateId, String chptcha)
+			throws UnsupportedEncodingException, ClientException, IOException;
 
 	/**
-	 * 查询发送结果详情
+	 * 发送短信通知
 	 * 
-	 * @param bizId
+	 * @param phoneNumber
+	 * @param userName
+	 * @param chptcha
 	 * @return
+	 * @throws IOException
 	 * @throws ClientException
-	 * @throws IOException 
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
-	public QuerySendDetailsResponse querySendDetails(QuerySendDetailsRequest querySendDetailsRequest)
-			throws ClientException, UnsupportedEncodingException, IOException;
+	public SmsSendResponse sendSmsNotice(String phoneNumber, String userName, String chptcha)
+			throws UnsupportedEncodingException, ClientException, IOException;
+
+	/**
+	 * 根据流水号查询发送结果详情
+	 * 
+	 * @param phoneNumber
+	 * @param bizId
+	 *            流水号
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 * @throws ClientException
+	 * @throws IOException
+	 */
+	public Map<?, ?> querySendDetailsByBizId(String phoneNumber, String bizId)
+			throws UnsupportedEncodingException, ClientException, IOException;
+
+	/**
+	 * 多条件查询发送结果详情
+	 * 
+	 * @param smsQueryRequest
+	 * @return
+	 * @throws IOException
+	 * @throws ClientException
+	 * @throws UnsupportedEncodingException
+	 */
+	public Map<?, ?> querySendDetails(SmsQueryRequest smsQueryRequest)
+			throws UnsupportedEncodingException, ClientException, IOException;
 }

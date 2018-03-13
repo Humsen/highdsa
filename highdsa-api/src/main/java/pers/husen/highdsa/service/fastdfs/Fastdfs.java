@@ -1,6 +1,7 @@
 package pers.husen.highdsa.service.fastdfs;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @Desc FastDFS 文件服务
@@ -20,7 +21,7 @@ public interface Fastdfs {
 	 * @return
 	 * @throws IOException
 	 */
-	public String[] uploadFile(byte[] fileBuff, String uploadFileName) throws IOException;
+	public Map<String, String> uploadFile(byte[] fileBuff, String uploadFileName) throws IOException;
 
 	/**
 	 * 下载文件

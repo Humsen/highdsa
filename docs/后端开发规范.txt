@@ -1,6 +1,7 @@
-版本：V1.0
+版本：V1.1
 创建者：何明胜
 创建时间：2018年2月4日
+最后修改时间：2018年3月12日
 
 -------------    分割线        ------------------------
 
@@ -20,3 +21,20 @@
 	如果该异常是该类不能处理，则抛出至调用方，不打印日志
 	
 5、web API的url中，url路径的词组使用中划线，参数中的词组使用下划线
+
+6、dubbo系列类命名
+	dubbo API 不加API字样，因为会暴露在zookeeper
+	dubbo 提供者实现类，在API后面加impl，并且和API放在同名包下（不同模块），有不同实现类的，在类名前面加词限定
+	dubbo 消费者类，在web模块或者需要使用其他提供者的提供者类中，建立消费者类，命名资源名+Consumer，同名映射所有提供者接口
+	spring mvc 控制器类（接收http），资源名+Controller，如RedisController
+	
+7、dubbo和spring配置文件都放在resources/spring文件夹下
+
+8、类命名
+	优先使用包路径表示类含义，避免类名重复可在类名后面加上包路径最后一个词。如×××.core.SendSmsCore
+	或者减少一层包名，将包名的词加到类上面，如×××.impl.Msg改为×××.MsgImpl
+	
+9、请求调用层级关系
+	http业务/RESTful请求  -> controller -> service(highdsa.web.类名Svc) -> 消费者类（待定）  -> zookeeper -> 服务提供类(highdsa.service.×××.类名) -> 数据库/缓存/文件服务器等
+	                		     |                                                                                       |
+	                                                                       工具类                                                                                                                                                                                                                            工具类

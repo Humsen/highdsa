@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.collect.Maps;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.common.utility.TypeConvert;
+import pers.husen.highdsa.common.utility.ConvertType;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -175,7 +175,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();
-			reply = jedis.set(key.getBytes(), TypeConvert.serialize(value));
+			reply = jedis.set(key.getBytes(), ConvertType.serialize(value));
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
 			}
@@ -199,7 +199,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			jedis = getJedis();
 
 			if (jedis.exists(key.getBytes())) {
-				value = TypeConvert.unserialize(jedis.get(key.getBytes()));
+				value = ConvertType.unserialize(jedis.get(key.getBytes()));
 
 				// logger.info("redis <String> cache get success, key={}, value={}", key,
 				// value);
@@ -259,10 +259,10 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();
-			reply = jedis.set(TypeConvert.serialize(key), TypeConvert.serialize(value));
+			reply = jedis.set(ConvertType.serialize(key), ConvertType.serialize(value));
 
 			if (cacheSeconds != 0) {
-				jedis.expire(TypeConvert.serialize(key), cacheSeconds);
+				jedis.expire(ConvertType.serialize(key), cacheSeconds);
 			}
 
 			// logger.info("redis <Object> cache set success, key={}, value={}", key,
@@ -285,8 +285,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 
-			if (jedis.exists(TypeConvert.serialize(key))) {
-				value = TypeConvert.unserialize(jedis.get(TypeConvert.serialize(key)));
+			if (jedis.exists(ConvertType.serialize(key))) {
+				value = ConvertType.unserialize(jedis.get(ConvertType.serialize(key)));
 
 				// logger.info("redis <Object> cache get success, key={}, value={}", key,
 				// value);
@@ -307,8 +307,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 
-			if (jedis.exists(TypeConvert.serialize(key))) {
-				value = jedis.expire(TypeConvert.serialize(key), 0);
+			if (jedis.exists(ConvertType.serialize(key))) {
+				value = jedis.expire(ConvertType.serialize(key), 0);
 
 				// logger.info("redis <Object> cache get success, key={}, value={}", key,
 				// value);
@@ -402,7 +402,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 				jedis.del(key);
 			}
 
-			reply = jedis.set(key.getBytes(), TypeConvert.serializeList(value));
+			reply = jedis.set(key.getBytes(), ConvertType.serializeList(value));
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
 			}
@@ -428,7 +428,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 
 			if (jedis.exists(key.getBytes())) {
 				byte[] list = jedis.get(key.getBytes());
-				value = (List<Object>) TypeConvert.unserializeList(list);
+				value = (List<Object>) ConvertType.unserializeList(list);
 
 				// logger.info("redis <ObjectList> cache get success, key={}, value={}", key,
 				// value);
@@ -450,7 +450,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 			byte[] listTemp = jedis.get(key.getBytes());
-			List<Object> list = (List<Object>) TypeConvert.unserializeList(listTemp);
+			List<Object> list = (List<Object>) ConvertType.unserializeList(listTemp);
 			if (list == null) {
 				list = new ArrayList<Object>();
 			}
@@ -458,7 +458,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			for (Object o : value) {
 				list.add(o);
 			}
-			reply = jedis.set(key.getBytes(), TypeConvert.serializeList(list));
+			reply = jedis.set(key.getBytes(), ConvertType.serializeList(list));
 
 			// logger.info("redis <ObjectList> cache append success, key={}, value={}", key,
 			// value);
@@ -595,7 +595,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			if (jedis.exists(key.getBytes())) {
 				jedis.del(key);
 			}
-			reply = jedis.set(key.getBytes(), TypeConvert.serializeSet(value));
+			reply = jedis.set(key.getBytes(), ConvertType.serializeSet(value));
 
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
@@ -622,7 +622,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 
 			if (jedis.exists(key.getBytes())) {
 				byte[] list = jedis.get(key.getBytes());
-				value = (Set<Object>) TypeConvert.unserializeSet(list);
+				value = (Set<Object>) ConvertType.unserializeSet(list);
 
 				// logger.info("redis <Set<Object>> cache get success, key={}, value={}", key,
 				// value.toString());
@@ -644,7 +644,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 			byte[] listTemp = jedis.get(key.getBytes());
-			Set<Object> set = (Set<Object>) TypeConvert.unserializeSet(listTemp);
+			Set<Object> set = (Set<Object>) ConvertType.unserializeSet(listTemp);
 
 			if (set == null) {
 				set = new HashSet<Object>();
@@ -652,7 +652,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			for (Object o : value) {
 				set.add(o);
 			}
-			reply = jedis.set(key.getBytes(), TypeConvert.serializeSet(set));
+			reply = jedis.set(key.getBytes(), ConvertType.serializeSet(set));
 
 			// logger.info("redis <Set<Object>> cache append success, key={}, value={}",
 			// key, value.toString());
@@ -799,7 +799,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			}
 			Map<byte[], byte[]> map = Maps.newHashMap();
 			for (Map.Entry<String, Object> e : value.entrySet()) {
-				map.put((e.getKey().getBytes()), TypeConvert.serialize(e.getValue()));
+				map.put((e.getKey().getBytes()), ConvertType.serialize(e.getValue()));
 			}
 			reply = jedis.hmset(key.getBytes(), (Map<byte[], byte[]>) map);
 			if (cacheSeconds != 0) {
@@ -829,7 +829,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 				value = Maps.newHashMap();
 				Map<byte[], byte[]> map = jedis.hgetAll(key.getBytes());
 				for (Map.Entry<byte[], byte[]> e : map.entrySet()) {
-					value.put(TypeConvert.byteArray2String(e.getKey()), TypeConvert.unserialize(e.getValue()));
+					value.put(ConvertType.byteArray2String(e.getKey()), ConvertType.unserialize(e.getValue()));
 				}
 
 				// logger.info("redis <Map<String, Object>> cache get success, key={},
@@ -853,7 +853,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			jedis = getJedis();
 			Map<byte[], byte[]> map = Maps.newHashMap();
 			for (Map.Entry<String, Object> e : value.entrySet()) {
-				map.put((e.getKey().getBytes()), TypeConvert.serialize(e.getValue()));
+				map.put((e.getKey().getBytes()), ConvertType.serialize(e.getValue()));
 			}
 			reply = jedis.hmset(key.getBytes(), (Map<byte[], byte[]>) map);
 

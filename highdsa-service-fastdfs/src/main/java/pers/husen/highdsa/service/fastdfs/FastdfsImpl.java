@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -84,12 +86,14 @@ public class FastdfsImpl implements Fastdfs {
 
 	/* ------------------- 分割线 ------------------------ */
 
-	public String[] uploadFile(FileInputStream inStream, String uploadFileName) throws IOException{
+	public Map<String, String> uploadFile(FileInputStream inStream, String uploadFileName) throws IOException{
 		return uploadFile(getFileBuffer(inStream), uploadFileName);
 	}
 	
 	@Override
-	public String[] uploadFile(byte[] fileBuff, String uploadFileName) throws IOException {
+	public Map<String, String> uploadFile(byte[] fileBuff, String uploadFileName) throws IOException {
+		Map<String, String> replyMap = new HashMap<>(20);
+		
 		// 初始化
 		init();
 		logger.info("开始上传文件...");
@@ -128,7 +132,10 @@ public class FastdfsImpl implements Fastdfs {
 			logger.error("upload file fail, error code: " + client.getErrorCode());
 			return null;
 		} else {
+			replyMap.put("group_name", files[0]);
+			replyMap.put("remote_filename", files[1]);
 			logger.info("group_name: " + files[0] + ", remote_filename: " + files[1]);
+			
 			try {
 				logger.info(client.get_file_info(files[0], files[1]));
 			} catch (MyException e) {
@@ -139,8 +146,11 @@ public class FastdfsImpl implements Fastdfs {
 			if (servers == null) {
 				logger.error("get storage servers fail, error code: " + tracker.getErrorCode());
 			} else {
+				replyMap.put("storage_servers_count", String.valueOf(servers.length));
 				logger.info("storage servers count: " + servers.length);
+				
 				for (int k = 0; k < servers.length; k++) {
+					replyMap.put(String.valueOf(k + 1), servers[k].getIpAddr() + ":" + servers[k].getPort());
 					logger.info((k + 1) + ". " + servers[k].getIpAddr() + ":" + servers[k].getPort());
 				}
 			}
@@ -176,12 +186,13 @@ public class FastdfsImpl implements Fastdfs {
 				fileUrl += "?token=" + token + "&ts=" + ts;
 			}
 
+			replyMap.put("file_url", fileUrl);
 			logger.info("上传文件成功, file http url:\t" + fileUrl);
 
 		}
 		trackerServer.close();
 
-		return files;
+		return replyMap;
 	}
 
 	@Override
