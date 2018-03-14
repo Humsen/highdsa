@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pers.husen</groupId>
 	<artifactId>highdsa</artifactId>
-	<version>0.5.6-SNAPSHOT</version>
+	<version>0.5.8-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>highdsa</name>
@@ -67,7 +67,6 @@
 		<org.apache.maven.plugins.maven-javadoc-plugin.version>2.10.4</org.apache.maven.plugins.maven-javadoc-plugin.version>
 		<org.apache.maven.plugins.maven-compiler-plugin.version>3.5.1</org.apache.maven.plugins.maven-compiler-plugin.version>
 		<org.apache.maven.plugins.maven-surefire-plugin.version>2.20.1</org.apache.maven.plugins.maven-surefire-plugin.version>
-		<!-- <org.apache.maven.plugins.maven-resources-plugin.version>2.5</org.apache.maven.plugins.maven-resources-plugin.version> -->
 		<org.apache.maven.plugins.maven-dependency-plugin.version>3.0.2</org.apache.maven.plugins.maven-dependency-plugin.version>
 	</properties>
 
@@ -338,11 +337,6 @@
 								</outputDirectory>
 							</configuration>
 						</execution>
-						<!-- <execution> <id>unpack</id> <phase>package</phase> <goals> <goal>unpack</goal> 
-							</goals> <configuration> <artifactItems> <artifactItem> <groupId>pers.husen.highdsa</groupId> 
-							<artifactId>highdsa-common-log4j2</artifactId> <version>0.4.6-SNAPSHOT</version> 
-							<outputDirectory>${project.build.directory}/classes</outputDirectory> <includes>log4j-web.properties</includes> 
-							</artifactItem> </artifactItems> </configuration> </execution> -->
 					</executions>
 				</plugin>
 				<!-- 解决maven test命令时console出现中文乱码乱码 -->
@@ -408,10 +402,6 @@
 						</execution>
 					</executions>
 				</plugin>
-				<!-- 加载依赖模块的resources -->
-				<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
-					<version>${org.apache.maven.plugins.maven-resources-plugin.version}</version> 
-					<configuration> <encoding>UTF-8</encoding> </configuration> </plugin> -->
 			</plugins>
 		</pluginManagement>
 
@@ -444,8 +434,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
-				</plugin> -->
 		</plugins>
 	</build>
 </project>
