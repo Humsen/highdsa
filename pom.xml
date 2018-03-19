@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pers.husen</groupId>
 	<artifactId>highdsa</artifactId>
-	<version>0.5.8-SNAPSHOT</version>
+	<version>0.6.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>highdsa</name>
@@ -18,8 +18,8 @@
 		<module>highdsa-service-email</module>
 		<module>highdsa-service-fastdfs</module>
 		<module>highdsa-service-redis</module>
-		<module>highdsa-service-mybatis</module>
 		<module>highdsa-service-message</module>
+		<module>highdsa-service-mybatis</module>
 		<module>highdsa-web-email</module>
 		<module>highdsa-web-fastdfs</module>
 		<module>highdsa-web-redis</module>

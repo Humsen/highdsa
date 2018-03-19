@@ -6,11 +6,12 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.5.8-SNAPSHOT</version>
+		<version>0.6.1-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-service-mybatis</artifactId>
+	<packaging>war</packaging>
 	<name>highdsa-service-mybatis</name>
 	<url>https://github.com/CrazyHusen/highdsa</url>
 
@@ -64,9 +65,53 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 		</dependency>
+		<!-- <dependency> <groupId>org.mortbay.jetty</groupId> <artifactId>jetty</artifactId> 
+			<version>6.1.26</version> </dependency> -->
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all</artifactId>
+			<version>7.0.2.v20100331</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>7.0.2.v20100331</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<classesDirectory>target/classes/</classesDirectory>
+					<archive>
+						<manifest>
+							<!-- 指定dubbo main方法入口 -->
+							<mainClass>com.alibaba.dubbo.container.Main</mainClass>
+							<!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
+							<useUniqueVersions>false</useUniqueVersions>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>.</Class-Path>
+						</manifestEntries>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
 		<resources>
 			<!-- 配置文件 -->
 			<resource>
@@ -74,9 +119,10 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>mysql.properties</include>
 					<include>mappers/*</include>
 					<include>mybatis/*</include>
+					<include>mysql.properties</include>
+					<include>dubbo.properties</include>
 				</includes>
 			</resource>
 			<!-- spring相关配置文件 -->
@@ -86,6 +132,15 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>*</include>
+				</includes>
+			</resource>
+			<!-- dubbo扩展配置文件 -->
+			<resource>
+				<targetPath>${project.build.directory}/classes/META-INF/dubbo</targetPath>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>com.alibaba.dubbo.container.Container</include>
 				</includes>
 			</resource>
 		</resources>
