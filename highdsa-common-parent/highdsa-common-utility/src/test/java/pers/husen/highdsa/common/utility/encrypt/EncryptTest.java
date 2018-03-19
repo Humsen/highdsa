@@ -2,12 +2,17 @@ package pers.husen.highdsa.common.utility.encrypt;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import pers.husen.highdsa.common.encrypt.AesEncrypt;
+import pers.husen.highdsa.common.encrypt.DesEncrypt;
+import pers.husen.highdsa.common.encrypt.Md5Encrypt;
+import pers.husen.highdsa.common.encrypt.TripleDesEncrypt;
 
 /**
- * @Desc TODO
+ * @Desc 测试几种加密方法
  *
  * @Author 何明胜
  *
@@ -15,49 +20,109 @@ import pers.husen.highdsa.common.encrypt.AesEncrypt;
  * 
  * @Version 1.0.0
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EncryptTest {
-	String aesKey = "1234567812345678";
-	String aesReply = "IwL1EObaoKTjhTN8zTpLfg==";
-
 	@Test
-	public void testAESEncrypt() {
-		String result = null;
+	public void test01AESEncrypt() {
+		String dataSource = "husen";
+		String aesKey = "1234567812345678";
+		String aesReply = null;
+		String aesOrigin = null;
 
 		try {
-			result = AesEncrypt.encrypt("husen", aesKey);
+			aesReply = AesEncrypt.encrypt(dataSource, aesKey);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		System.out.println(result);
-		assertEquals(result, aesReply);
+		System.out.println("aesKey: " + aesKey + ", reply: " + aesReply);
+
+		try {
+			aesOrigin = AesEncrypt.decrypt(aesReply, aesKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		assertEquals(dataSource, aesOrigin);
 	}
 
 	@Test
-	public void testAESDecrypt() {
-		String result = null;
+	public void test02AesEncryptDefault() {
+		String dataSource = "husen";
+		String aesReply = null;
+		String aesOrigin = null;
 
 		try {
-			result = AesEncrypt.decrypt(aesReply, aesKey);
+			aesReply = AesEncrypt.encrypt(dataSource);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		System.out.println(result);
-		assertEquals(result, "husen");
+		System.out.println("aesKeyDefault: " + AesEncrypt.DEFAULT_AES_KEY + ", reply: " + aesReply);
+
+		try {
+			aesOrigin = AesEncrypt.decrypt(aesReply);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		assertEquals(aesOrigin, dataSource);
 	}
-	
+
 	@Test
-	public void testAesEncryptDefault() {
-		String result = null;
+	public void test03DesEncryptDefault() {
+		String dataSource = "husen";
+		String desReply = null;
+		String desOrigin = null;
 
 		try {
-			result = AesEncrypt.encrypt("husen");
+			desReply = DesEncrypt.encrypt(dataSource);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		System.out.println(result);
-		assertEquals(result, aesReply);
+		System.out.println("desKeyDefault: " + DesEncrypt.DEFAULT_DES_KEY + ", reply: " + desReply);
+
+		try {
+			desOrigin = DesEncrypt.decrypt(desReply);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		assertEquals(desOrigin, dataSource);
+	}
+
+	@Test
+	public void test04TripleDesEncryptDefault() {
+		String dataSource = "husen";
+		String desReply = null;
+		String desOrigin = null;
+
+		try {
+			desReply = TripleDesEncrypt.encrypt(dataSource);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("3desKeyDefault: " + TripleDesEncrypt.DEFAULT_TRIPLE_DES_KEY + ", reply: " + desReply);
+
+		try {
+			desOrigin = TripleDesEncrypt.decrypt(desReply);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		assertEquals(desOrigin, dataSource);
+	}
+
+	@Test
+	public void test05Md5Encrypt() {
+		String dataSource = "husen";
+
+		try {
+			System.out.println("md5 key: " + dataSource + ", reply: " + Md5Encrypt.getMD5Code(dataSource));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

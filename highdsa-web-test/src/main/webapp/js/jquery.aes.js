@@ -1,72 +1,49 @@
 /**
- * @Desc AES加密工具
+ * @Desc AES加密工具, 使用方法：必须导入JQuery,然后使用$.方法名(参数...)调用，如$.AESEncrypt('husen')
  * 
  * @Author 何明胜
  * 
  * @Created at 2018年3月17日 下午9:07:35
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 
-var keyStr = 'IwL1EObaoKTjhTN8';
+var aes_key_default = 'IwL1EObaoKTjhTN8';
 
-/**
- * aes加密,使用默认密钥
- * 
- * @param target
- * @returns
- */
+/** aes加密,使用默认密钥 */
 $.extend({
-	'AESEncrypt' : function (target){
-	    var key = CryptoJS.enc.Utf8.parse(keyStr);
-	    var srcs = CryptoJS.enc.Utf8.parse(target);
+	'AESEncrypt' : function (dataSource){
+	   return $.AESEncryptByKey(dataSource, aes_key_default);
+	}
+});
+
+/** aes加密,使用自定义密钥 */
+$.extend({
+	'AESEncryptByKey' : function (dataSource, secretKey){
+	    var key = CryptoJS.enc.Utf8.parse(secretKey);
+	    var srcs = CryptoJS.enc.Utf8.parse(dataSource);
 	    var encrypted = CryptoJS.AES.encrypt(srcs, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
 	    return encrypted.toString();
 	}
 });
 
-/**
- * aes解密,使用默认密钥
- * 
- * @param target
- * @returns
- */
+/** aes解密,使用默认密钥 */
 $.extend({
-	'AESDecrypt' : function (target){
-	    var key = CryptoJS.enc.Utf8.parse(keyStr);
-	    var decrypt = CryptoJS.AES.decrypt(target, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+	'AESDecrypt' : function (dataSource){
+	   return $.AESDecryptByKey(dataSource, aes_key_default);
+	}
+});
+
+/** aes解密,使用自定义密钥 */
+$.extend({
+	'AESDecryptByKey' : function (dataSource, secretKey){
+	    var key = CryptoJS.enc.Utf8.parse(secretKey);
+	    var decrypt = CryptoJS.AES.decrypt(dataSource, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
 	    return CryptoJS.enc.Utf8.stringify(decrypt).toString();
 	}
 });
 
-/**
- * aes加密,使用自定义密钥
- * 
- * @param target
- * @returns
- */
-$.extend({
-	'AESEncryptByKey' : function (target, custKey){
-	    var key = CryptoJS.enc.Utf8.parse(custKey);
-	    var srcs = CryptoJS.enc.Utf8.parse(target);
-	    var encrypted = CryptoJS.AES.encrypt(srcs, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
-	    return encrypted.toString();
-	}
-});
-
-/**
- * aes解密,使用自定义密钥
- * 
- * @param target
- * @returns
- */
-$.extend({
-	'AESDecryptByKey' : function (target, custKey){
-	    var key = CryptoJS.enc.Utf8.parse(custKey);
-	    var decrypt = CryptoJS.AES.decrypt(target, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
-	    return CryptoJS.enc.Utf8.stringify(decrypt).toString();
-	}
-});
+/* ------------------------------ 以下是封装好的方法 --------------------------------- */
 
 !
 function(t, n) {

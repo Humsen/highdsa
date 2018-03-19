@@ -3,6 +3,11 @@ package pers.husen.highdsa.common.encrypt;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import pers.husen.highdsa.common.exception.StackTrace2Str;
+
 /**
  * @Desc MD5加密工具
  *
@@ -10,10 +15,13 @@ import java.security.NoSuchAlgorithmException;
  *
  * @Created at 2018年2月28日 下午12:09:52
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class Md5Encrypt {
-	private static final String KEY_MD5 = "MD5";
+	private static final Logger logger = LogManager.getLogger(Md5Encrypt.class.getName());
+
+	/** 加密算法 */
+	private static final String MD5_ALGORITHM = "MD5";
 	/** 全局数组 */
 	private static final String[] STRING_DIGITS = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c",
 			"d", "e", "f" };
@@ -21,19 +29,21 @@ public class Md5Encrypt {
 	/**
 	 * MD5加密
 	 * 
-	 * @param strObj
+	 * @param dataSource
 	 * @return
 	 * @throws Exception
 	 */
-	public static String getMD5Code(String strObj) {
+	public static String getMD5Code(String dataSource) {
 		MessageDigest md = null;
+
 		try {
-			md = MessageDigest.getInstance(KEY_MD5);
+			md = MessageDigest.getInstance(MD5_ALGORITHM);
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
+
 		// md.digest() 该函数返回值为存放哈希值结果的byte数组
-		return byteToString(md.digest(strObj.getBytes()));
+		return byteToString(md.digest(dataSource.getBytes()));
 	}
 
 	/**
@@ -63,15 +73,7 @@ public class Md5Encrypt {
 		for (int i = 0; i < bByte.length; i++) {
 			sBuffer.append(byteToArrayString(bByte[i]));
 		}
+		
 		return sBuffer.toString();
-	}
-
-	public static void main(String[] args) {
-		try {
-			System.out.println(getMD5Code("123123"));
-			System.out.println(getMD5Code("123123").length());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

@@ -1,5 +1,5 @@
 /**
- * @Desc DES加密工具
+ * @Desc MD5加密工具, 使用方法：必须导入JQuery,然后使用$.md5(dataSource)调用，如$.md5('husen')
  *
  * @Author 何明胜
  *
