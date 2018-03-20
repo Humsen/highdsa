@@ -20,6 +20,7 @@
 		<module>highdsa-service-redis</module>
 		<module>highdsa-service-message</module>
 		<module>highdsa-service-mybatis</module>
+		<module>highdsa-service-activemq</module>
 		<module>highdsa-web-email</module>
 		<module>highdsa-web-fastdfs</module>
 		<module>highdsa-web-redis</module>
