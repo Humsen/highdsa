@@ -29,6 +29,8 @@ public class JettyContainer implements Container {
 	public static final String JETTY_DIRECTORY = "dubbo.jetty.directory";
 	public static final String JETTY_PAGES = "dubbo.jetty.page";
 	public static final int DEFAULT_JETTY_PORT = 8082;
+	public static final String DRUID_LOGIN_USERNAME = "druid.login.username";
+	public static final String DRUID_LOGIN_PASSWORD = "druid.login.password";
 	private static final Logger logger = LoggerFactory.getLogger(JettyContainer.class);
 	SelectChannelConnector connector;
 
@@ -43,9 +45,8 @@ public class JettyContainer implements Container {
 		}
 		connector = new SelectChannelConnector();
 		connector.setPort(port);
-		//
-		ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);  
-		//ServletHandler handler = new ServletHandler();
+
+		ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
 		String resources = ConfigUtils.getProperty(JETTY_DIRECTORY);
 		if (resources != null && resources.length() > 0) {
@@ -57,20 +58,21 @@ public class JettyContainer implements Container {
 		pageHolder.setInitParameter("pages", ConfigUtils.getProperty(JETTY_PAGES));
 		pageHolder.setInitOrder(2);
 
-		/* -------------------- 添加druid开始  -------------------*/
-		
 		// 这里是新添加的，作用于druid日志监控系统的
+		String loginUsername = ConfigUtils.getProperty(DRUID_LOGIN_USERNAME);
+		String loginPassword = ConfigUtils.getProperty(DRUID_LOGIN_PASSWORD);
+		if (loginUsername == null || loginPassword == null) {
+			loginUsername = loginPassword = "husen";
+		}
 		ServletHolder druidHolder = new ServletHolder(StatViewServlet.class);
-		druidHolder.setInitParameter("loginUsername", "husen");
-		druidHolder.setInitParameter("loginPassword", "husen");
-		
-		// handler.addServletWithMapping(StatViewServlet.class, "/druid/*");
+		druidHolder.setInitParameter("loginUsername", loginUsername);
+		druidHolder.setInitParameter("loginPassword", loginPassword);
 		handler.addServlet(druidHolder, "/druid/*");
-		/* -------------------- 添加druid结束 -------------------*/
-		
+
 		Server server = new Server();
 		server.addConnector(connector);
 		server.setHandler(handler);
+
 		try {
 			server.start();
 		} catch (Exception e) {
