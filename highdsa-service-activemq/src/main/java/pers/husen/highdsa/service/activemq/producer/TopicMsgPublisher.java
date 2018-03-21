@@ -12,34 +12,33 @@ import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
 /**
- * @Desc 队列消息发送
+ * @Desc 订阅消息
  *
  * @Author 何明胜
  *
- * @Created at 2018年3月20日 下午4:11:14
+ * @Created at 2018年3月20日 下午4:13:28
  * 
  * @Version 1.0.1
  */
-@Resource
-@Service("queueMsgSender")
-public class QueueMsgSender {
-	private static final Logger logger = LogManager.getLogger(QueueMsgSender.class.getName());
+@Service("topicMsgSender")
+public class TopicMsgPublisher {
+	private static final Logger logger = LogManager.getLogger(TopicMsgPublisher.class.getName());
 
-	/** 通过@Qualifier修饰符来注入对应的bean */
-	@Resource(name = "jmsQueueTemplate")
-	private JmsTemplate jmsQueueTemplate;
+	@Resource(name = "jmsTopicTemplate")
+	private JmsTemplate jmsTopicTemplate;
 
 	/**
-	 * 发送对象消息
+	 * 发布一条对象消息
 	 * 
 	 * @param destination
+	 *            目的地
 	 * @param message
 	 */
-	public void sendMessage(String destination, final Object message) {
-		jmsQueueTemplate.send(destination, new MessageCreator() {
+	public void publishMessage(String destination, final Object message) {
+		jmsTopicTemplate.send(destination, new MessageCreator() {
 			@Override
 			public Message createMessage(Session session) throws JMSException {
-				return jmsQueueTemplate.getMessageConverter().toMessage(message, session);
+				return jmsTopicTemplate.getMessageConverter().toMessage(message, session);
 			}
 		});
 
@@ -47,13 +46,13 @@ public class QueueMsgSender {
 	}
 
 	/**
-	 * 发送文本消息
+	 * 发布一条文本消息
 	 * 
 	 * @param destination
 	 * @param message
 	 */
-	public void sendMessage(String destination, final String message) {
-		jmsQueueTemplate.send(new MessageCreator() {
+	public void publishMessage(String destination, final String message) {
+		jmsTopicTemplate.send(new MessageCreator() {
 			@Override
 			public Message createMessage(Session session) throws JMSException {
 				return session.createTextMessage(message);

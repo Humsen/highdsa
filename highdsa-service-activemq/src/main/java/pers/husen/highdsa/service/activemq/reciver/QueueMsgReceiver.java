@@ -25,14 +25,15 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  * @Version 1.0.0
  */
 @Component("queueReceiver")
-public class QueueReceiver extends MessageListenerAdapter {
-	private static final Logger logger = LogManager.getLogger(QueueReceiver.class.getName());
+public class QueueMsgReceiver extends MessageListenerAdapter {
+	private static final Logger logger = LogManager.getLogger(QueueMsgReceiver.class.getName());
 
+	@Override
 	@JmsListener(destination = MqDefination.SIMPLE_EMAIL_QUEUE, concurrency = "5-10")
 	public void onMessage(Message message, Session session) throws JMSException {
 		try {
 			SimpleEmailParams emailParams = (SimpleEmailParams) getMessageConverter().fromMessage(message);
-			logger.info("消费一个：" + emailParams.getMailTo());
+			logger.info("点对点收到：" + emailParams.getMailTo());
 			logger.info("当前会话详情：{}", session);
 			
 			message.acknowledge();
