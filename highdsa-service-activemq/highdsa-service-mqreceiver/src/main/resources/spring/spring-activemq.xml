@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.3.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.15.3.xsd">
+
+	<!-- 连接工厂 -->
+	<bean id="mqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- ActiveMQ服务地址 -->
+		<property name="brokerURL" value="${activemq.brokerURL}" />
+		<property name="userName" value="${activemq.userName}"></property>
+		<property name="password" value="${activemq.password}"></property>
+		<!-- 是否异步发送消息. 将该值开启官方说法是可以取得更高的发送速度(5倍) -->
+		<property name="useAsyncSend" value="true" />
+		<!-- 异步发送消息 -->
+		<property name="alwaysSessionAsync" value="true" />
+		<property name="useDedicatedTaskRunner" value="true" />
+		<!-- 启用序列化信任 -->
+		<property name="trustAllPackages" value="true" />
+	</bean>
+
+	<!-- ActiveMQ为我们提供了一个PooledConnectionFactory，通过往里面注入一个ActiveMQConnectionFactory 
+		可以用来将Connection、Session和MessageProducer池化，这样可以大大的减少我们的资源消耗,要依赖于 activemq-pool包 -->
+	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory" ref="mqConnectionFactory" />
+		<property name="maxConnections" value="${activemq.pool.maxConnections}" />
+	</bean>
+
+	<!-- Spring用于管理真正的连接工厂的ConnectionFactory -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory">
+		<!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->
+		<property name="targetConnectionFactory" ref="pooledConnectionFactory" />
+		<property name="sessionCacheSize" value="100" />
+	</bean>
+
+	<!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
+
+	<!-- 定义JmsTemplate的Queue类型 -->
+	<bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<constructor-arg ref="connectionFactory" />
+		<!-- 非pub/sub模型（发布/订阅）,即队列模式,一对一 -->
+		<property name="pubSubDomain" value="false" />
+		<property name="messageConverter" ref="jmsMessageConverter"></property>
+	</bean>
+
+	<!-- 定义JmsTemplate的Topic类型 -->
+	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<!-- pub/sub模型（发布/订阅）,一对多 -->
+		<property name="pubSubDomain" value="true" />
+		<property name="messageConverter" ref="jmsMessageConverter"></property>
+	</bean>
+
+	<!-- 监听注解支持 -->
+	<jms:annotation-driven />
+
+	<!-- 消息处理器 -->
+	<bean id="jmsMessageConverter"
+		class="org.springframework.jms.support.converter.SimpleMessageConverter" />
+
+	<!-- queue监听器容器 -->
+	<bean id="jmsListenerContainerFactory"
+		class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+		<property name="connectionFactory" ref="connectionFactory" />
+	</bean>
+
+	<!-- Topic消息监听器 -->
+	<bean id="messageListenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory"></property>
+		<property name="destination" ref="topicDestination"></property>
+		<property name="messageListener" ref="topicMsgReceiver"></property>
+	</bean>
+</beans>
