@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pers.husen.highdsa.common.constant.JsonKey3Value;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.common.exception.custom.SqlException;
+import pers.husen.highdsa.common.exception.db.SqlException;
 
 /**
  * @Desc 全局异常拦截器

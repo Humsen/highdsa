@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
+import pers.husen.highdsa.common.exception.codec.CodecException;
 
 /**
  * @Desc 类型转换
@@ -28,6 +29,16 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  */
 public class ConvertType {
 	private static final Logger logger = LogManager.getLogger(ConvertType.class.getName());
+
+	public static byte[] toBytes(String source, String encoding) throws CodecException {
+		try {
+			return source.getBytes(encoding);
+		} catch (UnsupportedEncodingException e) {
+			String msg = "Unable to convert source [" + source + "] to byte array using " + "encoding '" + encoding
+					+ "'";
+			throw new CodecException(msg, e);
+		}
+	}
 
 	/**
 	 * 字符串数组转String
@@ -54,7 +65,7 @@ public class ConvertType {
 	public static String byteArray2String(byte[] byteArray) throws UnsupportedEncodingException {
 		return new String(byteArray, Encode.DEFAULT_ENCODE);
 	}
-	
+
 	/**
 	 * 序列化对象
 	 * 
@@ -130,7 +141,7 @@ public class ConvertType {
 		}
 
 		logger.info("序列化成功, 结果字节数组长度={}", byteArray.length);
-		
+
 		return byteArray;
 	}
 
@@ -164,7 +175,7 @@ public class ConvertType {
 		}
 
 		logger.info("反序列化成功, 结果为：{}", list.toString());
-		
+
 		return list;
 	}
 
@@ -193,7 +204,7 @@ public class ConvertType {
 		}
 
 		logger.info("序列化成功, 结果字节数组长度={}", byteArray.length);
-		
+
 		return byteArray;
 	}
 
@@ -227,7 +238,7 @@ public class ConvertType {
 		}
 
 		logger.info("反序列化成功, 结果为：{}", set.toString());
-		
+
 		return set;
 	}
 }

@@ -25,6 +25,10 @@
 			<artifactId>highdsa-common-log4j2</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>pers.husen.highdsa</groupId>
+			<artifactId>highdsa-common-exception</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
