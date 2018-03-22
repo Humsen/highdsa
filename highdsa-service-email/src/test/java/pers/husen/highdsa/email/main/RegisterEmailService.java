@@ -17,7 +17,9 @@ public class RegisterEmailService {
 	public static void main(String[] args) throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"spring/email-provider.xml"});
         context.start();
-        System.out.println("服务已经启动...");
+       
+        System.out.println("=============== 邮件发送服务已经启动... ==================");
+        
         System.in.read();
         context.close();
     }

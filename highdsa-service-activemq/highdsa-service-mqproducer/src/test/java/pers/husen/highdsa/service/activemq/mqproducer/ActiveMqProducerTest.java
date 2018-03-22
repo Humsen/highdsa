@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import pers.husen.highdsa.common.constant.MqDefination;
-import pers.husen.highdsa.common.entity.vo.email.SimpleEmailParams;
-import pers.husen.highdsa.service.activemq.mqproducer.QueueMsgSender;
-import pers.husen.highdsa.service.activemq.mqproducer.TopicMsgPublisher;
+import pers.husen.highdsa.common.constant.MsgQueueDefine;
+import pers.husen.highdsa.common.entity.vo.email.EmailParams;
+import pers.husen.highdsa.service.activemq.mqproducer.QueueMsgSenderImpl;
+import pers.husen.highdsa.service.activemq.mqproducer.TopicMsgPublisherImpl;
 
 /**
  * @Desc 测试消息生产者
@@ -24,39 +24,39 @@ import pers.husen.highdsa.service.activemq.mqproducer.TopicMsgPublisher;
 public class ActiveMqProducerTest {
 	ClassPathXmlApplicationContext context;
 
-	private QueueMsgSender queueSender;
-	private TopicMsgPublisher topicSender;
+	private QueueMsgSenderImpl queueSender;
+	private TopicMsgPublisherImpl topicSender;
 
 	@Before
 	public void before() {
 		context = new ClassPathXmlApplicationContext("classpath:spring/spring-context.xml");
 		context.start();
 
-		queueSender = (QueueMsgSender) context.getBean("queueMsgSender");
-		topicSender = (TopicMsgPublisher) context.getBean("topicMsgPublisher");
+		queueSender = (QueueMsgSenderImpl) context.getBean("queueMsgSender");
+		topicSender = (TopicMsgPublisherImpl) context.getBean("topicMsgPublisher");
 
 		System.out.println("=============== activemq已经启动... ==================");
 	}
 
 	@Test
 	public void testSendQueue() {
-		SimpleEmailParams emailParams = new SimpleEmailParams();
+		EmailParams emailParams = new EmailParams();
 
 		for (int i = 1; i <= 100; i++) {
 			emailParams.setMailTo("第 " + i + " 个收件人");
 
-			queueSender.sendMessage(MqDefination.SIMPLE_EMAIL_QUEUE, emailParams);
+			queueSender.sendMessage(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, emailParams);
 		}
 	}
 
 	@Test
 	public void testPublishTopic() {
-		SimpleEmailParams emailParams = new SimpleEmailParams();
+		EmailParams emailParams = new EmailParams();
 
 		for (int i = 1; i <= 100; i++) {
 			emailParams.setMailTo("第 " + i + " 个收件人");
 
-			topicSender.publishMessage(MqDefination.SIMPLE_EMAIL_TOPIC, emailParams);
+			topicSender.publishMessage(MsgQueueDefine.SIMPLE_EMAIL_TOPIC, emailParams);
 		}
 	}
 

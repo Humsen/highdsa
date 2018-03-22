@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import pers.husen.highdsa.common.response.BaseController;
+import pers.husen.highdsa.common.controller.BaseController;
+import pers.husen.highdsa.web.redis.handler.RedisSvc;
 
 /**
  * @Desc redis消费者
@@ -16,7 +17,7 @@ import pers.husen.highdsa.common.response.BaseController;
  *
  * @Created at 2018年3月3日 下午6:46:16
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @RestController
 @RequestMapping(value = "/redis/v1")
@@ -117,8 +118,8 @@ public class RedisController extends BaseController {
 
 	/* ------------------------------ close pools ------------------------------ */
 
-	@RequestMapping(value = "/pool.hms", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "/pool.hms", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
 	public String closeRedisPool() {
 
 		return redisSvc.closeRedisPool();

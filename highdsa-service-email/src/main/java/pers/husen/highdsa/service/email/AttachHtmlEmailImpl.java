@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.constant.ResponseConstants;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.service.email.EmailWithAttachment;
+import pers.husen.highdsa.service.email.AttachHtmlEmail;
 import pers.husen.highdsa.service.email.core.SaveEmail;
 import pers.husen.highdsa.service.email.core.SendEmailCore;
 
@@ -35,11 +35,11 @@ import pers.husen.highdsa.service.email.core.SendEmailCore;
  * 
  * @Version 1.0.1
  */
-public class EmailWithAttachmentImpl implements EmailWithAttachment {
-	private final Logger logger = LogManager.getLogger(EmailWithAttachmentImpl.class.getName());
+public class AttachHtmlEmailImpl implements AttachHtmlEmail {
+	private final Logger logger = LogManager.getLogger(AttachHtmlEmailImpl.class.getName());
 
 	@Override
-	public int sendEmail2User(String userEmail, String subject, String content, File attachment) {
+	public int sendEmail2User(String userEmail, String subject, String content, String attachment) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			// 获取配置文件
@@ -66,14 +66,17 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 			contentPart.setContent(content, "text/html;charset=UTF-8");
 			multipart.addBodyPart(contentPart);
 
+			// TODO - 此处调用 fastdfs java 客户端返回文件或者下载文件后在本地的路径
+			File attachFile = new File(attachment);
+			
 			// 添加附件的内容
-			if (attachment != null) {
+			if (attachFile != null) {
 				BodyPart attachmentBodyPart = new MimeBodyPart();
-				DataSource source = new FileDataSource(attachment);
+				DataSource source = new FileDataSource(attachFile);
 				attachmentBodyPart.setDataHandler(new DataHandler(source));
 
 				// MimeUtility.encodeWord可以避免文件名乱码
-				attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachment.getName()));
+				attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachFile.getName()));
 				multipart.addBodyPart(attachmentBodyPart);
 			}
 
@@ -91,21 +94,21 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 			// 关闭连接
 			transport.close();
 
-			logger.info("发送邮件成功! 主题：{}, 收件人：{}, 内容：{}, 附件名称：{}", subject, userEmail, content, attachment.getName());
+			logger.info("发送邮件成功! 主题：{}, 收件人：{}, 内容：{}, 附件名称：{}", subject, userEmail, content, attachFile.getName());
 
 			// 保存邮件
 			new SaveEmail(message);
-			
+
 			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
-		
+
 		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
 	}
 
 	@Override
-	public int sendEmail2Admin(String name, String senderEmail, String phone, String content, File attachment) {
+	public int sendEmail2Admin(String name, String senderEmail, String phone, String content, String attachment) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			Session session = sendEmailCore.getSession("email/all2admin-mail.properties");
@@ -131,14 +134,17 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 			contentPart.setContent(content, "text/html;charset=UTF-8");
 			multipart.addBodyPart(contentPart);
 
+			// TODO - 此处调用 fastdfs java 客户端返回文件或者下载文件后在本地的路径
+			File attachFile = new File(attachment);
+			
 			// 添加附件的内容
-			if (attachment != null) {
+			if (attachFile != null) {
 				BodyPart attachmentBodyPart = new MimeBodyPart();
-				DataSource source = new FileDataSource(attachment);
+				DataSource source = new FileDataSource(attachFile);
 				attachmentBodyPart.setDataHandler(new DataHandler(source));
 
 				// MimeUtility.encodeWord可以避免文件名乱码
-				attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachment.getName()));
+				attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachFile.getName()));
 				multipart.addBodyPart(attachmentBodyPart);
 			}
 
@@ -161,12 +167,12 @@ public class EmailWithAttachmentImpl implements EmailWithAttachment {
 
 			// 保存邮件
 			new SaveEmail(message);
-			
+
 			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
-		
+
 		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
 	}
 }

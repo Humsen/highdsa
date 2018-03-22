@@ -7,7 +7,7 @@ package pers.husen.highdsa.service.email;
  *
  * @Created at 2018年2月3日 下午7:37:37
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public interface SimpleHtmlEmail {
 	/**
@@ -17,7 +17,7 @@ public interface SimpleHtmlEmail {
 	 * @param randomCode
 	 * @return
 	 */
-	public int sendEmail4RetrivePwd(String email, int randomCode);
+	public int sendEmail4RetrivePwd(String mailTo, int randomCode);
 
 	/**
 	 * 新用户注册邮箱验证
@@ -26,7 +26,7 @@ public interface SimpleHtmlEmail {
 	 * @param randomCode
 	 * @return
 	 */
-	public int sendEmail4Register(String email, int randomCode);
+	public int sendEmail4Register(String mailTo, int randomCode);
 
 	/**
 	 * 用户修改邮箱验证原邮箱
@@ -35,7 +35,7 @@ public interface SimpleHtmlEmail {
 	 * @param randomCode
 	 * @return
 	 */
-	public int sendEmail4ModufyEmailAuth(String email, int randomCode);
+	public int sendEmail4ModifyEmailAuth(String mailTo, int randomCode);
 
 	/**
 	 * 用户修改邮箱绑定新邮箱
@@ -44,7 +44,7 @@ public interface SimpleHtmlEmail {
 	 * @param randomCode
 	 * @return
 	 */
-	public int sendEmail4ModufyEmailBind(String email, int randomCode);
+	public int sendEmail4ModifyEmailBind(String mailTo, int randomCode);
 
 	/**
 	 * 发送邮件给用户（发送验证码通用函数）
@@ -54,7 +54,7 @@ public interface SimpleHtmlEmail {
 	 * @param content
 	 * @return
 	 */
-	public int sendEmail2User(String email, String subject, String content);
+	public int sendEmail2User(String mailTo, String subject, String content);
 
 	/** ----------------- 分割线 --------------------- */
 
@@ -67,7 +67,7 @@ public interface SimpleHtmlEmail {
 	 * @param content
 	 * @return
 	 */
-	public int sendEmail4UserFeedback(String name, String email, String phone, String content);
+	public int sendEmail4UserFeedback(String nameFrom, String mailFrom, String phoneFrom, String content);
 
 	/**
 	 * 发邮件给站长（联系站长）
@@ -78,5 +78,5 @@ public interface SimpleHtmlEmail {
 	 * @param content
 	 * @return
 	 */
-	public int sendEmail2Admin(String name, String email, String phone, String content);
+	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content);
 }

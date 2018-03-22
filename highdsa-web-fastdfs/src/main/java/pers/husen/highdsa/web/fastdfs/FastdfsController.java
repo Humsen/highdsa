@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import pers.husen.highdsa.web.fastdfs.handler.FastdfsSvc;
+
 /**
  * @Desc 文件消费者
  *
@@ -26,10 +28,10 @@ public class FastdfsController {
 	@Autowired
 	FastdfsSvc fastdfsSvc;
 
-	@RequestMapping(value = "/upload.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value = "/upload.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String fileUpload(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
-		
+
 		return fastdfsSvc.fileUpload(request, response);
 	}
 }

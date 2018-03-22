@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.message.sms;
+package pers.husen.highdsa.web.message.sms.handler;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -24,12 +24,12 @@ import pers.husen.highdsa.service.message.SendSms;
  *
  * @Created at 2018年3月13日 上午10:11:18
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 @Service
 public class SendSmsSvc {
 	private static final Logger logger = LogManager.getLogger(SendSmsSvc.class.getName());
-	private final ObjectMapper objectMapper = new ObjectMapper();
+	private static final ObjectMapper objectMapper = new ObjectMapper();
 
 	@Autowired
 	private SendSms sendSms;

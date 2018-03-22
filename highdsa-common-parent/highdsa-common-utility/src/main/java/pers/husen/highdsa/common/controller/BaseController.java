@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.response;
+package pers.husen.highdsa.common.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

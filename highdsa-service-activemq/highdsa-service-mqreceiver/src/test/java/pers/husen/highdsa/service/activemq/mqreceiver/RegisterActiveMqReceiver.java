@@ -11,7 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 
  * @Version 1.0.0
  */
-public class ActiveMqReceiverTest {
+public class RegisterActiveMqReceiver {
 	public static void main(String[] args) {
 		try {
 			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(

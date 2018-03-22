@@ -1,7 +1,5 @@
 package pers.husen.highdsa.service.email;
 
-import java.io.File;
-
 /**
  * @Desc 带附件的邮件服务
  *
@@ -9,13 +7,13 @@ import java.io.File;
  *
  * @Created at 2018年2月5日 下午4:28:42
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
-public interface EmailWithAttachment {
+public interface AttachHtmlEmail {
 	/**
 	 * 发送邮件给用户
 	 * 
-	 * @param userEmail
+	 * @param mailTo
 	 *            用户邮箱（收件人）
 	 * @param subject
 	 *            标题
@@ -23,24 +21,24 @@ public interface EmailWithAttachment {
 	 *            内容
 	 * @param attachment
 	 *            附件
-	 * @return 
+	 * @return
 	 */
-	public int sendEmail2User(String userEmail, String subject, String content, File attachment);
+	public int sendEmail2User(String mailTo, String subject, String content, String attachment);
 
 	/**
 	 * 发送带附件的邮件给管理员
 	 * 
-	 * @param name
+	 * @param nameFrom
 	 *            发件人姓名
-	 * @param senderEmail
+	 * @param mailFrom
 	 *            发件人邮箱
-	 * @param phone
+	 * @param phoneFrom
 	 *            发件人电话
 	 * @param content
 	 *            内容
 	 * @param attachment
 	 *            附件
-	 * @return 
+	 * @return
 	 */
-	public int sendEmail2Admin(String name, String senderEmail, String phone, String content, File attachment);
+	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, String attachment);
 }

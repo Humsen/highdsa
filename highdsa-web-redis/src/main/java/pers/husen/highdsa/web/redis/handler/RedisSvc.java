@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.redis;
+package pers.husen.highdsa.web.redis.handler;
 
 import java.io.IOException;
 import java.util.Map;
@@ -26,10 +26,10 @@ import pers.husen.highdsa.service.redis.RedisPools;
  *
  * @Created at 2018年3月13日 下午8:52:20
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class RedisSvc {
-	private final Logger logger = LogManager.getLogger(RedisController.class.getName());
+	private final Logger logger = LogManager.getLogger(RedisSvc.class.getName());
 
 	@Autowired
 	private RedisPools redisPools;

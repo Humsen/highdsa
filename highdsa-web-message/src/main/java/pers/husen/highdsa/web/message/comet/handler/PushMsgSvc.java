@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.message.comet;
+package pers.husen.highdsa.web.message.comet.handler;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -21,7 +21,7 @@ import pers.husen.highdsa.service.message.PushMsg;
  *
  * @Created at 2018年3月13日 下午4:27:26
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 @Service
 public class PushMsgSvc {

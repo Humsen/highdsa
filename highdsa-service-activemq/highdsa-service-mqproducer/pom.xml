@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-service-activemq</artifactId>
-		<version>0.6.1-SNAPSHOT</version>
+		<version>0.6.8-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>highdsa-service-mqproducer</artifactId>
@@ -25,7 +26,6 @@
 		<dependency>
 			<groupId>org.apache.xbean</groupId>
 			<artifactId>xbean-spring</artifactId>
-			<version>4.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -34,12 +34,48 @@
 		<!-- activemq -->
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-all</artifactId>
-			<version>5.15.3</version>
+			<artifactId>activemq-broker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-kahadb-store</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-spring</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<resources>
+			<!-- 配置文件 -->
+			<resource>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>activemq.properties</include>
+				</includes>
+			</resource>
+			<!-- spring相关配置文件 -->
+			<resource>
+				<targetPath>${project.build.directory}/classes/META-INF/spring</targetPath>
+				<directory>src/main/resources/spring</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>activemq-provider.xml</include>
+					<include>spring-activemq.xml</include>
+					<include>spring-context.xml</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
 </project>

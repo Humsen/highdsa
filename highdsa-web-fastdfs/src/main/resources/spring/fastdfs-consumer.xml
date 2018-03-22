@@ -14,5 +14,5 @@
 
 	<!-- 声明需要暴露的服务接口 -->
 	<dubbo:reference interface="pers.husen.highdsa.service.fastdfs.Fastdfs"
-		id="fastdfsService" timeout="100000" check="false" />
+		id="fastdfs" timeout="100000" check="false" />
 </beans>

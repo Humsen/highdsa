@@ -29,7 +29,7 @@ import pers.husen.highdsa.service.email.core.SendEmailCore;
  *
  * @Created at 2018年2月3日 下午5:22:44
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	private final Logger logger = LogManager.getLogger(SimpleHtmlEmailImpl.class.getName());
@@ -61,7 +61,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	}
 
 	@Override
-	public int sendEmail4ModufyEmailAuth(String email, int randomCode) {
+	public int sendEmail4ModifyEmailAuth(String email, int randomCode) {
 		String subject = "【highdsa项目组】用户修改邮箱验证原邮箱";
 		String mode = "您正在使用修改邮箱功能。第一步，验证码您的原邮箱。";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>"
@@ -73,7 +73,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	}
 
 	@Override
-	public int sendEmail4ModufyEmailBind(String email, int randomCode) {
+	public int sendEmail4ModifyEmailBind(String email, int randomCode) {
 		String subject = "【highdsa项目组】用户修改邮箱绑定新邮箱";
 		String mode = "您正在使用修改邮箱功能。第二步，绑定您的新邮箱。";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>"

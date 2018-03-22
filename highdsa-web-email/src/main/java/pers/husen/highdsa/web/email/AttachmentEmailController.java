@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import pers.husen.highdsa.web.response.ResponseResult;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import pers.husen.highdsa.web.email.handler.AttachmentEmailSvc;
 
 /**
  * @Desc 带附件的邮件REST API
@@ -16,7 +18,7 @@ import pers.husen.highdsa.web.response.ResponseResult;
  *
  * @Created at 2018年2月6日 上午9:27:56
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @RestController
 @RequestMapping("/email/attachment/v1")
@@ -24,18 +26,20 @@ public class AttachmentEmailController {
 	@Autowired
 	AttachmentEmailSvc attachmentEmailSvc;
 
-	@RequestMapping(value = "/formal/2user.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public ResponseResult sendAttachmentEmail2User(String email, String subject, String content, String filepath) {
-		
-		return attachmentEmailSvc.sendAttachmentEmail2User(email, subject, content, filepath);
+	@RequestMapping(value = "/formal/2user.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String sendAttachmentEmail2User(String mailTo, String subject, String content, String attachment)
+			throws JsonProcessingException {
+
+		return attachmentEmailSvc.sendAttachmentEmail2User(mailTo, subject, content, attachment);
 	}
 
-	@RequestMapping(value = "/formal/2admin.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public ResponseResult sendEmail2Admin(String name, @RequestParam(value = "sender_email") String senderEmail,
-			String phone, String content, String filepath) {
-		
-		return attachmentEmailSvc.sendEmail2Admin(name, senderEmail, phone, content, filepath);
+	@RequestMapping(value = "/formal/2admin.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String sendEmail2Admin(@RequestParam(value = "name_from") String nameFrom,
+			@RequestParam(value = "mail_from") String mailFrom, @RequestParam(value = "phone_from") String phoneFrom,
+			String content, String attachment) throws JsonProcessingException {
+
+		return attachmentEmailSvc.sendEmail2Admin(nameFrom, mailFrom, phoneFrom, content, attachment);
 	}
 }

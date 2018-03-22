@@ -15,8 +15,8 @@ import org.springframework.jms.listener.adapter.MessageListenerAdapter;
 import org.springframework.jms.support.converter.MessageConversionException;
 import org.springframework.stereotype.Component;
 
-import pers.husen.highdsa.common.constant.MqDefination;
-import pers.husen.highdsa.common.entity.vo.email.SimpleEmailParams;
+import pers.husen.highdsa.common.constant.MsgQueueDefine;
+import pers.husen.highdsa.common.entity.vo.email.EmailParams;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 
 /**
@@ -29,8 +29,8 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  * @Version 1.0.1
  */
 @Component("topicMsgReceiver")
-public class TopicMsgReceiver extends MessageListenerAdapter {
-	private static final Logger logger = LogManager.getLogger(TopicMsgReceiver.class.getName());
+public class EmailTopicMsgReceiver extends MessageListenerAdapter {
+	private static final Logger logger = LogManager.getLogger(EmailTopicMsgReceiver.class.getName());
 
 	@Resource(name = "jmsTopicTemplate")
 	private JmsTemplate jmsTopicTemplate;
@@ -42,13 +42,13 @@ public class TopicMsgReceiver extends MessageListenerAdapter {
 	 */
 	@Bean(name = "topicDestination")
 	private ActiveMQTopic initTopicDestination() {
-		return new ActiveMQTopic(MqDefination.SIMPLE_EMAIL_TOPIC);
+		return new ActiveMQTopic(MsgQueueDefine.SIMPLE_EMAIL_TOPIC);
 	}
 
 	@Override
 	public void onMessage(Message message, Session session) throws JMSException {
 		try {
-			SimpleEmailParams emailParams = (SimpleEmailParams) getMessageConverter().fromMessage(message);
+			EmailParams emailParams = (EmailParams) getMessageConverter().fromMessage(message);
 			logger.info("订阅者收到：" + emailParams.getMailTo());
 			logger.info("当前会话详情：{}", session);
 
@@ -57,7 +57,7 @@ public class TopicMsgReceiver extends MessageListenerAdapter {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 
 			// 发送异常，重新放回队列
-			jmsTopicTemplate.send(MqDefination.SIMPLE_EMAIL_TOPIC, new MessageCreator() {
+			jmsTopicTemplate.send(MsgQueueDefine.SIMPLE_EMAIL_TOPIC, new MessageCreator() {
 				@Override
 				public Message createMessage(Session session) throws JMSException {
 					return jmsTopicTemplate.getMessageConverter().toMessage(message, session);
