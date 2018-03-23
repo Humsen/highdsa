@@ -92,6 +92,7 @@ public class HighdsaException extends RuntimeException {
 	}
 
 	/* ----------------------- setter/getter ---------------------------*/
+	
 	public int getErrorCode() {
 		return errorCode;
 	}

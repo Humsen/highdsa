@@ -26,18 +26,18 @@ import pers.husen.highdsa.service.activemq.QueueMsgSender;
 public class AttachmentEmailSvc {
 	private static final Logger logger = LogManager.getLogger(AttachmentEmailSvc.class.getName());
 
-	private static final ObjectMapper objectMapper = new ObjectMapper();
+	private final ObjectMapper objectMapper = new ObjectMapper();
 	private SimpleJson simpleJson;
 
 	@Autowired
 	private QueueMsgSender queueMsgSender;
 
-	public String sendAttachmentEmail2User(String mailTo, String subject, String content, String attachment)
-			throws JsonProcessingException {
+	public String sendAttachmentEmail2User(String mailTo, String subject, String content, String attachUrl,
+			String attachName) throws JsonProcessingException {
 		String reply = null;
 
-		AttachEmailParams attachEmailParams = new AttachEmailParams(mailTo, subject, content, attachment,
-				Thread.currentThread().getStackTrace()[1].getMethodName());
+		AttachEmailParams attachEmailParams = new AttachEmailParams(mailTo, subject, content,
+				Thread.currentThread().getStackTrace()[1].getMethodName(), attachUrl, attachName);
 
 		queueMsgSender.sendMessage(MsgQueueDefine.ATTACH_EMAIL_QUEUE, attachEmailParams);
 		simpleJson = new SimpleJson(true, "给用户发附件邮件成功");
@@ -48,12 +48,12 @@ public class AttachmentEmailSvc {
 		return reply;
 	}
 
-	public String sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, String attachment)
-			throws JsonProcessingException {
+	public String sendAttachEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content,
+			String attachUrl, String attachName) throws JsonProcessingException {
 		String reply = null;
 
-		AttachEmailParams attachEmailParams = new AttachEmailParams(nameFrom, mailFrom, phoneFrom, content, attachment,
-				Thread.currentThread().getStackTrace()[1].getMethodName());
+		AttachEmailParams attachEmailParams = new AttachEmailParams(nameFrom, mailFrom, phoneFrom, content,
+				Thread.currentThread().getStackTrace()[1].getMethodName(), attachUrl, attachName);
 
 		queueMsgSender.sendMessage(MsgQueueDefine.ATTACH_EMAIL_QUEUE, attachEmailParams);
 		simpleJson = new SimpleJson(true, "给管理员发附件邮件成功");

@@ -1,8 +1,5 @@
 package pers.husen.highdsa.service.fastdfs;
 
-
-
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,6 +24,7 @@ import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
+import pers.husen.highdsa.common.utility.ConvertType;
 
 /**
  * @Desc fastdfs 文件存储
@@ -35,7 +33,7 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  *
  * @Created at 2018年2月13日 下午2:58:20
  * 
- * @Version 1.0.1
+ * @Version 1.0.3
  */
 public class FastdfsImpl implements Fastdfs {
 	private final Logger logger = LogManager.getLogger(FastdfsImpl.class.getName());
@@ -58,46 +56,21 @@ public class FastdfsImpl implements Fastdfs {
 		 * ClientGlobal.setG_tracker_group(new TrackerGroup(tracker_servers));
 		 */
 
-		logger.info("初始化完成.<network_timeout={}ms,charset={}>",ClientGlobal.g_network_timeout,ClientGlobal.g_charset);
+		logger.info("初始化完成.<network_timeout={}ms,charset={}>", ClientGlobal.g_network_timeout, ClientGlobal.g_charset);
 	}
 
-	private byte[] getFileBuffer(InputStream inStream) throws IOException {
-		logger.fatal(inStream.available());
-		byte[] buffer = new byte[256 * 1024];
-		//byte[] fileBuffer = new byte[(int) fileLength];
-		ByteArrayOutputStream bOutputStream = new ByteArrayOutputStream();
-        
-		//int count = 0;
-		int length = 0;
-
-		while ((length = inStream.read(buffer)) != -1) {
-			/*for (int i = 0; i < length; ++i) {
-				fileBuffer[count + i] = buffer[i];
-			}*/
-			logger.fatal(length);
-			bOutputStream.write(buffer,0,length);
-			//count += length;
-		}
-		
-		bOutputStream.close();
-		
-		return bOutputStream.toByteArray();
+	public Map<String, String> uploadFile(FileInputStream inStream, String uploadFileName) throws IOException {
+		return uploadFile(ConvertType.inStream2ByteArray(inStream), uploadFileName);
 	}
 
-	/* ------------------- 分割线 ------------------------ */
-
-	public Map<String, String> uploadFile(FileInputStream inStream, String uploadFileName) throws IOException{
-		return uploadFile(getFileBuffer(inStream), uploadFileName);
-	}
-	
 	@Override
 	public Map<String, String> uploadFile(byte[] fileBuff, String uploadFileName) throws IOException {
 		Map<String, String> replyMap = new HashMap<>(20);
-		
+
 		// 初始化
 		init();
 		logger.info("开始上传文件...");
-		//byte[] fileBuff = getFileBuffer(inputStream);
+		// byte[] fileBuff = getFileBuffer(inputStream);
 		String[] files = null;
 		String fileExtName = "";
 		String period = ".";
@@ -135,7 +108,7 @@ public class FastdfsImpl implements Fastdfs {
 			replyMap.put("group_name", files[0]);
 			replyMap.put("remote_filename", files[1]);
 			logger.info("group_name: " + files[0] + ", remote_filename: " + files[1]);
-			
+
 			try {
 				logger.info(client.get_file_info(files[0], files[1]));
 			} catch (MyException e) {
@@ -148,7 +121,7 @@ public class FastdfsImpl implements Fastdfs {
 			} else {
 				replyMap.put("storage_servers_count", String.valueOf(servers.length));
 				logger.info("storage servers count: " + servers.length);
-				
+
 				for (int k = 0; k < servers.length; k++) {
 					replyMap.put(String.valueOf(k + 1), servers[k].getIpAddr() + ":" + servers[k].getPort());
 					logger.info((k + 1) + ". " + servers[k].getIpAddr() + ":" + servers[k].getPort());
@@ -196,7 +169,8 @@ public class FastdfsImpl implements Fastdfs {
 	}
 
 	@Override
-	public void downloadFile(String groupName, String filepath) throws Exception {
+	public void downloadFile(String groupName, String remoteFilenNme, String saveFilePath)
+			throws IOException, MyException {
 		// 初始化
 		init();
 		logger.info("开始下载文件...");
@@ -205,19 +179,41 @@ public class FastdfsImpl implements Fastdfs {
 		StorageServer storageServer = null;
 
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
-		byte[] b = storageClient.download_file(groupName, filepath);
+		byte[] byteArray = storageClient.download_file(groupName, remoteFilenNme);
 
-		if (b == null) {
+		if (byteArray == null) {
 			logger.error("下载失败");
 		} else {
-			logger.info("下载成功, 文件大小: " + b.length);
+			logger.info("下载成功, 文件大小: " + byteArray.length);
 		}
 
-		String fileName = filepath.substring(filepath.lastIndexOf(".") + 1);
-		FileOutputStream out = new FileOutputStream("src/main/resources/result." + fileName);
-		out.write(b);
+		// String fileName = filepath.substring(filepath.lastIndexOf(".") + 1);
+		FileOutputStream out = new FileOutputStream(saveFilePath);
+		out.write(byteArray);
 		out.flush();
 		out.close();
+	}
+
+	@Override
+	public InputStream downloadFile(String groupName, String remoteFilenNme) throws Exception {
+		init();
+		logger.info("开始下载文件...");
+		TrackerClient tracker = new TrackerClient();
+		TrackerServer trackerServer = tracker.getConnection();
+		StorageServer storageServer = null;
+
+		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
+		byte[] byteArray = storageClient.download_file(groupName, remoteFilenNme);
+
+		if (byteArray == null) {
+			logger.error("下载失败");
+		} else {
+			logger.info("下载成功, 文件大小: " + byteArray.length);
+		}
+
+		InputStream inStream = ConvertType.byteArray2InStream(byteArray);
+
+		return inStream;
 	}
 
 	@Override

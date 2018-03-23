@@ -29,7 +29,7 @@ import pers.husen.highdsa.service.message.SendSms;
 @Service
 public class SendSmsSvc {
 	private static final Logger logger = LogManager.getLogger(SendSmsSvc.class.getName());
-	private static final ObjectMapper objectMapper = new ObjectMapper();
+	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	@Autowired
 	private SendSms sendSms;

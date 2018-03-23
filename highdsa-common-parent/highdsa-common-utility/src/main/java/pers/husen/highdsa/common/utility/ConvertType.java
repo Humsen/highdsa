@@ -3,6 +3,7 @@ package pers.husen.highdsa.common.utility;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -25,12 +26,54 @@ import pers.husen.highdsa.common.exception.codec.CodecException;
  *
  * @Created at 2018年3月1日 下午1:01:47
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class ConvertType {
 	private static final Logger logger = LogManager.getLogger(ConvertType.class.getName());
 
-	public static byte[] toBytes(String source, String encoding) throws CodecException {
+	/**
+	 * 字节数组转输入流
+	 * 
+	 * @param byteArray
+	 * @return
+	 */
+	public static InputStream byteArray2InStream(byte[] byteArray) {
+		return new ByteArrayInputStream(byteArray);
+	}
+
+	/**
+	 * 输入流转字节数组
+	 * 
+	 * @param inStream
+	 * @return
+	 * @throws IOException
+	 */
+	public static byte[] inStream2ByteArray(InputStream inStream) throws IOException {
+		logger.fatal(inStream.available());
+		byte[] buffer = new byte[256 * 1024];
+		ByteArrayOutputStream bOutputStream = new ByteArrayOutputStream();
+
+		int length = 0;
+
+		while ((length = inStream.read(buffer)) != -1) {
+			logger.fatal(length);
+			bOutputStream.write(buffer, 0, length);
+		}
+
+		bOutputStream.close();
+
+		return bOutputStream.toByteArray();
+	}
+
+	/**
+	 * 字符串转字节数组
+	 * 
+	 * @param source
+	 * @param encoding
+	 * @return
+	 * @throws CodecException
+	 */
+	public static byte[] str2ByteArray(String source, String encoding) throws CodecException {
 		try {
 			return source.getBytes(encoding);
 		} catch (UnsupportedEncodingException e) {

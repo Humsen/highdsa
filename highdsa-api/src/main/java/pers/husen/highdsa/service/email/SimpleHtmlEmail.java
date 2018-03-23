@@ -13,7 +13,7 @@ public interface SimpleHtmlEmail {
 	/**
 	 * 找回密码邮箱验证
 	 * 
-	 * @param email
+	 * @param mailTo
 	 * @param randomCode
 	 * @return
 	 */
@@ -22,7 +22,7 @@ public interface SimpleHtmlEmail {
 	/**
 	 * 新用户注册邮箱验证
 	 * 
-	 * @param email
+	 * @param mailTo
 	 * @param randomCode
 	 * @return
 	 */
@@ -31,7 +31,7 @@ public interface SimpleHtmlEmail {
 	/**
 	 * 用户修改邮箱验证原邮箱
 	 * 
-	 * @param email
+	 * @param mailTo
 	 * @param randomCode
 	 * @return
 	 */
@@ -40,7 +40,7 @@ public interface SimpleHtmlEmail {
 	/**
 	 * 用户修改邮箱绑定新邮箱
 	 * 
-	 * @param email
+	 * @param mailTo
 	 * @param randomCode
 	 * @return
 	 */
@@ -49,7 +49,7 @@ public interface SimpleHtmlEmail {
 	/**
 	 * 发送邮件给用户（发送验证码通用函数）
 	 * 
-	 * @param email
+	 * @param mailTo
 	 * @param subject
 	 * @param content
 	 * @return
@@ -61,9 +61,9 @@ public interface SimpleHtmlEmail {
 	/**
 	 * 用户反馈联系管理员
 	 * 
-	 * @param name
-	 * @param email
-	 * @param phone
+	 * @param nameFrom
+	 * @param mailFrom
+	 * @param phoneFrom
 	 * @param content
 	 * @return
 	 */
@@ -72,9 +72,9 @@ public interface SimpleHtmlEmail {
 	/**
 	 * 发邮件给站长（联系站长）
 	 * 
-	 * @param name
-	 * @param email
-	 * @param phone
+	 * @param nameFrom
+	 * @param mailFrom
+	 * @param phoneFrom
 	 * @param content
 	 * @return
 	 */

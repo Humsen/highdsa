@@ -16,7 +16,7 @@ import pers.husen.highdsa.service.email.AttachHtmlEmail;
  *
  * @Created at 2018年3月22日 上午10:13:35
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class AttachEmailQueueMsgSvc {
 	private static final Logger logger = LogManager.getLogger(AttachEmailQueueMsgSvc.class.getName());
@@ -28,11 +28,13 @@ public class AttachEmailQueueMsgSvc {
 		String mailTo = attachEmailParams.getMailTo();
 		String subject = attachEmailParams.getSubject();
 		String content = attachEmailParams.getContent();
-		String attachment = attachEmailParams.getAttachment();
+		String attachUrl = attachEmailParams.getAttachUrl();
+		String attachName = attachEmailParams.getAttachName();
 
-		logger.info("mailTo:{}, subject:{}, content:{}, attachment：{}", mailTo, subject, content, attachment);
+		logger.info("mailTo:{}, subject:{}, content:{}, attachUrl：{}, attachName:{}", mailTo, subject, content,
+				attachUrl, attachName);
 
-		attachHtmlEmail.sendEmail2User(mailTo, subject, content, attachment);
+		attachHtmlEmail.sendEmail2User(mailTo, subject, content, attachUrl, attachName);
 	}
 
 	public void sendEmail2Admin(AttachEmailParams attachEmailParams) throws JsonProcessingException {
@@ -40,11 +42,12 @@ public class AttachEmailQueueMsgSvc {
 		String mailFrom = attachEmailParams.getMailFrom();
 		String phoneFrom = attachEmailParams.getPhoneFrom();
 		String content = attachEmailParams.getContent();
-		String attachment = attachEmailParams.getAttachment();
+		String attachUrl = attachEmailParams.getAttachUrl();
+		String attachName = attachEmailParams.getAttachName();
 
-		logger.info("nameFrom:{}, mailFrom:{}, phoneFrom:{}, content:{}, attachment:{}", nameFrom, mailFrom, phoneFrom,
-				content, attachment);
+		logger.info("nameFrom:{}, mailFrom:{}, phoneFrom:{}, content:{}, attachUrl:{}, attachName:{}", nameFrom,
+				mailFrom, phoneFrom, content, attachUrl, attachName);
 
-		attachHtmlEmail.sendEmail2Admin(nameFrom, mailFrom, phoneFrom, content, attachment);
+		attachHtmlEmail.sendEmail2Admin(nameFrom, mailFrom, phoneFrom, content, attachUrl, attachName);
 	}
 }

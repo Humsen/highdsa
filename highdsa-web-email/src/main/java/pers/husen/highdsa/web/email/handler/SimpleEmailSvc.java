@@ -26,7 +26,7 @@ import pers.husen.highdsa.service.activemq.QueueMsgSender;
 public class SimpleEmailSvc {
 	private static final Logger logger = LogManager.getLogger(SimpleEmailSvc.class.getName());
 
-	private static final ObjectMapper objectMapper = new ObjectMapper();
+	private final ObjectMapper objectMapper = new ObjectMapper();
 	private SimpleJson simpleJson;
 
 	@Autowired

@@ -13,7 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 
  * @Version 1.0.0
  */
-public class RegisterActiveMQProducer {
+public class RegisterActiveMqProducer {
 	public static void main(String[] args) throws IOException {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-context.xml");
 		context.start();

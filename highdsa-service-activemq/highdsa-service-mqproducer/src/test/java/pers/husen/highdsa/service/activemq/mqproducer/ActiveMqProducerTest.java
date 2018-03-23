@@ -42,7 +42,8 @@ public class ActiveMqProducerTest {
 	public void testSendQueue() {
 		EmailParams emailParams = new EmailParams();
 
-		for (int i = 1; i <= 100; i++) {
+		int totalNum = 100;
+		for (int i = 1; i <= totalNum; i++) {
 			emailParams.setMailTo("第 " + i + " 个收件人");
 
 			queueSender.sendMessage(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, emailParams);
@@ -53,7 +54,8 @@ public class ActiveMqProducerTest {
 	public void testPublishTopic() {
 		EmailParams emailParams = new EmailParams();
 
-		for (int i = 1; i <= 100; i++) {
+		int totalNum = 100;
+		for (int i = 1; i <= totalNum; i++) {
 			emailParams.setMailTo("第 " + i + " 个收件人");
 
 			topicSender.publishMessage(MsgQueueDefine.SIMPLE_EMAIL_TOPIC, emailParams);
