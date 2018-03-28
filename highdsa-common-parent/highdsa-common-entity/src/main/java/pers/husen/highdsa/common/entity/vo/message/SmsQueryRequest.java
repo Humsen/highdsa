@@ -30,6 +30,7 @@ public class SmsQueryRequest implements Serializable {
 
 	private Long ownerId;
 
+	@Override
 	public String toString() {
 		return "SmsQueryRequest [resourceOwnerId=" + resourceOwnerId + ", resourceOwnerAccount=" + resourceOwnerAccount
 				+ ", sendDate=" + sendDate + ", phoneNumber=" + phoneNumber + ", bizId=" + bizId + ", pageSize="

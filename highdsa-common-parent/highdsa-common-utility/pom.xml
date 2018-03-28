@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-common-parent</artifactId>
-		<version>0.6.8-SNAPSHOT</version>
+		<version>0.7.3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>highdsa-common-utility</artifactId>
@@ -71,6 +71,11 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+		</dependency>
+		<!-- shiro相关  -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
 		</dependency>
 	</dependencies>
 </project>

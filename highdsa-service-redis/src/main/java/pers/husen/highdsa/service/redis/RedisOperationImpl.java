@@ -300,6 +300,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		return value;
 	}
 
+	@Override
 	public Long removeObject(Object key) {
 		Long value = null;
 		Jedis jedis = null;
