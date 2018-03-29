@@ -15,7 +15,7 @@
 				<property name="supportedMediaTypes" value="text/html;charset=UTF-8" />
 			</bean>
 			<bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
-			<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
