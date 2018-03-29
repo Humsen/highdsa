@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.husen.highdsa.web.shiro.dao.SysUserRoleMapper">
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.shiro.SysUserRole">
+		<constructor>
+			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+			<idArg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+		</constructor>
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete from sys_user_role
+		where user_id = #{userId,jdbcType=BIGINT}
+		and role_id = #{roleId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysUserRole">
+		insert into sys_user_role (user_id, role_id)
+		values (#{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
+	</insert>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select user_id, role_id
+		from sys_user_role
+		order by user_id ASC,userCreateDate DESC
+	</select>
+</mapper>

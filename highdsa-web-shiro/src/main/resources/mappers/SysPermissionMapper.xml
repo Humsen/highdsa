@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.husen.highdsa.web.shiro.dao.SysPermissionMapper">
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.shiro.SysPermission">
+		<constructor>
+			<idArg column="permission_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+			<arg column="permission_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="permission_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="permission_valid" javaType="java.lang.Boolean" jdbcType="BIT" />
+		</constructor>
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_permission
+		where permission_id = #{permissionId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysPermission">
+		insert into sys_permission (permission_id, permission_name, permission_desc,
+		permission_valid)
+		values (#{permissionId,jdbcType=BIGINT}, #{permissionName,jdbcType=VARCHAR}, #{permissionDesc,jdbcType=VARCHAR},
+		#{permissionValid,jdbcType=BIT})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysPermission">
+		update sys_permission
+		set permission_name = #{permissionName,jdbcType=VARCHAR},
+		permission_desc = #{permissionDesc,jdbcType=VARCHAR},
+		permission_valid = #{permissionValid,jdbcType=BIT}
+		where permission_id = #{permissionId,jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select permission_id, permission_name, permission_desc, permission_valid
+		from sys_permission
+		where permission_id = #{permissionId,jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select permission_id, permission_name, permission_desc, permission_valid
+		from sys_permission
+		order by user_id ASC,userCreateDate DESC
+	</select>
+</mapper>

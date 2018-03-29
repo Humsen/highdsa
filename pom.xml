@@ -26,6 +26,7 @@
 		<module>highdsa-web-fastdfs</module>
 		<module>highdsa-web-redis</module>
 		<module>highdsa-web-message</module>
+		<module>highdsa-web-shiro</module>
 		<module>highdsa-web-test</module>
 	</modules>
 
@@ -302,6 +303,11 @@
 				<version>${org.apache.xbean.xbean-spring.version}</version>
 			</dependency>
 			<!-- shiro相关 -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-all</artifactId>
+				<version>${org.apache.shiro.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.shiro</groupId>
 				<artifactId>shiro-core</artifactId>

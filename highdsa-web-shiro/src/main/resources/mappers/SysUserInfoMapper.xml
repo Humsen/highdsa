@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.husen.highdsa.web.shiro.dao.SysUserInfoMapper">
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.shiro.SysUserInfo">
+		<constructor>
+			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+			<arg column="user_nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_head_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
+			<arg column="user_birthday" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_register_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+			<arg column="user_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_last_login_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+		</constructor>
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_user_info
+		where user_id = #{userId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysUserInfo">
+		insert into sys_user_info (user_id, user_nick_name, user_head_url,
+		user_sex, user_birthday, user_register_date,
+		user_desc, user_last_login_time)
+		values (#{userId,jdbcType=BIGINT}, #{userNickName,jdbcType=VARCHAR}, #{userHeadUrl,jdbcType=VARCHAR},
+		#{userSex,jdbcType=INTEGER}, #{userBirthday,jdbcType=VARCHAR}, #{userRegisterDate,jdbcType=TIMESTAMP},
+		#{userDesc,jdbcType=VARCHAR}, #{userLastLoginTime,jdbcType=TIMESTAMP})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysUserInfo">
+		update sys_user_info
+		set user_nick_name = #{userNickName,jdbcType=VARCHAR},
+		user_head_url = #{userHeadUrl,jdbcType=VARCHAR},
+		user_sex = #{userSex,jdbcType=INTEGER},
+		user_birthday = #{userBirthday,jdbcType=VARCHAR},
+		user_register_date = #{userRegisterDate,jdbcType=TIMESTAMP},
+		user_desc = #{userDesc,jdbcType=VARCHAR},
+		user_last_login_time = #{userLastLoginTime,jdbcType=TIMESTAMP}
+		where user_id = #{userId,jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select user_id, user_nick_name, user_head_url, user_sex, user_birthday, user_register_date,
+		user_desc, user_last_login_time
+		from sys_user_info
+		where user_id = #{userId,jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select user_id, user_nick_name, user_head_url, user_sex, user_birthday, user_register_date,
+		user_desc, user_last_login_time
+		from sys_user_info
+		order by user_id ASC,userCreateDate DESC
+	</select>
+</mapper>
