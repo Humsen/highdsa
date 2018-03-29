@@ -1,16 +1,19 @@
-package pers.husen.highdsa.web.shiro.service.impl;
+package pers.husen.highdsa.service.mybatis.impl;
 
 import java.util.Set;
 
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysUser;
 import pers.husen.highdsa.common.entity.po.shiro.SysUserRole;
-import pers.husen.highdsa.web.shiro.dao.SysUserMapper;
-import pers.husen.highdsa.web.shiro.dao.SysUserRoleMapper;
-import pers.husen.highdsa.web.shiro.service.SysUserManager;
-import pers.husen.highdsa.web.shiro.utils.PasswordHelper;
+import pers.husen.highdsa.service.mybatis.SysUserManager;
+import pers.husen.highdsa.service.mybatis.dao.system.SysUserMapper;
+import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
 
 /**
  * @Desc 系统用户管理实现
@@ -21,15 +24,13 @@ import pers.husen.highdsa.web.shiro.utils.PasswordHelper;
  * 
  * @Version 1.0.0
  */
-@Service
+@Service("sysUserManager")
 public class SysUserManagerImpl implements SysUserManager {
 
 	@Autowired
 	private SysUserMapper userDao;
 	@Autowired
 	private SysUserRoleMapper userRoleMapper;
-
-	private PasswordHelper passwordHelper = new PasswordHelper();
 
 	/**
 	 * 创建用户
@@ -38,7 +39,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 */
 	public int createUser(SysUser user) {
 		// 加密密码
-		passwordHelper.encryptPassword(user);
+		encryptPassword(user);
 		return userDao.insert(user);
 	}
 
@@ -51,7 +52,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	public void modifyPassword(Long userId, String newPassword) {
 		SysUser user = userDao.selectByPrimaryKey(userId);
 		user.setUserPassword(newPassword);
-		passwordHelper.encryptPassword(user);
+		encryptPassword(user);
 		userDao.updateByPrimaryKey(user);
 	}
 
@@ -107,5 +108,21 @@ public class SysUserManagerImpl implements SysUserManager {
 	 */
 	public Set<String> findPermissions(String userName) {
 		return userDao.selectPermissionsByUserName(userName);
+	}
+
+	/**
+	 * 密码加密
+	 * 
+	 * @param user
+	 */
+	public void encryptPassword(SysUser user) {
+		RandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
+		String algorithmName = "md5";
+		final int hashIterations = 2;
+
+		user.setUserPwdSalt(randomNumberGenerator.nextBytes().toHex());
+		String newPassword = new SimpleHash(algorithmName, user.getUserPassword(), ByteSource.Util.bytes(user.getUserName() + user.getUserPwdSalt()), hashIterations).toHex();
+
+		user.setUserPassword(newPassword);
 	}
 }

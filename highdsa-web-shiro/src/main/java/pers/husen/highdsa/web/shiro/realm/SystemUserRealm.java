@@ -13,7 +13,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysUser;
-import pers.husen.highdsa.web.shiro.service.SysUserManager;
+import pers.husen.highdsa.service.mybatis.SysUserManager;
 
 /**
  * @Desc 后台系统用户域
@@ -22,14 +22,14 @@ import pers.husen.highdsa.web.shiro.service.SysUserManager;
  *
  * @Created at 2018年3月29日 上午8:36:54
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class SystemUserRealm extends AuthorizingRealm {
 
-	private SysUserManager userService;
+	private SysUserManager sysUserManager;
 
-	public void setUserService(SysUserManager userService) {
-		this.userService = userService;
+	public void setUserService(SysUserManager sysUserManager) {
+		this.sysUserManager = sysUserManager;
 	}
 
 	@Override
@@ -37,8 +37,8 @@ public class SystemUserRealm extends AuthorizingRealm {
 		String username = (String) principals.getPrimaryPrincipal();
 
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		authorizationInfo.setRoles(userService.findRoles(username));
-		authorizationInfo.setStringPermissions(userService.findPermissions(username));
+		authorizationInfo.setRoles(sysUserManager.findRoles(username));
+		authorizationInfo.setStringPermissions(sysUserManager.findPermissions(username));
 
 		return authorizationInfo;
 	}
@@ -48,7 +48,7 @@ public class SystemUserRealm extends AuthorizingRealm {
 
 		String username = (String) token.getPrincipal();
 
-		SysUser user = userService.findByUserName(username);
+		SysUser user = sysUserManager.findByUserName(username);
 
 		if (user == null) {
 			throw new UnknownAccountException();// 没找到帐号

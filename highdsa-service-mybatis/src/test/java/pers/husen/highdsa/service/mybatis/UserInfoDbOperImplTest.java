@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import pers.husen.highdsa.common.entity.po.UserInfo;
+import pers.husen.highdsa.service.mybatis.impl.UserInfoDbOperImpl;
 
 /**
  * @Desc 测试
@@ -75,6 +76,7 @@ public class UserInfoDbOperImplTest {
 	@After
 	public void after() {
 		try {
+			System.out.println("=============== 阻塞开始... ==================");
 			// 为保证服务一直开着，利用输入流的阻塞来模拟
 			System.in.read();
 		} catch (IOException e) {

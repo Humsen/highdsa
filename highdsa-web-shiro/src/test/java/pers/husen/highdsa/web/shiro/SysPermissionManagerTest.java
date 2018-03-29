@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysPermission;
-import pers.husen.highdsa.web.shiro.service.SysPermissionManager;
+import pers.husen.highdsa.service.mybatis.SysPermissionManager;
 
 /**
  * @Desc 权限管理
@@ -27,7 +27,7 @@ public class SysPermissionManagerTest {
 
 	/**
 	 * 创建权限
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysPermissionManagerImpl#createPermission(pers.husen.highdsa.web.shiro.po.SysPermission)}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysPermissionManagerImpl#createPermission(pers.husen.highdsa.web.shiro.po.SysPermission)}.
 	 */
 	@Test
 	public void testCreatePermission() {
@@ -38,7 +38,7 @@ public class SysPermissionManagerTest {
 
 	/**
 	 * 删除权限
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysPermissionManagerImpl#deletePermission(java.lang.Integer)}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysPermissionManagerImpl#deletePermission(java.lang.Integer)}.
 	 */
 	@Test
 	public void testDeletePermission() {

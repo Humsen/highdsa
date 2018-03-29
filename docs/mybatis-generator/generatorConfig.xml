@@ -20,7 +20,7 @@
 		</commentGenerator>
 
 		<!-- Modify-3 修改数据库连接 -->
-		<jdbcConnection connectionURL="${url}" driverClass="${driver}" password="${password}" userId="${username}" />
+		<jdbcConnection connectionURL="${mysql.url}" driverClass="${mysql.driver}" password="${mysql.password}" userId="${mysql.username}" />
 
 		<!-- Modify-4 生成PO类的位置 -->
 		<javaModelGenerator targetPackage="${pojo.targetPackage}" targetProject="${pojo.targetProject}">

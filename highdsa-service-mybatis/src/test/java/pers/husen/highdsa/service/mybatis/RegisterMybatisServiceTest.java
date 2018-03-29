@@ -12,7 +12,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pers.husen.highdsa.common.entity.po.UserInfo;
 import pers.husen.highdsa.service.mybatis.cache.RedisCache;
 import pers.husen.highdsa.service.mybatis.core.SqlSessionFactoryManager;
-import pers.husen.highdsa.service.mybatis.dao.UserInfoMapper;
+import pers.husen.highdsa.service.mybatis.dao.user.UserInfoMapper;
+import pers.husen.highdsa.service.mybatis.impl.UserInfoDbOperImpl;
 import pers.husen.highdsa.service.redis.RedisOperation;
 
 /**
@@ -83,6 +84,7 @@ public class RegisterMybatisServiceTest {
 	@After
 	public void after() {
 		try {
+			System.out.println("=============== 阻塞开始... ==================");
 			// 为保证服务一直开着，利用输入流的阻塞来模拟
 			System.in.read();
 		} catch (IOException e) {

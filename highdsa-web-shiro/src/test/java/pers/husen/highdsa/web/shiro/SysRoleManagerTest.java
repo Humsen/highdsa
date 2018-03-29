@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysRole;
-import pers.husen.highdsa.web.shiro.service.SysRoleManager;
+import pers.husen.highdsa.service.mybatis.SysRoleManager;
 
 /**
  * @Desc 测试角色管理
@@ -27,7 +27,7 @@ public class SysRoleManagerTest {
 
 	/**
 	 * 创建角色之前必须先创建角色-权限关系
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysRoleManagerImpl#createSysRole(pers.husen.highdsa.web.shiro.po.SysRole)}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysRoleManagerImpl#createSysRole(pers.husen.highdsa.web.shiro.po.SysRole)}.
 	 */
 	@Test
 	public void testCreateSysRole() {
@@ -38,7 +38,7 @@ public class SysRoleManagerTest {
 
 	/**
 	 * 删除角色
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysRoleManagerImpl#deleteSysRole(java.lang.Integer)}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysRoleManagerImpl#deleteSysRole(java.lang.Integer)}.
 	 */
 	@Test
 	public void testDeleteSysRole() {
@@ -47,7 +47,7 @@ public class SysRoleManagerTest {
 
 	/**
 	 * 创建角色-权限关系
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysRoleManagerImpl#correlationPermissions(java.lang.Integer, java.lang.Integer[])}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysRoleManagerImpl#correlationPermissions(java.lang.Integer, java.lang.Integer[])}.
 	 */
 	@Test
 	public void testCorrelationPermissions() {
@@ -56,7 +56,7 @@ public class SysRoleManagerTest {
 
 	/**
 	 * 取消角色-权限关系之前必须先删除相应角色
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysRoleManagerImpl#uncorrelationPermissions(java.lang.Integer, java.lang.Integer[])}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysRoleManagerImpl#uncorrelationPermissions(java.lang.Integer, java.lang.Integer[])}.
 	 */
 	@Test
 	public void testUncorrelationPermissions() {

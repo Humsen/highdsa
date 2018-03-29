@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.shiro.dao;
+package pers.husen.highdsa.service.mybatis.dao.system;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

@@ -1,11 +1,11 @@
-package pers.husen.highdsa.web.shiro.service.impl;
+package pers.husen.highdsa.service.mybatis.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysPermission;
-import pers.husen.highdsa.web.shiro.dao.SysPermissionMapper;
-import pers.husen.highdsa.web.shiro.service.SysPermissionManager;
+import pers.husen.highdsa.service.mybatis.SysPermissionManager;
+import pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper;
 
 /**
  * @Desc 系统权限管理实现
@@ -16,7 +16,7 @@ import pers.husen.highdsa.web.shiro.service.SysPermissionManager;
  * 
  * @Version 1.0.0
  */
-@Service
+@Service("sysPermissionManager")
 public class SysPermissionManagerImpl implements SysPermissionManager {
 
 	@Autowired

@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.mybatis.dao;
+package pers.husen.highdsa.service.mybatis.dao.user;
 
 import java.util.List;
 

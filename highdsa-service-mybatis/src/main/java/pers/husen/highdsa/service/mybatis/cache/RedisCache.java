@@ -31,7 +31,7 @@ public class RedisCache implements Cache {
         RedisCache.redisOperation = redisOperation;
     }
 	
-	@Value(value = "1234")
+	@Value(value = "redis-cache")
 	private String id;
 
 	/**

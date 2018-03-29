@@ -8,7 +8,7 @@
 	</bean>
 
 	<!-- 凭证匹配器 -->
-	<bean id="credentialsMatcher" class="com.github.zhangkaitao.shiro.chapter12.credentials.RetryLimitHashedCredentialsMatcher">
+	<bean id="credentialsMatcher" class="pers.husen.highdsa.web.shiro.credentials.RetryLimitHashedCredentialsMatcher">
 		<constructor-arg ref="cacheManager" />
 		<property name="hashAlgorithmName" value="md5" />
 		<property name="hashIterations" value="2" />
@@ -16,8 +16,8 @@
 	</bean>
 
 	<!-- Realm实现 -->
-	<bean id="userRealm" class="pers.husen.highdsa.web.shiro.realm.SystemUserRealm">
-		<property name="userService" ref="userService" />
+	<bean id="systemUserRealm" class="pers.husen.highdsa.web.shiro.realm.SystemUserRealm">
+		<property name="sysUserManager" ref="sysUserManager" />
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
 		<property name="cachingEnabled" value="true" />
 		<property name="authenticationCachingEnabled" value="true" />
@@ -54,7 +54,7 @@
 	<bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager">
 		<property name="realms">
 			<list>
-				<ref bean="userRealm" />
+				<ref bean="systemUserRealm" />
 			</list>
 		</property>
 		<property name="sessionManager" ref="sessionManager" />

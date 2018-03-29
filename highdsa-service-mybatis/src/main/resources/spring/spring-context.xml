@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd    
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd    
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd    
@@ -18,8 +16,7 @@
 	<context:component-scan base-package="pers.husen.highdsa.service.mybatis" />
 
 	<!-- 数据源配置, 使用 Druid 数据库连接池 -->
-	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-		init-method="init" destroy-method="close">
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="url" value="${mysql.url}" />
 		<property name="username" value="${mysql.username}" />
 		<property name="password" value="${mysql.password}" />
@@ -48,8 +45,7 @@
 		<!-- 验证连接有效与否的SQL，不同的数据配置不同 -->
 		<property name="validationQuery" value="select 1 " />
 		<!-- 配置监控统计拦截的filters，用于在界面中统计sql和开启druid防火墙。注意： -->
-		<!-- 监控中有jdbcSqlStat，原因是：com.alibaba.druid.statJdbcDataSourceStat中的createSqlStat方法中， 
-			用了一个map来存放所有的sql语句，这样会导致线上触发FullGC，可将此处注释掉 -->
+		<!-- 监控中有jdbcSqlStat，原因是：com.alibaba.druid.statJdbcDataSourceStat中的createSqlStat方法中， 用了一个map来存放所有的sql语句，这样会导致线上触发FullGC，可将此处注释掉 -->
 		<property name="filters" value="wall,stat,log4j2" />
 		<!-- 映射慢sql -->
 		<property name="proxyFilters">
@@ -71,10 +67,10 @@
 
 	<!-- 日志过滤器 -->
 	<bean id="logFilter" class="com.alibaba.druid.filter.logging.Log4j2Filter">
-		<property name="connectionLogEnabled" value="false"/>
-        <property name="statementLogEnabled" value="false"/>
-        <property name="resultSetLogEnabled" value="false"/>
-        <property name="statementExecutableSqlLogEnable" value="false"/>
+		<property name="connectionLogEnabled" value="false" />
+		<property name="statementLogEnabled" value="false" />
+		<property name="resultSetLogEnabled" value="false" />
+		<property name="statementExecutableSqlLogEnable" value="false" />
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -86,21 +82,40 @@
 		<property name="configLocation" value="classpath:mybatis/mybatis-spring-config.xml" />
 	</bean>
 
-	<bean id="userInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface"
-			value="pers.husen.highdsa.service.mybatis.dao.UserInfoMapper" />
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
-
 	<!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使MyBatis实现第三方缓存 -->
-	<bean id="redisCacheTransfer"
-		class="pers.husen.highdsa.service.mybatis.cache.RedisCacheTransfer">
+	<bean id="redisCacheTransfer" class="pers.husen.highdsa.service.mybatis.cache.RedisCacheTransfer">
 		<property name="redisOperation" ref="redisOperation" />
 	</bean>
 
-	<bean id="userInfoDbOperImpl" class="pers.husen.highdsa.service.mybatis.UserInfoDbOperImpl"></bean>
-	<!-- <bean id="redisCache" class="pers.husen.highdsa.service.mybatis.cache.RedisCache"></bean> -->
+	<!-- 定义mapper类bean -->
+	<bean id="userInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.user.UserInfoMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
 
-	<!-- <import resource="mybatis-provider.xml" /> <import resource="redis-consumer.xml" 
-		/> -->
+	<bean id="sysPermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="sysRoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysRoleMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="sysRolePermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysRolePermissionMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="sysUserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysUserMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="sysUserRoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<!-- <import resource="mybatis-provider.xml" /> <import resource="redis-consumer.xml" /> -->
 </beans> 

@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.shiro.service;
+package pers.husen.highdsa.service.mybatis;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysPermission;
 

@@ -1,13 +1,13 @@
-package pers.husen.highdsa.web.shiro.service.impl;
+package pers.husen.highdsa.service.mybatis.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysRole;
 import pers.husen.highdsa.common.entity.po.shiro.SysRolePermission;
-import pers.husen.highdsa.web.shiro.dao.SysRoleMapper;
-import pers.husen.highdsa.web.shiro.dao.SysRolePermissionMapper;
-import pers.husen.highdsa.web.shiro.service.SysRoleManager;
+import pers.husen.highdsa.service.mybatis.SysRoleManager;
+import pers.husen.highdsa.service.mybatis.dao.system.SysRoleMapper;
+import pers.husen.highdsa.service.mybatis.dao.system.SysRolePermissionMapper;
 
 /**
  * @Desc 系统角色管理实现
@@ -18,11 +18,11 @@ import pers.husen.highdsa.web.shiro.service.SysRoleManager;
  * 
  * @Version 1.0.0
  */
-@Service
+@Service("sysRoleManager")
 public class SysRoleManagerImpl implements SysRoleManager {
 	@Autowired
 	private SysRoleMapper roleDao;
-	
+
 	@Autowired
 	private SysRolePermissionMapper rolePermissionMapper;
 

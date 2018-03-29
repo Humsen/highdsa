@@ -1,6 +1,8 @@
-package pers.husen.highdsa.web.shiro.service;
+package pers.husen.highdsa.service.mybatis;
 
 import java.util.Set;
+
+import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysUser;
 
@@ -13,6 +15,7 @@ import pers.husen.highdsa.common.entity.po.shiro.SysUser;
  * 
  * @Version 1.0.0
  */
+@Service("sysUserManager")
 public interface SysUserManager {
 	/**
 	 * 创建用户

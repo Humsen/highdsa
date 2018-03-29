@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysUser;
-import pers.husen.highdsa.web.shiro.service.SysUserManager;
+import pers.husen.highdsa.service.mybatis.SysUserManager;
 
 /**
  * @Desc 测试用户管理
@@ -21,7 +21,7 @@ import pers.husen.highdsa.web.shiro.service.SysUserManager;
  * @Version 1.0.2
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/spring-context.xml" })
+@ContextConfiguration(locations = { "classpath:spring/spring-shiro.xml", "classpath:system-consumer.xml" })
 public class SysUserManagerTest {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class SysUserManagerTest {
 
 	/**
 	 * 创建角色之前必须建立用户-角色关系
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysUserManagerImpl#createUser(pers.husen.highdsa.web.shiro.po.SysUser)}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysUserManagerImpl#createUser(pers.husen.highdsa.web.shiro.po.SysUser)}.
 	 */
 	@Test
 	public void testCreateUser() {
@@ -42,7 +42,7 @@ public class SysUserManagerTest {
 
 	/**
 	 * 修改密码
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysUserManagerImpl#modifyPassword(java.lang.Long, java.lang.String)}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysUserManagerImpl#modifyPassword(java.lang.Long, java.lang.String)}.
 	 */
 	@Test
 	public void testModifyPassword() {
@@ -51,7 +51,7 @@ public class SysUserManagerTest {
 
 	/**
 	 * 建立对象-角色关系
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysUserManagerImpl#correlationRoles(java.lang.Integer, java.lang.Integer[])}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysUserManagerImpl#correlationRoles(java.lang.Integer, java.lang.Integer[])}.
 	 */
 	@Test
 	public void testCorrelationRoles() {
@@ -60,7 +60,7 @@ public class SysUserManagerTest {
 
 	/**
 	 * 取消对象-角色关系之前必须删除用户
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysUserManagerImpl#uncorrelationRoles(java.lang.Integer, java.lang.Integer[])}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysUserManagerImpl#uncorrelationRoles(java.lang.Integer, java.lang.Integer[])}.
 	 */
 	@Test
 	public void testUncorrelationRoles() {
@@ -69,7 +69,7 @@ public class SysUserManagerTest {
 
 	/**
 	 * Test method for
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysUserManagerImpl#findByUserName(java.lang.String)}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysUserManagerImpl#findByUserName(java.lang.String)}.
 	 */
 	@Test
 	public void testFindByUserName() {
@@ -80,7 +80,7 @@ public class SysUserManagerTest {
 
 	/**
 	 * 根据用户名查询结果集
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysUserManagerImpl#findRoles(java.lang.String)}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysUserManagerImpl#findRoles(java.lang.String)}.
 	 */
 	@Test
 	public void testFindRoles() {
@@ -91,7 +91,7 @@ public class SysUserManagerTest {
 
 	/**
 	 * 根据用户名查询权限集
-	 * {@link pers.husen.highdsa.web.shiro.service.impl.SysUserManagerImpl#findPermissions(java.lang.String)}.
+	 * {@link pers.husen.highdsa.service.mybatis.impl.SysUserManagerImpl#findPermissions(java.lang.String)}.
 	 */
 	@Test
 	public void testFindPermissions() {
