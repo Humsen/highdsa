@@ -1,5 +1,6 @@
 package pers.husen.highdsa.service.redis;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -958,5 +959,30 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		}
 
 		return reply;
+	}
+
+	public Set<Object> keys(String pattern) {
+		Set<byte[]> keys = getJedis().keys(ConvertType.str2ByteArray(pattern));
+
+		Set<Object> set = new HashSet<Object>();
+
+		for (byte[] bs : keys) {
+			set.add(ConvertType.unserialize(bs));
+		}
+		return set;
+	}
+
+	/**
+	 * 获取所有的value
+	 */
+	public List<Object> values(String pattern) {
+		List<Object> values = new ArrayList<Object>();
+		Set<Object> keys = this.keys(pattern);
+
+		for (Object object : keys) {
+			byte[] bs = getJedis().get(ConvertType.serialize((Serializable) object));
+			values.add(ConvertType.unserialize(bs));
+		}
+		return values;
 	}
 }

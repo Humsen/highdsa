@@ -66,6 +66,17 @@ public class ConvertType {
 	}
 
 	/**
+	 * 字符串转字节数组, 使用工程默认编码
+	 * 
+	 * @param source
+	 * @return
+	 * @throws CodecException
+	 */
+	public static byte[] str2ByteArray(String source) throws CodecException {
+		return str2ByteArray(source, Encode.DEFAULT_ENCODE);
+	}
+
+	/**
 	 * 字符串转字节数组
 	 * 
 	 * @param source
@@ -77,8 +88,7 @@ public class ConvertType {
 		try {
 			return source.getBytes(encoding);
 		} catch (UnsupportedEncodingException e) {
-			String msg = "Unable to convert source [" + source + "] to byte array using " + "encoding '" + encoding
-					+ "'";
+			String msg = "Unable to convert source [" + source + "] to byte array using " + "encoding '" + encoding + "'";
 			throw new CodecException(msg, e);
 		}
 	}

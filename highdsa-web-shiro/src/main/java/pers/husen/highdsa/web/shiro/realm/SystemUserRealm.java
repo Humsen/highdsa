@@ -10,9 +10,9 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysUser;
+import pers.husen.highdsa.common.utility.ByteSourceSerializable;
 import pers.husen.highdsa.service.mybatis.SysUserManager;
 
 /**
@@ -28,7 +28,11 @@ public class SystemUserRealm extends AuthorizingRealm {
 
 	private SysUserManager sysUserManager;
 
-	public void setUserService(SysUserManager sysUserManager) {
+	/**
+	 * @param sysUserManager
+	 *            the sysUserManager to set
+	 */
+	public void setSysUserManager(SysUserManager sysUserManager) {
 		this.sysUserManager = sysUserManager;
 	}
 
@@ -61,9 +65,10 @@ public class SystemUserRealm extends AuthorizingRealm {
 		// 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), // 用户名
 				user.getUserPassword(), // 密码
-				ByteSource.Util.bytes(user.getUserName() + user.getUserPwdSalt()), // salt=username+salt
+				new ByteSourceSerializable(user.getUserName() + user.getUserPwdSalt()), // salt=username+salt
 				getName() // realm name
 		);
+		
 		return authenticationInfo;
 	}
 

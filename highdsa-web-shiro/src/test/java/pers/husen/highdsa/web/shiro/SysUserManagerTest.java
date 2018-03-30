@@ -21,7 +21,7 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  * @Version 1.0.2
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/spring-shiro.xml", "classpath:system-consumer.xml" })
+@ContextConfiguration(locations = { "classpath:spring/spring-shiro.xml", "classpath:spring/system-consumer.xml" })
 public class SysUserManagerTest {
 
 	@Autowired

@@ -385,4 +385,17 @@ public interface RedisOperation {
 	 * @return
 	 */
 	public Integer getDbSize();
+
+	/**
+	 * 获取所有key
+	 * 
+	 * @param pattern
+	 * @return
+	 */
+	public Set<Object> keys(String pattern);
+
+	/**
+	 * 获取所有的value
+	 */
+	public List<Object> values(String pattern);
 }

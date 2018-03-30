@@ -1,5 +1,6 @@
 package pers.husen.highdsa.common.entity.po.shiro;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,9 +10,11 @@ import java.util.Date;
  *
  * @Created at 2018年3月29日 下午3:35:04
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
-public class SysUserInfo {
+public class SysUserInfo implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private Long userId;
 
 	private String userNickName;

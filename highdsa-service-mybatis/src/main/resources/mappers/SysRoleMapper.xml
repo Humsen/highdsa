@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pers.husen.highdsa.web.shiro.dao.SysRoleMapper">
+<mapper namespace="pers.husen.highdsa.service.mybatis.dao.system.SysRoleMapper">
 	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.shiro.SysRole">
 		<constructor>
 			<idArg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />

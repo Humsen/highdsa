@@ -1,5 +1,7 @@
 package pers.husen.highdsa.common.entity.po.shiro;
 
+import java.io.Serializable;
+
 /**
  * @Desc 系统角色-权限实体类
  *
@@ -7,9 +9,11 @@ package pers.husen.highdsa.common.entity.po.shiro;
  *
  * @Created at 2018年3月29日 下午3:34:32
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
-public class SysRolePermission {
+public class SysRolePermission implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private Long roleId;
 
 	private Long permissionId;

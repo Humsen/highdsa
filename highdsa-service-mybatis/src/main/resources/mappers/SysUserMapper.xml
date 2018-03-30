@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pers.husen.highdsa.web.shiro.dao.SysUserMapper">
+<mapper namespace="pers.husen.highdsa.service.mybatis.dao.system.SysUserMapper">
 	<!-- 基础结果集 -->
 	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.shiro.SysUser">
 		<constructor>
