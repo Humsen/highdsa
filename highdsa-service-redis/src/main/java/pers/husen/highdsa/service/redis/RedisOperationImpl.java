@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.shiro.session.Session;
 
 import com.google.common.collect.Maps;
 
@@ -266,8 +267,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 				jedis.expire(ConvertType.serialize(key), cacheSeconds);
 			}
 
-			// logger.info("redis <Object> cache set success, key={}, value={}", key,
-			// value);
+			logger.info("------redis <Object> cache set success, key={}, value={}", key, value);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("设置redis缓存出错", e));
 		} finally {
@@ -289,8 +289,10 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			if (jedis.exists(ConvertType.serialize(key))) {
 				value = ConvertType.unserialize(jedis.get(ConvertType.serialize(key)));
 
-				// logger.info("redis <Object> cache get success, key={}, value={}", key,
-				// value);
+				logger.info("----------redis <Object> cache get success, key={}, value={}", key, value);
+				if (value instanceof Session) {
+					System.out.println("session id 为：" + ((Session) value).getId());
+				}
 			}
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis缓存出错", e));
@@ -961,15 +963,14 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		return reply;
 	}
 
-	public Set<Object> keys(String pattern) {
-		Set<byte[]> keys = getJedis().keys(ConvertType.str2ByteArray(pattern));
+	public Set<byte[]> keys(String pattern) {
+		Set<byte[]> keys = null;
+		Jedis jedis = jedisPool.getResource();
+		keys = jedis.keys(pattern.getBytes());
 
-		Set<Object> set = new HashSet<Object>();
+		return keys;
 
-		for (byte[] bs : keys) {
-			set.add(ConvertType.unserialize(bs));
-		}
-		return set;
+		// Set<byte[]> keys = getJedis().keys(ConvertType.str2ByteArray(pattern));
 	}
 
 	/**
@@ -977,12 +978,81 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	 */
 	public List<Object> values(String pattern) {
 		List<Object> values = new ArrayList<Object>();
-		Set<Object> keys = this.keys(pattern);
+		Set<byte[]> keys = this.keys(pattern);
 
-		for (Object object : keys) {
+		for (byte[] object : keys) {
 			byte[] bs = getJedis().get(ConvertType.serialize((Serializable) object));
 			values.add(ConvertType.unserialize(bs));
 		}
 		return values;
+	}
+
+	/* ---------------- shiro 新增 ------------------------- */
+
+	/**
+	 * get value from redis
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public byte[] get(byte[] key) {
+		byte[] value = null;
+		Jedis jedis = getJedis();
+		value = jedis.get(key);
+
+		return value;
+	}
+
+	/**
+	 * set
+	 * 
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public byte[] set(byte[] key, byte[] value) {
+		Jedis jedis = getJedis();
+		jedis.set(key, value);
+
+		return value;
+	}
+
+	/**
+	 * set
+	 * 
+	 * @param key
+	 * @param value
+	 * @param expire
+	 * @return
+	 */
+	public byte[] set(byte[] key, byte[] value, int expire) {
+		Jedis jedis = getJedis();
+		jedis.set(key, value);
+		if (expire != 0) {
+			jedis.expire(key, expire);
+		}
+
+		return value;
+	}
+
+	/**
+	 * del
+	 * 
+	 * @param key
+	 */
+	public void del(byte[] key) {
+		Jedis jedis = getJedis();
+		jedis.del(key);
+	}
+
+	/**
+	 * size
+	 */
+	public Long dbSize() {
+		Long dbSize = 0L;
+		Jedis jedis = getJedis();
+		dbSize = jedis.dbSize();
+
+		return dbSize;
 	}
 }

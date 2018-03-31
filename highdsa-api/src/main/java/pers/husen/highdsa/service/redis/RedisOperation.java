@@ -392,10 +392,43 @@ public interface RedisOperation {
 	 * @param pattern
 	 * @return
 	 */
-	public Set<Object> keys(String pattern);
+	public Set<byte[]> keys(String pattern);
 
 	/**
 	 * 获取所有的value
 	 */
 	public List<Object> values(String pattern);
+
+	public byte[] get(byte[] key);
+
+	/**
+	 * set
+	 * 
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public byte[] set(byte[] key, byte[] value);
+
+	/**
+	 * set
+	 * 
+	 * @param key
+	 * @param value
+	 * @param expire
+	 * @return
+	 */
+	public byte[] set(byte[] key, byte[] value, int expire);
+
+	/**
+	 * del
+	 * 
+	 * @param key
+	 */
+	public void del(byte[] key);
+
+	/**
+	 * size
+	 */
+	public Long dbSize();
 }

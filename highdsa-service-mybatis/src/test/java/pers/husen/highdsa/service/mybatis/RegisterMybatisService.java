@@ -21,7 +21,7 @@ public class RegisterMybatisService {
 		context.start();
 		// UserInfoDbOperImpl userInfoDbOperImpl = (UserInfoDbOperImpl)
 		// context.getBean("userInfoDbOper");
-		System.out.println("=============== dubbo已经启动... ==================");
+		System.out.println("=============== mybatis已经启动... ==================");
 
 		// UserInfo userInfo = userInfoDbOperImpl.selectById(1);
 		// System.out.println(userInfo);

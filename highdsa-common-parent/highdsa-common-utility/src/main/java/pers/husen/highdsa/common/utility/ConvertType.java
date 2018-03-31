@@ -120,6 +120,16 @@ public class ConvertType {
 	}
 
 	/**
+	 * 判断是否为空
+	 * 
+	 * @param byteArray
+	 * @return
+	 */
+	public static boolean isEmpty(byte[] byteArray) {
+		return (byteArray == null || byteArray.length == 0);
+	}
+
+	/**
 	 * 序列化对象
 	 * 
 	 * @param object
@@ -153,6 +163,10 @@ public class ConvertType {
 	public static Object unserialize(byte[] byteArray) {
 		ObjectInputStream objectInputStream = null;
 		ByteArrayInputStream byteArrayInputStream = null;
+
+		if (byteArray == null) {
+			return null;
+		}
 
 		try {
 			byteArrayInputStream = new ByteArrayInputStream(byteArray);

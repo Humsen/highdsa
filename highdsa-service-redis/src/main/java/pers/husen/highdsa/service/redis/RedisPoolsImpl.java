@@ -22,7 +22,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * 
  * @Version 1.0.0
  */
-public class RedisPoolsImpl implements RedisPools{
+public class RedisPoolsImpl implements RedisPools {
 	protected static JedisPool jedisPool = null;
 	private static final Logger logger = LogManager.getLogger(RedisPoolsImpl.class.getName());
 
@@ -41,8 +41,14 @@ public class RedisPoolsImpl implements RedisPools{
 		jedisconfig.setTestOnBorrow(Boolean.valueOf(bundle.getString("redis.pool.testOnBorrow")));
 		jedisconfig.setTestOnReturn(Boolean.valueOf(bundle.getString("redis.pool.testOnReturn")));
 
-		jedisPool = new JedisPool(jedisconfig, bundle.getString("redis.ip"),
-				Integer.valueOf(bundle.getString("redis.port")), Integer.valueOf(bundle.getString("redis.timeout")));
+		String authPwd = bundle.getString("redis.auth");
+		if (authPwd == null || authPwd == "") {
+			logger.info("redis连接没有密码");
+			jedisPool = new JedisPool(jedisconfig, bundle.getString("redis.ip"), Integer.valueOf(bundle.getString("redis.port")), Integer.valueOf(bundle.getString("redis.timeout")));
+		} else {
+			logger.info("redis连接有密码：{}", authPwd);
+			jedisPool = new JedisPool(jedisconfig, bundle.getString("redis.ip"), Integer.valueOf(bundle.getString("redis.port")), Integer.valueOf(bundle.getString("redis.timeout")), authPwd);
+		}
 
 		logger.info("redis 连接池初始化成功!");
 	}
@@ -94,7 +100,7 @@ public class RedisPoolsImpl implements RedisPools{
 	}
 
 	@Override
-	public  void closeRedisPool() {
+	public void closeRedisPool() {
 		jedisPool.close();
 		logger.info("关闭redis连接池成功!");
 	}
@@ -112,7 +118,7 @@ public class RedisPoolsImpl implements RedisPools{
 
 		int maxTotal = 26;
 		RedisPoolsImpl redisPoolsImpl = new RedisPoolsImpl();
-		
+
 		for (int i = 1; i <= maxTotal; i++) {
 			System.out.println("第" + i + "个");
 			Jedis jedis2 = redisPoolsImpl.getJedis();

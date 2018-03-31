@@ -1,14 +1,18 @@
 package pers.husen.highdsa.web.shiro.cache;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
+import org.apache.shiro.util.CollectionUtils;
 
-import pers.husen.highdsa.common.constant.RedisCacheKeyPrefix;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.redis.RedisOperation;
 import pers.husen.highdsa.service.redis.RedisPools;
@@ -27,9 +31,10 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	private static final Logger logger = LogManager.getLogger(ShiroRedisCache.class.getName());
 
 	private static RedisOperation redisOperation;
-	//private static RedisPools redisPools;
+	// private static RedisPools redisPools;
 
-	private String keyPrefix = RedisCacheKeyPrefix.SHIRO_REDIS_CACHE;
+	// private String keyPrefix = RedisCacheKeyPrefix.SHIRO_REDIS_CACHE;
+	private String keyPrefix = "shiro_redis_session:";
 
 	/**
 	 * @return the redisOperation
@@ -39,7 +44,8 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	}
 
 	/**
-	 * @param redisOperation the redisOperation to set
+	 * @param redisOperation
+	 *            the redisOperation to set
 	 */
 	public static void setRedisOperation(RedisOperation redisOperation) {
 		ShiroRedisCache.redisOperation = redisOperation;
@@ -47,7 +53,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 
 	public static void setRedisFactory(RedisOperation redisOperation, RedisPools redisPools) {
 		ShiroRedisCache.redisOperation = redisOperation;
-		//ShiroRedisCache.redisPools = redisPools;
+		// ShiroRedisCache.redisPools = redisPools;
 	}
 
 	public String getKeyPrefix() {
@@ -56,6 +62,20 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 
 	public void setKeyPrefix(String keyPrefix) {
 		this.keyPrefix = keyPrefix;
+	}
+
+	/**
+	 * Constructs a cache instance with the specified Redis manager and using a
+	 * custom key prefix.
+	 * 
+	 * @param cache
+	 *            The cache manager instance
+	 * @param prefix
+	 *            The Redis key prefix
+	 */
+	public ShiroRedisCache(String prefix) {
+		// set the prefix
+		this.keyPrefix = prefix;
 	}
 
 	/**
@@ -68,39 +88,69 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 		return keyPrefix + key;
 	}
 
+	/**
+	 * 获得byte[]型的key
+	 * 
+	 * @param key
+	 * @return
+	 */
+	private byte[] getByteKey(K key) {
+		if (key instanceof String) {
+			String preKey = this.keyPrefix + key;
+			return preKey.getBytes();
+		} else {
+			return SerializeUtils.serialize(key);
+		}
+	}
+
 	@Override
-	public Object get(Object key) throws CacheException {
-		Object object = null;
+	public V get(K key) throws CacheException {
+		logger.info("根据key从Redis中获取对象 key [" + key + "]");
+		V object = null;
 
 		if (key == null) {
 			return null;
 		}
 
 		try {
-			object = redisOperation.getObject(key);
+			object = (V) redisOperation.get(getByteKey(key));
 		} catch (Exception e) {
 			logger.fatal(StackTrace2Str.exceptionStackTrace2Str("出错", e));
 
 			throw new CacheException("获取缓存出错", e);
 		}
 
-		return (V) object;
+		return object;
 	}
 
 	/**
 	 * 将shiro的缓存保存到redis中
 	 */
 	@Override
-	public Object put(Object key, Object value) throws CacheException {
-		redisOperation.setObject(key, value, 0);
+	public V put(K key, V value) throws CacheException {
+		logger.debug("根据key从存储 key [" + key + "]");
+		try {
+			redisOperation.set(getByteKey(key), SerializeUtils.serialize(value));
+			return value;
+		} catch (Throwable t) {
+			throw new CacheException(t);
+		}
 
-		return get(key);
-
+		// return get(key);
 	}
 
 	@Override
-	public Object remove(Object key) throws CacheException {
-		return redisOperation.removeObject(key);
+	public V remove(K key) throws CacheException {
+		logger.debug("从redis中删除 key [" + key + "]");
+
+		try {
+			V previous = get(key);
+			redisOperation.del(getByteKey(key));
+
+			return previous;
+		} catch (Throwable t) {
+			throw new CacheException(t);
+		}
 	}
 
 	/**
@@ -108,7 +158,13 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 */
 	@Override
 	public void clear() throws CacheException {
-		redisOperation.flushDB();
+		logger.debug("从redis中删除所有元素");
+
+		try {
+			redisOperation.flushDB();
+		} catch (Throwable t) {
+			throw new CacheException(t);
+		}
 	}
 
 	/**
@@ -116,15 +172,34 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 */
 	@Override
 	public int size() {
-		return redisOperation.getDbSize();
+		try {
+			return redisOperation.getDbSize();
+		} catch (Throwable t) {
+			throw new CacheException(t);
+		}
+
 	}
 
 	/**
 	 * 获取所有的key
 	 */
 	@Override
-	public Set keys() {
-		return redisOperation.keys("*");
+	public Set<K> keys() {
+		try {
+			Set<byte[]> keys = redisOperation.keys(this.keyPrefix + "*");
+
+			if (CollectionUtils.isEmpty(keys)) {
+				return Collections.emptySet();
+			} else {
+				Set<K> newKeys = new HashSet<K>();
+				for (byte[] key : keys) {
+					newKeys.add((K) key);
+				}
+				return newKeys;
+			}
+		} catch (Throwable t) {
+			throw new CacheException(t);
+		}
 	}
 
 	/**
@@ -132,6 +207,23 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 */
 	@Override
 	public Collection values() {
-		return redisOperation.values("*");
+		try {
+			Set<byte[]> keys = redisOperation.keys(this.keyPrefix + "*");
+
+			if (!CollectionUtils.isEmpty(keys)) {
+				List<V> values = new ArrayList<V>(keys.size());
+				for (byte[] key : keys) {
+					V value = get((K) key);
+					if (value != null) {
+						values.add(value);
+					}
+				}
+				return Collections.unmodifiableList(values);
+			} else {
+				return Collections.emptyList();
+			}
+		} catch (Throwable t) {
+			throw new CacheException(t);
+		}
 	}
 }

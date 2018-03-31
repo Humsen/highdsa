@@ -29,7 +29,7 @@
 
 	<!-- 会话DAO -->
 	<bean id="sessionDAO" class="pers.husen.highdsa.web.shiro.session.RedisSessionDao">
-		<!-- 设置Session 缓存名字  -->
+		<!-- 设置Session 缓存名字 -->
 		<!-- <property name="activeSessionsCacheName" value="shiro-activeSessionCache" /> -->
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
@@ -74,6 +74,6 @@
 		<constructor-arg name="redisOperation" ref="redisOperation" />
 		<constructor-arg name="redisPools" ref="redisPools" />
 	</bean>
-	
+
 	<bean id="shiroTest" class="pers.husen.highdsa.web.shiro.spring.ShiroTest"></bean>
 </beans>

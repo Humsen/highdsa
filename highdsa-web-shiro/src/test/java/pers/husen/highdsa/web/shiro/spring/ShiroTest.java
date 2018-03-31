@@ -54,9 +54,9 @@ public class ShiroTest {
 		subject.login(token);
 
 		Assert.assertTrue(subject.isAuthenticated());
-
-		subject.checkRole("普通用户");
-		subject.checkPermission("user:create");
+		System.out.println("开始检查角色");
+		subject.checkRole("user");
+		subject.checkPermission("sys:user:create");
 
 		userManager.modifyPassword(1002L, "123");
 		systemUserRealm.clearCache(subject.getPrincipals());
