@@ -10,9 +10,11 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import pers.husen.highdsa.common.entity.po.UserInfo;
+import pers.husen.highdsa.common.entity.po.shiro.SysUser;
 import pers.husen.highdsa.service.mybatis.cache.RedisCache;
 import pers.husen.highdsa.service.mybatis.core.SqlSessionFactoryManager;
 import pers.husen.highdsa.service.mybatis.dao.user.UserInfoMapper;
+import pers.husen.highdsa.service.mybatis.impl.SysUserManagerImpl;
 import pers.husen.highdsa.service.mybatis.impl.UserInfoDbOperImpl;
 import pers.husen.highdsa.service.redis.RedisOperation;
 
@@ -23,14 +25,14 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年2月5日 下午1:03:55
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class RegisterMybatisServiceTest {
 	private ClassPathXmlApplicationContext context;
 
 	@Before
 	public void before() {
-		String[] configLocation = new String[] { "spring/mybatis-provider.xml", "spring/redis-consumer.xml","spring/spring-context.xml" };
+		String[] configLocation = new String[] { "spring/mybatis-provider.xml", "spring/redis-consumer.xml", "spring/spring-context.xml" };
 
 		context = new ClassPathXmlApplicationContext(configLocation);
 		context.start();
@@ -53,7 +55,7 @@ public class RegisterMybatisServiceTest {
 
 	@Test
 	public void testUserInfoDbOperImpl() {
-		UserInfoDbOperImpl userInfoDbOperImpl = (UserInfoDbOperImpl) context.getBean("userInfoDbOperImpl");
+		UserInfoDbOperImpl userInfoDbOperImpl = (UserInfoDbOperImpl) context.getBean("userInfoDbOper");
 
 		// userInfoDbOperImpl.deleteUserInfo(2);
 		List<UserInfo> userInfos = userInfoDbOperImpl.selectAll();
@@ -79,6 +81,17 @@ public class RegisterMybatisServiceTest {
 		SqlSession sqlSession1 = SqlSessionFactoryManager.openSession();
 		UserInfoMapper userInfoMapper1 = sqlSession1.getMapper(UserInfoMapper.class);
 		System.out.println("第4次查询：" + userInfoMapper1.selectById(1));
+	}
+
+	@Test
+	public void testShiroRedisCache() {
+		SysUserManagerImpl sysUserManager = (SysUserManagerImpl) context.getBean("sysUserManager");
+
+		SysUser sysUser = sysUserManager.findByUserName("husen");
+		System.out.println(sysUser);
+
+		SysUser sysUser1 = sysUserManager.findByUserName("husen");
+		System.out.println(sysUser1);
 	}
 
 	@After

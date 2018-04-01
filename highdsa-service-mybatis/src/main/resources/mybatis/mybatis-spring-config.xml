@@ -4,7 +4,7 @@
 	<!-- 全局配置 -->
 	<settings>
 		<!-- 启用二级缓存 -->
-		<setting name="cacheEnabled" value="false" />
+		<setting name="cacheEnabled" value="true" />
 		<!--是否开启自动驼峰命名规则（camel case）映射，下划线到驼峰 -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<!-- 指定日志为log4j2 -->

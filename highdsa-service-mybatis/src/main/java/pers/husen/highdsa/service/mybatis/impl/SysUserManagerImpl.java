@@ -22,15 +22,15 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
  *
  * @Created at 2018年3月29日 上午9:29:44
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Service("sysUserManager")
 public class SysUserManagerImpl implements SysUserManager {
 
 	@Autowired
-	private SysUserMapper userDao;
+	private SysUserMapper sysUserMapper;
 	@Autowired
-	private SysUserRoleMapper userRoleMapper;
+	private SysUserRoleMapper sysUserRoleMapper;
 
 	/**
 	 * 创建用户
@@ -41,7 +41,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	public int createUser(SysUser user) {
 		// 加密密码
 		encryptPassword(user);
-		return userDao.insert(user);
+		return sysUserMapper.insert(user);
 	}
 
 	/**
@@ -52,10 +52,10 @@ public class SysUserManagerImpl implements SysUserManager {
 	 */
 	@Override
 	public void modifyPassword(Long userId, String newPassword) {
-		SysUser user = userDao.selectByPrimaryKey(userId);
+		SysUser user = sysUserMapper.selectByPrimaryKey(userId);
 		user.setUserPassword(newPassword);
 		encryptPassword(user);
-		userDao.updateByPrimaryKey(user);
+		sysUserMapper.updateByPrimaryKey(user);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	@Override
 	public void correlationRoles(Long userId, Long... roleIds) {
 		for (Long roleId : roleIds) {
-			userRoleMapper.insert(new SysUserRole(userId, roleId));
+			sysUserRoleMapper.insert(new SysUserRole(userId, roleId));
 		}
 	}
 
@@ -80,7 +80,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	@Override
 	public void uncorrelationRoles(Long userId, Long... roleIds) {
 		for (Long roleId : roleIds) {
-			userRoleMapper.deleteByPrimaryKey(userId, roleId);
+			sysUserRoleMapper.deleteByPrimaryKey(userId, roleId);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 */
 	@Override
 	public SysUser findByUserName(String userName) {
-		return userDao.selectUserInfoByUserName(userName);
+		return sysUserMapper.selectUserInfoByUserName(userName);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 */
 	@Override
 	public Set<SysUser> findRoles(String userName) {
-		return userDao.selectRolesByUserName(userName);
+		return sysUserMapper.selectRolesByUserName(userName);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 */
 	@Override
 	public Set<SysUser> findPermissions(String userName) {
-		return userDao.selectPermissionsByUserName(userName);
+		return sysUserMapper.selectPermissionsByUserName(userName);
 	}
 
 	/**

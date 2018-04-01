@@ -20,7 +20,7 @@ import redis.clients.jedis.JedisPoolConfig;
  *
  * @Created at 2018年2月28日 上午9:51:35
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class RedisPoolsImpl implements RedisPools {
 	protected static JedisPool jedisPool = null;
@@ -46,11 +46,11 @@ public class RedisPoolsImpl implements RedisPools {
 			logger.info("redis连接没有密码");
 			jedisPool = new JedisPool(jedisconfig, bundle.getString("redis.ip"), Integer.valueOf(bundle.getString("redis.port")), Integer.valueOf(bundle.getString("redis.timeout")));
 		} else {
-			logger.info("redis连接有密码：{}", authPwd);
+			logger.trace("redis连接有密码：{}", authPwd);
 			jedisPool = new JedisPool(jedisconfig, bundle.getString("redis.ip"), Integer.valueOf(bundle.getString("redis.port")), Integer.valueOf(bundle.getString("redis.timeout")), authPwd);
 		}
 
-		logger.info("redis 连接池初始化成功!");
+		logger.trace("redis 连接池初始化成功!");
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class RedisPoolsImpl implements RedisPools {
 		Jedis jedis = null;
 
 		if (jedisPool == null || jedisPool.isClosed()) {
-			logger.info("redis 连接池为空,开始初始化...");
+			logger.trace("redis 连接池为空,开始初始化...");
 			try {
 				initRedis();
 			} catch (IOException e) {
@@ -77,7 +77,7 @@ public class RedisPoolsImpl implements RedisPools {
 
 		try {
 			jedis = jedisPool.getResource();
-			logger.info("分配一个redis 连接池成功!");
+			logger.trace("分配一个redis 连接池成功!");
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("分配连接池错误,开始重试", e));
 
@@ -95,7 +95,7 @@ public class RedisPoolsImpl implements RedisPools {
 	public void returnResource(final Jedis jedis) {
 		if (jedis != null) {
 			jedis.close();
-			logger.info("redis 连接释放1个");
+			logger.trace("redis 连接释放1个");
 		}
 	}
 

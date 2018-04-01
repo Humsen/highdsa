@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
+import pers.husen.highdsa.common.exception.cache.MybatisRedisCacheException;
 import pers.husen.highdsa.service.redis.RedisOperation;
 
 /**
@@ -19,25 +20,23 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年3月7日 下午9:11:07
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 @Repository(value = "redisCache")
 public class RedisCache implements Cache {
 	private static final Logger logger = LogManager.getLogger(RedisCache.class.getName());
 
 	private static RedisOperation redisOperation;
+	/** The {@code ReadWriteLock}. */
+	private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+	// private String keyPrefix = RedisCacheConstants.MYBATIS_REDIS_CACHE;
 
 	public static void setRedisOperation(RedisOperation redisOperation) {
-        RedisCache.redisOperation = redisOperation;
-    }
-	
+		RedisCache.redisOperation = redisOperation;
+	}
+
 	@Value(value = "redis-cache")
 	private String id;
-
-	/**
-	 * The {@code ReadWriteLock}.
-	 */
-	private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
 	public RedisCache() {
 	}
@@ -46,14 +45,20 @@ public class RedisCache implements Cache {
 		if (id == null) {
 			throw new IllegalArgumentException("Cache instances require an ID");
 		}
-		logger.info("RedisCache init: id=" + id);
+		logger.trace("RedisCache init: id=" + id);
 
 		this.id = id;
 	}
 
 	@Override
 	public void clear() {
-		redisOperation.flushDB();
+		logger.trace("从redis中删除所有元素");
+
+		try {
+			redisOperation.flushDB();
+		} catch (Exception e) {
+			throw new MybatisRedisCacheException("从redis中删除所有元素出错", e);
+		}
 	}
 
 	@Override
@@ -65,11 +70,11 @@ public class RedisCache implements Cache {
 	public Object getObject(Object key) {
 		Object object = null;
 		try {
-			 object = redisOperation.getObject(key);
+			object = redisOperation.getObject(key);
 		} catch (Exception e) {
-			logger.fatal(StackTrace2Str.exceptionStackTrace2Str("出错", e));
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("出错", e));
 		}
-		
+
 		return object;
 	}
 

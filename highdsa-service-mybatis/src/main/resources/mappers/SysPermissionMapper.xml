@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper">
+	<!-- 自定义二级缓存 -->
+	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
+
 	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.shiro.SysPermission">
 		<constructor>
 			<idArg column="permission_id" javaType="java.lang.Long" jdbcType="BIGINT" />
@@ -16,7 +19,8 @@
 	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysPermission">
 		insert into sys_permission (permission_id, permission_name, permission_desc,
 		permission_valid)
-		values (#{permissionId,jdbcType=BIGINT}, #{permissionName,jdbcType=VARCHAR}, #{permissionDesc,jdbcType=VARCHAR},
+		values (#{permissionId,jdbcType=BIGINT},
+		#{permissionName,jdbcType=VARCHAR}, #{permissionDesc,jdbcType=VARCHAR},
 		#{permissionValid,jdbcType=BIT})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysPermission">
@@ -29,7 +33,8 @@
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select permission_id, permission_name, permission_desc, permission_valid
 		from sys_permission
-		where permission_id = #{permissionId,jdbcType=BIGINT}
+		where permission_id =
+		#{permissionId,jdbcType=BIGINT}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
 		select permission_id, permission_name, permission_desc, permission_valid
