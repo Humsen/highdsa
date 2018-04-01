@@ -20,7 +20,7 @@ import pers.husen.highdsa.web.shiro.realm.SystemUserRealm;
  *
  * @Created at 2018年3月28日 上午11:03:01
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 @Service
 public class ShiroTest {
@@ -52,7 +52,7 @@ public class ShiroTest {
 
 	public void testShiroRedisCache() {
 		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken("user", "123");
+		UsernamePasswordToken token = new UsernamePasswordToken("user", "1234");
 		subject.login(token);
 
 		Assert.assertTrue(subject.isAuthenticated());
@@ -60,10 +60,10 @@ public class ShiroTest {
 		subject.checkRole("普通用户");
 		subject.checkPermission("sys:user:view");
 
-		sysUserManager.modifyPassword(1002L, "123");
+		sysUserManager.modifyPassword(1002L, "1234");
 		systemUserRealm.clearCache(subject.getPrincipals());
 
-		token = new UsernamePasswordToken("user", "123");
+		token = new UsernamePasswordToken("user", "1234");
 		subject.login(token);
 
 		System.out.println("=============== 阻塞开始... ==================");

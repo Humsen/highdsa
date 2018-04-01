@@ -16,7 +16,7 @@ import org.apache.shiro.cache.CacheManager;
  *
  * @Created at 2018年3月30日 上午8:29:21
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @SuppressWarnings("rawtypes")
 public class ShiroRedisCacheManager implements CacheManager {
@@ -57,14 +57,14 @@ public class ShiroRedisCacheManager implements CacheManager {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <K, V> Cache<K, V> getCache(String name) throws CacheException {
-		logger.info("获取名称为: " + name + " 的RedisCache实例");
+		logger.debug("获取名称为: " + name + " 的RedisCache实例");
 
 		Cache cache = cacheMap.get(name);
 
 		if (cache == null) {
 
 			// create a new cache instance
-			cache = new ShiroRedisCache<K, V>(keyPrefix + name);
+			cache = new ShiroRedisCache<K, V>(keyPrefix);
 
 			// add it to the cache collection
 			cacheMap.put(name, cache);

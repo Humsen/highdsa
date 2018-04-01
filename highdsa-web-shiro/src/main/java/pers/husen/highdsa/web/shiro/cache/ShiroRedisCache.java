@@ -15,7 +15,6 @@ import org.apache.shiro.util.CollectionUtils;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.redis.RedisOperation;
-import pers.husen.highdsa.service.redis.RedisPools;
 
 /**
  * @Desc shiro使用redis缓存
@@ -24,14 +23,13 @@ import pers.husen.highdsa.service.redis.RedisPools;
  *
  * @Created at 2018年3月30日 上午12:07:58
  * 
- * @Version 1.0.2
+ * @Version 1.0.4
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	private static final Logger logger = LogManager.getLogger(ShiroRedisCache.class.getName());
 
 	private static RedisOperation redisOperation;
-	// private static RedisPools redisPools;
 
 	// private String keyPrefix = RedisCacheKeyPrefix.SHIRO_REDIS_CACHE;
 	private String keyPrefix = "shiro_redis_session:";
@@ -49,11 +47,6 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 */
 	public static void setRedisOperation(RedisOperation redisOperation) {
 		ShiroRedisCache.redisOperation = redisOperation;
-	}
-
-	public static void setRedisFactory(RedisOperation redisOperation, RedisPools redisPools) {
-		ShiroRedisCache.redisOperation = redisOperation;
-		// ShiroRedisCache.redisPools = redisPools;
 	}
 
 	public String getKeyPrefix() {
@@ -79,16 +72,6 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	}
 
 	/**
-	 * 获取带前缀的key
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public String getKeyWithPrefix(String key) {
-		return keyPrefix + key;
-	}
-
-	/**
 	 * 获得byte[]型的key
 	 * 
 	 * @param key
@@ -98,9 +81,11 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 		if (key instanceof String) {
 			System.out.println("是string：" + key);
 			String preKey = this.keyPrefix + key;
+
 			return preKey.getBytes();
 		} else {
 			System.out.println("是对象：" + key);
+
 			return SerializeUtils.serialize(key);
 		}
 	}
@@ -108,21 +93,22 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	@Override
 	public V get(K key) throws CacheException {
 		logger.info("根据key从Redis中获取对象 key [" + key + "]");
-		V object = null;
+		V value = null;
 
 		if (key == null) {
 			return null;
 		}
 
 		try {
-			object = (V) redisOperation.get(getByteKey(key));
+			byte[] rawValue = redisOperation.get(getByteKey(key));
+			value = (V) SerializeUtils.deserialize(rawValue);
+
+			return value;
 		} catch (Exception e) {
 			logger.fatal(StackTrace2Str.exceptionStackTrace2Str("出错", e));
 
 			throw new CacheException("获取缓存出错", e);
 		}
-
-		return object;
 	}
 
 	/**
@@ -130,15 +116,14 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 */
 	@Override
 	public V put(K key, V value) throws CacheException {
-		logger.debug("根据key从存储 key [" + key + "]");
+		logger.debug("根据key存储, key [" + key + "]");
 		try {
 			redisOperation.set(getByteKey(key), SerializeUtils.serialize(value));
+
 			return value;
 		} catch (Throwable t) {
 			throw new CacheException(t);
 		}
-
-		// return get(key);
 	}
 
 	@Override
@@ -175,7 +160,9 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	@Override
 	public int size() {
 		try {
-			return redisOperation.getDbSize();
+			Long longSize = new Long(redisOperation.dbSize());
+
+			return longSize.intValue();
 		} catch (Throwable t) {
 			throw new CacheException(t);
 		}

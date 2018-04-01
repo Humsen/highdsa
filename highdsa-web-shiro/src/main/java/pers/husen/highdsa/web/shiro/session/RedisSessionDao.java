@@ -11,8 +11,8 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 
+import pers.husen.highdsa.service.redis.RedisOperation;
 import pers.husen.highdsa.web.shiro.cache.SerializeUtils;
-import pers.husen.highdsa.web.shiro.cache.ShiroRedisCache;
 
 /**
  * @Desc 会话缓存管理
@@ -21,13 +21,29 @@ import pers.husen.highdsa.web.shiro.cache.ShiroRedisCache;
  *
  * @Created at 2018年3月30日 下午3:35:46
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class RedisSessionDao extends AbstractSessionDAO {
 	private static final Logger logger = LogManager.getLogger(RedisSessionDao.class.getName());
 
-	private static final String PREFIX = "shiro_session_id:";
+	private static RedisOperation redisOperation;
+	private static final String PREFIX = "shiro_redis_session:";
 	private static final int EXPRIE = 10000;
+
+	/**
+	 * @return the redisOperation
+	 */
+	public static RedisOperation getRedisOperation() {
+		return redisOperation;
+	}
+
+	/**
+	 * @param redisOperation
+	 *            the redisOperation to set
+	 */
+	public static void setRedisOperation(RedisOperation redisOperation) {
+		RedisSessionDao.redisOperation = redisOperation;
+	}
 
 	@Override
 	public void update(Session session) throws UnknownSessionException {
@@ -46,7 +62,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 		byte[] value = SerializeUtils.serialize(session);
 		session.setTimeout(EXPRIE * 1000);
 
-		ShiroRedisCache.getRedisOperation().set(key, value, EXPRIE);
+		redisOperation.set(key, value, EXPRIE);
 	}
 
 	@Override
@@ -57,17 +73,17 @@ public class RedisSessionDao extends AbstractSessionDAO {
 			return;
 		}
 
-		ShiroRedisCache.getRedisOperation().del(this.getByteKey(session.getId()));
+		redisOperation.del(this.getByteKey(session.getId()));
 	}
 
 	@Override
 	public Collection<Session> getActiveSessions() {
 		Set<Session> sessions = new HashSet<Session>();
 
-		Set<byte[]> keys = ShiroRedisCache.getRedisOperation().keys(PREFIX + "*");
+		Set<byte[]> keys = redisOperation.keys(PREFIX + "*");
 		if (keys != null && keys.size() > 0) {
 			for (byte[] key : keys) {
-				Session s = (Session) SerializeUtils.deserialize(ShiroRedisCache.getRedisOperation().get(key));
+				Session s = (Session) SerializeUtils.deserialize(redisOperation.get(key));
 				sessions.add(s);
 			}
 		}
@@ -85,7 +101,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 		byte[] value = SerializeUtils.serialize(session);
 		session.setTimeout(EXPRIE * 1000);
 
-		ShiroRedisCache.getRedisOperation().set(key, value, EXPRIE);
+		redisOperation.set(key, value, EXPRIE);
 
 		return sessionId;
 	}
@@ -98,7 +114,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 			return null;
 		}
 
-		Session session = (Session) SerializeUtils.deserialize(ShiroRedisCache.getRedisOperation().get(this.getByteKey(sessionId)));
+		Session session = (Session) SerializeUtils.deserialize(redisOperation.get(this.getByteKey(sessionId)));
 
 		// 判断是否有会话 没有返回NULL
 		if (session == null) {

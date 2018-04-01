@@ -29,13 +29,13 @@
 	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
 
 	<!-- 会话DAO -->
+	<bean id="sessionDAO" class="pers.husen.highdsa.web.shiro.session.RedisSessionDao"></bean>
 	<!-- <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO"> <property name="activeSessionsCacheName" value="shiro-activeSessionCache" /> <property name="sessionIdGenerator" 
 		ref="sessionIdGenerator" /> </bean> -->
-	<bean id="sessionDAO" class="pers.husen.highdsa.web.shiro.session.RedisSessionDao">
-		<!-- 设置Session 缓存名字 -->
-		<!-- <property name="activeSessionsCacheName" value="shiro-activeSessionCache" /> -->
-		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
-	</bean>
+	<!-- <bean id="sessionDAO" class="pers.husen.highdsa.web.shiro.session.RedisSessionDao"> -->
+	<!-- 设置Session 缓存名字 -->
+	<!-- <property name="activeSessionsCacheName" value="shiro-activeSessionCache" /> -->
+	<!-- <property name="sessionIdGenerator" ref="sessionIdGenerator" /> </bean> -->
 
 	<!-- 会话验证调度器 -->
 	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
@@ -44,13 +44,11 @@
 	</bean>
 
 	<!-- 会话管理器 -->
-	<bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
-		<property name="globalSessionTimeout" value="1800000" />
-		<property name="deleteInvalidSessions" value="true" />
-		<property name="sessionValidationSchedulerEnabled" value="true" />
-		<property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
 		<property name="sessionDAO" ref="sessionDAO" />
 	</bean>
+	<!-- <bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager"> <property name="globalSessionTimeout" value="1800000" /> <property name="deleteInvalidSessions" value="true" 
+		/> <property name="sessionValidationSchedulerEnabled" value="true" /> <property name="sessionValidationScheduler" ref="sessionValidationScheduler" /> <property name="sessionDAO" ref="sessionDAO" /> </bean> -->
 
 	<!-- 安全管理器 -->
 	<bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager">
@@ -75,6 +73,5 @@
 	<!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使shiro实现第三方缓存 -->
 	<bean id="shiroRedisCacheTransfer" class="pers.husen.highdsa.web.shiro.cache.ShiroRedisCacheTransfer">
 		<constructor-arg name="redisOperation" ref="redisOperation" />
-		<constructor-arg name="redisPools" ref="redisPools" />
 	</bean>
 </beans>
