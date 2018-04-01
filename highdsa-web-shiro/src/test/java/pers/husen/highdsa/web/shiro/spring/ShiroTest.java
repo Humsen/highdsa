@@ -8,6 +8,7 @@ import org.apache.shiro.subject.Subject;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.service.mybatis.SysUserManager;
 import pers.husen.highdsa.web.shiro.realm.SystemUserRealm;
@@ -19,18 +20,19 @@ import pers.husen.highdsa.web.shiro.realm.SystemUserRealm;
  *
  * @Created at 2018年3月28日 上午11:03:01
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
+@Service
 public class ShiroTest {
 
 	@Autowired
-	private SysUserManager userManager;
+	private SysUserManager sysUserManager;
 
 	@Autowired
 	private SystemUserRealm systemUserRealm;
 
 	public static void main(String[] args) {
-		String[] configLocation = new String[] { "classpath:spring/spring-shiro.xml", "classpath:spring/system-consumer.xml" };
+		String[] configLocation = new String[] { "classpath:spring/spring-context.xml", "classpath:spring/spring-shiro.xml", "classpath:spring/system-consumer.xml" };
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(configLocation);
 		context.start();
@@ -50,18 +52,18 @@ public class ShiroTest {
 
 	public void testShiroRedisCache() {
 		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken("user", "654321");
+		UsernamePasswordToken token = new UsernamePasswordToken("user", "123");
 		subject.login(token);
 
 		Assert.assertTrue(subject.isAuthenticated());
 		System.out.println("开始检查角色");
-		subject.checkRole("user");
-		subject.checkPermission("sys:user:create");
+		subject.checkRole("普通用户");
+		subject.checkPermission("sys:user:view");
 
-		userManager.modifyPassword(1002L, "123");
+		sysUserManager.modifyPassword(1002L, "123");
 		systemUserRealm.clearCache(subject.getPrincipals());
 
-		token = new UsernamePasswordToken("user", "12123");
+		token = new UsernamePasswordToken("user", "123");
 		subject.login(token);
 
 		System.out.println("=============== 阻塞开始... ==================");

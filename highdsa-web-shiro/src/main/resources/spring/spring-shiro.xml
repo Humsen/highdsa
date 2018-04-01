@@ -4,6 +4,7 @@
 
 	<!-- 缓存管理器 使用redis实现 -->
 	<bean id="cacheManager" class="pers.husen.highdsa.web.shiro.cache.ShiroRedisCacheManager"></bean>
+	<!-- <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> <property name="cacheManagerConfigFile" value="classpath:ehcache.xml" /> </bean> -->
 
 	<!-- 凭证匹配器 -->
 	<bean id="credentialsMatcher" class="pers.husen.highdsa.web.shiro.credentials.RetryLimitHashedCredentialsMatcher">
@@ -28,6 +29,8 @@
 	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
 
 	<!-- 会话DAO -->
+	<!-- <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO"> <property name="activeSessionsCacheName" value="shiro-activeSessionCache" /> <property name="sessionIdGenerator" 
+		ref="sessionIdGenerator" /> </bean> -->
 	<bean id="sessionDAO" class="pers.husen.highdsa.web.shiro.session.RedisSessionDao">
 		<!-- 设置Session 缓存名字 -->
 		<!-- <property name="activeSessionsCacheName" value="shiro-activeSessionCache" /> -->
@@ -74,6 +77,4 @@
 		<constructor-arg name="redisOperation" ref="redisOperation" />
 		<constructor-arg name="redisPools" ref="redisPools" />
 	</bean>
-
-	<bean id="shiroTest" class="pers.husen.highdsa.web.shiro.spring.ShiroTest"></bean>
 </beans>

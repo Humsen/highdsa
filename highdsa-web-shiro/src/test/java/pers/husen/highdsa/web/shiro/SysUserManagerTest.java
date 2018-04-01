@@ -18,7 +18,7 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  *
  * @Created at 2018年3月29日 下午12:11:59
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/spring-shiro.xml", "classpath:spring/system-consumer.xml" })
@@ -84,7 +84,7 @@ public class SysUserManagerTest {
 	 */
 	@Test
 	public void testFindRoles() {
-		Set<String> reply = sysUserManager.findRoles("admin");
+		Set<SysUser> reply = sysUserManager.findRoles("admin");
 
 		System.out.println("查询角色结果：" + reply);
 	}
@@ -95,7 +95,7 @@ public class SysUserManagerTest {
 	 */
 	@Test
 	public void testFindPermissions() {
-		Set<String> reply = sysUserManager.findPermissions("super_admin");
+		Set<SysUser> reply = sysUserManager.findPermissions("super_admin");
 
 		System.out.println("查询权限结果：" + reply);
 	}

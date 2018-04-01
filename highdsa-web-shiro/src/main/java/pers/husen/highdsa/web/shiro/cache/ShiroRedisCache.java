@@ -24,7 +24,7 @@ import pers.husen.highdsa.service.redis.RedisPools;
  *
  * @Created at 2018年3月30日 上午12:07:58
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ShiroRedisCache<K, V> implements Cache<K, V> {
@@ -96,9 +96,11 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 */
 	private byte[] getByteKey(K key) {
 		if (key instanceof String) {
+			System.out.println("是string：" + key);
 			String preKey = this.keyPrefix + key;
 			return preKey.getBytes();
 		} else {
+			System.out.println("是对象：" + key);
 			return SerializeUtils.serialize(key);
 		}
 	}

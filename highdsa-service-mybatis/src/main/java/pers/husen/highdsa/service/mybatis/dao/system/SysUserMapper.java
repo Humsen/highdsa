@@ -12,7 +12,7 @@ import pers.husen.highdsa.common.entity.po.shiro.SysUser;
  *
  * @Created at 2018年3月29日 下午3:19:33
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public interface SysUserMapper {
 	int deleteByPrimaryKey(Long userId);
@@ -39,7 +39,7 @@ public interface SysUserMapper {
 	 * @param userName
 	 * @return
 	 */
-	Set<String> selectRolesByUserName(String userName);
+	Set<SysUser> selectRolesByUserName(String userName);
 
 	/**
 	 * 根据用户名查找权限集合
@@ -47,5 +47,5 @@ public interface SysUserMapper {
 	 * @param userName
 	 * @return
 	 */
-	Set<String> selectPermissionsByUserName(String userName);
+	Set<SysUser> selectPermissionsByUserName(String userName);
 }

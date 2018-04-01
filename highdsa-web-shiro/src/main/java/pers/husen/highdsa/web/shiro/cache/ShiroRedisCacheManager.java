@@ -16,7 +16,7 @@ import org.apache.shiro.cache.CacheManager;
  *
  * @Created at 2018年3月30日 上午8:29:21
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @SuppressWarnings("rawtypes")
 public class ShiroRedisCacheManager implements CacheManager {
@@ -64,7 +64,7 @@ public class ShiroRedisCacheManager implements CacheManager {
 		if (cache == null) {
 
 			// create a new cache instance
-			cache = new ShiroRedisCache<K, V>(keyPrefix);
+			cache = new ShiroRedisCache<K, V>(keyPrefix + name);
 
 			// add it to the cache collection
 			cacheMap.put(name, cache);

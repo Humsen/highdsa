@@ -22,7 +22,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
  *
  * @Created at 2018年3月29日 上午9:29:44
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service("sysUserManager")
 public class SysUserManagerImpl implements SysUserManager {
@@ -96,7 +96,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param userName
 	 * @return
 	 */
-	public Set<String> findRoles(String userName) {
+	public Set<SysUser> findRoles(String userName) {
 		return userDao.selectRolesByUserName(userName);
 	}
 
@@ -106,7 +106,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param userName
 	 * @return
 	 */
-	public Set<String> findPermissions(String userName) {
+	public Set<SysUser> findPermissions(String userName) {
 		return userDao.selectPermissionsByUserName(userName);
 	}
 

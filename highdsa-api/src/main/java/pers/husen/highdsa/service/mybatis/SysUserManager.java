@@ -13,7 +13,7 @@ import pers.husen.highdsa.common.entity.po.shiro.SysUser;
  *
  * @Created at 2018年3月29日 上午9:21:33
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service("sysUserManager")
 public interface SysUserManager {
@@ -62,7 +62,7 @@ public interface SysUserManager {
 	 * @param username
 	 * @return
 	 */
-	public Set<String> findRoles(String userName);
+	public Set<SysUser> findRoles(String userName);
 
 	/**
 	 * 根据用户名查找其权限
@@ -70,5 +70,5 @@ public interface SysUserManager {
 	 * @param username
 	 * @return
 	 */
-	public Set<String> findPermissions(String userName);
+	public Set<SysUser> findPermissions(String userName);
 }

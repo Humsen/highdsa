@@ -1,5 +1,9 @@
 package pers.husen.highdsa.web.shiro.realm;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -11,6 +15,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import pers.husen.highdsa.common.entity.po.shiro.SysRole;
+import pers.husen.highdsa.common.entity.po.shiro.SysRolePermission;
 import pers.husen.highdsa.common.entity.po.shiro.SysUser;
 import pers.husen.highdsa.common.utility.ByteSourceSerializable;
 import pers.husen.highdsa.service.mybatis.SysUserManager;
@@ -22,7 +28,7 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  *
  * @Created at 2018年3月29日 上午8:36:54
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class SystemUserRealm extends AuthorizingRealm {
 
@@ -38,11 +44,42 @@ public class SystemUserRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		String username = (String) principals.getPrimaryPrincipal();
+		String userName = (String) principals.getPrimaryPrincipal();
 
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		authorizationInfo.setRoles(sysUserManager.findRoles(username));
-		authorizationInfo.setStringPermissions(sysUserManager.findPermissions(username));
+
+		// 根据用户名查询当前用户拥有的角色
+		Set<String> roleNames = new HashSet<String>();
+
+		Set<SysUser> userRoles = sysUserManager.findRoles(userName);
+		for (SysUser userRole : userRoles) {
+			List<SysRole> roleList = userRole.getSysRoleList();
+
+			for (SysRole role : roleList) {
+				roleNames.add(role.getRoleName());
+				System.out.println("角色：" + role.getRoleName());
+			}
+		}
+		// 将角色名称提供给info
+		authorizationInfo.setRoles(roleNames);
+
+		System.out.println("获取角色：" + authorizationInfo.getRoles());
+
+		// 根据用户名查询当前用户权限
+		Set<String> permissionNames = new HashSet<String>();
+
+		Set<SysUser> userPermissions = sysUserManager.findPermissions(userName);
+		for (SysUser userPermission : userPermissions) {
+			List<SysRolePermission> rolePermissionList = userPermission.getSysRolePermissionList();
+
+			for (SysRolePermission rolePermission : rolePermissionList) {
+				permissionNames.add(rolePermission.getSysPermission().getPermissionName());
+				System.out.println("权限：" + rolePermission.getSysPermission().getPermissionName());
+			}
+		}
+		// 将权限名称提供给info
+		authorizationInfo.setStringPermissions(permissionNames);
+		System.out.println("获取权限：" + authorizationInfo.getStringPermissions());
 
 		return authorizationInfo;
 	}
@@ -68,7 +105,7 @@ public class SystemUserRealm extends AuthorizingRealm {
 				new ByteSourceSerializable(user.getUserName() + user.getUserPwdSalt()), // salt=username+salt
 				getName() // realm name
 		);
-		
+
 		return authenticationInfo;
 	}
 
