@@ -22,7 +22,7 @@ import org.apache.shiro.cache.CacheManager;
 public class ShiroRedisCacheManager implements CacheManager {
 	private static final Logger logger = LogManager.getLogger(ShiroRedisCacheManager.class.getName());
 
-	// fast lookup by name map
+	/** fast lookup by name map */
 	private final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap<String, Cache>();
 
 	/**

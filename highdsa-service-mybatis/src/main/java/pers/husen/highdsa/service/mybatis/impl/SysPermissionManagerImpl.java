@@ -20,13 +20,15 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper;
 public class SysPermissionManagerImpl implements SysPermissionManager {
 
 	@Autowired
-	private SysPermissionMapper permissionDao;
+	private SysPermissionMapper permissionMapper;
 
+	@Override
 	public int createPermission(SysPermission permission) {
-		return permissionDao.insert(permission);
+		return permissionMapper.insert(permission);
 	}
 
+	@Override
 	public void deletePermission(Long permissionId) {
-		permissionDao.deleteByPrimaryKey(permissionId);
+		permissionMapper.deleteByPrimaryKey(permissionId);
 	}
 }

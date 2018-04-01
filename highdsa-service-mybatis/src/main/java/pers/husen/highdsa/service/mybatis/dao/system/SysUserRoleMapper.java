@@ -14,9 +14,27 @@ import pers.husen.highdsa.common.entity.po.shiro.SysUserRole;
  * @Version 1.0.0
  */
 public interface SysUserRoleMapper {
-    int deleteByPrimaryKey(@Param("userId") Long userId, @Param("roleId") Long roleId);
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param userId
+	 * @param roleId
+	 * @return
+	 */
+	int deleteByPrimaryKey(@Param("userId") Long userId, @Param("roleId") Long roleId);
 
-    int insert(SysUserRole record);
+	/**
+	 * 插入新角色
+	 * 
+	 * @param record
+	 * @return
+	 */
+	int insert(SysUserRole record);
 
-    List<SysUserRole> selectAll();
+	/**
+	 * 查询所有记录
+	 * 
+	 * @return
+	 */
+	List<SysUserRole> selectAll();
 }

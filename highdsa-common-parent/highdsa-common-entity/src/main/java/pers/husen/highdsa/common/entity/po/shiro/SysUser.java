@@ -2,6 +2,7 @@ package pers.husen.highdsa.common.entity.po.shiro;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Desc 系统用户实体类
@@ -10,7 +11,7 @@ import java.util.List;
  *
  * @Created at 2018年3月29日 下午3:34:45
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -137,5 +138,25 @@ public class SysUser implements Serializable {
 	 */
 	public void setSysRolePermissionList(List<SysRolePermission> sysRolePermissionList) {
 		this.sysRolePermissionList = sysRolePermissionList;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object == this) {
+			return true;
+		}
+
+		if (!(object instanceof SysUser)) {
+			return false;
+		}
+		SysUser user = (SysUser) object;
+
+		return Objects.equals(userId, user.userId) && Objects.equals(userName, user.userName) && Objects.equals(userPassword, user.userPassword) && Objects.equals(userEmail, user.userEmail)
+				&& Objects.equals(userPhone, user.userPhone) && Objects.equals(userPwdSalt, user.userPwdSalt) && Objects.equals(userState, user.userState);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId, userName, userPassword);
 	}
 }

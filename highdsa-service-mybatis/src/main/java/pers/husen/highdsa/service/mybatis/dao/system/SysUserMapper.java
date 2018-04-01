@@ -15,14 +15,43 @@ import pers.husen.highdsa.common.entity.po.shiro.SysUser;
  * @Version 1.0.1
  */
 public interface SysUserMapper {
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	int deleteByPrimaryKey(Long userId);
 
+	/**
+	 * 插入新的用户
+	 * 
+	 * @param record
+	 * @return
+	 */
 	int insert(SysUser record);
 
+	/**
+	 * 根据主键查询
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	SysUser selectByPrimaryKey(Long userId);
 
+	/**
+	 * 查询所欲记录
+	 * 
+	 * @return
+	 */
 	List<SysUser> selectAll();
 
+	/**
+	 * 根据主键更新记录
+	 * 
+	 * @param record
+	 * @return
+	 */
 	int updateByPrimaryKey(SysUser record);
 
 	/**

@@ -26,10 +26,12 @@ public class SysRoleManagerImpl implements SysRoleManager {
 	@Autowired
 	private SysRolePermissionMapper rolePermissionMapper;
 
+	@Override
 	public int createSysRole(SysRole role) {
 		return roleDao.insert(role);
 	}
 
+	@Override
 	public void deleteSysRole(Long roleId) {
 		roleDao.deleteByPrimaryKey(roleId);
 	}
@@ -40,6 +42,7 @@ public class SysRoleManagerImpl implements SysRoleManager {
 	 * @param roleId
 	 * @param permissionIds
 	 */
+	@Override
 	public void correlationPermissions(Long roleId, Long... permissionIds) {
 		for (Long permissionId : permissionIds) {
 			rolePermissionMapper.insert(new SysRolePermission(roleId, permissionId));
@@ -52,6 +55,7 @@ public class SysRoleManagerImpl implements SysRoleManager {
 	 * @param roleId
 	 * @param permissionIds
 	 */
+	@Override
 	public void uncorrelationPermissions(Long roleId, Long... permissionIds) {
 		for (Long permissionId : permissionIds) {
 			rolePermissionMapper.deleteByPrimaryKey(roleId, permissionId);

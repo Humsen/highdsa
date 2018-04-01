@@ -21,6 +21,7 @@ public interface SysUserManager {
 	 * 创建用户
 	 * 
 	 * @param user
+	 * @return
 	 */
 	public int createUser(SysUser user);
 
@@ -51,7 +52,7 @@ public interface SysUserManager {
 	/**
 	 * 根据用户名查找用户
 	 * 
-	 * @param username
+	 * @param userName
 	 * @return
 	 */
 	public SysUser findByUserName(String userName);
@@ -59,7 +60,7 @@ public interface SysUserManager {
 	/**
 	 * 根据用户名查找其角色
 	 * 
-	 * @param username
+	 * @param userName
 	 * @return
 	 */
 	public Set<SysUser> findRoles(String userName);
@@ -67,7 +68,7 @@ public interface SysUserManager {
 	/**
 	 * 根据用户名查找其权限
 	 * 
-	 * @param username
+	 * @param userName
 	 * @return
 	 */
 	public Set<SysUser> findPermissions(String userName);

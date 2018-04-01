@@ -395,14 +395,23 @@ public interface RedisOperation {
 	public Set<byte[]> keys(String pattern);
 
 	/**
-	 * 获取所有的value
+	 * 根据前缀获取所有的value
+	 * 
+	 * @param pattern
+	 * @return
 	 */
 	public List<Object> values(String pattern);
 
+	/**
+	 * 根据字节数组获取字节数组
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public byte[] get(byte[] key);
 
 	/**
-	 * set
+	 * 设置字节数组
 	 * 
 	 * @param key
 	 * @param value
@@ -411,7 +420,7 @@ public interface RedisOperation {
 	public byte[] set(byte[] key, byte[] value);
 
 	/**
-	 * set
+	 * 设置字节数组,带过期时间
 	 * 
 	 * @param key
 	 * @param value
@@ -428,7 +437,9 @@ public interface RedisOperation {
 	public void del(byte[] key);
 
 	/**
-	 * size
+	 * 获取db数量
+	 * 
+	 * @return
 	 */
 	public Long dbSize();
 }

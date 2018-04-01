@@ -37,6 +37,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * 
 	 * @param user
 	 */
+	@Override
 	public int createUser(SysUser user) {
 		// 加密密码
 		encryptPassword(user);
@@ -49,6 +50,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param userId
 	 * @param newPassword
 	 */
+	@Override
 	public void modifyPassword(Long userId, String newPassword) {
 		SysUser user = userDao.selectByPrimaryKey(userId);
 		user.setUserPassword(newPassword);
@@ -62,6 +64,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param userId
 	 * @param roleIds
 	 */
+	@Override
 	public void correlationRoles(Long userId, Long... roleIds) {
 		for (Long roleId : roleIds) {
 			userRoleMapper.insert(new SysUserRole(userId, roleId));
@@ -74,6 +77,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param userId
 	 * @param roleIds
 	 */
+	@Override
 	public void uncorrelationRoles(Long userId, Long... roleIds) {
 		for (Long roleId : roleIds) {
 			userRoleMapper.deleteByPrimaryKey(userId, roleId);
@@ -86,6 +90,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param userName
 	 * @return
 	 */
+	@Override
 	public SysUser findByUserName(String userName) {
 		return userDao.selectUserInfoByUserName(userName);
 	}
@@ -96,6 +101,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param userName
 	 * @return
 	 */
+	@Override
 	public Set<SysUser> findRoles(String userName) {
 		return userDao.selectRolesByUserName(userName);
 	}
@@ -106,6 +112,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param userName
 	 * @return
 	 */
+	@Override
 	public Set<SysUser> findPermissions(String userName) {
 		return userDao.selectPermissionsByUserName(userName);
 	}

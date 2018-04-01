@@ -13,13 +13,42 @@ import pers.husen.highdsa.common.entity.po.shiro.SysPermission;
  * @Version 1.0.0
  */
 public interface SysPermissionMapper {
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param permissionId
+	 * @return
+	 */
 	int deleteByPrimaryKey(Long permissionId);
 
+	/**
+	 * 插入新的权限记录
+	 * 
+	 * @param record
+	 * @return
+	 */
 	int insert(SysPermission record);
 
+	/**
+	 * 根据主键查询
+	 * 
+	 * @param permissionId
+	 * @return
+	 */
 	SysPermission selectByPrimaryKey(Long permissionId);
 
+	/**
+	 * 查询所有权限
+	 * 
+	 * @return
+	 */
 	List<SysPermission> selectAll();
 
+	/**
+	 * 根据主键更新记录
+	 * 
+	 * @param record
+	 * @return
+	 */
 	int updateByPrimaryKey(SysPermission record);
 }

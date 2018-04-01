@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,6 +17,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import pers.husen.highdsa.common.constant.SysUserState;
 import pers.husen.highdsa.common.entity.po.shiro.SysRole;
 import pers.husen.highdsa.common.entity.po.shiro.SysRolePermission;
 import pers.husen.highdsa.common.entity.po.shiro.SysUser;
@@ -31,6 +34,7 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  * @Version 1.0.3
  */
 public class SystemUserRealm extends AuthorizingRealm {
+	private static final Logger logger = LogManager.getLogger(SystemUserRealm.class.getName());
 
 	private SysUserManager sysUserManager;
 
@@ -57,13 +61,13 @@ public class SystemUserRealm extends AuthorizingRealm {
 
 			for (SysRole role : roleList) {
 				roleNames.add(role.getRoleName());
-				System.out.println("角色：" + role.getRoleName());
+				logger.trace("从数据库获取到的角色：" + role.getRoleName());
 			}
 		}
 		// 将角色名称提供给info
 		authorizationInfo.setRoles(roleNames);
 
-		System.out.println("获取角色：" + authorizationInfo.getRoles());
+		logger.trace("获取当前所有获取角色：" + authorizationInfo.getRoles());
 
 		// 根据用户名查询当前用户权限
 		Set<String> permissionNames = new HashSet<String>();
@@ -74,12 +78,12 @@ public class SystemUserRealm extends AuthorizingRealm {
 
 			for (SysRolePermission rolePermission : rolePermissionList) {
 				permissionNames.add(rolePermission.getSysPermission().getPermissionName());
-				System.out.println("权限：" + rolePermission.getSysPermission().getPermissionName());
+				logger.trace("从数据库获取到的权限：" + rolePermission.getSysPermission().getPermissionName());
 			}
 		}
 		// 将权限名称提供给info
 		authorizationInfo.setStringPermissions(permissionNames);
-		System.out.println("获取权限：" + authorizationInfo.getStringPermissions());
+		logger.trace("获取当前所有权限：" + authorizationInfo.getStringPermissions());
 
 		return authorizationInfo;
 	}
@@ -92,18 +96,21 @@ public class SystemUserRealm extends AuthorizingRealm {
 		SysUser user = sysUserManager.findByUserName(username);
 
 		if (user == null) {
-			throw new UnknownAccountException();// 没找到帐号
+			// 没找到帐号
+			throw new UnknownAccountException();
 		}
 
-		if ("001".equals(user.getUserState())) {
-			throw new LockedAccountException(); // 帐号锁定
+		if (SysUserState.VALID.equals(user.getUserState())) {
+			// 帐号锁定
+			throw new LockedAccountException(); 
 		}
 
 		// 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), // 用户名
-				user.getUserPassword(), // 密码
-				new ByteSourceSerializable(user.getUserName() + user.getUserPwdSalt()), // salt=username+salt
-				getName() // realm name
+		// 用户名, 密码, salt=username+salt, realm name
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), 
+				user.getUserPassword(), 
+				new ByteSourceSerializable(user.getUserName() + user.getUserPwdSalt()), 
+				getName() 
 		);
 
 		return authenticationInfo;

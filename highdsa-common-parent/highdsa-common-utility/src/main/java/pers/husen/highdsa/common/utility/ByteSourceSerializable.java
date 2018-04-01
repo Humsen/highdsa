@@ -92,14 +92,17 @@ public class ByteSourceSerializable implements ByteSource, Serializable {
 		return this.bytes == null || this.bytes.length == 0;
 	}
 
+	@Override
 	public String toString() {
 		return this.toBase64();
 	}
 
+	@Override
 	public int hashCode() {
 		return this.bytes != null && this.bytes.length != 0 ? Arrays.hashCode(this.bytes) : 0;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
 			return true;

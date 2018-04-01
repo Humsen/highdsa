@@ -13,13 +13,42 @@ import pers.husen.highdsa.common.entity.po.shiro.SysUserInfo;
  * @Version 1.0.0
  */
 public interface SysUserInfoMapper {
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	int deleteByPrimaryKey(Long userId);
 
+	/**
+	 * 插入新用户信息
+	 * 
+	 * @param record
+	 * @return
+	 */
 	int insert(SysUserInfo record);
 
+	/**
+	 * 根据主键查找
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	SysUserInfo selectByPrimaryKey(Long userId);
 
+	/**
+	 * 查询所有
+	 * 
+	 * @return
+	 */
 	List<SysUserInfo> selectAll();
 
+	/**
+	 * 根据主键更新
+	 * 
+	 * @param record
+	 * @return
+	 */
 	int updateByPrimaryKey(SysUserInfo record);
 }

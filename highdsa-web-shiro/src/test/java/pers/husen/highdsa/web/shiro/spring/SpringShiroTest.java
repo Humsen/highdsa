@@ -23,7 +23,7 @@ import pers.husen.highdsa.web.shiro.realm.SystemUserRealm;
  * @Version 1.0.4
  */
 @Service
-public class ShiroTest {
+public class SpringShiroTest {
 
 	@Autowired
 	private SysUserManager sysUserManager;
@@ -39,7 +39,7 @@ public class ShiroTest {
 
 		System.out.println("=============== redis服务已经启动... ==================");
 
-		ShiroTest shiroTest = (ShiroTest) context.getBean("shiroTest");
+		SpringShiroTest shiroTest = (SpringShiroTest) context.getBean("springShiroTest");
 		shiroTest.testShiroRedisCache();
 
 		try {
@@ -56,7 +56,7 @@ public class ShiroTest {
 		subject.login(token);
 
 		Assert.assertTrue(subject.isAuthenticated());
-		System.out.println("开始检查角色");
+		System.out.println("=============== 开始检查角色  ===============");
 		subject.checkRole("普通用户");
 		subject.checkPermission("sys:user:view");
 

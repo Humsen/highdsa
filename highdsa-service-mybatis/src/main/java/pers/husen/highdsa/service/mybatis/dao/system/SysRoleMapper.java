@@ -13,13 +13,42 @@ import pers.husen.highdsa.common.entity.po.shiro.SysRole;
  * @Version 1.0.0
  */
 public interface SysRoleMapper {
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param roleId
+	 * @return
+	 */
 	int deleteByPrimaryKey(Long roleId);
 
+	/**
+	 * 插入新的记录
+	 * 
+	 * @param record
+	 * @return
+	 */
 	int insert(SysRole record);
 
+	/**
+	 * 根据主键查找
+	 * 
+	 * @param roleId
+	 * @return
+	 */
 	SysRole selectByPrimaryKey(Long roleId);
 
+	/**
+	 * 查询所有记录
+	 * 
+	 * @return
+	 */
 	List<SysRole> selectAll();
 
+	/**
+	 * 根据主键更新记录
+	 * 
+	 * @param record
+	 * @return
+	 */
 	int updateByPrimaryKey(SysRole record);
 }
