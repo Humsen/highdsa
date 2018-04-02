@@ -15,6 +15,7 @@ import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.util.CollectionUtils;
 
 import pers.husen.highdsa.common.constant.RedisCacheConstants;
+import pers.husen.highdsa.common.exception.ParamsException;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.utility.Serializer;
 import pers.husen.highdsa.service.redis.RedisOperation;
@@ -79,19 +80,18 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 * @return
 	 */
 	private byte[] getByteKey(K key) {
-		logger.fatal(key instanceof Serializable);
-		logger.fatal(key instanceof String);
-		logger.fatal(key.getClass().getName());
-		if (key instanceof Serializable) {
-			logger.debug("获取string的byte数组：" + key);
-			String preKey = this.keyPrefix + key;
+		logger.trace(key instanceof Serializable);
+		logger.trace(key instanceof String);
+		logger.trace(key.getClass().getName());
 
-			return preKey.getBytes();
-		} else {
-			logger.debug("获取object的byte数组：" + key);
-
-			return Serializer.serialize(key);
+		if (!(key instanceof Serializable)) {
+			throw new ParamsException("序列化参数没有实现Serializable接口");
 		}
+
+		logger.debug("获取string的byte数组：" + key);
+		String preKey = this.keyPrefix + key;
+
+		return preKey.getBytes();
 	}
 
 	@Override

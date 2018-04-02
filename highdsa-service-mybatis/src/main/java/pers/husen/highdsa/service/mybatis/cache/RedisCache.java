@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import pers.husen.highdsa.common.constant.RedisCacheConstants;
+import pers.husen.highdsa.common.exception.ParamsException;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.exception.cache.MybatisRedisCacheException;
 import pers.husen.highdsa.common.utility.Serializer;
@@ -147,7 +148,7 @@ public class RedisCache implements Cache {
 	 */
 	private byte[] getByteKey(Object key) {
 		if (!(key instanceof Serializable)) {
-			return Serializer.serialize(key);
+			throw new ParamsException("序列化参数没有实现Serializable接口");
 		}
 
 		String preKey = this.keyPrefix + (Serializable) key;
