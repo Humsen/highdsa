@@ -6,9 +6,10 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd    
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<context:component-scan base-package="pers.husen.highdsa" />
+	<context:component-scan base-package="pers.husen.highdsa.service.shiro" />
 
 	<!-- 启用Spring对基于@AspectJ aspects的配置支持 -->
 	<!-- 激活自动代理功能 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
 </beans>  
