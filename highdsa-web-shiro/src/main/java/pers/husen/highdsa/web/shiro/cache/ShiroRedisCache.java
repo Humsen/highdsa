@@ -1,5 +1,6 @@
 package pers.husen.highdsa.web.shiro.cache;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,7 +33,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	private static final Logger logger = LogManager.getLogger(ShiroRedisCache.class.getName());
 
 	private static RedisOperation redisOperation;
-	private String keyPrefix = RedisCacheConstants.SHIRO_REDIS_SESSION;
+	private String keyPrefix = RedisCacheConstants.SHIRO_REDIS_CACHE;
 
 	/**
 	 * @return the redisOperation
@@ -78,7 +79,10 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 * @return
 	 */
 	private byte[] getByteKey(K key) {
-		if (key instanceof String) {
+		logger.fatal(key instanceof Serializable);
+		logger.fatal(key instanceof String);
+		logger.fatal(key.getClass().getName());
+		if (key instanceof Serializable) {
 			logger.debug("获取string的byte数组：" + key);
 			String preKey = this.keyPrefix + key;
 
@@ -92,7 +96,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 
 	@Override
 	public V get(K key) throws CacheException {
-		logger.info("根据key从Redis中获取对象 key [" + key + "]");
+		logger.debug("根据key从Redis中获取对象 key [" + key + "]");
 		V value = null;
 
 		if (key == null) {
@@ -105,7 +109,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 
 			return value;
 		} catch (Exception e) {
-			logger.fatal(StackTrace2Str.exceptionStackTrace2Str("出错", e));
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("出错", e));
 
 			throw new CacheException("获取缓存出错", e);
 		}
@@ -148,7 +152,13 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 		logger.debug("从redis中删除所有元素");
 
 		try {
-			redisOperation.flushDB();
+			Set<byte[]> keys = redisOperation.keys(this.keyPrefix + "*");
+
+			if (!CollectionUtils.isEmpty(keys)) {
+				for (byte[] key : keys) {
+					redisOperation.del(key);
+				}
+			}
 		} catch (Throwable t) {
 			throw new CacheException(t);
 		}
@@ -160,13 +170,12 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	@Override
 	public int size() {
 		try {
-			Long longSize = new Long(redisOperation.dbSize());
+			Set<byte[]> keys = redisOperation.keys(this.keyPrefix + "*");
 
-			return longSize.intValue();
+			return keys.size();
 		} catch (Throwable t) {
 			throw new CacheException(t);
 		}
-
 	}
 
 	/**

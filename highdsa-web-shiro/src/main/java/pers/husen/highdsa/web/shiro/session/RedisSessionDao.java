@@ -11,6 +11,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 
+import pers.husen.highdsa.common.constant.RedisCacheConstants;
 import pers.husen.highdsa.common.utility.Serializer;
 import pers.husen.highdsa.service.redis.RedisOperation;
 
@@ -27,7 +28,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 	private static final Logger logger = LogManager.getLogger(RedisSessionDao.class.getName());
 
 	private static RedisOperation redisOperation;
-	private static final String PREFIX = "shiro_redis_session:";
+	private static final String PREFIX = RedisCacheConstants.SHIRO_REDIS_SESSION;
 	private static final int EXPRIE = 10000;
 
 	/**
@@ -47,7 +48,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 
 	@Override
 	public void update(Session session) throws UnknownSessionException {
-		logger.info("--------update-----");
+		logger.trace("--------update-----");
 
 		if (session == null) {
 			logger.error("session is null");
@@ -58,6 +59,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 			return;
 		}
 
+		logger.debug("sessionId: {}", session.getId());
 		byte[] key = getByteKey(session.getId());
 		byte[] value = Serializer.serialize(session);
 		session.setTimeout(EXPRIE * 1000);
@@ -67,12 +69,13 @@ public class RedisSessionDao extends AbstractSessionDAO {
 
 	@Override
 	public void delete(Session session) {
-		logger.info("--------delete-----");
+		logger.trace("--------delete-----");
 		if (session == null || session.getId() == null) {
 			logger.error("session or session id is null");
 			return;
 		}
 
+		logger.debug("sessionId: {}", session.getId());
 		redisOperation.del(this.getByteKey(session.getId()));
 	}
 
@@ -93,8 +96,10 @@ public class RedisSessionDao extends AbstractSessionDAO {
 
 	@Override
 	protected Serializable doCreate(Session session) {
-		logger.info("--------doCreate-----");
+		logger.trace("--------doCreate-----");
 		Serializable sessionId = this.generateSessionId(session);
+
+		logger.debug("sessionId: {}", sessionId);
 		this.assignSessionId(session, sessionId);
 
 		byte[] key = getByteKey(session.getId());
@@ -108,12 +113,13 @@ public class RedisSessionDao extends AbstractSessionDAO {
 
 	@Override
 	protected Session doReadSession(Serializable sessionId) {
-		logger.info("--------doReadSession-----");
+		logger.trace("--------doReadSession-----");
 		if (sessionId == null) {
 			logger.error("session id is null");
 			return null;
 		}
 
+		logger.debug("sessionId: {}", sessionId);
 		Session session = (Session) Serializer.unserialize(redisOperation.get(this.getByteKey(sessionId)));
 
 		// 判断是否有会话 没有返回NULL
