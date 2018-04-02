@@ -1,7 +1,6 @@
 package pers.husen.highdsa.service.mybatis.dao.system;
 
 import java.util.List;
-import java.util.Set;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysUser;
 
@@ -12,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.shiro.SysUser;
  *
  * @Created at 2018年3月29日 下午3:19:33
  * 
- * @Version 1.0.1
+ * @Version 1.0.3
  */
 public interface SysUserMapper {
 	/**
@@ -68,7 +67,7 @@ public interface SysUserMapper {
 	 * @param userName
 	 * @return
 	 */
-	Set<SysUser> selectRolesByUserName(String userName);
+	SysUser selectRolesByUserName(String userName);
 
 	/**
 	 * 根据用户名查找权限集合
@@ -76,5 +75,5 @@ public interface SysUserMapper {
 	 * @param userName
 	 * @return
 	 */
-	Set<SysUser> selectPermissionsByUserName(String userName);
+	SysUser selectPermissionsByUserName(String userName);
 }

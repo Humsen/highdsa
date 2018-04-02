@@ -1,7 +1,8 @@
 package pers.husen.highdsa.service.shiro.mybatis;
 
-import java.util.Set;
+import java.io.IOException;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,7 @@ public class SysUserManagerTest {
 	 */
 	@Test
 	public void testFindRoles() {
-		Set<SysUser> reply = sysUserManager.findRoles("admin");
+		SysUser reply = sysUserManager.findRoles("admin");
 
 		System.out.println("查询角色结果：" + reply);
 	}
@@ -95,8 +96,21 @@ public class SysUserManagerTest {
 	 */
 	@Test
 	public void testFindPermissions() {
-		Set<SysUser> reply = sysUserManager.findPermissions("super_admin");
+		SysUser reply = sysUserManager.findPermissions("super_admin");
 
 		System.out.println("查询权限结果：" + reply);
+	}
+	
+	@After
+	public void after() {
+		try {
+			System.out.println("=============== 阻塞开始... ==================");
+			// 为保证服务一直开着，利用输入流的阻塞来模拟
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("=============== 消费者关闭... ==================");
 	}
 }

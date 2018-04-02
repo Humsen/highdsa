@@ -1,8 +1,6 @@
 package pers.husen.highdsa.service.shiro;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Set;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -22,7 +20,7 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  *
  * @Created at 2018年4月2日 下午10:47:05
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service("shiroService")
 public class ShiroServiceImpl implements ShiroService {
@@ -55,15 +53,11 @@ public class ShiroServiceImpl implements ShiroService {
 	public SysUser getPermissions(String userName) {
 		SysUser sysUser = new SysUser();
 		// 根据用户名查询当前用户拥有的角色
-		Set<SysUser> sysUserSet = sysUserManager.findRoles(userName);
-		Iterator<SysUser> it = sysUserSet.iterator();
-		while (it.hasNext()) {
-			sysUser = it.next();
-		}
+		sysUser = sysUserManager.findRoles(userName);
 
 		// 根据用户名查询当前用户权限
-		Set<SysUser> userPermissions = sysUserManager.findPermissions(userName);
-		sysUser.setSysRolePermissionList(userPermissions.iterator().next().getSysRolePermissionList());
+		SysUser userPermissions = sysUserManager.findPermissions(userName);
+		sysUser.setSysRolePermissionList(userPermissions.getSysRolePermissionList());
 
 		return sysUser;
 	}

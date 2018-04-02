@@ -31,7 +31,7 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  *
  * @Created at 2018年3月29日 上午8:36:54
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 public class SystemUserRealm extends AuthorizingRealm {
 	private static final Logger logger = LogManager.getLogger(SystemUserRealm.class.getName());
@@ -55,14 +55,12 @@ public class SystemUserRealm extends AuthorizingRealm {
 		// 根据用户名查询当前用户拥有的角色
 		Set<String> roleNames = new HashSet<String>();
 
-		Set<SysUser> userRoles = sysUserManager.findRoles(userName);
-		for (SysUser userRole : userRoles) {
-			List<SysRole> roleList = userRole.getSysRoleList();
+		SysUser userRole = sysUserManager.findRoles(userName);
+		List<SysRole> roleList = userRole.getSysRoleList();
 
-			for (SysRole role : roleList) {
-				roleNames.add(role.getRoleName());
-				logger.trace("从数据库获取到的角色：" + role.getRoleName());
-			}
+		for (SysRole role : roleList) {
+			roleNames.add(role.getRoleName());
+			logger.trace("从数据库获取到的角色：" + role.getRoleName());
 		}
 		// 将角色名称提供给info
 		authorizationInfo.setRoles(roleNames);
@@ -72,14 +70,12 @@ public class SystemUserRealm extends AuthorizingRealm {
 		// 根据用户名查询当前用户权限
 		Set<String> permissionNames = new HashSet<String>();
 
-		Set<SysUser> userPermissions = sysUserManager.findPermissions(userName);
-		for (SysUser userPermission : userPermissions) {
-			List<SysRolePermission> rolePermissionList = userPermission.getSysRolePermissionList();
+		SysUser userPermission = sysUserManager.findPermissions(userName);
+		List<SysRolePermission> rolePermissionList = userPermission.getSysRolePermissionList();
 
-			for (SysRolePermission rolePermission : rolePermissionList) {
-				permissionNames.add(rolePermission.getSysPermission().getPermissionName());
-				logger.trace("从数据库获取到的权限：" + rolePermission.getSysPermission().getPermissionName());
-			}
+		for (SysRolePermission rolePermission : rolePermissionList) {
+			permissionNames.add(rolePermission.getSysPermission().getPermissionName());
+			logger.trace("从数据库获取到的权限：" + rolePermission.getSysPermission().getPermissionName());
 		}
 		// 将权限名称提供给info
 		authorizationInfo.setStringPermissions(permissionNames);
@@ -102,16 +98,13 @@ public class SystemUserRealm extends AuthorizingRealm {
 
 		if (SysUserState.VALID.equals(user.getUserState())) {
 			// 帐号锁定
-			throw new LockedAccountException(); 
+			throw new LockedAccountException();
 		}
 
 		// 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
 		// 用户名, 密码, salt=username+salt, realm name
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), 
-				user.getUserPassword(), 
-				new ByteSourceSerializable(user.getUserName() + user.getUserPwdSalt()), 
-				getName() 
-		);
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), user.getUserPassword(), new ByteSourceSerializable(user.getUserName() + user.getUserPwdSalt()),
+				getName());
 
 		return authenticationInfo;
 	}

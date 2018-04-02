@@ -1,7 +1,5 @@
 package pers.husen.highdsa.service.mybatis;
 
-import java.util.Set;
-
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.entity.po.shiro.SysUser;
@@ -13,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.shiro.SysUser;
  *
  * @Created at 2018年3月29日 上午9:21:33
  * 
- * @Version 1.0.1
+ * @Version 1.0.3
  */
 @Service("sysUserManager")
 public interface SysUserManager {
@@ -63,7 +61,7 @@ public interface SysUserManager {
 	 * @param userName
 	 * @return
 	 */
-	public Set<SysUser> findRoles(String userName);
+	public SysUser findRoles(String userName);
 
 	/**
 	 * 根据用户名查找其权限
@@ -71,5 +69,5 @@ public interface SysUserManager {
 	 * @param userName
 	 * @return
 	 */
-	public Set<SysUser> findPermissions(String userName);
+	public SysUser findPermissions(String userName);
 }

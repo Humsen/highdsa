@@ -1,7 +1,5 @@
 package pers.husen.highdsa.service.mybatis.impl;
 
-import java.util.Set;
-
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -22,7 +20,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
  *
  * @Created at 2018年3月29日 上午9:29:44
  * 
- * @Version 1.0.2
+ * @Version 1.0.4
  */
 @Service("sysUserManager")
 public class SysUserManagerImpl implements SysUserManager {
@@ -102,7 +100,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @return
 	 */
 	@Override
-	public Set<SysUser> findRoles(String userName) {
+	public SysUser findRoles(String userName) {
 		return sysUserMapper.selectRolesByUserName(userName);
 	}
 
@@ -113,7 +111,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @return
 	 */
 	@Override
-	public Set<SysUser> findPermissions(String userName) {
+	public SysUser findPermissions(String userName) {
 		return sysUserMapper.selectPermissionsByUserName(userName);
 	}
 

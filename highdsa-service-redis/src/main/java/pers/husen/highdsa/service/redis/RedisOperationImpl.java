@@ -25,7 +25,7 @@ import redis.clients.jedis.Jedis;
  *
  * @Created at 2018年2月28日 下午2:19:37
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation {
 	private static final Logger logger = LogManager.getLogger(RedisOperationImpl.class.getName());
@@ -262,13 +262,15 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();
-			reply = jedis.set(Serializer.serialize(key), Serializer.serialize(value));
+			
+			String serialKey = String.valueOf((Serializable)key);
+			reply = jedis.set(serialKey.getBytes(), Serializer.serialize(value));
 
 			if (cacheSeconds != 0) {
-				jedis.expire(Serializer.serialize(key), cacheSeconds);
+				jedis.expire(serialKey.getBytes(), cacheSeconds);
 			}
 
-			logger.info("------redis <Object> cache set success, key={}, value={}", key, value);
+			logger.debug("------redis <Object> cache set success, key={}, value={}", key, value);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("设置redis缓存出错", e));
 		} finally {
@@ -287,10 +289,11 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 
-			if (jedis.exists(Serializer.serialize(key))) {
-				value = Serializer.unserialize(jedis.get(Serializer.serialize(key)));
+			String serialKey = String.valueOf((Serializable)key);
+			if (jedis.exists(serialKey.getBytes())) {
+				value = Serializer.unserialize(jedis.get(serialKey.getBytes()));
 
-				logger.info("----------redis <Object> cache get success, key={}, value={}", key, value);
+				logger.debug("----------redis <Object> cache get success, key={}, value={}", key, value);
 				if (value instanceof Session) {
 					System.out.println("session id 为：" + ((Session) value).getId());
 				}
@@ -312,8 +315,9 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 
-			if (jedis.exists(Serializer.serialize(key))) {
-				value = jedis.expire(Serializer.serialize(key), 0);
+			String serialKey = String.valueOf((Serializable)key);
+			if (jedis.exists(serialKey.getBytes())) {
+				value = jedis.expire(serialKey.getBytes(), 0);
 
 				// logger.info("redis <Object> cache get success, key={}, value={}", key,
 				// value);

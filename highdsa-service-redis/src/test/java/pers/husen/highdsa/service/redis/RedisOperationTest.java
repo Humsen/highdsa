@@ -1,6 +1,8 @@
 package pers.husen.highdsa.service.redis;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,9 +13,9 @@ import java.util.Set;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-
-import pers.husen.highdsa.common.po.UserInfoPo;
 import org.junit.runners.MethodSorters;
+
+import pers.husen.highdsa.common.entity.po.UserInfo;
 
 /**
  * @Desc 测试redis操作
@@ -70,19 +72,19 @@ public class RedisOperationTest {
 
 	@Test
 	public void test08SetObject() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
-		assertEquals(redisOperationImpl.setObject("userinfo", userInfoPo, 0), "OK");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
+		assertEquals(redisOperationImpl.setObject("userinfo", UserInfo, 0), "OK");
 	}
 
 	@Test
 	public void test09GetObject() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
-		assertEquals(redisOperationImpl.getObject("userinfo").toString(), userInfoPo.toString());
+		assertEquals(redisOperationImpl.getObject("userinfo").toString(), UserInfo.toString());
 	}
 
 	@Test
@@ -93,11 +95,11 @@ public class RedisOperationTest {
 
 	@Test
 	public void test11DelObject() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
-		redisOperationImpl.setObject("userinfo123", userInfoPo, 0);
+		redisOperationImpl.setObject("userinfo123", UserInfo, 0);
 
 		assertEquals(redisOperationImpl.delObject("userinfo123"), new Long(1));
 	}
@@ -136,45 +138,45 @@ public class RedisOperationTest {
 
 	@Test
 	public void test15SetObjectList() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
 		List<Object> list = new ArrayList<Object>();
-		list.add(userInfoPo);
-		list.add(userInfoPo);
-		list.add(userInfoPo);
+		list.add(UserInfo);
+		list.add(UserInfo);
+		list.add(UserInfo);
 
 		assertEquals(redisOperationImpl.setObjectList("userinfoList", list, 0), "OK");
 	}
 
 	@Test
 	public void test16GetObjectList() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
 		List<Object> list = new ArrayList<Object>();
-		list.add(userInfoPo);
-		list.add(userInfoPo);
-		list.add(userInfoPo);
+		list.add(UserInfo);
+		list.add(UserInfo);
+		list.add(UserInfo);
 
 		assertEquals(redisOperationImpl.getObjectList("userinfoList").toString(), list.toString());
 	}
 
 	@Test
 	public void test17AppendObjectList() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
 		List<Object> list = new ArrayList<Object>();
-		list.add(userInfoPo);
-		list.add(userInfoPo);
-		list.add(userInfoPo);
-		list.add(userInfoPo);
+		list.add(UserInfo);
+		list.add(UserInfo);
+		list.add(UserInfo);
+		list.add(UserInfo);
 
-		String result = redisOperationImpl.appendObjectList("userinfoList", userInfoPo);
+		String result = redisOperationImpl.appendObjectList("userinfoList", UserInfo);
 		assertTrue("OK".equals(result));
 		assertEquals(redisOperationImpl.getObjectList("userinfoList").toString(), list.toString());
 	}
@@ -221,44 +223,44 @@ public class RedisOperationTest {
 
 	@Test
 	public void test23SetObjectSet() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
-		UserInfoPo userInfoPo1 = new UserInfoPo();
-		userInfoPo1.setUsername("何明胜1");
-		userInfoPo1.setPassword("123123");
+		UserInfo UserInfo1 = new UserInfo();
+		UserInfo1.setUserName("何明胜1");
+		UserInfo1.setUserPassword("123123");
 
-		UserInfoPo userInfoPo2 = new UserInfoPo();
-		userInfoPo2.setUsername("何明胜2");
-		userInfoPo2.setPassword("123123");
+		UserInfo UserInfo2 = new UserInfo();
+		UserInfo2.setUserName("何明胜2");
+		UserInfo2.setUserPassword("123123");
 
 		Set<Object> set = new HashSet<Object>();
-		set.add(userInfoPo);
-		set.add(userInfoPo1);
-		set.add(userInfoPo2);
+		set.add(UserInfo);
+		set.add(UserInfo1);
+		set.add(UserInfo2);
 
 		assertEquals(redisOperationImpl.setObjectSet("userinfoSet", set, 0), "OK");
 	}
 
 	@Test
 	public void test24GetObjectSet() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
-		UserInfoPo userInfoPo1 = new UserInfoPo();
-		userInfoPo1.setUsername("何明胜1");
-		userInfoPo1.setPassword("123123");
+		UserInfo UserInfo1 = new UserInfo();
+		UserInfo1.setUserName("何明胜1");
+		UserInfo1.setUserPassword("123123");
 
-		UserInfoPo userInfoPo2 = new UserInfoPo();
-		userInfoPo2.setUsername("何明胜2");
-		userInfoPo2.setPassword("123123");
+		UserInfo UserInfo2 = new UserInfo();
+		UserInfo2.setUserName("何明胜2");
+		UserInfo2.setUserPassword("123123");
 
 		Set<Object> set = new HashSet<Object>();
-		set.add(userInfoPo);
-		set.add(userInfoPo1);
-		set.add(userInfoPo2);
+		set.add(UserInfo);
+		set.add(UserInfo1);
+		set.add(UserInfo2);
 
 		Set<Object> result = redisOperationImpl.getObjectSet("userinfoSet");
 		assertTrue(result.toString() != "");
@@ -266,26 +268,26 @@ public class RedisOperationTest {
 
 	@Test
 	public void test25AppendObjectSet() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
-		UserInfoPo userInfoPo1 = new UserInfoPo();
-		userInfoPo1.setUsername("何明胜1");
-		userInfoPo1.setPassword("123123");
+		UserInfo UserInfo1 = new UserInfo();
+		UserInfo1.setUserName("何明胜1");
+		UserInfo1.setUserPassword("123123");
 
-		UserInfoPo userInfoPo2 = new UserInfoPo();
-		userInfoPo2.setUsername("何明胜2");
-		userInfoPo2.setPassword("123123");
+		UserInfo UserInfo2 = new UserInfo();
+		UserInfo2.setUserName("何明胜2");
+		UserInfo2.setUserPassword("123123");
 
 		Set<Object> set = new HashSet<Object>();
-		set.add(userInfoPo);
-		set.add(userInfoPo1);
-		set.add(userInfoPo2);
-		set.add(userInfoPo1);
-		set.add(userInfoPo2);
+		set.add(UserInfo);
+		set.add(UserInfo1);
+		set.add(UserInfo2);
+		set.add(UserInfo1);
+		set.add(UserInfo2);
 
-		String result = redisOperationImpl.appendObjectSet("userinfoSet", new Object[] { userInfoPo1, userInfoPo2 });
+		String result = redisOperationImpl.appendObjectSet("userinfoSet", new Object[] { UserInfo1, UserInfo2 });
 		assertEquals(result, "OK");
 		String resultStr = redisOperationImpl.getObjectSet("userinfoSet").toString();
 		assertTrue(resultStr != "");
@@ -334,48 +336,48 @@ public class RedisOperationTest {
 
 	@Test
 	public void test31setObjectMap() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
 		Map<String, Object> map = new HashMap<>(4);
-		map.put("uesrinfoMap", userInfoPo);
-		map.put("uesrinfoMap1", userInfoPo);
-		map.put("uesrinfoMap2", userInfoPo);
+		map.put("uesrinfoMap", UserInfo);
+		map.put("uesrinfoMap1", UserInfo);
+		map.put("uesrinfoMap2", UserInfo);
 
 		assertEquals(redisOperationImpl.setObjectMap("redisObjectMap", map, 0), "OK");
 	}
 
 	@Test
 	public void test32getObjectMap() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
 		Map<String, Object> map = new HashMap<>(4);
-		map.put("uesrinfoMap", userInfoPo);
-		map.put("uesrinfoMap1", userInfoPo);
-		map.put("uesrinfoMap2", userInfoPo);
+		map.put("uesrinfoMap", UserInfo);
+		map.put("uesrinfoMap1", UserInfo);
+		map.put("uesrinfoMap2", UserInfo);
 
 		assertTrue(redisOperationImpl.getObjectMap("redisObjectMap").toString() != "");
 	}
 
 	@Test
 	public void test33appendObjectMap() {
-		UserInfoPo userInfoPo = new UserInfoPo();
-		userInfoPo.setUsername("何明胜");
-		userInfoPo.setPassword("123123");
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
 
 		Map<String, Object> map = new HashMap<>(10);
-		map.put("uesrinfoMap", userInfoPo);
-		map.put("uesrinfoMap1", userInfoPo);
-		map.put("uesrinfoMap2", userInfoPo);
-		map.put("uesrinfoMap3", userInfoPo);
-		map.put("uesrinfoMap4", userInfoPo);
+		map.put("uesrinfoMap", UserInfo);
+		map.put("uesrinfoMap1", UserInfo);
+		map.put("uesrinfoMap2", UserInfo);
+		map.put("uesrinfoMap3", UserInfo);
+		map.put("uesrinfoMap4", UserInfo);
 
 		Map<String, Object> map1 = new HashMap<>(4);
-		map1.put("uesrinfoMap3", userInfoPo);
-		map1.put("uesrinfoMap4", userInfoPo);
+		map1.put("uesrinfoMap3", UserInfo);
+		map1.put("uesrinfoMap4", UserInfo);
 
 		assertEquals(redisOperationImpl.appendObjectMap("redisObjectMap", map1), "OK");
 	}
@@ -395,5 +397,14 @@ public class RedisOperationTest {
 	@Test
 	public void test36DeleteAll() {
 		assertEquals(redisOperationImpl.flushAll(), "OK");
+	}
+
+	@Test
+	public void test37SetObject() {
+		UserInfo UserInfo = new UserInfo();
+		UserInfo.setUserName("何明胜");
+		UserInfo.setUserPassword("123123");
+
+		assertEquals(redisOperationImpl.setObject(UserInfo, UserInfo, 0), "OK");
 	}
 }

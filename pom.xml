@@ -44,6 +44,7 @@
 		<org.mybatis.version>3.4.5</org.mybatis.version>
 		<com.sun.mail.version>1.6.0</com.sun.mail.version>
 		<org.javassist.version>3.22.0-GA</org.javassist.version>
+		<org.apache.shiro.version>1.4.0</org.apache.shiro.version>
 		<com.alibaba.dubbo.version>2.6.0</com.alibaba.dubbo.version>
 		<com.alibaba.druid.version>1.1.8</com.alibaba.druid.version>
 		<com.google.guava.version>24.0-jre</com.google.guava.version>
@@ -65,7 +66,6 @@
 		<biz.paluch.logging.logstash-gelf.version>1.11.2</biz.paluch.logging.logstash-gelf.version>
 		<com.aliyun.aliyun-java-sdk-dysmsapi.version>1.1.0</com.aliyun.aliyun-java-sdk-dysmsapi.version>
 		<org.eclipse.jetty.jetty-servlet.version>7.6.21.v20160908</org.eclipse.jetty.jetty-servlet.version>
-		<org.apache.shiro.version>1.4.0</org.apache.shiro.version>
 
 		<!-- 插件版本管理 -->
 		<org.eclipse.m2e.lifecycle-mapping.version>1.0.0</org.eclipse.m2e.lifecycle-mapping.version>
@@ -311,6 +311,26 @@
 			<dependency>
 				<groupId>org.apache.shiro</groupId>
 				<artifactId>shiro-core</artifactId>
+				<version>${org.apache.shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-web</artifactId>
+				<version>${org.apache.shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-ehcache</artifactId>
+				<version>${org.apache.shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${org.apache.shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-quartz</artifactId>
 				<version>${org.apache.shiro.version}</version>
 			</dependency>
 		</dependencies>
