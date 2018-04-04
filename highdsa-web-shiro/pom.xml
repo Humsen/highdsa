@@ -11,13 +11,18 @@
 	<groupId>pers.husen.highdsa</groupId>
 	<artifactId>highdsa-web-shiro</artifactId>
 	<packaging>war</packaging>
-	<name>highdsa-web-shiro Maven Webapp</name>
+	<name>highdsa-web-shiro</name>
 	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<dependencies>
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>pers.husen.highdsa</groupId>
+			<artifactId>highdsa-shiro-client</artifactId>
+			<version>0.7.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -81,9 +86,10 @@
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-quartz</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
 	</dependencies>
-
-	<build>
-		<finalName>highdsa-web-shiro</finalName>
-	</build>
 </project>

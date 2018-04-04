@@ -60,16 +60,17 @@ public class RedisSessionDao extends AbstractSessionDAO {
 		}
 
 		logger.debug("sessionId: {}", session.getId());
-		byte[] key = getByteKey(session.getId());
+		byte[] key = this.getByteKey(session.getId());
 		byte[] value = Serializer.serialize(session);
 		session.setTimeout(EXPRIE * 1000);
 
-		redisOperation.set(key, value, EXPRIE);
+		redisOperation.set(key, value, EXPRIE * 1000);
 	}
 
 	@Override
 	public void delete(Session session) {
 		logger.trace("--------delete-----");
+
 		if (session == null || session.getId() == null) {
 			logger.error("session or session id is null");
 			return;
@@ -97,16 +98,17 @@ public class RedisSessionDao extends AbstractSessionDAO {
 	@Override
 	protected Serializable doCreate(Session session) {
 		logger.trace("--------doCreate-----");
+
 		Serializable sessionId = this.generateSessionId(session);
 
 		logger.debug("sessionId: {}", sessionId);
 		this.assignSessionId(session, sessionId);
 
-		byte[] key = getByteKey(session.getId());
+		byte[] key = this.getByteKey(session.getId());
 		byte[] value = Serializer.serialize(session);
 		session.setTimeout(EXPRIE * 1000);
 
-		redisOperation.set(key, value, EXPRIE);
+		redisOperation.set(key, value, EXPRIE * 1000);
 
 		return sessionId;
 	}
@@ -114,6 +116,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 	@Override
 	protected Session doReadSession(Serializable sessionId) {
 		logger.trace("--------doReadSession-----");
+	
 		if (sessionId == null) {
 			logger.error("session id is null");
 			return null;
@@ -121,11 +124,6 @@ public class RedisSessionDao extends AbstractSessionDAO {
 
 		logger.debug("sessionId: {}", sessionId);
 		Session session = (Session) Serializer.unserialize(redisOperation.get(this.getByteKey(sessionId)));
-
-		// 判断是否有会话 没有返回NULL
-		if (session == null) {
-			return null;
-		}
 
 		return session;
 	}
@@ -138,6 +136,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 	 */
 	private byte[] getByteKey(Serializable sessionId) {
 		String preKey = PREFIX + sessionId;
+
 		return preKey.getBytes();
 	}
 }

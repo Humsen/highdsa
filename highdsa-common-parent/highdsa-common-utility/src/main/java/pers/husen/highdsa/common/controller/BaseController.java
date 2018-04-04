@@ -21,13 +21,13 @@ public class BaseController {
 	protected HttpSession session;
 
 	/**
-	 * ModelAttribute 表示先执行
+	 * ModelAttribute注解 表示先执行
 	 * 
 	 * @param request
 	 * @param response
 	 */
 	@ModelAttribute
-	public void setReqAndRes(HttpServletRequest request, HttpServletResponse response) {
+	public void setHttpAttribute(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
 		this.session = request.getSession();

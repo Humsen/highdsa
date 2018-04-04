@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.shiro.realm;
+package pers.husen.highdsa.service.shiro.client.realm;
 
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +28,21 @@ import pers.husen.highdsa.service.shiro.ShiroService;
  */
 public class ClientUserRealm extends AuthorizingRealm {
 	private ShiroService shiroService;
+
+	/**
+	 * @return the shiroService
+	 */
+	public ShiroService getShiroService() {
+		return shiroService;
+	}
+
+	/**
+	 * @param shiroService
+	 *            the shiroService to set
+	 */
+	public void setShiroService(ShiroService shiroService) {
+		this.shiroService = shiroService;
+	}
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
