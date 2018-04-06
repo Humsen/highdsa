@@ -7,6 +7,8 @@ import org.apache.shiro.web.filter.authc.AuthenticationFilter;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 
+import pers.husen.highdsa.common.controller.ClientSavedRequest;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;

@@ -125,6 +125,8 @@ public class RedisSessionDao extends AbstractSessionDAO {
 		logger.debug("sessionId: {}", sessionId);
 		Session session = (Session) Serializer.unserialize(redisOperation.get(this.getByteKey(sessionId)));
 
+		logger.debug("session.getId():{}",session.getId());
+		
 		return session;
 	}
 

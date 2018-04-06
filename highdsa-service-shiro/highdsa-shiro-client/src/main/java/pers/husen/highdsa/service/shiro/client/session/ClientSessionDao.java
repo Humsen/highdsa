@@ -66,6 +66,10 @@ public class ClientSessionDao extends CachingSessionDAO {
 	protected Session doReadSession(Serializable sessionId) {
 		logger.debug("读取session, sessionId: {}", sessionId);
 		
-		return shiroService.getSession(sessionId);
+		Session session =  shiroService.getSession(sessionId);
+		logger.debug("session.getId():{}",session.getId());
+		
+		
+		return session;
 	}
 }

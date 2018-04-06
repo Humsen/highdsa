@@ -66,6 +66,7 @@ public class ShiroServiceImpl implements ShiroService {
 	public Serializable login(UsernamePasswordToken token) {
 		Subject subject = SecurityUtils.getSubject();
 		subject.login(token);
+		System.out.println("是否登录：" + subject.isAuthenticated());
 
 		return subject.getSession().getId();
 	}

@@ -12,5 +12,5 @@
 	<!-- <dubbo:registry address="zookeeper://39.106.185.126:2181"/> -->
 
 	<!-- 声明需要暴露的服务接口 -->
-	<dubbo:reference id="shiroService" interface="pers.husen.highdsa.service.shiro.ShiroService" protocol="dubbo" timeout="10000" check="false" />
+	<dubbo:reference id="shiroService" interface="pers.husen.highdsa.service.shiro.ShiroService" protocol="rmi" timeout="10000" check="false" />
 </beans>

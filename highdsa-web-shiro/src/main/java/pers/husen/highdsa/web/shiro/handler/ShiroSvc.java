@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,8 @@ public class ShiroSvc {
 		shiroService.login(token);
 
 		simpleJson = new SimpleJson(true, "登录成功");
+		Subject subject = SecurityUtils.getSubject();
+		System.out.println("是否登录：" + subject.isAuthenticated());
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);
