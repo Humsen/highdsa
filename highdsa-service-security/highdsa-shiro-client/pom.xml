@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
-		<artifactId>highdsa-service-shiro</artifactId>
+		<artifactId>highdsa-service-security</artifactId>
 		<version>0.7.3-SNAPSHOT</version>
 	</parent>
 

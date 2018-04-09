@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
-		<artifactId>highdsa-service-shiro</artifactId>
+		<artifactId>highdsa-service-security</artifactId>
 		<version>0.7.3-SNAPSHOT</version>
 	</parent>
 
@@ -95,6 +95,13 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
+		</dependency>
+		<!-- 单独导入cas的配置依赖到项目中 -->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-core-configuration</artifactId>
+			<version>${cas.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 

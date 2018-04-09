@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
-		<artifactId>highdsa-service-shiro</artifactId>
+		<artifactId>highdsa-service-security</artifactId>
 		<version>0.7.3-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>highdsa-shiro-server</artifactId>
-	<name>highdsa-shiro-server</name>
+	<artifactId>highdsa-service-shiro</artifactId>
+	<name>highdsa-service-shiro</name>
 	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<properties>
