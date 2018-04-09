@@ -1,31 +1,18 @@
-<?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-service-security</artifactId>
-		<version>0.7.3-SNAPSHOT</version>
+		<version>0.9.3-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>highdsa-shiro-manage</artifactId>
-	<packaging>war</packaging>
-	<name>highdsa-shiro-manage</name>
-	<url>https://github.com/CrazyHusen/highdsa</url>
+	<packaging>pom</packaging>
 	
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
-	</dependencies>
-	
-	<build>
-		<finalName>highdsa-shiro-manage</finalName>
-	</build>
+	<modules>
+		<module>highdsa-sysuser-config</module>
+		<module>highdsa-customer-config</module>
+	</modules>
 </project>

@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=pers.husen.highdsa.cas.server.core.CustomAuthenticationEventExecutionPlanConfigurer
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=pers.husen.highdsa.service.cas.server.core.CustomAuthenticationEventExecutionPlanConfigurer

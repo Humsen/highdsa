@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>pers.husen</groupId>
 		<artifactId>highdsa</artifactId>
-		<version>0.7.3-SNAPSHOT</version>
+		<version>0.9.3-SNAPSHOT</version>
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
@@ -22,7 +22,6 @@
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-shiro-client</artifactId>
-			<version>0.7.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

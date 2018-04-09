@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-service-security</artifactId>
-		<version>0.7.3-SNAPSHOT</version>
+		<version>0.9.3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>highdsa-cas-server</artifactId>
@@ -14,8 +14,6 @@
 	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<properties>
-		<cas.version>5.2.3</cas.version>
-		<springboot.version>2.0.0.RELEASE</springboot.version>
 		<!-- app.server could be -jetty, -undertow, -tomcat, or blank if you plan to provide appserver -->
 		<app.server>-tomcat</app.server>
 
@@ -37,10 +35,11 @@
 			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- 单独导入cas的配置依赖到项目中 -->
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
-			<artifactId>cas-server-core-api</artifactId>
-			<version>5.2.3</version>
+			<artifactId>cas-server-core-configuration</artifactId>
+			<scope>runtime</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.logging.log4j</groupId>
@@ -48,11 +47,19 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- 自定义认证的方式 begin -->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-core-api</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-core-webflow</artifactId>
-			<version>${cas.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.logging.log4j</groupId>
@@ -63,7 +70,6 @@
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-core-authentication</artifactId>
-			<version>${cas.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.logging.log4j</groupId>
@@ -74,7 +80,6 @@
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-webapp-config</artifactId>
-			<version>${cas.version}</version>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
@@ -83,7 +88,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- 自己需要的jar包，我这里用到了查库验证身份，所以引入了mysql -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -95,13 +99,6 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-		</dependency>
-		<!-- 单独导入cas的配置依赖到项目中 -->
-		<dependency>
-			<groupId>org.apereo.cas</groupId>
-			<artifactId>cas-server-core-configuration</artifactId>
-			<version>${cas.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 

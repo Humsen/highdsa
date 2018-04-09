@@ -3,72 +3,52 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
 
 	<display-name>shiro</display-name>
-	<description>shiro权限管理配置消费者</description>
+	<description>shiro 测试</description>
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 
-	<!-- redis消费者配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:spring/spring-context.xml,
-			<!-- classpath*:**/spring-client-context.xml -->
-			classpath:spring/spring-client-context.xml
+			classpath*:**/spring-shiro-cas.xml
+			<!-- classpath:spring/spring-shiro-cas.xml -->
 		</param-value>
 	</context-param>
-	<!-- logj4 日志存放 应用根目录 -->
-	<context-param>
-		<param-name>webAppRootKey</param-name>
-		<param-value>webapp.root</param-value>
-	</context-param>
-	<!-- 指定log4j2配置文件的位置 -->
-	<context-param>
-		<param-name>log4jConfiguration</param-name>
-		<param-value>classpath:log4j2-web.xml</param-value>
-	</context-param>
-	<!-- 配置log4j2的监听器 -->
-	<listener>
-		<listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
-	</listener>
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
 
-	<!-- shiro 安全过滤器 -->
-	<!-- The filter-name matches name of a 'shiroFilter' bean inside applicationContext.xml -->
 	<filter>
 		<filter-name>shiroFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>targetFilterLifecycle</param-name>
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
 
-	<!-- Make sure any request you want accessible to Shiro is filtered. /* catches all -->
-	<!-- requests. Usually this filter mapping is defined first (before all others) to -->
-	<!-- ensure that Shiro works in subsequent filters in the filter chain: -->
 	<filter-mapping>
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- SpringMVC servlet -->
 	<servlet>
-		<servlet-name>shiroServlet</servlet-name>
+		<servlet-name>springDispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:spring/spring-mvc-servlet.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-		<!-- <async-supported>true</async-supported> -->
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>shiroServlet</servlet-name>
+		<servlet-name>springDispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 </web-app>

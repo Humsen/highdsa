@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pers.husen</groupId>
 	<artifactId>highdsa</artifactId>
-	<version>0.7.3-SNAPSHOT</version>
+	<version>0.9.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>highdsa</name>
@@ -37,12 +37,18 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- 依赖版本管理 -->
+		<cas.version>5.2.3</cas.version>
+		<jstl.version>1.2</jstl.version>
 		<junit.version>4.12</junit.version>
+		<quartz.version>2.2.3</quartz.version>
+		<io.buji.version>3.1.0</io.buji.version>
 		<aspectj.version>1.8.13</aspectj.version>
+		<org.pac4j.version>2.2.1</org.pac4j.version>
 		<org.jsoup.version>1.11.2</org.jsoup.version>
 		<com.101tec.version>0.10</com.101tec.version>
 		<org.mybatis.version>3.4.5</org.mybatis.version>
 		<com.sun.mail.version>1.6.0</com.sun.mail.version>
+		<springboot.version>2.0.0.RELEASE</springboot.version>
 		<org.javassist.version>3.22.0-GA</org.javassist.version>
 		<org.apache.shiro.version>1.4.0</org.apache.shiro.version>
 		<com.alibaba.dubbo.version>2.6.0</com.alibaba.dubbo.version>
@@ -109,6 +115,11 @@
 			<dependency>
 				<groupId>pers.husen.highdsa</groupId>
 				<artifactId>highdsa-common-entity</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>pers.husen.highdsa</groupId>
+				<artifactId>highdsa-shiro-client</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<!-- dubbo -->
@@ -332,6 +343,61 @@
 				<groupId>org.apache.shiro</groupId>
 				<artifactId>shiro-quartz</artifactId>
 				<version>${org.apache.shiro.version}</version>
+			</dependency>
+			<!-- 单独导入cas的配置依赖到项目中 -->
+			<dependency>
+				<groupId>org.apereo.cas</groupId>
+				<artifactId>cas-server-core-configuration</artifactId>
+				<version>${cas.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apereo.cas</groupId>
+				<artifactId>cas-server-core-api</artifactId>
+				<version>${cas.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apereo.cas</groupId>
+				<artifactId>cas-server-core-webflow</artifactId>
+				<version>${cas.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apereo.cas</groupId>
+				<artifactId>cas-server-core-authentication</artifactId>
+				<version>${cas.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apereo.cas</groupId>
+				<artifactId>cas-server-webapp-config</artifactId>
+				<version>${cas.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- cas pac4j buji client -->
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>${quartz.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.buji</groupId>
+				<artifactId>buji-pac4j</artifactId>
+				<version>${io.buji.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.pac4j</groupId>
+				<artifactId>pac4j-core</artifactId>
+				<version>${org.pac4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.pac4j</groupId>
+				<artifactId>pac4j-cas</artifactId>
+				<version>${org.pac4j.version}</version>
+			</dependency>
+			<!-- jstl -->
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>${jstl.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
