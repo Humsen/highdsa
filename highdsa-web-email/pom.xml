@@ -53,4 +53,8 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<finalName>highdsa-web-email</finalName>
+	</build>
 </project>

@@ -59,4 +59,8 @@
 			<artifactId>commons-fileupload</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<finalName>highdsa-web-fastdfs</finalName>
+	</build>
 </project>

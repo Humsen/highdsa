@@ -50,4 +50,8 @@
 			<artifactId>log4j-web</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<finalName>highdsa-web-test</finalName>
+	</build>
 </project>

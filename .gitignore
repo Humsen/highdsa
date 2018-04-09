@@ -9,6 +9,7 @@ rebel.xml
 .settings
 .project
 .classpath
+.factorypath
 
 # log file
 logs

@@ -119,5 +119,7 @@
 				</includes>
 			</resource>
 		</resources>
+		
+		<finalName>highdsa-service-mybatis</finalName>
 	</build>
 </project>
