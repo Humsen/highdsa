@@ -7,8 +7,8 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pers.husen.highdsa.common.entity.po.shiro.SysUser;
-import pers.husen.highdsa.common.entity.po.shiro.SysUserRole;
+import pers.husen.highdsa.common.entity.po.system.SysUser;
+import pers.husen.highdsa.common.entity.po.system.SysUserRole;
 import pers.husen.highdsa.service.mybatis.SysUserManager;
 import pers.husen.highdsa.service.mybatis.dao.system.SysUserMapper;
 import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;

@@ -2,7 +2,7 @@ package pers.husen.highdsa.service.mybatis.dao.system;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import pers.husen.highdsa.common.entity.po.shiro.SysRolePermission;
+import pers.husen.highdsa.common.entity.po.system.SysRolePermission;
 
 /**
  * @Desc 系统 角色-权限 SQL映射

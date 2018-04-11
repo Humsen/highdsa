@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import pers.husen.highdsa.common.entity.po.UserInfo;
-import pers.husen.highdsa.common.entity.po.shiro.SysUser;
+import pers.husen.highdsa.common.entity.po.system.SysUser;
 import pers.husen.highdsa.service.mybatis.cache.RedisCache;
 import pers.husen.highdsa.service.mybatis.core.SqlSessionFactoryManager;
 import pers.husen.highdsa.service.mybatis.dao.user.UserInfoMapper;

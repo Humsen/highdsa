@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.entity.po.shiro;
+package pers.husen.highdsa.common.entity.po.system;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @Created at 2018年3月29日 下午3:34:45
  * 
- * @Version 1.0.5
+ * @Version 1.0.6
  */
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,11 +20,11 @@ public class SysUser implements Serializable {
 
 	private String userName;
 
-	private String userPassword;
-
 	private String userEmail;
 
 	private String userPhone;
+
+	private String userPassword;
 
 	private String userPwdSalt;
 
@@ -36,16 +36,16 @@ public class SysUser implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SysUser [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword + ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userPwdSalt=" + userPwdSalt
+		return "SysUser [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userPassword=" + userPassword + ", userPwdSalt=" + userPwdSalt
 				+ ", userState=" + userState + ", sysRoleList=" + sysRoleList + ", sysRolePermissionList=" + sysRolePermissionList + "]";
 	}
 
-	public SysUser(Long userId, String userName, String userPassword, String userEmail, String userPhone, String userPwdSalt, String userState) {
+	public SysUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt, String userState) {
 		this.userId = userId;
 		this.userName = userName;
-		this.userPassword = userPassword;
 		this.userEmail = userEmail;
 		this.userPhone = userPhone;
+		this.userPassword = userPassword;
 		this.userPwdSalt = userPwdSalt;
 		this.userState = userState;
 	}
@@ -70,14 +70,6 @@ public class SysUser implements Serializable {
 		this.userName = userName == null ? null : userName.trim();
 	}
 
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword == null ? null : userPassword.trim();
-	}
-
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -92,6 +84,14 @@ public class SysUser implements Serializable {
 
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone == null ? null : userPhone.trim();
+	}
+
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword == null ? null : userPassword.trim();
 	}
 
 	public String getUserPwdSalt() {
@@ -151,8 +151,8 @@ public class SysUser implements Serializable {
 		}
 		SysUser user = (SysUser) object;
 
-		return Objects.equals(userId, user.userId) && Objects.equals(userName, user.userName) && Objects.equals(userPassword, user.userPassword) && Objects.equals(userEmail, user.userEmail)
-				&& Objects.equals(userPhone, user.userPhone) && Objects.equals(userPwdSalt, user.userPwdSalt) && Objects.equals(userState, user.userState);
+		return Objects.equals(userId, user.userId) && Objects.equals(userName, user.userName) && Objects.equals(userEmail, user.userEmail) && Objects.equals(userPhone, user.userPhone)
+				&& Objects.equals(userPassword, user.userPassword) && Objects.equals(userPwdSalt, user.userPwdSalt) && Objects.equals(userState, user.userState);
 	}
 
 	@Override

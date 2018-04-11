@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.entity.po.shiro;
+package pers.husen.highdsa.common.entity.po.system;
 
 import java.io.Serializable;
 

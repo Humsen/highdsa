@@ -2,7 +2,7 @@ package pers.husen.highdsa.service.mybatis;
 
 import org.springframework.stereotype.Service;
 
-import pers.husen.highdsa.common.entity.po.shiro.SysUser;
+import pers.husen.highdsa.common.entity.po.system.SysUser;
 
 /**
  * @Desc 系统用户管理

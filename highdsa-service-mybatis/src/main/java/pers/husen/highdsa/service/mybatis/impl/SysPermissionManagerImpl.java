@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import pers.husen.highdsa.common.entity.po.shiro.SysPermission;
+import pers.husen.highdsa.common.entity.po.system.SysPermission;
 import pers.husen.highdsa.service.mybatis.SysPermissionManager;
 import pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper;
 

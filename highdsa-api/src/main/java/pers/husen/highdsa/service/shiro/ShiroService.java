@@ -3,7 +3,7 @@ package pers.husen.highdsa.service.shiro;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 
-import pers.husen.highdsa.common.entity.po.shiro.SysUser;
+import pers.husen.highdsa.common.entity.po.system.SysUser;
 
 import java.io.Serializable;
 

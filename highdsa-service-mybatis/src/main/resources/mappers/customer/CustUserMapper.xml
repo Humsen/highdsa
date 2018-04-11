@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.husen.highdsa.service.mybatis.dao.customer.CustUserMapper">
+	<!-- 自定义二级缓存 -->
+	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
+
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustUser">
+		<constructor>
+			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+			<arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_email" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_password" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_pwd_salt" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_state" javaType="java.lang.String" jdbcType="VARCHAR" />
+		</constructor>
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from cust_user
+		where user_id = #{userId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.customer.CustUser">
+		insert into cust_user (user_id, user_name, user_email,
+		user_phone, user_password, user_pwd_salt,
+		user_state)
+		values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
+		#{userPhone,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{userPwdSalt,jdbcType=VARCHAR},
+		#{userState,jdbcType=VARCHAR})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.customer.CustUser">
+		update cust_user
+		set user_name = #{userName,jdbcType=VARCHAR},
+		user_email = #{userEmail,jdbcType=VARCHAR},
+		user_phone = #{userPhone,jdbcType=VARCHAR},
+		user_password = #{userPassword,jdbcType=VARCHAR},
+		user_pwd_salt = #{userPwdSalt,jdbcType=VARCHAR},
+		user_state = #{userState,jdbcType=VARCHAR}
+		where user_id = #{userId,jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select user_id, user_name, user_email, user_phone, user_password, user_pwd_salt,
+		user_state
+		from cust_user
+		where user_id = #{userId,jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select user_id, user_name, user_email, user_phone, user_password, user_pwd_salt,
+		user_state
+		from cust_user
+		order by user_id ASC,userCreateDate DESC
+	</select>
+</mapper>

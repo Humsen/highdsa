@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.husen.highdsa.service.mybatis.dao.customer.CustRoleMapper">
+	<!-- 自定义二级缓存 -->
+	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
+
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustRole">
+		<constructor>
+			<idArg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+			<arg column="role_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="role_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="role_valid" javaType="java.lang.Boolean" jdbcType="BIT" />
+		</constructor>
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from cust_role
+		where role_id = #{roleId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.customer.CustRole">
+		insert into cust_role (role_id, role_name, role_desc,
+		role_valid)
+		values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR},
+		#{roleValid,jdbcType=BIT})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.customer.CustRole">
+		update cust_role
+		set role_name = #{roleName,jdbcType=VARCHAR},
+		role_desc = #{roleDesc,jdbcType=VARCHAR},
+		role_valid = #{roleValid,jdbcType=BIT}
+		where role_id = #{roleId,jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select role_id, role_name, role_desc, role_valid
+		from cust_role
+		where role_id = #{roleId,jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select role_id, role_name, role_desc, role_valid
+		from cust_role
+		order by user_id ASC,userCreateDate DESC
+	</select>
+</mapper>

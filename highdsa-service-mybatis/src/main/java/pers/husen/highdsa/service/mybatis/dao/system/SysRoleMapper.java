@@ -1,7 +1,7 @@
 package pers.husen.highdsa.service.mybatis.dao.system;
 
 import java.util.List;
-import pers.husen.highdsa.common.entity.po.shiro.SysRole;
+import pers.husen.highdsa.common.entity.po.system.SysRole;
 
 /**
  * @Desc 系统 角色 SQL映射

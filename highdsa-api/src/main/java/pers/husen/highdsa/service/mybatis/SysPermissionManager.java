@@ -1,6 +1,6 @@
 package pers.husen.highdsa.service.mybatis;
 
-import pers.husen.highdsa.common.entity.po.shiro.SysPermission;
+import pers.husen.highdsa.common.entity.po.system.SysPermission;
 
 /**
  * @Desc 系统权限管理

@@ -5,7 +5,10 @@
 
 [快速开始链接](http://www.mybatis.org/generator/quickstart.html)
 
-自动生成之前，需要加入mybatis和相应的数据库jar包,如
+自动生成之前，需要检查以下几项：
+1. 将这两个配置文件放到某个工程下,generatorConfig.xml默认加载classpath下的generator-mysql.properties,同时需要检查resources的build path;
+2. 检查generator-mysql.properties中mappers子目录是用包的点形式还是目录下划线;
+3. 加入mybatis和相应的数据库jar包,如
 
 	<dependency>
 		<groupId>org.mybatis</groupId>
@@ -36,6 +39,6 @@
 ***
 ### 文件说明	 
 > `generatorConfig.xml` -> 主要配置文件，都是不变的配置   
-> `mysql.properties` -> 需要自定义的配置，被`generatorConfig.xml`文件引入
+> `generator-mysql.properties` -> 需要自定义的配置，被`generatorConfig.xml`文件引入
 
 ***

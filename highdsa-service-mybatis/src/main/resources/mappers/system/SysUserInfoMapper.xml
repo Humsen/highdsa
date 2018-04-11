@@ -8,10 +8,10 @@
 		<constructor>
 			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="user_nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_register_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
 			<arg column="user_head_url" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
 			<arg column="user_birthday" javaType="java.lang.String" jdbcType="VARCHAR" />
-			<arg column="user_register_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
 			<arg column="user_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_last_login_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
 		</constructor>

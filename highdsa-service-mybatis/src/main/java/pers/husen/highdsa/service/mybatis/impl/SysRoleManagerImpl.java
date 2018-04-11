@@ -3,8 +3,8 @@ package pers.husen.highdsa.service.mybatis.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pers.husen.highdsa.common.entity.po.shiro.SysRole;
-import pers.husen.highdsa.common.entity.po.shiro.SysRolePermission;
+import pers.husen.highdsa.common.entity.po.system.SysRole;
+import pers.husen.highdsa.common.entity.po.system.SysRolePermission;
 import pers.husen.highdsa.service.mybatis.SysRoleManager;
 import pers.husen.highdsa.service.mybatis.dao.system.SysRoleMapper;
 import pers.husen.highdsa.service.mybatis.dao.system.SysRolePermissionMapper;

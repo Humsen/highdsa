@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.entity.po.shiro;
+package pers.husen.highdsa.common.entity.po.system;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @Created at 2018年3月29日 下午3:35:04
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class SysUserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,13 +19,13 @@ public class SysUserInfo implements Serializable {
 
 	private String userNickName;
 
+	private Date userRegisterDate;
+
 	private String userHeadUrl;
 
-	private Integer userSex;
+	private Boolean userSex;
 
 	private String userBirthday;
-
-	private Date userRegisterDate;
 
 	private String userDesc;
 
@@ -33,17 +33,17 @@ public class SysUserInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SysUserInfo [userId=" + userId + ", userNickName=" + userNickName + ", userHeadUrl=" + userHeadUrl + ", userSex=" + userSex + ", userBirthday=" + userBirthday + ", userRegisterDate="
-				+ userRegisterDate + ", userDesc=" + userDesc + ", userLastLoginTime=" + userLastLoginTime + "]";
+		return "SysUserInfo [userId=" + userId + ", userNickName=" + userNickName + ", userRegisterDate=" + userRegisterDate + ", userHeadUrl=" + userHeadUrl + ", userSex=" + userSex
+				+ ", userBirthday=" + userBirthday + ", userDesc=" + userDesc + ", userLastLoginTime=" + userLastLoginTime + "]";
 	}
 
-	public SysUserInfo(Long userId, String userNickName, String userHeadUrl, Integer userSex, String userBirthday, Date userRegisterDate, String userDesc, Date userLastLoginTime) {
+	public SysUserInfo(Long userId, String userNickName, Date userRegisterDate, String userHeadUrl, Boolean userSex, String userBirthday, String userDesc, Date userLastLoginTime) {
 		this.userId = userId;
 		this.userNickName = userNickName;
+		this.userRegisterDate = userRegisterDate;
 		this.userHeadUrl = userHeadUrl;
 		this.userSex = userSex;
 		this.userBirthday = userBirthday;
-		this.userRegisterDate = userRegisterDate;
 		this.userDesc = userDesc;
 		this.userLastLoginTime = userLastLoginTime;
 	}
@@ -68,6 +68,14 @@ public class SysUserInfo implements Serializable {
 		this.userNickName = userNickName == null ? null : userNickName.trim();
 	}
 
+	public Date getUserRegisterDate() {
+		return userRegisterDate;
+	}
+
+	public void setUserRegisterDate(Date userRegisterDate) {
+		this.userRegisterDate = userRegisterDate;
+	}
+
 	public String getUserHeadUrl() {
 		return userHeadUrl;
 	}
@@ -76,11 +84,11 @@ public class SysUserInfo implements Serializable {
 		this.userHeadUrl = userHeadUrl == null ? null : userHeadUrl.trim();
 	}
 
-	public Integer getUserSex() {
+	public Boolean getUserSex() {
 		return userSex;
 	}
 
-	public void setUserSex(Integer userSex) {
+	public void setUserSex(Boolean userSex) {
 		this.userSex = userSex;
 	}
 
@@ -90,14 +98,6 @@ public class SysUserInfo implements Serializable {
 
 	public void setUserBirthday(String userBirthday) {
 		this.userBirthday = userBirthday == null ? null : userBirthday.trim();
-	}
-
-	public Date getUserRegisterDate() {
-		return userRegisterDate;
-	}
-
-	public void setUserRegisterDate(Date userRegisterDate) {
-		this.userRegisterDate = userRegisterDate;
 	}
 
 	public String getUserDesc() {

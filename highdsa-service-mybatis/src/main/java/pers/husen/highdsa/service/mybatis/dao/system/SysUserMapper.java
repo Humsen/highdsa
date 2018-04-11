@@ -1,8 +1,7 @@
 package pers.husen.highdsa.service.mybatis.dao.system;
 
 import java.util.List;
-
-import pers.husen.highdsa.common.entity.po.shiro.SysUser;
+import pers.husen.highdsa.common.entity.po.system.SysUser;
 
 /**
  * @Desc 系统 用户 SQL映射

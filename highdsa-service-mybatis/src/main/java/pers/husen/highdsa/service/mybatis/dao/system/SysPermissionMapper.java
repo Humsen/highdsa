@@ -1,7 +1,7 @@
 package pers.husen.highdsa.service.mybatis.dao.system;
 
 import java.util.List;
-import pers.husen.highdsa.common.entity.po.shiro.SysPermission;
+import pers.husen.highdsa.common.entity.po.system.SysPermission;
 
 /**
  * @Desc 系统 权限 SQL映射

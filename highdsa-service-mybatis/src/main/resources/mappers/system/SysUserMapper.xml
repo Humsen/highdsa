@@ -9,9 +9,9 @@
 		<constructor>
 			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-			<arg column="user_password" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_email" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_password" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_pwd_salt" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_state" javaType="java.lang.String" jdbcType="VARCHAR" />
 		</constructor>

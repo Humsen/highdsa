@@ -1,6 +1,6 @@
 package pers.husen.highdsa.service.mybatis;
 
-import pers.husen.highdsa.common.entity.po.shiro.SysRole;
+import pers.husen.highdsa.common.entity.po.system.SysRole;
 
 /**
  * @Desc 系统角色管理
