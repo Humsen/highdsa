@@ -6,7 +6,7 @@
 
 	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustUserInfo">
 		<constructor>
-			<idArg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+			<idArg column="user_id" javaType="java.lang.Long" jdbcType="INTEGER" />
 			<arg column="user_nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_register_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
 			<arg column="user_head_url" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -18,7 +18,7 @@
 		</constructor>
 		<result column="user_sex" property="userSex" />
 	</resultMap>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from cust_user_info
 		where user_id = #{userId,jdbcType=INTEGER}
 	</delete>
@@ -43,13 +43,13 @@
 		user_birthday = #{userBirthday,jdbcType=VARCHAR},
 		user_desc = #{userDesc,jdbcType=VARCHAR},
 		user_last_login_time = #{userLastLoginTime,jdbcType=TIMESTAMP}
-		where user_id = #{userId,jdbcType=INTEGER}
+		where user_id = #{userId,jdbcType=BIGINT}
 	</update>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select user_id, user_nick_name, user_register_date, user_head_url, user_sex, user_address,
 		user_age, user_birthday, user_desc, user_last_login_time
 		from cust_user_info
-		where user_id = #{userId,jdbcType=INTEGER}
+		where user_id = #{userId,jdbcType=BIGINT}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
 		select user_id, user_nick_name, user_register_date, user_head_url, user_sex, user_address,

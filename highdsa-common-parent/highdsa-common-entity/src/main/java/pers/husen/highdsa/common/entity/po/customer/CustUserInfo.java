@@ -15,7 +15,7 @@ import java.util.Date;
 public class CustUserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Integer userId;
+	private Long userId;
 
 	private String userNickName;
 
@@ -41,7 +41,7 @@ public class CustUserInfo implements Serializable {
 				+ ", userAddress=" + userAddress + ", userAge=" + userAge + ", userBirthday=" + userBirthday + ", userDesc=" + userDesc + ", userLastLoginTime=" + userLastLoginTime + "]";
 	}
 
-	public CustUserInfo(Integer userId, String userNickName, Date userRegisterDate, String userHeadUrl, Boolean userSex, String userAddress, String userAge, String userBirthday, String userDesc,
+	public CustUserInfo(Long userId, String userNickName, Date userRegisterDate, String userHeadUrl, Boolean userSex, String userAddress, String userAge, String userBirthday, String userDesc,
 			Date userLastLoginTime) {
 		this.userId = userId;
 		this.userNickName = userNickName;
@@ -55,7 +55,7 @@ public class CustUserInfo implements Serializable {
 		this.userLastLoginTime = userLastLoginTime;
 	}
 
-	public CustUserInfo(Integer userId, String userNickName, Date userRegisterDate, String userHeadUrl, String userAddress, String userAge, String userBirthday, String userDesc,
+	public CustUserInfo(Long userId, String userNickName, Date userRegisterDate, String userHeadUrl, String userAddress, String userAge, String userBirthday, String userDesc,
 			Date userLastLoginTime) {
 		this.userId = userId;
 		this.userNickName = userNickName;
@@ -72,11 +72,11 @@ public class CustUserInfo implements Serializable {
 		super();
 	}
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

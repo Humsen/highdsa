@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import pers.husen.highdsa.common.entity.po.UserInfo;
+import pers.husen.highdsa.common.entity.po.customer.CustUserInfo;
 
 /**
  * @Desc 测试redis操作
@@ -72,36 +73,43 @@ public class RedisOperationTest {
 
 	@Test
 	public void test08SetObject() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
-		assertEquals(redisOperationImpl.setObject("userinfo", UserInfo, 0), "OK");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1003L);
+		custUserInfo.setUserNickName("何明胜");
+		custUserInfo.setUserDesc("测试设置用户缓存");
+		custUserInfo.setUserLastLoginTime(new Date());
+
+		assertEquals(redisOperationImpl.setObject("userId_1003", custUserInfo, 0), "OK");
 	}
 
 	@Test
 	public void test09GetObject() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1003L);
+		custUserInfo.setUserNickName("何明胜");
+		custUserInfo.setUserDesc("测试设置用户缓存");
+		custUserInfo.setUserLastLoginTime(new Date());
 
-		assertEquals(redisOperationImpl.getObject("userinfo").toString(), UserInfo.toString());
+		assertEquals(redisOperationImpl.getObject("userId_1003").toString(), custUserInfo.toString());
 	}
 
 	@Test
 	public void test10ExistsObject() {
-		assertEquals(redisOperationImpl.existsObject("userinfo"), true);
-		assertEquals(redisOperationImpl.existsObject("userinfo1"), false);
+		assertEquals(redisOperationImpl.existsObject("userId_1003"), true);
+		assertEquals(redisOperationImpl.existsObject("userId_10031"), false);
 	}
 
 	@Test
 	public void test11DelObject() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1003L);
+		custUserInfo.setUserNickName("何明胜");
+		custUserInfo.setUserDesc("测试设置用户缓存");
+		custUserInfo.setUserLastLoginTime(new Date());
 
-		redisOperationImpl.setObject("userinfo123", UserInfo, 0);
+		redisOperationImpl.setObject("userId_1003_1", custUserInfo, 0);
 
-		assertEquals(redisOperationImpl.delObject("userinfo123"), new Long(1));
+		assertEquals(redisOperationImpl.delObject("userId_1003_1"), new Long(1));
 	}
 
 	@Test
@@ -138,47 +146,53 @@ public class RedisOperationTest {
 
 	@Test
 	public void test15SetObjectList() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1003L);
+		custUserInfo.setUserNickName("何明胜");
+		custUserInfo.setUserDesc("测试设置用户缓存");
+		custUserInfo.setUserLastLoginTime(new Date());
 
 		List<Object> list = new ArrayList<Object>();
-		list.add(UserInfo);
-		list.add(UserInfo);
-		list.add(UserInfo);
+		list.add(custUserInfo);
+		list.add(custUserInfo);
+		list.add(custUserInfo);
 
-		assertEquals(redisOperationImpl.setObjectList("userinfoList", list, 0), "OK");
+		assertEquals(redisOperationImpl.setObjectList("userList_1003", list, 0), "OK");
 	}
 
 	@Test
 	public void test16GetObjectList() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1003L);
+		custUserInfo.setUserNickName("何明胜");
+		custUserInfo.setUserDesc("测试设置用户缓存");
+		custUserInfo.setUserLastLoginTime(new Date());
 
 		List<Object> list = new ArrayList<Object>();
-		list.add(UserInfo);
-		list.add(UserInfo);
-		list.add(UserInfo);
+		list.add(custUserInfo);
+		list.add(custUserInfo);
+		list.add(custUserInfo);
 
-		assertEquals(redisOperationImpl.getObjectList("userinfoList").toString(), list.toString());
+		assertEquals(redisOperationImpl.getObjectList("userList_1003").toString(), list.toString());
 	}
 
 	@Test
 	public void test17AppendObjectList() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1003L);
+		custUserInfo.setUserNickName("何明胜");
+		custUserInfo.setUserDesc("测试设置用户缓存");
+		custUserInfo.setUserLastLoginTime(new Date());
 
 		List<Object> list = new ArrayList<Object>();
-		list.add(UserInfo);
-		list.add(UserInfo);
-		list.add(UserInfo);
-		list.add(UserInfo);
+		list.add(custUserInfo);
+		list.add(custUserInfo);
+		list.add(custUserInfo);
+		list.add(custUserInfo);
 
-		String result = redisOperationImpl.appendObjectList("userinfoList", UserInfo);
+		String result = redisOperationImpl.appendObjectList("userList_1003", custUserInfo);
 		assertTrue("OK".equals(result));
-		assertEquals(redisOperationImpl.getObjectList("userinfoList").toString(), list.toString());
+		assertEquals(redisOperationImpl.getObjectList("userList_1003").toString(), list.toString());
 	}
 
 	@Test
@@ -223,73 +237,96 @@ public class RedisOperationTest {
 
 	@Test
 	public void test23SetObjectSet() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1003L);
+		custUserInfo.setUserNickName("何明胜1");
+		custUserInfo.setUserDesc("测试设置用户缓存1");
+		custUserInfo.setUserLastLoginTime(new Date());
 
-		UserInfo UserInfo1 = new UserInfo();
-		UserInfo1.setUserName("何明胜1");
-		UserInfo1.setUserPassword("123123");
+		CustUserInfo custUserInfo2 = new CustUserInfo();
+		custUserInfo2.setUserId(1004L);
+		custUserInfo2.setUserNickName("何明胜2");
+		custUserInfo2.setUserDesc("测试设置用户缓存2");
+		custUserInfo2.setUserLastLoginTime(new Date());
 
-		UserInfo UserInfo2 = new UserInfo();
-		UserInfo2.setUserName("何明胜2");
-		UserInfo2.setUserPassword("123123");
+		CustUserInfo custUserInfo3 = new CustUserInfo();
+		custUserInfo3.setUserId(1005L);
+		custUserInfo3.setUserNickName("何明胜3");
+		custUserInfo3.setUserDesc("测试设置用户缓存3");
+		custUserInfo3.setUserLastLoginTime(new Date());
 
 		Set<Object> set = new HashSet<Object>();
-		set.add(UserInfo);
-		set.add(UserInfo1);
-		set.add(UserInfo2);
+		set.add(custUserInfo);
+		set.add(custUserInfo2);
+		set.add(custUserInfo3);
 
-		assertEquals(redisOperationImpl.setObjectSet("userinfoSet", set, 0), "OK");
+		assertEquals(redisOperationImpl.setObjectSet("userSet_100:3_4_5", set, 0), "OK");
 	}
 
 	@Test
 	public void test24GetObjectSet() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1003L);
+		custUserInfo.setUserNickName("何明胜1");
+		custUserInfo.setUserDesc("测试设置用户缓存1");
+		custUserInfo.setUserLastLoginTime(new Date());
 
-		UserInfo UserInfo1 = new UserInfo();
-		UserInfo1.setUserName("何明胜1");
-		UserInfo1.setUserPassword("123123");
+		CustUserInfo custUserInfo2 = new CustUserInfo();
+		custUserInfo2.setUserId(1004L);
+		custUserInfo2.setUserNickName("何明胜2");
+		custUserInfo2.setUserDesc("测试设置用户缓存2");
+		custUserInfo2.setUserLastLoginTime(new Date());
 
-		UserInfo UserInfo2 = new UserInfo();
-		UserInfo2.setUserName("何明胜2");
-		UserInfo2.setUserPassword("123123");
+		CustUserInfo custUserInfo3 = new CustUserInfo();
+		custUserInfo3.setUserId(1005L);
+		custUserInfo3.setUserNickName("何明胜3");
+		custUserInfo3.setUserDesc("测试设置用户缓存3");
+		custUserInfo3.setUserLastLoginTime(new Date());
 
 		Set<Object> set = new HashSet<Object>();
-		set.add(UserInfo);
-		set.add(UserInfo1);
-		set.add(UserInfo2);
+		set.add(custUserInfo);
+		set.add(custUserInfo2);
+		set.add(custUserInfo3);
 
-		Set<Object> result = redisOperationImpl.getObjectSet("userinfoSet");
+		Set<Object> result = redisOperationImpl.getObjectSet("userSet_100:3_4_5");
 		assertTrue(result.toString() != "");
 	}
 
 	@Test
 	public void test25AppendObjectSet() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1003L);
+		custUserInfo.setUserNickName("何明胜1");
+		custUserInfo.setUserDesc("测试设置用户缓存1");
+		custUserInfo.setUserLastLoginTime(new Date());
 
-		UserInfo UserInfo1 = new UserInfo();
-		UserInfo1.setUserName("何明胜1");
-		UserInfo1.setUserPassword("123123");
+		CustUserInfo custUserInfo2 = new CustUserInfo();
+		custUserInfo2.setUserId(1004L);
+		custUserInfo2.setUserNickName("何明胜2");
+		custUserInfo2.setUserDesc("测试设置用户缓存2");
+		custUserInfo2.setUserLastLoginTime(new Date());
 
-		UserInfo UserInfo2 = new UserInfo();
-		UserInfo2.setUserName("何明胜2");
-		UserInfo2.setUserPassword("123123");
+		CustUserInfo custUserInfo3 = new CustUserInfo();
+		custUserInfo3.setUserId(1005L);
+		custUserInfo3.setUserNickName("何明胜3");
+		custUserInfo3.setUserDesc("测试设置用户缓存3");
+		custUserInfo3.setUserLastLoginTime(new Date());
+
+		CustUserInfo custUserInfo4 = new CustUserInfo();
+		custUserInfo4.setUserId(1005L);
+		custUserInfo4.setUserNickName("何明胜4");
+		custUserInfo4.setUserDesc("测试设置用户缓存4");
+		custUserInfo4.setUserLastLoginTime(new Date());
 
 		Set<Object> set = new HashSet<Object>();
-		set.add(UserInfo);
-		set.add(UserInfo1);
-		set.add(UserInfo2);
-		set.add(UserInfo1);
-		set.add(UserInfo2);
+		set.add(custUserInfo);
+		set.add(custUserInfo2);
+		set.add(custUserInfo3);
+		set.add(custUserInfo4);
 
-		String result = redisOperationImpl.appendObjectSet("userinfoSet", new Object[] { UserInfo1, UserInfo2 });
+		String result = redisOperationImpl.appendObjectSet("userSet_100:3_4_5", new Object[] { custUserInfo4 });
 		assertEquals(result, "OK");
-		String resultStr = redisOperationImpl.getObjectSet("userinfoSet").toString();
+		String resultStr = redisOperationImpl.getObjectSet("userSet_100:3_4_5").toString();
 		assertTrue(resultStr != "");
 	}
 
@@ -336,48 +373,36 @@ public class RedisOperationTest {
 
 	@Test
 	public void test31setObjectMap() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1005L);
+		custUserInfo.setUserNickName("何明胜4");
+		custUserInfo.setUserDesc("测试设置用户缓存4");
+		custUserInfo.setUserLastLoginTime(new Date());
 
 		Map<String, Object> map = new HashMap<>(4);
-		map.put("uesrinfoMap", UserInfo);
-		map.put("uesrinfoMap1", UserInfo);
-		map.put("uesrinfoMap2", UserInfo);
+		map.put("uesrinfoMap", custUserInfo);
+		map.put("uesrinfoMap1", custUserInfo);
+		map.put("uesrinfoMap2", custUserInfo);
 
 		assertEquals(redisOperationImpl.setObjectMap("redisObjectMap", map, 0), "OK");
 	}
 
 	@Test
 	public void test32getObjectMap() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
-
-		Map<String, Object> map = new HashMap<>(4);
-		map.put("uesrinfoMap", UserInfo);
-		map.put("uesrinfoMap1", UserInfo);
-		map.put("uesrinfoMap2", UserInfo);
-
 		assertTrue(redisOperationImpl.getObjectMap("redisObjectMap").toString() != "");
 	}
 
 	@Test
 	public void test33appendObjectMap() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
-
-		Map<String, Object> map = new HashMap<>(10);
-		map.put("uesrinfoMap", UserInfo);
-		map.put("uesrinfoMap1", UserInfo);
-		map.put("uesrinfoMap2", UserInfo);
-		map.put("uesrinfoMap3", UserInfo);
-		map.put("uesrinfoMap4", UserInfo);
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1005L);
+		custUserInfo.setUserNickName("何明胜4");
+		custUserInfo.setUserDesc("测试设置用户缓存4");
+		custUserInfo.setUserLastLoginTime(new Date());
 
 		Map<String, Object> map1 = new HashMap<>(4);
-		map1.put("uesrinfoMap3", UserInfo);
-		map1.put("uesrinfoMap4", UserInfo);
+		map1.put("uesrinfoMap3", custUserInfo);
+		map1.put("uesrinfoMap4", custUserInfo);
 
 		assertEquals(redisOperationImpl.appendObjectMap("redisObjectMap", map1), "OK");
 	}
@@ -401,10 +426,12 @@ public class RedisOperationTest {
 
 	@Test
 	public void test37SetObject() {
-		UserInfo UserInfo = new UserInfo();
-		UserInfo.setUserName("何明胜");
-		UserInfo.setUserPassword("123123");
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(1005L);
+		custUserInfo.setUserNickName("何明胜4");
+		custUserInfo.setUserDesc("测试设置用户缓存4");
+		custUserInfo.setUserLastLoginTime(new Date());
 
-		assertEquals(redisOperationImpl.setObject(UserInfo, UserInfo, 0), "OK");
+		assertEquals(redisOperationImpl.setObject(custUserInfo, custUserInfo, 0), "OK");
 	}
 }
