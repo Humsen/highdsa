@@ -2,11 +2,10 @@ package pers.husen.highdsa.service.mybatis.impl;
 
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pers.husen.highdsa.common.encrypt.Md5Encrypt;
 import pers.husen.highdsa.common.entity.po.system.SysUser;
 import pers.husen.highdsa.common.entity.po.system.SysUserRole;
 import pers.husen.highdsa.service.mybatis.SysUserManager;
@@ -122,12 +121,15 @@ public class SysUserManagerImpl implements SysUserManager {
 	 */
 	public void encryptPassword(SysUser user) {
 		RandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
-		String algorithmName = "md5";
+		// String algorithmName = "md5";
 		final int hashIterations = 2;
 
 		user.setUserPwdSalt(randomNumberGenerator.nextBytes().toHex());
-		String newPassword = new SimpleHash(algorithmName, user.getUserPassword(), ByteSource.Util.bytes(user.getUserName() + user.getUserPwdSalt()), hashIterations).toHex();
+		// String encryptedPwd1 = new SimpleHash(algorithmName, user.getUserPassword(),
+		// ByteSource.Util.bytes(user.getUserName() + user.getUserPwdSalt()),
+		// hashIterations).toHex();
+		String encryptedPwd = Md5Encrypt.getMD5Code(user.getUserPassword(), user.getUserName() + user.getUserPwdSalt(), hashIterations);
 
-		user.setUserPassword(newPassword);
+		user.setUserPassword(encryptedPwd);
 	}
 }

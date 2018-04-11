@@ -10,6 +10,7 @@ rebel.xml
 .project
 .classpath
 .factorypath
+.springBeans
 
 # log file
 logs
