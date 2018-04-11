@@ -1,87 +1,106 @@
 package pers.husen.highdsa.common.entity.po.customer;
 
-public class CustUser {
-    private Long userId;
+import java.io.Serializable;
 
-    private String userName;
+/**
+ * @Desc 客户用户实体类
+ *
+ * @Author 何明胜
+ *
+ * @Created at 2018年4月11日 下午1:36:36
+ * 
+ * @Version 1.0.0
+ */
+public class CustUser implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    private String userEmail;
+	private Long userId;
 
-    private String userPhone;
+	private String userName;
 
-    private String userPassword;
+	private String userEmail;
 
-    private String userPwdSalt;
+	private String userPhone;
 
-    private String userState;
+	private String userPassword;
 
-    public CustUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt, String userState) {
-        this.userId = userId;
-        this.userName = userName;
-        this.userEmail = userEmail;
-        this.userPhone = userPhone;
-        this.userPassword = userPassword;
-        this.userPwdSalt = userPwdSalt;
-        this.userState = userState;
-    }
+	private String userPwdSalt;
 
-    public CustUser() {
-        super();
-    }
+	private String userState;
 
-    public Long getUserId() {
-        return userId;
-    }
+	@Override
+	public String toString() {
+		return "CustUser [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userPassword=" + userPassword + ", userPwdSalt=" + userPwdSalt
+				+ ", userState=" + userState + "]";
+	}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public CustUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt, String userState) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.userPhone = userPhone;
+		this.userPassword = userPassword;
+		this.userPwdSalt = userPwdSalt;
+		this.userState = userState;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public CustUser() {
+		super();
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public String getUserEmail() {
-        return userEmail;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail == null ? null : userEmail.trim();
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getUserPhone() {
-        return userPhone;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName == null ? null : userName.trim();
+	}
 
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone == null ? null : userPhone.trim();
-    }
+	public String getUserEmail() {
+		return userEmail;
+	}
 
-    public String getUserPassword() {
-        return userPassword;
-    }
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail == null ? null : userEmail.trim();
+	}
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword == null ? null : userPassword.trim();
-    }
+	public String getUserPhone() {
+		return userPhone;
+	}
 
-    public String getUserPwdSalt() {
-        return userPwdSalt;
-    }
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone == null ? null : userPhone.trim();
+	}
 
-    public void setUserPwdSalt(String userPwdSalt) {
-        this.userPwdSalt = userPwdSalt == null ? null : userPwdSalt.trim();
-    }
+	public String getUserPassword() {
+		return userPassword;
+	}
 
-    public String getUserState() {
-        return userState;
-    }
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword == null ? null : userPassword.trim();
+	}
 
-    public void setUserState(String userState) {
-        this.userState = userState == null ? null : userState.trim();
-    }
+	public String getUserPwdSalt() {
+		return userPwdSalt;
+	}
+
+	public void setUserPwdSalt(String userPwdSalt) {
+		this.userPwdSalt = userPwdSalt == null ? null : userPwdSalt.trim();
+	}
+
+	public String getUserState() {
+		return userState;
+	}
+
+	public void setUserState(String userState) {
+		this.userState = userState == null ? null : userState.trim();
+	}
 }

@@ -13,5 +13,5 @@
     <!-- <dubbo:registry address="zookeeper://39.106.185.126:2181"/> -->
 
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:reference interface="pers.husen.highdsa.service.mybatis.UserInfoDbOper" id="userInfoDbOper" timeout="100000" check="false"/>
+    <dubbo:reference interface="pers.husen.highdsa.service.mybatis.SysUserInfoManager" id="sysUserInfoManager" timeout="100000" check="false"/>
 </beans>

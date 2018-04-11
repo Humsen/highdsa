@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @Created at 2018年3月29日 下午3:35:04
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 public class SysUserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -43,6 +43,16 @@ public class SysUserInfo implements Serializable {
 		this.userRegisterDate = userRegisterDate;
 		this.userHeadUrl = userHeadUrl;
 		this.userSex = userSex;
+		this.userBirthday = userBirthday;
+		this.userDesc = userDesc;
+		this.userLastLoginTime = userLastLoginTime;
+	}
+	
+	public SysUserInfo(Long userId, String userNickName, Date userRegisterDate, String userHeadUrl, String userBirthday, String userDesc, Date userLastLoginTime) {
+		this.userId = userId;
+		this.userNickName = userNickName;
+		this.userRegisterDate = userRegisterDate;
+		this.userHeadUrl = userHeadUrl;
 		this.userBirthday = userBirthday;
 		this.userDesc = userDesc;
 		this.userLastLoginTime = userLastLoginTime;

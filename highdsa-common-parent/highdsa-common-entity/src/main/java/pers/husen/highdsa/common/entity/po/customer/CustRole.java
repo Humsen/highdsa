@@ -1,54 +1,72 @@
 package pers.husen.highdsa.common.entity.po.customer;
 
-public class CustRole {
-    private Long roleId;
+import java.io.Serializable;
 
-    private String roleName;
+/**
+ * @Desc 客户角色实体类
+ *
+ * @Author 何明胜
+ *
+ * @Created at 2018年4月11日 下午1:35:21
+ * 
+ * @Version 1.0.0
+ */
+public class CustRole implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    private String roleDesc;
+	private Long roleId;
 
-    private Boolean roleValid;
+	private String roleName;
 
-    public CustRole(Long roleId, String roleName, String roleDesc, Boolean roleValid) {
-        this.roleId = roleId;
-        this.roleName = roleName;
-        this.roleDesc = roleDesc;
-        this.roleValid = roleValid;
-    }
+	private String roleDesc;
 
-    public CustRole() {
-        super();
-    }
+	private Boolean roleValid;
 
-    public Long getRoleId() {
-        return roleId;
-    }
+	@Override
+	public String toString() {
+		return "CustRole [roleId=" + roleId + ", roleName=" + roleName + ", roleDesc=" + roleDesc + ", roleValid=" + roleValid + "]";
+	}
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
+	public CustRole(Long roleId, String roleName, String roleDesc, Boolean roleValid) {
+		this.roleId = roleId;
+		this.roleName = roleName;
+		this.roleDesc = roleDesc;
+		this.roleValid = roleValid;
+	}
 
-    public String getRoleName() {
-        return roleName;
-    }
+	public CustRole() {
+		super();
+	}
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
-    }
+	public Long getRoleId() {
+		return roleId;
+	}
 
-    public String getRoleDesc() {
-        return roleDesc;
-    }
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
 
-    public void setRoleDesc(String roleDesc) {
-        this.roleDesc = roleDesc == null ? null : roleDesc.trim();
-    }
+	public String getRoleName() {
+		return roleName;
+	}
 
-    public Boolean getRoleValid() {
-        return roleValid;
-    }
+	public void setRoleName(String roleName) {
+		this.roleName = roleName == null ? null : roleName.trim();
+	}
 
-    public void setRoleValid(Boolean roleValid) {
-        this.roleValid = roleValid;
-    }
+	public String getRoleDesc() {
+		return roleDesc;
+	}
+
+	public void setRoleDesc(String roleDesc) {
+		this.roleDesc = roleDesc == null ? null : roleDesc.trim();
+	}
+
+	public Boolean getRoleValid() {
+		return roleValid;
+	}
+
+	public void setRoleValid(Boolean roleValid) {
+		this.roleValid = roleValid;
+	}
 }

@@ -1,54 +1,72 @@
 package pers.husen.highdsa.common.entity.po.customer;
 
-public class CustPermission {
-    private Long permissionId;
+import java.io.Serializable;
 
-    private String permissionName;
+/**
+ * @Desc 客户权限实体类
+ *
+ * @Author 何明胜
+ *
+ * @Created at 2018年4月11日 下午1:34:51
+ * 
+ * @Version 1.0.0
+ */
+public class CustPermission implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    private String permissionDesc;
+	private Long permissionId;
 
-    private Boolean permissionValid;
+	private String permissionName;
 
-    public CustPermission(Long permissionId, String permissionName, String permissionDesc, Boolean permissionValid) {
-        this.permissionId = permissionId;
-        this.permissionName = permissionName;
-        this.permissionDesc = permissionDesc;
-        this.permissionValid = permissionValid;
-    }
+	private String permissionDesc;
 
-    public CustPermission() {
-        super();
-    }
+	private Boolean permissionValid;
 
-    public Long getPermissionId() {
-        return permissionId;
-    }
+	@Override
+	public String toString() {
+		return "CustPermission [permissionId=" + permissionId + ", permissionName=" + permissionName + ", permissionDesc=" + permissionDesc + ", permissionValid=" + permissionValid + "]";
+	}
 
-    public void setPermissionId(Long permissionId) {
-        this.permissionId = permissionId;
-    }
+	public CustPermission(Long permissionId, String permissionName, String permissionDesc, Boolean permissionValid) {
+		this.permissionId = permissionId;
+		this.permissionName = permissionName;
+		this.permissionDesc = permissionDesc;
+		this.permissionValid = permissionValid;
+	}
 
-    public String getPermissionName() {
-        return permissionName;
-    }
+	public CustPermission() {
+		super();
+	}
 
-    public void setPermissionName(String permissionName) {
-        this.permissionName = permissionName == null ? null : permissionName.trim();
-    }
+	public Long getPermissionId() {
+		return permissionId;
+	}
 
-    public String getPermissionDesc() {
-        return permissionDesc;
-    }
+	public void setPermissionId(Long permissionId) {
+		this.permissionId = permissionId;
+	}
 
-    public void setPermissionDesc(String permissionDesc) {
-        this.permissionDesc = permissionDesc == null ? null : permissionDesc.trim();
-    }
+	public String getPermissionName() {
+		return permissionName;
+	}
 
-    public Boolean getPermissionValid() {
-        return permissionValid;
-    }
+	public void setPermissionName(String permissionName) {
+		this.permissionName = permissionName == null ? null : permissionName.trim();
+	}
 
-    public void setPermissionValid(Boolean permissionValid) {
-        this.permissionValid = permissionValid;
-    }
+	public String getPermissionDesc() {
+		return permissionDesc;
+	}
+
+	public void setPermissionDesc(String permissionDesc) {
+		this.permissionDesc = permissionDesc == null ? null : permissionDesc.trim();
+	}
+
+	public Boolean getPermissionValid() {
+		return permissionValid;
+	}
+
+	public void setPermissionValid(Boolean permissionValid) {
+		this.permissionValid = permissionValid;
+	}
 }

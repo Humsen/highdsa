@@ -40,7 +40,7 @@ public class MyCasClient extends CasClient {
 	            throw HttpAction.unauthorized("AJAX request -> 401", context, null, action.getLocation());
 	        }
 	        // authentication has already been tried -> unauthorized
-	        //FIXME 以下这段代码在org.pac4j.cas.client.CasClient中会出现401错误，所以在这里屏蔽掉。以后寻求更好的解决办法。
+	        // 以下这段代码在org.pac4j.cas.client.CasClient中会出现401错误，所以在这里屏蔽掉。以后寻求更好的解决办法。
 //	        final String attemptedAuth = (String) context.getSessionAttribute(getName() + ATTEMPTED_AUTHENTICATION_SUFFIX);
 //	        if (CommonHelper.isNotBlank(attemptedAuth)) {
 //	            cleanAttemptedAuthentication(context);

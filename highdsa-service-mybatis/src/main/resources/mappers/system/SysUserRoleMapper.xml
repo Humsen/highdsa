@@ -4,7 +4,7 @@
 	<!-- 自定义二级缓存 -->
 	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
 
-	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.shiro.SysUserRole">
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.system.SysUserRole">
 		<constructor>
 			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<idArg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
@@ -15,7 +15,7 @@
 		where user_id = #{userId,jdbcType=BIGINT}
 		and role_id = #{roleId,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysUserRole">
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.system.SysUserRole">
 		insert into sys_user_role (user_id, role_id)
 		values (#{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
 	</insert>

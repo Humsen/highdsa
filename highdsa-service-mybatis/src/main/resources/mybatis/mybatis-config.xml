@@ -21,8 +21,8 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias alias="UserInfo"
-			type="pers.husen.highdsa.common.entity.po.UserInfo" />
+		<typeAlias alias="SysUserInfo"
+			type="pers.husen.highdsa.common.entity.po.system.SysUserInfo" />
 	</typeAliases>
 
 	<!-- 配置mybatis运行环境 -->
@@ -45,6 +45,6 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="mappers/UserInfoMapper.xml" />
+		<mapper resource="mappers/system/SysUserInfoMapper.xml" />
 	</mappers>
 </configuration>

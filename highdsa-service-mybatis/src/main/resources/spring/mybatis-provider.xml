@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
-    classpath:/org/springframework/beans/factory/xml/spring-beans-4.3.xsd classpath:/org/springframework/beans/factory/xml/spring-beans-4.3.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 	<!--定义了提供方应用信息，用于计算依赖关系；在 dubbo-admin 或 dubbo-monitor 会显示这个名字，方便辨识 -->
@@ -12,11 +11,9 @@
 	<dubbo:protocol name="dubbo" port="20880" payload="104857600" />
 
 	<!--使用 dubbo 协议实现定义好的 api.PermissionService 接口 超时单位：毫秒 -->
-	<dubbo:service interface="pers.husen.highdsa.service.mybatis.UserInfoDbOper" ref="userInfoDbOper" protocol="dubbo" timeout="10000" />
+	<dubbo:service interface="pers.husen.highdsa.service.mybatis.SysUserInfoManager" ref="sysUserInfoManager" protocol="dubbo" timeout="10000" />
+	
 	<dubbo:service interface="pers.husen.highdsa.service.mybatis.SysPermissionManager" ref="sysPermissionManager" protocol="dubbo" timeout="10000" />
 	<dubbo:service interface="pers.husen.highdsa.service.mybatis.SysRoleManager" ref="sysRoleManager" protocol="dubbo" timeout="10000" />
 	<dubbo:service interface="pers.husen.highdsa.service.mybatis.SysUserManager" ref="sysUserManager" protocol="dubbo" timeout="10000" />
-
-	<!--具体实现该接口的 bean -->
-	<bean id="userInfoDbOper" class="pers.husen.highdsa.service.mybatis.impl.UserInfoDbOperImpl" />
 </beans>

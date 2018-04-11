@@ -19,12 +19,12 @@ public class RegisterMybatisService {
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(configLocation);
 		context.start();
-		// UserInfoDbOperImpl userInfoDbOperImpl = (UserInfoDbOperImpl)
-		// context.getBean("userInfoDbOper");
+		
+		//SysUserInfoManagerImpl sysUserInfoManagerImpl = (SysUserInfoManagerImpl) context.getBean("sysUserInfoManager");
 		System.out.println("=============== mybatis已经启动... ==================");
 
-		// UserInfo userInfo = userInfoDbOperImpl.selectById(1);
-		// System.out.println(userInfo);
+		//SysUserInfo sysUserInfo = sysUserInfoManagerImpl.selectById(1000L);
+		//System.out.println(sysUserInfo);
 
 		System.out.println("=============== 阻塞开始... ==================");
 		try {

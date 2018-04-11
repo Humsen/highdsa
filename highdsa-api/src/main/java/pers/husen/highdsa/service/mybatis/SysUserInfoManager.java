@@ -2,7 +2,7 @@ package pers.husen.highdsa.service.mybatis;
 
 import java.util.List;
 
-import pers.husen.highdsa.common.entity.po.UserInfo;
+import pers.husen.highdsa.common.entity.po.system.SysUserInfo;
 
 /**
  * @Desc dubbo用户信息表操作接口
@@ -13,21 +13,21 @@ import pers.husen.highdsa.common.entity.po.UserInfo;
  * 
  * @Version 1.0.0
  */
-public interface UserInfoDbOper {
+public interface SysUserInfoManager {
 	/**
 	 * 根据id查询
 	 * 
 	 * @param userId
 	 * @return
 	 */
-	public UserInfo selectById(Integer userId);
+	public SysUserInfo selectById(Long userId);
 
 	/**
 	 * 查询所有用户
 	 * 
 	 * @return
 	 */
-	public List<UserInfo> selectAll();
+	public List<SysUserInfo> selectAll();
 
 	/**
 	 * 插入新的用户信息
@@ -35,7 +35,7 @@ public interface UserInfoDbOper {
 	 * @param userInfo
 	 * @return
 	 */
-	public Integer insertUserInfo(UserInfo userInfo);
+	public Integer insertUserInfo(SysUserInfo sysUserInfo);
 
 	/**
 	 * 根据id更新用户信息
@@ -43,7 +43,7 @@ public interface UserInfoDbOper {
 	 * @param userInfo
 	 * @return
 	 */
-	public Integer updateUserInfo(UserInfo userInfo);
+	public Integer updateUserInfo(SysUserInfo sysUserInfo);
 
 	/**
 	 * 删除用户信息
@@ -51,5 +51,5 @@ public interface UserInfoDbOper {
 	 * @param userId
 	 * @return
 	 */
-	public Integer deleteUserInfo(Integer userId);
+	public Integer deleteUserInfo(Long userId);
 }

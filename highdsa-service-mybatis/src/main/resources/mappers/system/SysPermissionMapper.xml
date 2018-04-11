@@ -4,7 +4,7 @@
 	<!-- 自定义二级缓存 -->
 	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
 
-	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.shiro.SysPermission">
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.system.SysPermission">
 		<constructor>
 			<idArg column="permission_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="permission_name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -16,14 +16,14 @@
 		delete from sys_permission
 		where permission_id = #{permissionId,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysPermission">
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.system.SysPermission">
 		insert into sys_permission (permission_id, permission_name, permission_desc,
 		permission_valid)
 		values (#{permissionId,jdbcType=BIGINT},
 		#{permissionName,jdbcType=VARCHAR}, #{permissionDesc,jdbcType=VARCHAR},
 		#{permissionValid,jdbcType=BIT})
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.shiro.SysPermission">
+	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.system.SysPermission">
 		update sys_permission
 		set permission_name = #{permissionName,jdbcType=VARCHAR},
 		permission_desc = #{permissionDesc,jdbcType=VARCHAR},

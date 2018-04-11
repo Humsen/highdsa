@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd    
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd    
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd    
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd    
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd    
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd    
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- 引入dbconfig.properties属性文件 -->
 	<context:property-placeholder location="classpath:mysql.properties" />
@@ -76,7 +76,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- dataSource bean -->
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath*:mappers/*.xml" />
+		<property name="mapperLocations" value="classpath*:mappers/**/*.xml" />
 		<property name="typeAliasesPackage" value="pers.husen.highdsa.common.entity.po" />
 		<!-- 可以单独指定mybatis的配置文件，或者写在本文件里面。 用下面的自动扫描装配(推荐)或者单独mapper -->
 		<property name="configLocation" value="classpath:mybatis/mybatis-spring-config.xml" />
@@ -88,8 +88,8 @@
 	</bean>
 
 	<!-- 定义mapper类bean -->
-	<bean id="userInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.user.UserInfoMapper" />
+	<bean id="sysUserInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysUserInfoMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 

@@ -1,32 +1,50 @@
 package pers.husen.highdsa.common.entity.po.customer;
 
-public class CustUserRole {
-    private Long userId;
+import java.io.Serializable;
 
-    private Long roleId;
+/**
+ * @Desc 客户用户角色实体类
+ *
+ * @Author 何明胜
+ *
+ * @Created at 2018年4月11日 下午1:37:04
+ * 
+ * @Version 1.0.0
+ */
+public class CustUserRole implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    public CustUserRole(Long userId, Long roleId) {
-        this.userId = userId;
-        this.roleId = roleId;
-    }
+	private Long userId;
 
-    public CustUserRole() {
-        super();
-    }
+	private Long roleId;
 
-    public Long getUserId() {
-        return userId;
-    }
+	@Override
+	public String toString() {
+		return "CustUserRole [userId=" + userId + ", roleId=" + roleId + "]";
+	}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public CustUserRole(Long userId, Long roleId) {
+		this.userId = userId;
+		this.roleId = roleId;
+	}
 
-    public Long getRoleId() {
-        return roleId;
-    }
+	public CustUserRole() {
+		super();
+	}
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
 }

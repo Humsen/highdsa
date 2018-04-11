@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import pers.husen.highdsa.common.entity.po.system.SysUserInfo;
+import pers.husen.highdsa.web.test.mybatis.handler.MybatisSvc;
+
 /**
  * @Desc 测试mybatis
  *
@@ -16,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  *
  * @Created at 2018年3月20日 上午10:22:15
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 @RestController
 @RequestMapping("/mybatis/v1")
@@ -26,7 +29,7 @@ public class MybatisController {
 
 	@ResponseBody
 	@RequestMapping(value = "/user.hms", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	public String selectById(@RequestParam("user_id") int userId) throws JsonProcessingException {
+	public SysUserInfo selectById(@RequestParam("user_id") Long userId) throws JsonProcessingException {
 
 		return mybatisSvc.selectById(userId);
 	}
