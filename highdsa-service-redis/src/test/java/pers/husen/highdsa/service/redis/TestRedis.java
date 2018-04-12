@@ -15,6 +15,7 @@ public class TestRedis {
 	public static void main(String[] args) {
 		// 连接本地的 Redis 服务
 		Jedis jedis = new Jedis("39.106.185.126", 6379);
+		jedis.auth("123456");		
 		System.out.println("Connection to server sucessfully");
 		// 查看服务是否运行
 		jedis.set("husen", "hemingsheng");
