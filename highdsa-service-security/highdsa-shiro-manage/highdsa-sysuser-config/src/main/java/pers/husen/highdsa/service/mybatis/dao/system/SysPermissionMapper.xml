@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper">
+	<!-- 自定义二级缓存 -->
+	<!-- <cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" /> -->
+
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.system.SysPermission">
+		<constructor>
+			<idArg column="permission_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+			<arg column="permission_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="permission_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="permission_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="permission_valid" javaType="java.lang.Boolean" jdbcType="BIT" />
+			<arg column="permission_navi" javaType="java.lang.Integer" jdbcType="BIT" />
+			<arg column="permission_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+		</constructor>
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_permission
+		where permission_id = #{permissionId,jdbcType=BIGINT}
+	</delete>
+	<!-- TODO-SQL代码格式化  -->
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.system.SysPermission">
+		insert into sys_permission (permission_id, permission_name, permission_code, permission_desc, permission_navi, permission_url,
+		permission_valid)
+		values
+		(#{permissionId,jdbcType=BIGINT},
+		#{permissionName,jdbcType=VARCHAR},#{permissionCode,jdbcType=VARCHAR},
+		#{permissionDesc,jdbcType=VARCHAR},#{permissionNavi,jdbcType=BIT},#{permissionUrl,jdbcType=VARCHAR},
+		#{permissionValid,jdbcType=BIT})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.system.SysPermission">
+		update sys_permission
+		set permission_name = #{permissionName,jdbcType=VARCHAR},
+		permission_code = #{permissionCode,jdbcType=VARCHAR},
+		permission_desc = #{permissionDesc,jdbcType=VARCHAR},
+		permission_valid = #{permissionValid,jdbcType=BIT}
+		where permission_id = #{permissionId,jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select permission_id, permission_name, permission_code, permission_desc, permission_navi, permission_url, permission_valid
+		from sys_permission
+		where
+		permission_id =
+		#{permissionId,jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		permission_id,
+		permission_name,
+		permission_code,
+		permission_desc,
+		permission_valid,
+		permission_navi,
+		permission_url
+		FROM
+		sys_permission
+		ORDER BY
+		permission_id ASC
+	</select>
+	<!-- 添加的 -->
+	<!-- 根据角色id查询所有导航结点 -->
+	<select id="findNavisByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		sys_permission.permission_id,
+		sys_permission.permission_name,
+		sys_permission.permission_code,
+		sys_permission.permission_desc,
+		sys_permission.permission_valid,
+		sys_permission.permission_navi,
+		sys_permission.permission_url
+		FROM
+		sys_role_permission ,
+		sys_permission
+		WHERE
+		sys_role_permission.role_id =
+		#{roleId,jdbcType=BIGINT} AND
+		sys_role_permission.permission_id = sys_permission.permission_id AND
+		sys_permission.permission_navi = 1
+	</select>
+	<!-- 根据角色id查询所有权限 -->
+	<select id="findPermissionsByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		sys_permission.permission_id,
+		sys_permission.permission_name,
+		sys_permission.permission_code,
+		sys_permission.permission_desc,
+		sys_permission.permission_valid,
+		sys_permission.permission_navi,
+		sys_permission.permission_url
+		FROM
+		sys_role_permission ,
+		sys_permission
+		WHERE
+		sys_role_permission.role_id =
+		#{roleId,jdbcType=BIGINT} AND
+		sys_role_permission.permission_id = sys_permission.permission_id
+	</select>
+</mapper>

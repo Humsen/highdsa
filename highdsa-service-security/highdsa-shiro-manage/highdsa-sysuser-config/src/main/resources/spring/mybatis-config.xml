@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Permission" type="pers.husen.highdsa.common.entity.po.system.SysPermission" />
+		<typeAlias alias="Role" type="pers.husen.highdsa.common.entity.po.system.SysRole" />
+		<typeAlias alias="RolePermission" type="pers.husen.highdsa.common.entity.po.system.SysRolePermission" />
+		<typeAlias alias="User" type="pers.husen.highdsa.common.entity.po.system.SysUser" />
+		<typeAlias alias="UserRole" type="pers.husen.highdsa.common.entity.po.system.SysUserRole" />
+	</typeAliases>
+</configuration>

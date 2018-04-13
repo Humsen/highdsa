@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.husen.highdsa.service.mybatis.dao.system.SysRolePermissionMapper">
+	<!-- 自定义二级缓存 -->
+	<!-- <cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" /> -->
+
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.system.SysRolePermission">
+		<constructor>
+			<idArg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+			<idArg column="permission_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+		</constructor>
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete from sys_role_permission
+		where role_id = #{roleId,jdbcType=BIGINT}
+		and permission_id = #{permissionId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.system.SysRolePermission">
+		insert into sys_role_permission (role_id, permission_id)
+		values (#{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT})
+	</insert>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select role_id, permission_id
+		from sys_role_permission
+		order by user_id ASC,userCreateDate DESC
+	</select>
+	<!-- 根据角色id删除角色-权限 联系 -->
+	<delete id="deleteByRoleId" parameterType="java.lang.Long">
+		DELETE
+		FROM
+		sys_role_permission
+		WHERE
+		role_id = #{roleId,jdbcType=BIGINT}
+	</delete>
+	<!-- 根据权限id删除角色-权限 联系 -->
+	<delete id="deleteByPermissionId" parameterType="java.lang.Long">
+		DELETE
+		FROM
+		sys_role_permission
+		WHERE
+		permission_id = #{permissionId,jdbcType=BIGINT}
+	</delete>
+</mapper>
