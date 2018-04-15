@@ -10,6 +10,7 @@
 			<idArg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 		</constructor>
 	</resultMap>
+
 	<delete id="deleteByPrimaryKey" parameterType="map">
 		delete from sys_user_role
 		where user_id = #{userId,jdbcType=BIGINT}
@@ -22,6 +23,22 @@
 	<select id="selectAll" resultMap="BaseResultMap">
 		select user_id, role_id
 		from sys_user_role
-		order by user_id ASC,userCreateDate DESC
+		order by user_id ASC
 	</select>
+	<!--根据用户id删除 用户-角色联系 -->
+	<delete id="deleteByUserId" parameterType="java.lang.Long">
+		DELETE
+		FROM
+		sys_user_role
+		WHERE
+		user_id = #{userId,jdbcType=BIGINT}
+	</delete>
+	<!-- 根据角色id删除 用户-角色 联系 -->
+	<delete id="deleteByRoleId" parameterType="java.lang.Long">
+		DELETE
+		FROM
+		sys_user_role
+		WHERE
+		role_id = #{roleId,jdbcType=BIGINT}
+	</delete>
 </mapper>

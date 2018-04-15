@@ -1,14 +1,21 @@
 package pers.husen.highdsa.service.mybatis.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.encrypt.Md5Encrypt;
+import pers.husen.highdsa.common.entity.po.system.SysNavigation;
+import pers.husen.highdsa.common.entity.po.system.SysRole;
 import pers.husen.highdsa.common.entity.po.system.SysUser;
 import pers.husen.highdsa.common.entity.po.system.SysUserRole;
 import pers.husen.highdsa.service.mybatis.SysUserManager;
+import pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper;
+import pers.husen.highdsa.service.mybatis.dao.system.SysRoleMapper;
 import pers.husen.highdsa.service.mybatis.dao.system.SysUserMapper;
 import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
 
@@ -19,15 +26,18 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
  *
  * @Created at 2018年3月29日 上午9:29:44
  * 
- * @Version 1.0.4
+ * @Version 1.0.7
  */
 @Service("sysUserManager")
 public class SysUserManagerImpl implements SysUserManager {
-
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	@Autowired
 	private SysUserRoleMapper sysUserRoleMapper;
+	@Autowired
+	private SysRoleMapper sysRoleMapper;
+	@Autowired
+	private SysPermissionMapper sysPermissionMapper;
 
 	/**
 	 * 创建用户
@@ -35,10 +45,10 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param user
 	 */
 	@Override
-	public int createUser(SysUser user) {
+	public int createUser(SysUser sysUser) {
 		// 加密密码
-		encryptPassword(user);
-		return sysUserMapper.insert(user);
+		encryptPassword(sysUser);
+		return sysUserMapper.insert(sysUser);
 	}
 
 	/**
@@ -81,37 +91,87 @@ public class SysUserManagerImpl implements SysUserManager {
 		}
 	}
 
-	/**
-	 * 根据用户名查找用户
-	 * 
-	 * @param userName
-	 * @return
-	 */
 	@Override
-	public SysUser findByUserName(String userName) {
-		return sysUserMapper.selectUserInfoByUserName(userName);
+	public SysUser addUser(SysUser sysUser, Long... roleIds) {
+		// 密码加密
+		encryptPassword(sysUser);
+		// TODO-设置分布式id
+		sysUser.setUserId(10004L);
+		// 设置正常状态
+		sysUser.setUserState("100");
+
+		sysUserMapper.insert(sysUser);
+
+		if (roleIds != null && roleIds.length > 0) {
+			for (Long roleId : roleIds) {
+				sysUserRoleMapper.insert(new SysUserRole(sysUser.getUserId(), roleId));
+			}
+		}
+		
+		return sysUser;
 	}
 
-	/**
-	 * 根据用户名查找其角色
-	 * 
-	 * @param userName
-	 * @return
-	 */
 	@Override
-	public SysUser findRoles(String userName) {
+	public void deleteUser(Long userId) {
+		sysUserRoleMapper.deleteByUserId(userId);
+		sysUserMapper.deleteByPrimaryKey(userId);
+	}
+
+	@Override
+	public void deleteMoreUsers(Long... userIds) {
+		if (userIds != null && userIds.length > 0) {
+			for (Long userId : userIds) {
+				deleteUser(userId);
+			}
+		}
+	}
+
+	@Override
+	public SysUser findUserByUserName(String userName) {
+		return sysUserMapper.selectUserByUserName(userName);
+	}
+
+	@Override
+	public List<SysUser> getAllUsers() {
+		return sysUserMapper.selectAll();
+	}
+
+	@Override
+	public void updateUserRoles(Long userId, Long... roleIds) {
+		sysUserRoleMapper.deleteByUserId(userId);
+
+		if (roleIds != null && roleIds.length > 0) {
+			for (Long roleId : roleIds) {
+				sysUserRoleMapper.insert(new SysUserRole(userId, roleId));
+			}
+		}
+	}
+
+	@Override
+	public SysUser findRolesByUserName(String userName) {
 		return sysUserMapper.selectRolesByUserName(userName);
 	}
 
-	/**
-	 * 根据用户名查找其权限
-	 * 
-	 * @param userName
-	 * @return
-	 */
 	@Override
-	public SysUser findPermissions(String userName) {
+	public SysUser findPermissionsByUserName(String userName) {
 		return sysUserMapper.selectPermissionsByUserName(userName);
+	}
+
+	@Override
+	public List<SysNavigation> findNavigationBar(String userName) {
+		List<SysNavigation> navigationBar = new ArrayList<SysNavigation>();
+		SysNavigation navigation;
+
+		List<SysRole> roles = sysRoleMapper.selectRolesByUserName(userName);
+
+		for (SysRole role : roles) {
+			navigation = new SysNavigation();
+			navigation.setNavigationName(role.getRoleDesc());
+			navigation.setChildNavigations(sysPermissionMapper.findNavisByRoleId(role.getRoleId()));
+			navigationBar.add(navigation);
+		}
+
+		return navigationBar;
 	}
 
 	/**

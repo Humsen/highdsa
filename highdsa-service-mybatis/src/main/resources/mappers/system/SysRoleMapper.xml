@@ -8,36 +8,67 @@
 		<constructor>
 			<idArg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="role_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="role_code" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="role_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="role_create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+			<arg column="role_last_modify_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
 			<arg column="role_valid" javaType="java.lang.Boolean" jdbcType="BIT" />
 		</constructor>
 	</resultMap>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from sys_role
 		where role_id = #{roleId,jdbcType=BIGINT}
 	</delete>
 	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.system.SysRole">
-		insert into sys_role (role_id, role_name, role_desc,
+		insert into sys_role (role_id, role_name, role_code,
+		role_desc, role_create_time, role_last_modify_time,
 		role_valid)
-		values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR},
+		values (#{roleId,jdbcType=BIGINT},
+		#{roleName,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR},
+		#{roleDesc,jdbcType=VARCHAR}, #{roleCreateTime,jdbcType=TIMESTAMP}, #{roleLastModifyTime,jdbcType=TIMESTAMP},
 		#{roleValid,jdbcType=BIT})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.system.SysRole">
 		update sys_role
 		set role_name = #{roleName,jdbcType=VARCHAR},
+		role_code = #{roleCode,jdbcType=VARCHAR},
 		role_desc = #{roleDesc,jdbcType=VARCHAR},
+		role_last_modify_time = #{roleLastModifyTime,jdbcType=TIMESTAMP},
 		role_valid = #{roleValid,jdbcType=BIT}
-		where
-		role_id = #{roleId,jdbcType=BIGINT}
+		where role_id =
+		#{roleId,jdbcType=BIGINT}
 	</update>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select role_id, role_name, role_desc, role_valid
+		select role_id, role_name, role_code, role_desc, role_create_time, role_last_modify_time,
+		role_valid
 		from sys_role
-		where role_id = #{roleId,jdbcType=BIGINT}
+		where
+		role_id = #{roleId,jdbcType=BIGINT}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
-		select role_id, role_name, role_desc, role_valid
+		select role_id, role_name, role_code, role_desc, role_create_time, role_last_modify_time,
+		role_valid
 		from sys_role
-		order by user_id ASC,userCreateDate DESC
+		order by role_id ASC
+	</select>
+	<!-- 根据用户名查询相应角色 -->
+	<select id="selectRolesByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+		role.role_id,
+		role.role_name,
+		role.role_code,
+		role.role_desc,
+		role.role_valid,
+		role.role_create_time,
+		role.role_last_modify_time
+		FROM
+		sys_user,
+		sys_user_role AS user_role,
+		sys_role AS role
+		WHERE
+		sys_user.user_name = #{userName,jdbcType=VARCHAR} AND
+		sys_user.user_id = user_role.user_id
+		AND user_role.role_id = role.role_id;
 	</select>
 </mapper>

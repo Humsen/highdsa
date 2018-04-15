@@ -10,7 +10,7 @@ import pers.husen.highdsa.common.entity.po.system.SysPermission;
  *
  * @Created at 2018年3月29日 下午3:20:11
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 public interface SysPermissionMapper {
 	/**
@@ -27,7 +27,7 @@ public interface SysPermissionMapper {
 	 * @param record
 	 * @return
 	 */
-	int insert(SysPermission record);
+	int insert(SysPermission sysPermission);
 
 	/**
 	 * 根据主键查询
@@ -50,5 +50,21 @@ public interface SysPermissionMapper {
 	 * @param record
 	 * @return
 	 */
-	int updateByPrimaryKey(SysPermission record);
+	int updateByPrimaryKey(SysPermission sysPermission);
+
+	/**
+	 * 根据角色id查询所有导航结点
+	 * 
+	 * @param roleId
+	 * @return
+	 */
+	List<SysPermission> findNavisByRoleId(Long roleId);
+
+	/**
+	 * 根据角色id查询所有权限
+	 * 
+	 * @param roleId
+	 * @return
+	 */
+	List<SysPermission> findPermissionsByRoleId(Long roleId);
 }

@@ -1,6 +1,9 @@
 package pers.husen.highdsa.service.mybatis;
 
+import java.util.List;
+
 import pers.husen.highdsa.common.entity.po.system.SysRole;
+import pers.husen.highdsa.common.entity.po.system.SysUser;
 
 /**
  * @Desc 系统角色管理
@@ -9,7 +12,7 @@ import pers.husen.highdsa.common.entity.po.system.SysRole;
  *
  * @Created at 2018年3月29日 上午9:21:03
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public interface SysRoleManager {
 	/**
@@ -19,13 +22,6 @@ public interface SysRoleManager {
 	 * @return
 	 */
 	public int createSysRole(SysRole sysRole);
-
-	/**
-	 * 删除角色
-	 * 
-	 * @param roleId
-	 */
-	public void deleteSysRole(Long roleId);
 
 	/**
 	 * 添加角色-权限之间关系
@@ -42,4 +38,66 @@ public interface SysRoleManager {
 	 * @param permissionIds
 	 */
 	public void uncorrelationPermissions(Long roleId, Long... permissionIds);
+
+	/**
+	 * 添加角色
+	 * 
+	 * @param role
+	 * @param permissionIds
+	 * @return
+	 */
+	SysRole addRole(SysRole role, Long... permissionIds);
+
+	/**
+	 * 根据id删除
+	 * 
+	 * @param roleId
+	 */
+	void deleteRole(Long roleId);
+
+	/**
+	 * 删除一组角色
+	 * 
+	 * @param roleIds
+	 */
+	void deleteMoreRoles(Long... roleIds);
+
+	/**
+	 * 根据角色id查找角色
+	 * 
+	 * @param roleId
+	 * @return
+	 */
+	SysRole findRoleById(Long roleId);
+
+	/**
+	 * 根据用户名查找角色集合
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	SysUser findRolesByUserName(String userName);
+
+	/**
+	 * 获取所有角色
+	 * 
+	 * @return
+	 */
+	List<SysRole> findAllRoles();
+
+	/**
+	 * 更新角色和权限关联
+	 * 
+	 * @param role
+	 * @param permIds
+	 */
+	void updateRole(SysRole role, Long... permIds);
+
+	/**
+	 * 增加角色权限关联
+	 * 
+	 * @param roleId
+	 * @param permissionIds
+	 */
+	void addRolePermissions(Long roleId, Long... permissionIds);
 }

@@ -22,13 +22,13 @@ import pers.husen.highdsa.service.mybatis.impl.SysUserInfoManagerImpl;
  *
  * @Created at 2018年3月7日 下午4:36:51
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 // 使用junit4进行测试
 @RunWith(SpringJUnit4ClassRunner.class)
-//加载配置文件
-@ContextConfiguration(locations = { "classpath:spring/mybatis-provider.xml", "classpath:spring/redis-consumer.xml", "classpath:spring/spring-context.xml" }) 
-public class SysUserInfoManagerImplTest extends AbstractJUnit4SpringContextTests{
+// 加载配置文件
+@ContextConfiguration(locations = { "classpath:spring/mybatis-provider.xml", "classpath:spring/redis-consumer.xml", "classpath:spring/spring-context.xml" })
+public class SysUserInfoManagerImplTest extends AbstractJUnit4SpringContextTests {
 	private SysUserInfoManagerImpl sysUserInfoManagerImpl;
 
 	@Before
@@ -54,7 +54,7 @@ public class SysUserInfoManagerImplTest extends AbstractJUnit4SpringContextTests
 		SysUserInfo sysUserInfo = new SysUserInfo();
 		sysUserInfo.setUserId(1005L);
 		sysUserInfo.setUserNickName("哈哈");
-		sysUserInfo.setUserRegisterDate(new Date());
+		sysUserInfo.setUserRegisterTime(new Date());
 		sysUserInfo.setUserLastLoginTime(new Date());
 
 		sysUserInfoManagerImpl.insertUserInfo(sysUserInfo);
@@ -65,7 +65,7 @@ public class SysUserInfoManagerImplTest extends AbstractJUnit4SpringContextTests
 		SysUserInfo sysUserInfo = new SysUserInfo();
 		sysUserInfo.setUserId(1005L);
 		sysUserInfo.setUserNickName("更新用户信息");
-		sysUserInfo.setUserRegisterDate(new Date());
+		sysUserInfo.setUserRegisterTime(new Date());
 		sysUserInfo.setUserLastLoginTime(new Date());
 
 		sysUserInfoManagerImpl.updateUserInfo(sysUserInfo);

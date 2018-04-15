@@ -1,12 +1,15 @@
 package pers.husen.highdsa.service.mybatis.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.entity.po.system.SysPermission;
 import pers.husen.highdsa.service.mybatis.SysPermissionManager;
 import pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper;
+import pers.husen.highdsa.service.mybatis.dao.system.SysRolePermissionMapper;
 
 /**
  * @Desc 系统权限管理实现
@@ -15,22 +18,77 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper;
  *
  * @Created at 2018年3月29日 上午10:18:13
  * 
- * @Version 1.0.1
+ * @Version 1.0.4
  */
 @Service("sysPermissionManager")
 public class SysPermissionManagerImpl implements SysPermissionManager {
 
 	@Autowired
-	@Qualifier("sysPermissionMapper")
-	private SysPermissionMapper permissionMapper;
+	private SysPermissionMapper sysPermissionMapper;
+	@Autowired
+	private SysRolePermissionMapper sysRolePermissionMapper;
 
 	@Override
-	public int createPermission(SysPermission permission) {
-		return permissionMapper.insert(permission);
+	public SysPermission createPermission(SysPermission sysPermission) {
+		// TODO-插入分布式id
+		sysPermission.setPermissionId(10001L);
+		// 设置权限有效
+		sysPermission.setPermissionValid(true);
+		// 如果是否为导航属性为null,说明创建时没有被勾选，设置为false
+		if (sysPermission.getPermissionNavi() == null) {
+			sysPermission.setPermissionNavi(false);
+		}
+		// 设置创建时间
+		sysPermission.setPermissionCreateTime(new Date());
+		// 设置最后更新时间
+		sysPermission.setPermissionLastModifyTime(new Date());
+
+		sysPermissionMapper.insert(sysPermission);
+
+		return sysPermission;
 	}
 
 	@Override
 	public void deletePermission(Long permissionId) {
-		permissionMapper.deleteByPrimaryKey(permissionId);
+		sysRolePermissionMapper.deleteByPermissionId(permissionId);
+		sysPermissionMapper.deleteByPrimaryKey(permissionId);
+	}
+
+	@Override
+	public void deleteMorePermissions(Long... permIds) {
+		if (permIds != null && permIds.length > 0) {
+			for (Long permId : permIds) {
+				deletePermission(permId);
+			}
+		}
+	}
+
+	@Override
+	public SysPermission findSysPermissionById(Long permId) {
+		return sysPermissionMapper.selectByPrimaryKey(permId);
+	}
+
+	@Override
+	public List<SysPermission> findPermissionsByRoleId(Long roleId) {
+		return sysPermissionMapper.findPermissionsByRoleId(roleId);
+	}
+
+	@Override
+	public List<SysPermission> getAllPermissions() {
+		return sysPermissionMapper.selectAll();
+	}
+
+	@Override
+	public void updatePermissionByPrimaryKey(SysPermission sysPermission) {
+		// 如果是否为导航属性为null,说明创建时没有被勾选，设置为false
+		if (sysPermission.getPermissionNavi() == null) {
+			sysPermission.setPermissionNavi(false);
+		}
+		//设置权限有效
+		sysPermission.setPermissionValid(true);
+		//设置最后更新时间
+		sysPermission.setPermissionLastModifyTime(new Date());
+
+		sysPermissionMapper.updateByPrimaryKey(sysPermission);
 	}
 }

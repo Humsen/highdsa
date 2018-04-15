@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pers.husen.highdsa.common.entity.po.system.SysUser;
-import pers.husen.highdsa.shiro.config.sysuser.service.RoleService;
-import pers.husen.highdsa.shiro.config.sysuser.service.UserService;
-import pers.husen.highdsa.shiro.config.sysuser.service.impl.PasswordService;
+import pers.husen.highdsa.service.mybatis.SysRoleManager;
+import pers.husen.highdsa.service.mybatis.SysUserManager;
 
 /**
  * @Desc 用户控制器
@@ -25,18 +24,15 @@ import pers.husen.highdsa.shiro.config.sysuser.service.impl.PasswordService;
  *
  * @Created at 2018年4月13日 下午3:06:00
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
-	private UserService userService;
+	private SysUserManager sysUserManager;
 	@Autowired
-	private RoleService roleService;
-	@SuppressWarnings("unused")
-	@Autowired
-	private PasswordService passwordService;
+	private SysRoleManager sysRoleManager;
 
 	@RequestMapping("/login")
 	public ModelAndView login(HttpServletRequest req) {
@@ -57,7 +53,7 @@ public class UserController {
 	@RequiresPermissions("user:list")
 	@RequestMapping("/list")
 	public ModelAndView showUserList() {
-		List<?> list = userService.getAllUsers();
+		List<?> list = sysUserManager.getAllUsers();
 		ModelAndView mav = new ModelAndView("user-list");
 		mav.addObject("users", list);
 		return mav;
@@ -67,42 +63,43 @@ public class UserController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public SysUser addUser(SysUser user, Long... roleIds) {
-		userService.addUser(user, roleIds);
-		return user;
+		SysUser sysUser = sysUserManager.addUser(user, roleIds);
+		
+		return sysUser;
 	}
 
 	@RequiresPermissions("user:showroles")
 	@RequestMapping("/showroles")
 	@ResponseBody
 	public List<?> shwoRoles(String userName) {
-		return roleService.getRolesByUserName(userName).getSysRoleList();
+		return sysRoleManager.findRolesByUserName(userName).getSysRoleList();
 	}
 
 	@RequiresPermissions("role:list")
 	@RequestMapping("/listRoles")
 	@ResponseBody
 	public List<?> getRoles() {
-		return roleService.getAllRoles();
+		return sysRoleManager.findAllRoles();
 	}
 
 	@RequiresPermissions("user:delete")
 	@RequestMapping("/delete")
 	@ResponseBody
 	public void deleteUser(Long userId) {
-		userService.deleteUser(userId);
+		sysUserManager.deleteUser(userId);
 	}
 
 	@RequiresPermissions("user:delete")
 	@RequestMapping("/deletemore")
 	@ResponseBody
 	public void deleteMoreUsers(Long... userIds) {
-		userService.deleteMoreUsers(userIds);
+		sysUserManager.deleteMoreUsers(userIds);
 	}
 
 	@RequiresPermissions("user:corelationrole")
 	@RequestMapping("/corelationRole")
 	@ResponseBody
 	public void corelationRole(Long userId, Long... roleIds) {
-		userService.updateUserRoles(userId, roleIds);
+		sysUserManager.updateUserRoles(userId, roleIds);
 	}
 }

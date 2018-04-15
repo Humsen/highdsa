@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @Created at 2018年3月29日 下午3:35:18
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class SysUserRole implements Serializable {
 	private static final long serialVersionUID = 1L;

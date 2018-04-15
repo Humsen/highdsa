@@ -28,7 +28,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年2月5日 下午1:03:55
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 //使用junit4进行测试
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -89,10 +89,10 @@ public class MybatisAndRedisCacheTest extends AbstractJUnit4SpringContextTests{
 	public void testShiroRedisCache() {
 		SysUserManagerImpl sysUserManager = (SysUserManagerImpl) applicationContext.getBean("sysUserManager");
 
-		SysUser sysUser = sysUserManager.findByUserName("user");
+		SysUser sysUser = sysUserManager.findUserByUserName("user");
 		System.out.println(sysUser);
 
-		SysUser sysUser1 = sysUserManager.findByUserName("user");
+		SysUser sysUser1 = sysUserManager.findUserByUserName("user");
 		System.out.println(sysUser1);
 	}
 

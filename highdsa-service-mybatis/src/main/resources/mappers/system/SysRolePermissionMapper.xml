@@ -10,6 +10,7 @@
 			<idArg column="permission_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 		</constructor>
 	</resultMap>
+
 	<delete id="deleteByPrimaryKey" parameterType="map">
 		delete from sys_role_permission
 		where role_id = #{roleId,jdbcType=BIGINT}
@@ -22,6 +23,22 @@
 	<select id="selectAll" resultMap="BaseResultMap">
 		select role_id, permission_id
 		from sys_role_permission
-		order by user_id ASC,userCreateDate DESC
+		order by role_id ASC
 	</select>
+	<!-- 根据角色id删除角色-权限 联系 -->
+	<delete id="deleteByRoleId" parameterType="java.lang.Long">
+		DELETE
+		FROM
+		sys_role_permission
+		WHERE
+		role_id = #{roleId,jdbcType=BIGINT}
+	</delete>
+	<!-- 根据权限id删除角色-权限 联系 -->
+	<delete id="deleteByPermissionId" parameterType="java.lang.Long">
+		DELETE
+		FROM
+		sys_role_permission
+		WHERE
+		permission_id = #{permissionId,jdbcType=BIGINT}
+	</delete>
 </mapper>

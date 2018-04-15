@@ -22,10 +22,13 @@
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<!-- property指的是在bean中字段名 ofType类的全定向名 -->
-		<collection property="sysRoleList" ofType="pers.husen.highdsa.common.entity.po.system.SysUser">
+		<collection property="sysRoleList" ofType="pers.husen.highdsa.common.entity.po.system.SysRole">
 			<result column="role_id" property="roleId" />
 			<result column="role_name" property="roleName" />
+			<result column="role_code" property="roleCode" />
 			<result column="role_desc" property="roleDesc" />
+			<result column="role_create_time" property="roleCreateTime" />
+			<result column="role_last_modify_time" property="roleLastModifyTime" />
 			<result column="role_valid" property="roleValid" />
 		</collection>
 	</resultMap>
@@ -40,7 +43,12 @@
 			<result column="permission_id" property="permissionId" />
 			<association property="sysPermission" javaType="pers.husen.highdsa.common.entity.po.system.SysPermission">
 				<result column="permission_name" property="permissionName" />
+				<result column="permission_code" property="permissionCode" />
 				<result column="permission_desc" property="permissionDesc" />
+				<result column="permission_navi" property="permissionNavi" />
+				<result column="permission_url" property="permissionUrl" />
+				<result column="permission_create_time" property="permissionCreateTime" />
+				<result column="permission_last_modify_time" property="permissionLastModifyTime" />
 				<result column="permission_valid" property="permissionValid" />
 			</association>
 		</collection>
@@ -51,41 +59,39 @@
 		where user_id = #{userId,jdbcType=BIGINT}
 	</delete>
 	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.system.SysUser">
-		insert into sys_user (user_id, user_name, user_password,
-		user_email, user_phone, user_pwd_salt,
+		insert into sys_user (user_id, user_name, user_email,
+		user_phone, user_password, user_pwd_salt,
 		user_state)
 		values (#{userId,jdbcType=BIGINT},
-		#{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
-		#{userEmail,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userPwdSalt,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
+		#{userPhone,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{userPwdSalt,jdbcType=VARCHAR},
 		#{userState,jdbcType=VARCHAR})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.system.SysUser">
 		update sys_user
 		set user_name = #{userName,jdbcType=VARCHAR},
-		user_password = #{userPassword,jdbcType=VARCHAR},
-		user_email =
-		#{userEmail,jdbcType=VARCHAR},
+		user_email = #{userEmail,jdbcType=VARCHAR},
 		user_phone = #{userPhone,jdbcType=VARCHAR},
+		user_password = #{userPassword,jdbcType=VARCHAR},
 		user_pwd_salt = #{userPwdSalt,jdbcType=VARCHAR},
 		user_state = #{userState,jdbcType=VARCHAR}
-		where user_id =
-		#{userId,jdbcType=BIGINT}
+		where user_id = #{userId,jdbcType=BIGINT}
 	</update>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select user_id, user_name, user_password, user_email, user_phone, user_pwd_salt,
+		select user_id, user_name, user_email, user_phone, user_password, user_pwd_salt,
 		user_state
 		from sys_user
 		where user_id =
 		#{userId,jdbcType=BIGINT}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
-		select user_id, user_name, user_password, user_email, user_phone, user_pwd_salt,
+		select user_id, user_name, user_email, user_phone, user_password, user_pwd_salt,
 		user_state
 		from sys_user
-		order by user_id ASC,userCreateDate DESC
+		order by user_id ASC
 	</select>
 	<!-- 新增的复合查询 -->
-	<select id="selectUserInfoByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+	<select id="selectUserByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select user_id, user_name, user_password, user_email, user_phone, user_pwd_salt,
 		user_state
 		from sys_user
@@ -95,41 +101,50 @@
 	</select>
 	<select id="selectRolesByUserName" parameterType="java.lang.String" resultMap="rolesResultMap">
 		SELECT
-		user.user_id,
-		user.user_name,
+		sys_user.user_id,
+		sys_user.user_name,
 		role.role_id,
 		role.role_name,
+		role.role_code,
 		role.role_desc,
+		role.role_create_time,
+		role.role_last_modify_time,
 		role.role_valid
 		FROM
-		sys_user AS user ,
-		sys_user_role AS userRole ,
+		sys_user,
+		sys_user_role AS user_role,
 		sys_role AS role
 		WHERE
-		user.user_name = #{userName,jdbcType=VARCHAR} AND
-		user.user_id = userRole.user_id AND
-		userRole.role_id = role.role_id
+		sys_user.user_name = #{userName,jdbcType=VARCHAR} AND
+		sys_user.user_id =
+		user_role.user_id
+		AND user_role.role_id = role.role_id
 	</select>
 	<select id="selectPermissionsByUserName" parameterType="java.lang.String" resultMap="permissionResultMap">
 		SELECT
-		`user`.user_id,
-		`user`.user_name,
-		rolePermission.role_id,
-		rolePermission.permission_id,
+		sys_user.user_id,
+		sys_user.user_name,
+		role_permission.role_id,
+		role_permission.permission_id,
 		permission.permission_name,
+		permission.permission_code,
 		permission.permission_desc,
-		permission.permission_valid
+		permission.permission_valid,
+		permission.permission_navi,
+		permission.permission_url,
+		permission.permission_create_time,
+		permission.permission_last_modify_time
 		FROM
-		sys_role_permission AS rolePermission ,
-		sys_user AS `user` ,
-		sys_permission AS permission ,
-		sys_user_role AS
-		userRole
+		sys_role_permission AS role_permission,
+		sys_user,
+		sys_permission AS permission,
+		sys_user_role AS user_role
 		WHERE
-		`user`.user_id = userRole.user_id AND
-		userRole.role_id = rolePermission.role_id AND
-		rolePermission.permission_id = permission.permission_id AND
-		`user`.user_name =
-		#{userName,jdbcType=VARCHAR};
+		sys_user.user_name =
+		#{userName,jdbcType=VARCHAR}
+		AND sys_user.user_id =
+		user_role.user_id
+		AND user_role.role_id = role_permission.role_id
+		AND role_permission.permission_id = permission.permission_id
 	</select>
 </mapper>

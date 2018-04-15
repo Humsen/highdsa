@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @Created at 2018年3月29日 下午3:35:04
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 public class SysUserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +19,7 @@ public class SysUserInfo implements Serializable {
 
 	private String userNickName;
 
-	private Date userRegisterDate;
+	private Date userRegisterTime;
 
 	private String userHeadUrl;
 
@@ -33,26 +33,16 @@ public class SysUserInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SysUserInfo [userId=" + userId + ", userNickName=" + userNickName + ", userRegisterDate=" + userRegisterDate + ", userHeadUrl=" + userHeadUrl + ", userSex=" + userSex
+		return "SysUserInfo [userId=" + userId + ", userNickName=" + userNickName + ", userRegisterTime=" + userRegisterTime + ", userHeadUrl=" + userHeadUrl + ", userSex=" + userSex
 				+ ", userBirthday=" + userBirthday + ", userDesc=" + userDesc + ", userLastLoginTime=" + userLastLoginTime + "]";
 	}
 
-	public SysUserInfo(Long userId, String userNickName, Date userRegisterDate, String userHeadUrl, Boolean userSex, String userBirthday, String userDesc, Date userLastLoginTime) {
+	public SysUserInfo(Long userId, String userNickName, Date userRegisterTime, String userHeadUrl, Boolean userSex, String userBirthday, String userDesc, Date userLastLoginTime) {
 		this.userId = userId;
 		this.userNickName = userNickName;
-		this.userRegisterDate = userRegisterDate;
+		this.userRegisterTime = userRegisterTime;
 		this.userHeadUrl = userHeadUrl;
 		this.userSex = userSex;
-		this.userBirthday = userBirthday;
-		this.userDesc = userDesc;
-		this.userLastLoginTime = userLastLoginTime;
-	}
-	
-	public SysUserInfo(Long userId, String userNickName, Date userRegisterDate, String userHeadUrl, String userBirthday, String userDesc, Date userLastLoginTime) {
-		this.userId = userId;
-		this.userNickName = userNickName;
-		this.userRegisterDate = userRegisterDate;
-		this.userHeadUrl = userHeadUrl;
 		this.userBirthday = userBirthday;
 		this.userDesc = userDesc;
 		this.userLastLoginTime = userLastLoginTime;
@@ -78,12 +68,12 @@ public class SysUserInfo implements Serializable {
 		this.userNickName = userNickName == null ? null : userNickName.trim();
 	}
 
-	public Date getUserRegisterDate() {
-		return userRegisterDate;
+	public Date getUserRegisterTime() {
+		return userRegisterTime;
 	}
 
-	public void setUserRegisterDate(Date userRegisterDate) {
-		this.userRegisterDate = userRegisterDate;
+	public void setUserRegisterTime(Date userRegisterTime) {
+		this.userRegisterTime = userRegisterTime;
 	}
 
 	public String getUserHeadUrl() {

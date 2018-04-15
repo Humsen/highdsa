@@ -50,7 +50,7 @@
 		<!-- Modify-7 指定数据库表和自定义查询所有升降序查询 。此处可以设置多个table元素指定多张表 -->
 		<table tableName="${tableName}">
 			<!-- 如果选择的runtime是MyBatis3Simple，那么会生成一个SelectAll方法，如果指定了selectAllOrderByClause，那么会在该SQL中添加指定的这个order条件 -->
-			<property name="selectAllOrderByClause" value="user_id ASC,userCreateDate DESC" />
+			<property name="selectAllOrderByClause" value="user_id ASC, userCreateDate DESC" />
 		</table>
 
 	</context>

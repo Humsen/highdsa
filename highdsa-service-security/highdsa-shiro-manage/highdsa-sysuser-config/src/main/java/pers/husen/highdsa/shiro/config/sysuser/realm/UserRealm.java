@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pers.husen.highdsa.common.entity.po.system.SysRole;
 import pers.husen.highdsa.common.entity.po.system.SysRolePermission;
 import pers.husen.highdsa.common.entity.po.system.SysUser;
-import pers.husen.highdsa.shiro.config.sysuser.service.UserService;
+import pers.husen.highdsa.service.mybatis.SysUserManager;
 
 /**
  * @Desc 用户域
@@ -28,12 +28,12 @@ import pers.husen.highdsa.shiro.config.sysuser.service.UserService;
  *
  * @Created at 2018年4月13日 下午3:07:00
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class UserRealm extends AuthorizingRealm {
 
 	@Autowired
-	private UserService userService;
+	private SysUserManager sysUserManager;
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -44,7 +44,7 @@ public class UserRealm extends AuthorizingRealm {
 		// 根据用户名查询当前用户拥有的角色
 		Set<String> roleNames = new HashSet<String>();
 
-		SysUser userRole = userService.findRolesByUserName(userName);
+		SysUser userRole = sysUserManager.findRolesByUserName(userName);
 		List<SysRole> roleList = userRole.getSysRoleList();
 
 		for (SysRole role : roleList) {
@@ -56,7 +56,7 @@ public class UserRealm extends AuthorizingRealm {
 		// 根据用户名查询当前用户权限
 		Set<String> permissionNames = new HashSet<String>();
 
-		SysUser userPermission = userService.findPermissionsByUserName(userName);
+		SysUser userPermission = sysUserManager.findPermissionsByUserName(userName);
 		List<SysRolePermission> rolePermissionList = userPermission.getSysRolePermissionList();
 
 		for (SysRolePermission rolePermission : rolePermissionList) {
@@ -71,7 +71,7 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		String userName = (String) token.getPrincipal();
-		SysUser user = userService.getUserByUserName(userName);
+		SysUser user = sysUserManager.findUserByUserName(userName);
 		if (user == null) {
 			throw new UnknownAccountException();
 		}

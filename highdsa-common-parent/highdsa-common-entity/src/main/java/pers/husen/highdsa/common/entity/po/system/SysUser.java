@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @Created at 2018年3月29日 下午3:34:45
  * 
- * @Version 1.0.6
+ * @Version 1.0.7
  */
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -140,6 +140,9 @@ public class SysUser implements Serializable {
 		this.sysRolePermissionList = sysRolePermissionList;
 	}
 
+	/**
+	 * 重写equals和hashCode来定义判断相等的规则
+	 */
 	@Override
 	public boolean equals(Object object) {
 		if (object == this) {

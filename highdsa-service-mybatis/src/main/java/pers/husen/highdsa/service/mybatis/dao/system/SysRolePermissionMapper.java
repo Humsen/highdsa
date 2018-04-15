@@ -1,7 +1,9 @@
 package pers.husen.highdsa.service.mybatis.dao.system;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import pers.husen.highdsa.common.entity.po.system.SysRolePermission;
 
 /**
@@ -11,7 +13,7 @@ import pers.husen.highdsa.common.entity.po.system.SysRolePermission;
  *
  * @Created at 2018年3月29日 下午3:19:48
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 public interface SysRolePermissionMapper {
 	/**
@@ -29,7 +31,7 @@ public interface SysRolePermissionMapper {
 	 * @param record
 	 * @return
 	 */
-	int insert(SysRolePermission record);
+	int insert(SysRolePermission sysRolePermission);
 
 	/**
 	 * 查询所有
@@ -37,4 +39,20 @@ public interface SysRolePermissionMapper {
 	 * @return
 	 */
 	List<SysRolePermission> selectAll();
+
+	/**
+	 * 根据角色id删除,删除角色时，此角色对应的所有权限联系失效
+	 * 
+	 * @param roleId
+	 * @return
+	 */
+	int deleteByRoleId(Long roleId);
+
+	/**
+	 * 根据权限id删除角色-权限 联系,刹车农户权限时拥有此权限的角色的此权限默认全部失效
+	 * 
+	 * @param permissionId
+	 * @return
+	 */
+	int deleteByPermissionId(Long permissionId);
 }

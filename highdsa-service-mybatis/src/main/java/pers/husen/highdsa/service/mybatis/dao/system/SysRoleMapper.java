@@ -1,6 +1,7 @@
 package pers.husen.highdsa.service.mybatis.dao.system;
 
 import java.util.List;
+
 import pers.husen.highdsa.common.entity.po.system.SysRole;
 
 /**
@@ -10,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.system.SysRole;
  *
  * @Created at 2018年3月29日 下午3:20:01
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 public interface SysRoleMapper {
 	/**
@@ -27,7 +28,7 @@ public interface SysRoleMapper {
 	 * @param record
 	 * @return
 	 */
-	int insert(SysRole record);
+	int insert(SysRole sysRole);
 
 	/**
 	 * 根据主键查找
@@ -50,5 +51,13 @@ public interface SysRoleMapper {
 	 * @param record
 	 * @return
 	 */
-	int updateByPrimaryKey(SysRole record);
+	int updateByPrimaryKey(SysRole sysRole);
+
+	/**
+	 * 根据用户名查找角色
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	List<SysRole> selectRolesByUserName(String userName);
 }

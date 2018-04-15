@@ -160,6 +160,7 @@
 			obj.html("");
 			$.ajax({
 				url : "listperms.html",
+				async : false,
 				type : "POST",
 				dataType : "json",
 				success : function(data) {

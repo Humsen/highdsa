@@ -1,6 +1,7 @@
 package pers.husen.highdsa.service.mybatis.dao.system;
 
 import java.util.List;
+
 import pers.husen.highdsa.common.entity.po.system.SysUserInfo;
 
 /**
@@ -10,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.system.SysUserInfo;
  *
  * @Created at 2018年3月29日 下午3:19:40
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 public interface SysUserInfoMapper {
 	/**
@@ -27,7 +28,7 @@ public interface SysUserInfoMapper {
 	 * @param record
 	 * @return
 	 */
-	int insert(SysUserInfo record);
+	int insert(SysUserInfo sysUserInfo);
 
 	/**
 	 * 根据主键查找
@@ -51,4 +52,12 @@ public interface SysUserInfoMapper {
 	 * @return
 	 */
 	int updateByPrimaryKey(SysUserInfo record);
+
+	/**
+	 * 根据用户名查找用户信息
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	SysUserInfo selectUserInfoByUserName(String userName);
 }
