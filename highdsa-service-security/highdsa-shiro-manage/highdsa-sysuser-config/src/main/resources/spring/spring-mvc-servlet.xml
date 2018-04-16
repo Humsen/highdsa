@@ -26,11 +26,7 @@
 	<!-- 扫描生成controller组件 -->
 	<context:component-scan base-package="pers.husen.highdsa.shiro.config.sysuser.controller" />
 
-	<!-- 启用Spring Shiro注解 -->
 	<aop:config proxy-target-class="true"></aop:config>
-	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-		<property name="securityManager" ref="securityManager" />
-	</bean>
 
 	<!-- 默认的视图解析器- -->
 	<bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -40,7 +36,6 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- 控制器异常处理 -->
-	<bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" />
-	<bean class="pers.husen.highdsa.shiro.config.sysuser.exception.DefaultExceptionHandler" />
+	<!-- 异常处理类 -->
+	<bean id="exceptionResolver" class="pers.husen.highdsa.common.exception.ExceptionInterceptor"></bean>
 </beans>

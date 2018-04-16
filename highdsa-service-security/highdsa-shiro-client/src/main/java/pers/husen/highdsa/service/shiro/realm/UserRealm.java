@@ -1,21 +1,19 @@
-package pers.husen.highdsa.shiro.config.sysuser.realm;
+package pers.husen.highdsa.service.shiro.realm;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
+import io.buji.pac4j.realm.Pac4jRealm;
+import io.buji.pac4j.subject.Pac4jPrincipal;
 import pers.husen.highdsa.common.entity.po.system.SysRole;
 import pers.husen.highdsa.common.entity.po.system.SysRolePermission;
 import pers.husen.highdsa.common.entity.po.system.SysUser;
@@ -30,20 +28,24 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  * 
  * @Version 1.0.1
  */
-public class UserRealm extends AuthorizingRealm {
+public class UserRealm extends Pac4jRealm {
 
 	@Autowired
 	private SysUserManager sysUserManager;
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		String userName = (String) principals.getPrimaryPrincipal();
+		// 获取用户身份
+		Pac4jPrincipal prPac4jPrincipal = SecurityUtils.getSubject().getPrincipals().oneByType(Pac4jPrincipal.class);
+		String userName = prPac4jPrincipal.getProfile().getId();
 
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 
 		// 根据用户名查询当前用户拥有的角色
 		Set<String> roleNames = new HashSet<String>();
 
+		WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
+		sysUserManager = (SysUserManager) wac.getBean("sysUserManager");
 		SysUser userRole = sysUserManager.findRolesByUserName(userName);
 		List<SysRole> roleList = userRole.getSysRoleList();
 
@@ -66,17 +68,5 @@ public class UserRealm extends AuthorizingRealm {
 		authorizationInfo.setStringPermissions(permissionNames);
 
 		return authorizationInfo;
-	}
-
-	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		String userName = (String) token.getPrincipal();
-		SysUser user = sysUserManager.findUserByUserName(userName);
-		if (user == null) {
-			throw new UnknownAccountException();
-		}
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), user.getUserPassword(), ByteSource.Util.bytes(user.getUserName() + user.getUserPwdSalt()),
-				getName());
-		return authenticationInfo;
 	}
 }

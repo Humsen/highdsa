@@ -84,18 +84,17 @@
 
 	<!-- 安全管理器 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<property name="realm">
-			<bean class="io.buji.pac4j.realm.Pac4jRealm">
-				<property name="cachingEnabled" value="false" />
-				<property name="authenticationCachingEnabled" value="false" />
-				<property name="authenticationCacheName" value="authenticationCache" />
-				<property name="authorizationCachingEnabled" value="false" />
-				<property name="authorizationCacheName" value="authorizationCache" />
-			</bean>
-		</property>
-
+		<property name="realm" ref="userRealm" />
 		<property name="subjectFactory" ref="pac4jSubjectFactory"></property>
+	</bean>
 
+	<!-- Realm实现 -->
+	<bean id="userRealm" class="pers.husen.highdsa.service.shiro.realm.UserRealm">
+		<property name="cachingEnabled" value="true" />
+		<property name="authenticationCachingEnabled" value="true" />
+		<property name="authenticationCacheName" value="authenticationCache" />
+		<property name="authorizationCachingEnabled" value="true" />
+		<property name="authorizationCacheName" value="authorizationCache" />
 	</bean>
 
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -134,6 +133,8 @@
 		</property>
 		<property name="filterChainDefinitions">
 			<value>
+				/static/**=anon<!-- 静态资源文件访问 -->
+				/ = casSecurityFilter
 				/index = casSecurityFilter
 				/logout = logout
 				/callback = callback
@@ -151,4 +152,8 @@
 		<property name="proxyTargetClass" value="true" />
 	</bean>
 
+	<!-- 启用Spring Shiro注解 -->
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
 </beans>

@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pers.husen.highdsa.common.entity.po.system.SysRole;
-import pers.husen.highdsa.service.mybatis.SysPermissionManager;
-import pers.husen.highdsa.service.mybatis.SysRoleManager;
+import pers.husen.highdsa.shiro.config.sysuser.controller.handler.RoleSvc;
 
 /**
  * @Desc 角色控制器
@@ -26,70 +25,61 @@ import pers.husen.highdsa.service.mybatis.SysRoleManager;
 @RequestMapping("/role")
 public class RoleController {
 	@Autowired
-	private SysRoleManager sysRoleManager;
-	@Autowired
-	private SysPermissionManager sysPermissionManager;
+	private RoleSvc roleSvc;
 
 	@RequiresPermissions("role:list")
 	@RequestMapping("/list")
 	public ModelAndView showRoleList() {
-		List<?> list = sysRoleManager.findAllRoles();
-
-		ModelAndView mav = new ModelAndView("role-list");
-		mav.addObject("roles", list);
-		return mav;
+		return roleSvc.showRoleList();
 	}
 
 	@RequiresPermissions("role:showperms")
 	@RequestMapping("/listperms")
 	@ResponseBody
 	public List<?> getPerms() {
-		return sysPermissionManager.getAllPermissions();
+		return roleSvc.getPerms();
 	}
 
 	@RequiresPermissions("role:add")
 	@RequestMapping("/add")
 	@ResponseBody
 	public SysRole addRole(SysRole role, Long... permIds) {
-		SysRole sysRole = sysRoleManager.addRole(role, permIds);
 
-		return sysRole;
+		return roleSvc.addRole(role, permIds);
 	}
 
 	@RequiresPermissions("role:delete")
 	@RequestMapping("/delete")
 	@ResponseBody
 	public void deleteRole(Long roleId) {
-		sysRoleManager.deleteRole(roleId);
+		roleSvc.deleteRole(roleId);
 	}
 
 	@RequiresPermissions("role:delete")
 	@RequestMapping("/deletemore")
 	@ResponseBody
 	public void deleteMoreRoles(Long... roleIds) {
-		sysRoleManager.deleteMoreRoles(roleIds);
+		roleSvc.deleteMoreRoles(roleIds);
 	}
 
 	@RequiresPermissions("role:showperms")
 	@RequestMapping("/showroleperms")
 	@ResponseBody
 	public List<?> showRolePerms(Long roleId) {
-		List<?> perms = sysPermissionManager.findPermissionsByRoleId(roleId);
-		
-		return perms;
+		return roleSvc.showRolePerms(roleId);
 	}
 
 	@RequiresPermissions("role:findinfo")
 	@RequestMapping("/getrole")
 	@ResponseBody
 	public SysRole getRoleById(Long roleId) {
-		return sysRoleManager.findRoleById(roleId);
+		return roleSvc.getRoleById(roleId);
 	}
 
 	@RequiresPermissions("role:corelationperm")
 	@RequestMapping("/updaterole")
 	@ResponseBody()
 	public void updateRole(SysRole role, Long... permIds) {
-		sysRoleManager.updateRole(role, permIds);
+		roleSvc.updateRole(role, permIds);
 	}
 }

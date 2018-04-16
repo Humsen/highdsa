@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pers.husen.highdsa.common.entity.po.system.SysUser;
-import pers.husen.highdsa.service.mybatis.SysRoleManager;
-import pers.husen.highdsa.service.mybatis.SysUserManager;
+import pers.husen.highdsa.shiro.config.sysuser.controller.handler.UserSvc;
 
 /**
  * @Desc 用户控制器
@@ -30,76 +27,58 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
-	private SysUserManager sysUserManager;
-	@Autowired
-	private SysRoleManager sysRoleManager;
+	private UserSvc userSvc;
 
 	@RequestMapping("/login")
 	public ModelAndView login(HttpServletRequest req) {
-		String error = null;
-		String exceptionClassName = (String) req.getAttribute("shiroLoginFailure");
-		if (UnknownAccountException.class.getName().equals(exceptionClassName)) {
-			error = "用户名/密码错误";
-		} else if (IncorrectCredentialsException.class.getName().equals(exceptionClassName)) {
-			error = "用户名/密码错误";
-		} else if (exceptionClassName != null) {
-			error = "其他错误：" + exceptionClassName;
-		}
-		ModelAndView mav = new ModelAndView("login");
-		mav.addObject("error", error);
-		return mav;
+		return userSvc.login(req);
 	}
 
 	@RequiresPermissions("user:list")
 	@RequestMapping("/list")
 	public ModelAndView showUserList() {
-		List<?> list = sysUserManager.getAllUsers();
-		ModelAndView mav = new ModelAndView("user-list");
-		mav.addObject("users", list);
-		return mav;
+		return userSvc.showUserList();
 	}
 
 	@RequiresPermissions("user:add")
 	@RequestMapping("/add")
 	@ResponseBody
 	public SysUser addUser(SysUser user, Long... roleIds) {
-		SysUser sysUser = sysUserManager.addUser(user, roleIds);
-		
-		return sysUser;
+		return userSvc.addUser(user, roleIds);
 	}
 
 	@RequiresPermissions("user:showroles")
 	@RequestMapping("/showroles")
 	@ResponseBody
 	public List<?> shwoRoles(String userName) {
-		return sysRoleManager.findRolesByUserName(userName).getSysRoleList();
+		return userSvc.shwoRoles(userName);
 	}
 
 	@RequiresPermissions("role:list")
 	@RequestMapping("/listRoles")
 	@ResponseBody
 	public List<?> getRoles() {
-		return sysRoleManager.findAllRoles();
+		return userSvc.getRoles();
 	}
 
 	@RequiresPermissions("user:delete")
 	@RequestMapping("/delete")
 	@ResponseBody
 	public void deleteUser(Long userId) {
-		sysUserManager.deleteUser(userId);
+		userSvc.deleteUser(userId);
 	}
 
 	@RequiresPermissions("user:delete")
 	@RequestMapping("/deletemore")
 	@ResponseBody
 	public void deleteMoreUsers(Long... userIds) {
-		sysUserManager.deleteMoreUsers(userIds);
+		userSvc.deleteMoreUsers(userIds);
 	}
 
 	@RequiresPermissions("user:corelationrole")
 	@RequestMapping("/corelationRole")
 	@ResponseBody
 	public void corelationRole(Long userId, Long... roleIds) {
-		sysUserManager.updateUserRoles(userId, roleIds);
+		userSvc.corelationRole(userId, roleIds);
 	}
 }

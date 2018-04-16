@@ -1,7 +1,5 @@
 package pers.husen.highdsa.shiro.config.sysuser.controller;
 
-import java.util.List;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pers.husen.highdsa.common.entity.po.system.SysPermission;
-import pers.husen.highdsa.service.mybatis.SysPermissionManager;
+import pers.husen.highdsa.shiro.config.sysuser.controller.handler.PermissionSvc;
 
 /**
  * @Desc 权限控制器
@@ -25,53 +23,47 @@ import pers.husen.highdsa.service.mybatis.SysPermissionManager;
 @RequestMapping("/perm")
 public class PermissionController {
 	@Autowired
-	private SysPermissionManager sysPermissionManager;
+	private PermissionSvc permissionSvc;
 
 	@RequiresPermissions("perm:list")
 	@RequestMapping("/list")
 	public ModelAndView showRoleList() {
-		List<SysPermission> list = sysPermissionManager.getAllPermissions();
-
-		ModelAndView mav = new ModelAndView("permission-list");
-		mav.addObject("perms", list);
-
-		return mav;
+		
+		return permissionSvc.showRoleList();
 	}
 
 	@RequiresPermissions("perm:add")
 	@RequestMapping("/add")
 	@ResponseBody
 	public SysPermission addPermission(SysPermission permission) {
-		SysPermission sysPermission = sysPermissionManager.createPermission(permission);
-		
-		return sysPermission;
+		return permissionSvc.addPermission(permission);
 	}
 
 	@RequiresPermissions("perm:delete")
 	@RequestMapping("/delete")
 	@ResponseBody
 	public void deletePermission(Long permId) {
-		sysPermissionManager.deletePermission(permId);
+		permissionSvc.deletePermission(permId);
 	}
 
 	@RequiresPermissions("perm:delete")
 	@RequestMapping("/deletemore")
 	@ResponseBody
 	public void deleteMorePerms(Long... permIds) {
-		sysPermissionManager.deleteMorePermissions(permIds);
+		permissionSvc.deleteMorePerms(permIds);
 	}
 
 	@RequiresPermissions("perm:update")
 	@RequestMapping("/getperm")
 	@ResponseBody
 	public SysPermission getPermById(Long permId) {
-		return sysPermissionManager.findSysPermissionById(permId);
+		return permissionSvc.getPermById(permId);
 	}
 
 	@RequiresPermissions("perm:update")
 	@RequestMapping("/update")
 	@ResponseBody
 	public void updatePermission(SysPermission permission) {
-		sysPermissionManager.updatePermissionByPrimaryKey(permission);
+		permissionSvc.updatePermission(permission);
 	}
 }

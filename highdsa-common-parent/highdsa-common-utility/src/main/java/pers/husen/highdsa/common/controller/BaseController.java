@@ -33,6 +33,6 @@ public class BaseController {
 		this.session = request.getSession();
 
 		// 设置编码
-		response.setContentType("text/html;charset=UTF-8");
+		//response.setContentType("text/html;charset=UTF-8");
 	}
 }

@@ -6,9 +6,8 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-            classpath:spring/spring-beans.xml,
-            classpath:spring/spring-shiro.xml,
-            classpath:spring/mybatis-consumer.xml
+            classpath*:**/mybatis-consumer.xml,
+		    classpath*:**/spring-shiro-cas.xml,
         </param-value>
 	</context-param>
 	<listener>
@@ -32,18 +31,18 @@
 
 	<!-- Spring Servlet配置 -->
 	<servlet>
-		<servlet-name>spring</servlet-name>
+		<servlet-name>sysuserServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:spring/spring-mvc.xml</param-value>
+			<param-value>classpath:spring/spring-mvc-servlet.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<!-- 为servlet设置启用异步支持 -->
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>spring</servlet-name>
+		<servlet-name>sysuserServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 </web-app>
