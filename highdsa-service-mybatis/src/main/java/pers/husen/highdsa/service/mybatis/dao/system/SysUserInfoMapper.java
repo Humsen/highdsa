@@ -11,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.system.SysUserInfo;
  *
  * @Created at 2018年3月29日 下午3:19:40
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public interface SysUserInfoMapper {
 	/**
@@ -25,7 +25,7 @@ public interface SysUserInfoMapper {
 	/**
 	 * 插入新用户信息
 	 * 
-	 * @param record
+	 * @param sysUserInfo
 	 * @return
 	 */
 	int insert(SysUserInfo sysUserInfo);
@@ -48,10 +48,10 @@ public interface SysUserInfoMapper {
 	/**
 	 * 根据主键更新
 	 * 
-	 * @param record
+	 * @param sysUserInfo
 	 * @return
 	 */
-	int updateByPrimaryKey(SysUserInfo record);
+	int updateByPrimaryKey(SysUserInfo sysUserInfo);
 
 	/**
 	 * 根据用户名查找用户信息

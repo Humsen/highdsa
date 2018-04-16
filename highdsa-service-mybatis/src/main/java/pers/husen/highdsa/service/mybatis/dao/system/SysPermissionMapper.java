@@ -10,7 +10,7 @@ import pers.husen.highdsa.common.entity.po.system.SysPermission;
  *
  * @Created at 2018年3月29日 下午3:20:11
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public interface SysPermissionMapper {
 	/**
@@ -24,7 +24,7 @@ public interface SysPermissionMapper {
 	/**
 	 * 插入新的权限记录
 	 * 
-	 * @param record
+	 * @param sysPermission
 	 * @return
 	 */
 	int insert(SysPermission sysPermission);
@@ -47,7 +47,7 @@ public interface SysPermissionMapper {
 	/**
 	 * 根据主键更新记录
 	 * 
-	 * @param record
+	 * @param sysPermission
 	 * @return
 	 */
 	int updateByPrimaryKey(SysPermission sysPermission);

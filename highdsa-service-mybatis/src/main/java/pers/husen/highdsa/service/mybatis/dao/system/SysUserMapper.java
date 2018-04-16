@@ -11,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.system.SysUser;
  *
  * @Created at 2018年3月29日 下午3:19:33
  * 
- * @Version 1.0.6
+ * @Version 1.0.7
  */
 public interface SysUserMapper {
 	/**
@@ -25,7 +25,7 @@ public interface SysUserMapper {
 	/**
 	 * 插入新的用户
 	 * 
-	 * @param record
+	 * @param sysUser
 	 * @return
 	 */
 	int insert(SysUser sysUser);
@@ -48,7 +48,7 @@ public interface SysUserMapper {
 	/**
 	 * 根据主键更新记录
 	 * 
-	 * @param record
+	 * @param sysUser
 	 * @return
 	 */
 	int updateByPrimaryKey(SysUser sysUser);

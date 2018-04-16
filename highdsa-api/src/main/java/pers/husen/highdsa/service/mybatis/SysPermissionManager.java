@@ -17,7 +17,7 @@ public interface SysPermissionManager {
 	/**
 	 * 创建权限
 	 * 
-	 * @param permission
+	 * @param sysPermission
 	 * @return
 	 */
 	public SysPermission createPermission(SysPermission sysPermission);
@@ -32,14 +32,14 @@ public interface SysPermissionManager {
 	/**
 	 * 根据权限id删除权限
 	 * 
-	 * @param permIds
+	 * @param permissionsIds
 	 */
 	void deleteMorePermissions(Long... permissionsIds);
 
 	/**
 	 * 根据权限id查找权限
 	 * 
-	 * @param permId
+	 * @param permissionId
 	 * @return
 	 */
 	SysPermission findSysPermissionById(Long permissionId);
@@ -62,7 +62,7 @@ public interface SysPermissionManager {
 	/**
 	 * 根据权限id更新权限
 	 * 
-	 * @param permission
+	 * @param sysPermission
 	 */
 	void updatePermissionByPrimaryKey(SysPermission sysPermission);
 }

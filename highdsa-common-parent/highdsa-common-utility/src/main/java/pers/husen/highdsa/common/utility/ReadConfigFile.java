@@ -29,8 +29,7 @@ public class ReadConfigFile {
 	 * @throws UnsupportedEncodingException
 	 * @throws IOException
 	 */
-	public static Properties readByRelativePath(String fileRelativePath)
-			throws UnsupportedEncodingException, IOException {
+	public static Properties readByRelativePath(String fileRelativePath) throws UnsupportedEncodingException, IOException {
 		Properties properties = new Properties();
 
 		// 使用ClassLoader加载properties配置文件生成对应的输入流
@@ -42,7 +41,10 @@ public class ReadConfigFile {
 	}
 
 	/**
-	 * 读取类路径下的文件（需要指定相对类根目录路径） 注意:只能读取类路径下的，不能读取resources下的。估计编译后能够读取。并且被读取的文件名称不加后缀
+	 * 读取类路径下的文件（需要指定相对类根目录路径）
+	 * 注意:只能读取类路径下的，不能读取resources下的。估计编译后能够读取。并且被读取的文件名称不加后缀。 这是国际化的类，所以要加zh_CN类似的。
+	 * <br/>
+	 * config为属性文件名，放在包com.test.config下，如果是放在src下，直接用config即可
 	 * 
 	 * @param fileRelativePath
 	 *            无后缀的文件名称
@@ -50,9 +52,7 @@ public class ReadConfigFile {
 	 * @throws UnsupportedEncodingException
 	 * @throws IOException
 	 */
-	public static ResourceBundle readByClassPath(String fileClassPath)
-			throws UnsupportedEncodingException, IOException {
-		// config为属性文件名，放在包com.test.config下，如果是放在src下，直接用config即可
+	public static ResourceBundle readByClassPath(String fileClassPath) throws UnsupportedEncodingException, IOException {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(fileClassPath);
 
 		return resourceBundle;
@@ -68,8 +68,7 @@ public class ReadConfigFile {
 	public static Properties readByAbsolutePath(String fileAbsolutePath) throws IOException {
 		Properties properties = new Properties();
 
-		InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(fileAbsolutePath),
-				Encode.DEFAULT_ENCODE);
+		InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(fileAbsolutePath), Encode.DEFAULT_ENCODE);
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 		// 使用InPutStream流读取properties文件
 		properties.load(bufferedReader);

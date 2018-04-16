@@ -7,6 +7,15 @@ import org.pac4j.core.store.Store;
 
 import io.buji.pac4j.profile.ShiroProfileManager;
 
+/**
+ * @Desc 登录退出处理
+ *
+ * @Author 何明胜
+ *
+ * @Created at 2018年4月16日 下午11:59:55
+ * 
+ * @Version 1.0.0
+ */
 public class ShiroCasLogoutHandler<C extends WebContext> extends DefaultCasLogoutHandler<C> {
 
 	public ShiroCasLogoutHandler() {
@@ -17,6 +26,7 @@ public class ShiroCasLogoutHandler<C extends WebContext> extends DefaultCasLogou
 	}
 
 	@SuppressWarnings("rawtypes")
+	@Override
 	protected void destroy(final C context, final SessionStore sessionStore, final String channel) {
 		// remove profiles
 		final ShiroProfileManager manager = new ShiroProfileManager(context);

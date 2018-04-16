@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import pers.husen.highdsa.common.entity.po.system.SysRole;
 import pers.husen.highdsa.common.entity.po.system.SysRolePermission;
 import pers.husen.highdsa.common.entity.po.system.SysUser;
+import pers.husen.highdsa.common.exception.db.NullPointerException;
+import pers.husen.highdsa.common.sequence.SequenceManager;
 import pers.husen.highdsa.service.mybatis.SysRoleManager;
 import pers.husen.highdsa.service.mybatis.dao.system.SysRoleMapper;
 import pers.husen.highdsa.service.mybatis.dao.system.SysRolePermissionMapper;
@@ -68,8 +70,14 @@ public class SysRoleManagerImpl implements SysRoleManager {
 
 	@Override
 	public SysRole addRole(SysRole sysRole, Long... permissionIds) {
-		// TODO-设置角色分布式id
-		sysRole.setRoleId(10003L);
+		// 设置分布式角色id
+		Long roleId = SequenceManager.getNextId();
+		if (roleId != null) {
+			sysRole.setRoleId(roleId);
+			;
+		} else {
+			throw new NullPointerException("获取的roleId为空");
+		}
 
 		// 设置角色有效
 		sysRole.setRoleValid(true);
@@ -117,15 +125,15 @@ public class SysRoleManagerImpl implements SysRoleManager {
 	}
 
 	@Override
-	public void updateRole(SysRole role, Long... permIds) {
-		//设置角色有效
+	public void updateRole(SysRole role, Long... permissionIds) {
+		// 设置角色有效
 		role.setRoleValid(true);
-		//设置最后更新时间
+		// 设置最后更新时间
 		role.setRoleLastModifyTime(new Date());
-		
+
 		sysRoleMapper.updateByPrimaryKey(role);
 		sysRolePermissionMapper.deleteByRoleId(role.getRoleId());
-		addRolePermissions(role.getRoleId(), permIds);
+		addRolePermissions(role.getRoleId(), permissionIds);
 	}
 
 	@Override

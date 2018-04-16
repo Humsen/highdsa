@@ -11,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.system.SysRole;
  *
  * @Created at 2018年3月29日 下午3:20:01
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public interface SysRoleMapper {
 	/**
@@ -25,7 +25,7 @@ public interface SysRoleMapper {
 	/**
 	 * 插入新的记录
 	 * 
-	 * @param record
+	 * @param sysRole
 	 * @return
 	 */
 	int insert(SysRole sysRole);
@@ -48,7 +48,7 @@ public interface SysRoleMapper {
 	/**
 	 * 根据主键更新记录
 	 * 
-	 * @param record
+	 * @param sysRole
 	 * @return
 	 */
 	int updateByPrimaryKey(SysRole sysRole);

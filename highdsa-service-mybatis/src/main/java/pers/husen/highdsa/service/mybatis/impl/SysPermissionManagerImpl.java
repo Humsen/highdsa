@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.entity.po.system.SysPermission;
+import pers.husen.highdsa.common.exception.db.NullPointerException;
+import pers.husen.highdsa.common.sequence.SequenceManager;
 import pers.husen.highdsa.service.mybatis.SysPermissionManager;
 import pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper;
 import pers.husen.highdsa.service.mybatis.dao.system.SysRolePermissionMapper;
@@ -18,7 +20,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysRolePermissionMapper;
  *
  * @Created at 2018年3月29日 上午10:18:13
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 @Service("sysPermissionManager")
 public class SysPermissionManagerImpl implements SysPermissionManager {
@@ -30,8 +32,14 @@ public class SysPermissionManagerImpl implements SysPermissionManager {
 
 	@Override
 	public SysPermission createPermission(SysPermission sysPermission) {
-		// TODO-插入分布式id
-		sysPermission.setPermissionId(10001L);
+		//设置权限id
+		Long permissionId = SequenceManager.getNextId();
+		if (permissionId != null) {
+			sysPermission.setPermissionId(permissionId);
+		} else {
+			throw new NullPointerException("获取的permissionId为空");
+		}
+		
 		// 设置权限有效
 		sysPermission.setPermissionValid(true);
 		// 如果是否为导航属性为null,说明创建时没有被勾选，设置为false
@@ -55,17 +63,17 @@ public class SysPermissionManagerImpl implements SysPermissionManager {
 	}
 
 	@Override
-	public void deleteMorePermissions(Long... permIds) {
-		if (permIds != null && permIds.length > 0) {
-			for (Long permId : permIds) {
-				deletePermission(permId);
+	public void deleteMorePermissions(Long... permissionIds) {
+		if (permissionIds != null && permissionIds.length > 0) {
+			for (Long permissionId : permissionIds) {
+				deletePermission(permissionId);
 			}
 		}
 	}
 
 	@Override
-	public SysPermission findSysPermissionById(Long permId) {
-		return sysPermissionMapper.selectByPrimaryKey(permId);
+	public SysPermission findSysPermissionById(Long permissionId) {
+		return sysPermissionMapper.selectByPrimaryKey(permissionId);
 	}
 
 	@Override
@@ -84,9 +92,9 @@ public class SysPermissionManagerImpl implements SysPermissionManager {
 		if (sysPermission.getPermissionNavi() == null) {
 			sysPermission.setPermissionNavi(false);
 		}
-		//设置权限有效
+		// 设置权限有效
 		sysPermission.setPermissionValid(true);
-		//设置最后更新时间
+		// 设置最后更新时间
 		sysPermission.setPermissionLastModifyTime(new Date());
 
 		sysPermissionMapper.updateByPrimaryKey(sysPermission);

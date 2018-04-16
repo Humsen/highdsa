@@ -28,11 +28,9 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年2月5日 下午1:03:55
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
-//使用junit4进行测试
 @RunWith(SpringJUnit4ClassRunner.class)
-//加载配置文件
 @ContextConfiguration(locations = { "classpath:spring/mybatis-provider.xml", "classpath:spring/redis-consumer.xml", "classpath:spring/spring-context.xml" }) 
 public class MybatisAndRedisCacheTest extends AbstractJUnit4SpringContextTests{
 

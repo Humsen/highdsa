@@ -22,11 +22,9 @@ import pers.husen.highdsa.service.mybatis.impl.SysUserInfoManagerImpl;
  *
  * @Created at 2018年3月7日 下午4:36:51
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
-// 使用junit4进行测试
 @RunWith(SpringJUnit4ClassRunner.class)
-// 加载配置文件
 @ContextConfiguration(locations = { "classpath:spring/mybatis-provider.xml", "classpath:spring/redis-consumer.xml", "classpath:spring/spring-context.xml" })
 public class SysUserInfoManagerImplTest extends AbstractJUnit4SpringContextTests {
 	private SysUserInfoManagerImpl sysUserInfoManagerImpl;

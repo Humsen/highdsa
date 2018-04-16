@@ -13,6 +13,8 @@ import pers.husen.highdsa.common.entity.po.system.SysNavigation;
 import pers.husen.highdsa.common.entity.po.system.SysRole;
 import pers.husen.highdsa.common.entity.po.system.SysUser;
 import pers.husen.highdsa.common.entity.po.system.SysUserRole;
+import pers.husen.highdsa.common.exception.db.NullPointerException;
+import pers.husen.highdsa.common.sequence.SequenceManager;
 import pers.husen.highdsa.service.mybatis.SysUserManager;
 import pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper;
 import pers.husen.highdsa.service.mybatis.dao.system.SysRoleMapper;
@@ -95,8 +97,14 @@ public class SysUserManagerImpl implements SysUserManager {
 	public SysUser addUser(SysUser sysUser, Long... roleIds) {
 		// 密码加密
 		encryptPassword(sysUser);
-		// TODO-设置分布式id
-		sysUser.setUserId(10004L);
+		// 设置分布式用户id
+		Long userId = SequenceManager.getNextId();
+		if (userId != null) {
+			sysUser.setUserId(userId);
+		} else {
+			throw new NullPointerException("获取的userId为空");
+		}
+		
 		// 设置正常状态
 		sysUser.setUserState("100");
 
@@ -107,7 +115,7 @@ public class SysUserManagerImpl implements SysUserManager {
 				sysUserRoleMapper.insert(new SysUserRole(sysUser.getUserId(), roleId));
 			}
 		}
-		
+
 		return sysUser;
 	}
 

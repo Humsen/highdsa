@@ -32,7 +32,7 @@ public interface SysUserInfoManager {
 	/**
 	 * 插入新的用户信息
 	 * 
-	 * @param userInfo
+	 * @param sysUserInfo
 	 * @return
 	 */
 	public Integer insertUserInfo(SysUserInfo sysUserInfo);
@@ -40,7 +40,7 @@ public interface SysUserInfoManager {
 	/**
 	 * 根据id更新用户信息
 	 * 
-	 * @param userInfo
+	 * @param sysUserInfo
 	 * @return
 	 */
 	public Integer updateUserInfo(SysUserInfo sysUserInfo);

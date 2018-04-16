@@ -16,10 +16,10 @@ import pers.husen.highdsa.web.shiro.handler.ShiroSvc;
  *
  * @Created at 2018年4月3日 下午4:23:54
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Controller
-//@RequestMapping(value = "/sys/v1")
+@RequestMapping(value = "/sys/v1")
 public class ShiroController {
 	@Autowired
 	ShiroSvc shiroSvc;

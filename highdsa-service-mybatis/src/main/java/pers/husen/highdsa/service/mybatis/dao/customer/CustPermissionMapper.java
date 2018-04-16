@@ -3,14 +3,52 @@ package pers.husen.highdsa.service.mybatis.dao.customer;
 import java.util.List;
 import pers.husen.highdsa.common.entity.po.customer.CustPermission;
 
+/**
+ * @Desc 客户权限类映射
+ *
+ * @Author 何明胜
+ *
+ * @Created at 2018年4月16日 下午11:44:55
+ * 
+ * @Version 1.0.1
+ */
 public interface CustPermissionMapper {
-    int deleteByPrimaryKey(Long permissionId);
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param permissionId
+	 * @return
+	 */
+	int deleteByPrimaryKey(Long permissionId);
 
-    int insert(CustPermission record);
+	/**
+	 * 插入新记录
+	 * 
+	 * @param custPermission
+	 * @return
+	 */
+	int insert(CustPermission custPermission);
 
-    CustPermission selectByPrimaryKey(Long permissionId);
+	/**
+	 * 根据主键查找
+	 * 
+	 * @param permissionId
+	 * @return
+	 */
+	CustPermission selectByPrimaryKey(Long permissionId);
 
-    List<CustPermission> selectAll();
+	/**
+	 * 查询所有
+	 * 
+	 * @return
+	 */
+	List<CustPermission> selectAll();
 
-    int updateByPrimaryKey(CustPermission record);
+	/**
+	 * 根据主键更新
+	 * 
+	 * @param custPermission
+	 * @return
+	 */
+	int updateByPrimaryKey(CustPermission custPermission);
 }

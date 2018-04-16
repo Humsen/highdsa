@@ -13,7 +13,7 @@ import pers.husen.highdsa.common.entity.po.system.SysUserRole;
  *
  * @Created at 2018年3月29日 下午3:19:12
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public interface SysUserRoleMapper {
 	/**
@@ -28,10 +28,10 @@ public interface SysUserRoleMapper {
 	/**
 	 * 插入新角色
 	 * 
-	 * @param record
+	 * @param sysUserRole
 	 * @return
 	 */
-	int insert(SysUserRole record);
+	int insert(SysUserRole sysUserRole);
 
 	/**
 	 * 查询所有记录

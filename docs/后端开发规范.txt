@@ -38,3 +38,7 @@
 	http业务/RESTful请求  -> controller -> service(highdsa.web.类名Svc) -> 消费者类（待定）  -> zookeeper -> 服务提供类(highdsa.service.×××.类名) -> 数据库/缓存/文件服务器等
 	                		     |                                                                                       |
 	                                                                       工具类                                                                                                                                                                                                                            工具类
+	                                                                       
+10、实体类实例化命名
+	类名取类首字母小写的驼峰;
+	实体类字段命名可省略系统属性，如sysUserId可为userId	                                                                       

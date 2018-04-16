@@ -13,7 +13,7 @@ import pers.husen.highdsa.common.entity.po.system.SysRolePermission;
  *
  * @Created at 2018年3月29日 下午3:19:48
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public interface SysRolePermissionMapper {
 	/**
@@ -28,7 +28,7 @@ public interface SysRolePermissionMapper {
 	/**
 	 * 插入新记录
 	 * 
-	 * @param record
+	 * @param sysRolePermission
 	 * @return
 	 */
 	int insert(SysRolePermission sysRolePermission);

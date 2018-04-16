@@ -80,7 +80,8 @@ public class UsernamePasswordAuthenticationHandler extends AbstractUsernamePassw
 		String encryptedSelectPwd = Md5Encrypt.getMD5Code(currentPwd, selectUser.get("user_name").toString() + selectUser.get("user_pwd_salt").toString(), 2);
 		logger.info("md5加密两次后的密码：{}", encryptedSelectPwd);
 
-		if (encryptedSelectPwd.equals(selectUser.get("user_password").toString())) {
+		String userPassword = "user_password";
+		if (encryptedSelectPwd.equals(selectUser.get(userPassword).toString())) {
 			logger.info("密码对比成功");
 
 			return createHandlerResult(transformedCredential, this.principalFactory.createPrincipal(username, map), null);
