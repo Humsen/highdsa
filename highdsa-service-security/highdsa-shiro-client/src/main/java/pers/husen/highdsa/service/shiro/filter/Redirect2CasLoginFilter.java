@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.session.filter;
+package pers.husen.highdsa.service.shiro.filter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;

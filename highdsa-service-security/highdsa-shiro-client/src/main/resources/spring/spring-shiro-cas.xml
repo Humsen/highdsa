@@ -12,12 +12,13 @@
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:url.properties</value>
+				<value>classpath:shiro/url.properties</value>
 			</list>
 		</property>
 	</bean>
 
 	<!-- pac4j configurations -->
+	
 	<!-- 请求cas服务端配置 -->
 	<bean id="casConfig" class="org.pac4j.cas.config.CasConfiguration">
 		<!-- CAS server登录链接 -->
@@ -54,7 +55,7 @@
 	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
 
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="sid" />
+		<constructor-arg value="highdsa-session-id" />
 		<property name="httpOnly" value="false" />
 		<property name="maxAge" value="180000" />
 		<property name="path" value="/" />
@@ -97,7 +98,7 @@
 		<property name="authorizationCacheName" value="authorizationCache" />
 	</bean>
 
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	<bean id="shiroFilter" class="pers.husen.highdsa.service.shiro.filter.ClientShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager"></property>
 		<property name="filters">
 			<util:map>
@@ -126,23 +127,19 @@
 				</entry>
 				<!-- 拦截/login,并作一些操作，测试用，可以忽略 -->
 				<entry key="login">
-					<bean class="pers.husen.highdsa.service.shiro.session.filter.Redirect2CasLoginFilter"></bean>
+					<bean class="pers.husen.highdsa.service.shiro.filter.Redirect2CasLoginFilter"></bean>
 				</entry>
 
 			</util:map>
 		</property>
-		<property name="filterChainDefinitions">
-			<value>
-				/static/**=anon<!-- 静态资源文件访问 -->
-				/ = casSecurityFilter
-				/index = casSecurityFilter
-				/logout = logout
-				/callback = callback
-				/login** = login
-				/login/** = login
-			</value>
+		<property name="filterChainDefinitionsLocation">
+			<value>classpath:shiro/shiro-urls.ini</value>
 		</property>
-
+		<!-- <property name="filterChainDefinitions">
+			<value>
+				/** = casSecurityFilter
+			</value>
+		</property> -->
 	</bean>
 
 	<!-- 生命周期处理 -->
