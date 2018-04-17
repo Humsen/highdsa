@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aliyuncs.exceptions.ClientException;
 
-import pers.husen.highdsa.common.utility.ConvertRequestParams;
+import pers.husen.highdsa.common.transform.ConvertRequestParams;
 import pers.husen.highdsa.web.message.sms.handler.SendSmsSvc;
 
 /**

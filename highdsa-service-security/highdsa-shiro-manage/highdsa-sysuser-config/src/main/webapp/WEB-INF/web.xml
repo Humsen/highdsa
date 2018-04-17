@@ -6,7 +6,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-            classpath*:**/mybatis-consumer.xml,
+            classpath*:**/shiro-consumer.xml,
 		    classpath*:**/spring-shiro-cas.xml,
         </param-value>
 	</context-param>

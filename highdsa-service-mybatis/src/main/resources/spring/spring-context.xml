@@ -93,6 +93,11 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
+	<bean id="sysSessionsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysSessionsMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
 	<bean id="sysPermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />

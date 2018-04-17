@@ -17,7 +17,7 @@ import pers.husen.highdsa.common.constant.RedisCacheConstants;
 import pers.husen.highdsa.common.exception.ParamsException;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.exception.cache.MybatisRedisCacheException;
-import pers.husen.highdsa.common.utility.Serializer;
+import pers.husen.highdsa.common.transform.Serializer;
 import pers.husen.highdsa.service.redis.RedisOperation;
 
 /**

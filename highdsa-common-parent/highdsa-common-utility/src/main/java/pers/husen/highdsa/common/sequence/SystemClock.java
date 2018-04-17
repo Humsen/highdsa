@@ -56,7 +56,9 @@ public class SystemClock {
 		ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("system-clock-%d").build();
 		// Common Thread Pool
 		ExecutorService pool = new ThreadPoolExecutor(5, 200, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
-		pool.execute(() -> now.set(System.currentTimeMillis()));
+		pool.execute(() -> {
+			now.set(System.currentTimeMillis());
+		});
 		// gracefully shutdown
 		pool.shutdown();
 	}

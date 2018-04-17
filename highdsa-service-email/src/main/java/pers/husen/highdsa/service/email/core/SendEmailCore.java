@@ -14,9 +14,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.sun.mail.util.MailSSLSocketFactory;
 
+import pers.husen.highdsa.common.BaseUtils;
 import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.common.utility.VarHandle;
 
 /**
  * @Desc 发送邮件核心类
@@ -63,8 +63,7 @@ public class SendEmailCore {
 	public Session setupSession(String configFile) throws GeneralSecurityException {
 
 		try {
-			properties.load(new InputStreamReader(SendEmailCore.class.getClassLoader().getResourceAsStream(configFile),
-					Encode.DEFAULT_ENCODE));
+			properties.load(new InputStreamReader(SendEmailCore.class.getClassLoader().getResourceAsStream(configFile), Encode.DEFAULT_ENCODE));
 
 			this.mailHost = properties.getProperty("mail.smtp.host");
 			this.senderEamilAddr = properties.getProperty("mail.sender.username");
@@ -76,15 +75,15 @@ public class SendEmailCore {
 			this.setupDefaultSession();
 		}
 
-		if (VarHandle.isEmpty(mailHost) || VarHandle.isEmpty(senderEmailPwd) || VarHandle.isEmpty(senderEmailPwd)) {
+		if (BaseUtils.isEmpty(mailHost) || BaseUtils.isEmpty(senderEmailPwd) || BaseUtils.isEmpty(senderEmailPwd)) {
 			logger.info("建立邮件会话：邮箱参数异常");
 			return this.setupDefaultSession();
 		}
 
 		// QQ邮箱开启SSL, 貌似去掉也可以
-		//MailSSLSocketFactory sf = new MailSSLSocketFactory();
-		//sf.setTrustAllHosts(true);
-		//properties.put("mail.smtp.ssl.socketFactory", sf);
+		// MailSSLSocketFactory sf = new MailSSLSocketFactory();
+		// sf.setTrustAllHosts(true);
+		// properties.put("mail.smtp.ssl.socketFactory", sf);
 
 		// 根据认证获取默认session对象
 		session = Session.getDefaultInstance(properties, new Authenticator() {
@@ -94,8 +93,7 @@ public class SendEmailCore {
 			}
 		});
 
-		logger.info("建立邮件会话：设置成功!  host:{},fromEamilAddr:{},fromEmailPwd:{}", mailHost, senderEamilAddr,
-				senderEmailPwd);
+		logger.info("建立邮件会话：设置成功!  host:{},fromEamilAddr:{},fromEmailPwd:{}", mailHost, senderEamilAddr, senderEmailPwd);
 		return session;
 	}
 
@@ -219,7 +217,8 @@ public class SendEmailCore {
 	}
 
 	/**
-	 * @param properties the properties to set
+	 * @param properties
+	 *            the properties to set
 	 */
 	public void setProperties(Properties properties) {
 		this.properties = properties;

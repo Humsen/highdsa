@@ -14,8 +14,8 @@ import org.apache.shiro.session.Session;
 import com.google.common.collect.Maps;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.common.utility.ConvertType;
-import pers.husen.highdsa.common.utility.Serializer;
+import pers.husen.highdsa.common.transform.ConvertType;
+import pers.husen.highdsa.common.transform.Serializer;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -262,8 +262,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();
-			
-			String serialKey = String.valueOf((Serializable)key);
+
+			String serialKey = String.valueOf((Serializable) key);
 			reply = jedis.set(serialKey.getBytes(), Serializer.serialize(value));
 
 			if (cacheSeconds != 0) {
@@ -289,7 +289,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 
-			String serialKey = String.valueOf((Serializable)key);
+			String serialKey = String.valueOf((Serializable) key);
 			if (jedis.exists(serialKey.getBytes())) {
 				value = Serializer.unserialize(jedis.get(serialKey.getBytes()));
 
@@ -315,7 +315,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 		try {
 			jedis = getJedis();
 
-			String serialKey = String.valueOf((Serializable)key);
+			String serialKey = String.valueOf((Serializable) key);
 			if (jedis.exists(serialKey.getBytes())) {
 				value = jedis.expire(serialKey.getBytes(), 0);
 
@@ -971,8 +971,16 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	@Override
 	public Set<byte[]> keys(String pattern) {
 		Set<byte[]> keys = null;
-		Jedis jedis = jedisPool.getResource();
-		keys = jedis.keys(pattern.getBytes());
+		Jedis jedis;
+
+		try {
+			jedis = getJedis();
+			keys = jedis.keys(pattern.getBytes());
+
+			// logger.info("redis current db cache delete success!");
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis数据库key数量出错", e));
+		}
 
 		return keys;
 
@@ -986,11 +994,18 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public List<Object> values(String pattern) {
 		List<Object> values = new ArrayList<Object>();
 		Set<byte[]> keys = this.keys(pattern);
+		Jedis jedis;
 
-		for (byte[] object : keys) {
-			byte[] bs = getJedis().get(Serializer.serialize((Serializable) object));
-			values.add(Serializer.unserialize(bs));
+		try {
+			jedis = getJedis();
+			for (byte[] object : keys) {
+				byte[] bs = jedis.get(Serializer.serialize((Serializable) object));
+				values.add(Serializer.unserialize(bs));
+			}
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis数据库所有值", e));
 		}
+
 		return values;
 	}
 

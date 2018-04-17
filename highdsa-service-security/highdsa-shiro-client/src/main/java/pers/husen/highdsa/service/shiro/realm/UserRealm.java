@@ -8,9 +8,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 
 import io.buji.pac4j.realm.Pac4jRealm;
 import io.buji.pac4j.subject.Pac4jPrincipal;
@@ -30,8 +27,15 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  */
 public class UserRealm extends Pac4jRealm {
 
-	@Autowired
 	private SysUserManager sysUserManager;
+
+	/**
+	 * @param sysUserManager
+	 *            the sysUserManager to set
+	 */
+	public void setSysUserManager(SysUserManager sysUserManager) {
+		this.sysUserManager = sysUserManager;
+	}
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -44,8 +48,6 @@ public class UserRealm extends Pac4jRealm {
 		// 根据用户名查询当前用户拥有的角色
 		Set<String> roleNames = new HashSet<String>();
 
-		WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-		sysUserManager = (SysUserManager) wac.getBean("sysUserManager");
 		SysUser userRole = sysUserManager.findRolesByUserName(userName);
 		List<SysRole> roleList = userRole.getSysRoleList();
 
@@ -68,5 +70,33 @@ public class UserRealm extends Pac4jRealm {
 		authorizationInfo.setStringPermissions(permissionNames);
 
 		return authorizationInfo;
+	}
+
+	@Override
+	public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+		super.clearCachedAuthorizationInfo(principals);
+	}
+
+	@Override
+	public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
+		super.clearCachedAuthenticationInfo(principals);
+	}
+
+	@Override
+	public void clearCache(PrincipalCollection principals) {
+		super.clearCache(principals);
+	}
+
+	public void clearAllCachedAuthorizationInfo() {
+		getAuthorizationCache().clear();
+	}
+
+	public void clearAllCachedAuthenticationInfo() {
+		getAuthenticationCache().clear();
+	}
+
+	public void clearAllCache() {
+		clearAllCachedAuthenticationInfo();
+		clearAllCachedAuthorizationInfo();
 	}
 }

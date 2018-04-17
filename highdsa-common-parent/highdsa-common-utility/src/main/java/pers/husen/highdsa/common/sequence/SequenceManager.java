@@ -63,7 +63,7 @@ public class SequenceManager {
 	 */
 	private static void init() {
 		try {
-			sequenceConfig = ReadConfigFile.readByRelativePath("sequence.properties");
+			sequenceConfig = ReadConfigFile.readByRelativePath("sequence/sequence.properties");
 		} catch (UnsupportedEncodingException e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		} catch (IOException e) {

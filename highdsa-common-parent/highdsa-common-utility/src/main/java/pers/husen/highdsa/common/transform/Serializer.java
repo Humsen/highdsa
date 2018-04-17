@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.utility;
+package pers.husen.highdsa.common.transform;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,7 +26,7 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  * 
  * @Version 1.0.0
  */
-public class Serializer extends BaseUtils{
+public class Serializer extends BaseUtils {
 	private static final Logger logger = LogManager.getLogger(Serializer.class.getName());
 
 	/**
@@ -36,15 +36,14 @@ public class Serializer extends BaseUtils{
 	 * @return 字节数组
 	 */
 	public static byte[] serialize(Object object) {
-		if(object == null) {
+		if (object == null) {
 			return null;
 		}
-		
+
 		if (!(object instanceof Serializable)) {
-			throw new IllegalArgumentException(
-					Serializer.class.getSimpleName() + " requires a Serializable payload " + "but received an object of type [" + object.getClass().getName() + "]");
+			throw new IllegalArgumentException(Serializer.class.getSimpleName() + " requires a Serializable payload " + "but received an object of type [" + object.getClass().getName() + "]");
 		}
-		
+
 		ObjectOutputStream objectOutputStream = null;
 		ByteArrayOutputStream byteArrayOutputStream = null;
 
@@ -61,7 +60,7 @@ public class Serializer extends BaseUtils{
 		} catch (IOException e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("序列化失败", e));
 		}
-		
+
 		return null;
 	}
 
@@ -75,7 +74,7 @@ public class Serializer extends BaseUtils{
 		if (isEmpty(byteArray)) {
 			return null;
 		}
-		
+
 		ObjectInputStream objectInputStream = null;
 		ByteArrayInputStream byteArrayInputStream = null;
 

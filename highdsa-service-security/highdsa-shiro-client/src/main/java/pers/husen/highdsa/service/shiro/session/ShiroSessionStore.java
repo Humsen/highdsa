@@ -1,12 +1,12 @@
 package pers.husen.highdsa.service.shiro.session;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.Session;
 import org.pac4j.core.context.J2EContext;
 import org.pac4j.core.context.session.SessionStore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @Desc shiro会话存储
@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
  * @Version 1.0.0
  */
 public class ShiroSessionStore implements SessionStore<J2EContext> {
-
-	private final static Logger logger = LoggerFactory.getLogger(ShiroSessionStore.class);
+	private final static Logger logger = LogManager.getLogger(ShiroSessionStore.class.getName());
 
 	/**
 	 * 获取shiro session
@@ -52,6 +51,7 @@ public class ShiroSessionStore implements SessionStore<J2EContext> {
 		if (session != null) {
 			return session.getAttribute(key);
 		}
+
 		return null;
 	}
 

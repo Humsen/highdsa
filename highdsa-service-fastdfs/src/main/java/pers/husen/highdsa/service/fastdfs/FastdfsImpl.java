@@ -24,7 +24,7 @@ import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.common.utility.ConvertType;
+import pers.husen.highdsa.common.transform.ConvertType;
 
 /**
  * @Desc fastdfs 文件存储

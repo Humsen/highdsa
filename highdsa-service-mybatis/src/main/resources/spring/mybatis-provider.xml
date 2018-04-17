@@ -12,6 +12,7 @@
 
 	<!--使用 dubbo 协议实现定义好的 api.PermissionService 接口 超时单位：毫秒 -->
 	<dubbo:service interface="pers.husen.highdsa.service.mybatis.SysUserInfoManager" ref="sysUserInfoManager" protocol="dubbo" timeout="10000" />
+	<dubbo:service interface="pers.husen.highdsa.service.mybatis.SysSessionsManager" ref="sysSessionsManager" protocol="dubbo" timeout="10000" />
 	
 	<dubbo:service interface="pers.husen.highdsa.service.mybatis.SysPermissionManager" ref="sysPermissionManager" protocol="dubbo" timeout="10000" />
 	<dubbo:service interface="pers.husen.highdsa.service.mybatis.SysRoleManager" ref="sysRoleManager" protocol="dubbo" timeout="10000" />
