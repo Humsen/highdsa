@@ -125,6 +125,16 @@
 				<artifactId>highdsa-shiro-client</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>pers.husen.highdsa</groupId>
+				<artifactId>highdsa-client-cas</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>pers.husen.highdsa</groupId>
+				<artifactId>highdsa-client-pac4j</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
 			<!-- dubbo -->
 			<dependency>
 				<groupId>com.alibaba</groupId>

@@ -21,7 +21,7 @@
 		</dependency>
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
-			<artifactId>highdsa-shiro-client</artifactId>
+			<artifactId>highdsa-client-pac4j</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -90,7 +90,7 @@
 			<artifactId>javax.servlet.jsp-api</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName>highdsa-web-shiro</finalName>
 	</build>
