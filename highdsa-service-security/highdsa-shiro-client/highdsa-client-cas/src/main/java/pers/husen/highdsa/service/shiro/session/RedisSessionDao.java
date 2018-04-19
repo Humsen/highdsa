@@ -1,18 +1,13 @@
 package pers.husen.highdsa.service.shiro.session;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.ValidatingSession;
 
 import pers.husen.highdsa.common.constant.RedisCacheConstants;
-import pers.husen.highdsa.common.exception.db.NullPointerException;
 import pers.husen.highdsa.common.transform.Serializer;
 import pers.husen.highdsa.service.redis.RedisOperation;
 
@@ -48,9 +43,26 @@ public class RedisSessionDao extends MysqlSessionDao {
 	}
 
 	@Override
-	public void update(Session session) throws UnknownSessionException {
+	protected Serializable doCreate(Session session) {
+		// 数据库先创建
+		Serializable sessionId = super.doCreate(session);
+		logger.trace("--------doCreate-----");
+
+		logger.debug("sessionId: {}", session.getId());
+		byte[] key = this.getByteKey(session.getId());
+		byte[] value = Serializer.serialize(session);
+		session.setTimeout(EXPRIE * 1000);
+
+		redisOperation.set(key, value, EXPRIE * 1000);
+
+		return sessionId;
+	}
+
+	@Override
+	protected void doUpdate(Session session) {
 		// 如果会话过期/停止 没必要再更新了
 		if (session instanceof ValidatingSession && !((ValidatingSession) session).isValid()) {
+			logger.error("session is invalid");
 			return;
 		}
 		if (session == null) {
@@ -65,7 +77,6 @@ public class RedisSessionDao extends MysqlSessionDao {
 		super.doUpdate(session);
 		logger.trace("--------update-----");
 
-		logger.debug("sessionId: {}", session.getId());
 		byte[] key = this.getByteKey(session.getId());
 		byte[] value = Serializer.serialize(session);
 		session.setTimeout(EXPRIE * 1000);
@@ -74,78 +85,44 @@ public class RedisSessionDao extends MysqlSessionDao {
 	}
 
 	@Override
-	public void delete(Session session) {
+	protected void doDelete(Session session) {
 		if (session == null || session.getId() == null) {
 			logger.error("session or session id is null");
 			return;
 		}
-		
+
 		super.doDelete(session);
-		
+
 		logger.trace("--------delete-----");
-		logger.debug("sessionId: {}", session.getId());
-		
+
 		redisOperation.del(this.getByteKey(session.getId()));
 	}
 
-	@Override
-	public Collection<Session> getActiveSessions() {
-		Set<Session> sessions = new HashSet<Session>();
-
-		Set<byte[]> keys = redisOperation.keys(PREFIX + "*");
-		if (keys != null && keys.size() > 0) {
-			for (byte[] key : keys) {
-				Session s = (Session) Serializer.unserialize(redisOperation.get(key));
-				sessions.add(s);
-			}
-		}
-
-		return sessions;
-	}
-
-	@Override
-	protected Serializable doCreate(Session session) {
-		// 数据库先创建
-		super.doCreate(session);
-		logger.trace("--------doCreate-----");
-
-		Serializable sessionId = this.generateSessionId(session);
-
-		logger.debug("sessionId: {}", sessionId);
-		this.assignSessionId(session, sessionId);
-
-		byte[] key = this.getByteKey(session.getId());
-		byte[] value = Serializer.serialize(session);
-		session.setTimeout(EXPRIE * 1000);
-
-		redisOperation.set(key, value, EXPRIE * 1000);
-
-		return sessionId;
-	}
-
+	/**
+	 * 先从缓存中获取session，如果没有再去数据库中获取
+	 */
 	@Override
 	protected Session doReadSession(Serializable sessionId) {
-		// 先从缓存中获取session，如果没有再去数据库中获取
-		logger.trace("--------doReadSession-----");
-
 		if (sessionId == null) {
 			logger.error("session id is null");
 			return null;
 		}
 
-		logger.debug("sessionId: {}", sessionId);
+		logger.trace("--------doReadSession-----");
 		Session session = (Session) Serializer.unserialize(redisOperation.get(this.getByteKey(sessionId)));
 
 		if (session == null) {
+			logger.trace("redis缓存为空，从数据库获取");
 			session = super.doReadSession(sessionId);
 		}
 
 		if (session != null) {
-			this.doCreate(session);
-		} else {
-			throw new NullPointerException("获取会话为空");
-		}
-		logger.debug("session.getId():{}", session.getId());
+			byte[] key = this.getByteKey(session.getId());
+			byte[] value = Serializer.serialize(session);
+			session.setTimeout(EXPRIE * 1000);
+
+			redisOperation.set(key, value, EXPRIE * 1000);
+		} 
 
 		return session;
 	}

@@ -48,22 +48,19 @@
 	</bean>
 
 	<!-- 会话验证调度器 -->
-	<!-- bean id="sessionValidationScheduler" class="pers.husen.highdsa.service.shiro.session.MysqlSessionValidationScheduler"> <property name="sysSessionsManager" ref="sysSessionsManager" /> <property name="interval" 
-		value="1800000" /> <property name="sessionManager" ref="sessionManager" /> </bean> -->
-	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
-		<property name="sessionValidationInterval" value="1800000" />
+	<bean id="sessionValidationScheduler" class="pers.husen.highdsa.service.shiro.session.MysqlSessionValidationScheduler">
+		<property name="sysSessionsManager" ref="sysSessionsManager" />
+		<property name="interval" value="1800000" />
 		<property name="sessionManager" ref="sessionManager" />
 	</bean>
+	<!-- <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler"> <property name="sessionValidationInterval" value="1800000" /> <property name="sessionManager" 
+		ref="sessionManager" /> </bean> -->
 
 	<!-- 会话 DAO -->
-	<!-- <bean id="sessionDAO" class="pers.husen.highdsa.service.shiro.session.RedisSessionDao">
+	<bean id="sessionDAO" class="pers.husen.highdsa.service.shiro.session.MysqlRedisSessionDao">
 		<property name="sysSessionsManager" ref="sysSessionsManager" />
-		<property name="activeSessionsCacheName" value="highdsa-sysuser-config-activeSessionCache" />
-		<property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
-		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
-	</bean> -->
-	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
-		<property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
+		<property name="redisOperation" ref="redisOperation" />
+		<property name="activeSessionsCacheName" value="shiro_redis_session:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
 
