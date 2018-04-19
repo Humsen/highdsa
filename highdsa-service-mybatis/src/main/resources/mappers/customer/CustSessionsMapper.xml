@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.husen.highdsa.service.mybatis.dao.customer.CustSessionsMapper">
+	<!-- 自定义二级缓存 -->
+	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
+
+	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustSessions">
+		<constructor>
+			<idArg column="session_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="session_create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+			<arg column="session_last_modify_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+			<arg column="session_valid" javaType="java.lang.Boolean" jdbcType="BIT" />
+			<arg column="session_value" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+		</constructor>
+	</resultMap>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from cust_sessions
+		where session_id = #{sessionId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.customer.CustSessions">
+		insert into cust_sessions (session_id, session_create_time, session_last_modify_time,
+		session_valid, session_value)
+		values (#{sessionId,jdbcType=VARCHAR},
+		#{sessionCreateTime,jdbcType=TIMESTAMP}, #{sessionLastModifyTime,jdbcType=TIMESTAMP},
+		#{sessionValid,jdbcType=BIT}, #{sessionValue,jdbcType=LONGVARCHAR})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.customer.CustSessions">
+		update cust_sessions
+		set session_create_time = #{sessionCreateTime,jdbcType=TIMESTAMP},
+		session_last_modify_time =
+		#{sessionLastModifyTime,jdbcType=TIMESTAMP},
+		session_valid = #{sessionValid,jdbcType=BIT},
+		session_value = #{sessionValue,jdbcType=LONGVARCHAR}
+		where session_id = #{sessionId,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select session_id, session_create_time, session_last_modify_time, session_valid,
+		session_value
+		from cust_sessions
+		where
+		session_id = #{sessionId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select session_id, session_create_time, session_last_modify_time, session_valid,
+		session_value
+		from cust_sessions
+	</select>
+	<select id="selectListByPage" parameterType="int" resultMap="BaseResultMap">
+		select session_id, session_value, session_create_time, session_last_modify_time,
+		session_valid
+		from cust_sessions
+		limit #{arg0},#{arg1}
+	</select>
+</mapper>
