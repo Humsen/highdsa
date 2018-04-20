@@ -28,8 +28,8 @@
 		<constructor-arg name="name" value="highdsa-session-id" />
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="-1" />
-		<!-- <property name="path" value="/" /> -->
-		<!-- <property name="domain" value="" /> -->
+		<property name="path" value="/" />
+		<property name="domain" value="" />
 	</bean>
 
 	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -37,7 +37,7 @@
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="2592000" />
 		<!-- 30天 -->
-		<!-- <property name="domain" value="" /> <property name="path" value="/" /> -->
+		<property name="domain" value="" /> <property name="path" value="/" />
 	</bean>
 
 	<!-- rememberMe管理器 -->
@@ -85,7 +85,7 @@
 		<property name="subjectFactory" ref="casSubjectFactory"></property>
 		<property name="sessionManager" ref="sessionManager" />
 		<property name="cacheManager" ref="cacheManager" />
-		<!-- <property name="rememberMeManager" ref="rememberMeManager" /> -->
+		<property name="rememberMeManager" ref="rememberMeManager" />
 	</bean>
 
 	<!-- Realm实现 -->
