@@ -6,6 +6,7 @@
 - log4j2 web模块配置文件log4j2-web.xml放在log4j2模块下，web项目可以直接引入   
 
 - log4j web模块配置文件log4j-web.properties需要分别放在每个web模块的resources文件夹下，并改名为log4j.properties。因为
+
  - 1.web可以直接读取依赖的jar包类路径下的log4j.properties，但是这样就不能达到和非web模块配置文件分开而分别设置日志输出路径的目的；
  - 2.通过web.xml配置监听器，则无法直接读取jar包里的配置文件，需要通过maven 插件解压jar的配置文件至web工程中，比较麻烦；
  - 3.通过web.xml配置监听器，${webapp.root}未生效之前，会将${webapp.root}当作空，从而在系统根目录下生成临时文件夹（如C盘根目录）；
@@ -18,5 +19,16 @@
 > `log4j2-web.xml` -> log4j2 web模块配置文件，无需移动      
 > `log4j.properties` -> log4j 非web服务模块配文件，无需移动   
 > `log4j-web.properties` -> log4j web模块配置文件，需要分别放在每个web模块下，并改名为logj4.properties   
+
+
+特别地,web模块需要单独引入web的依赖，因为web模块似乎会影响log4j优雅关机
+
+```
+<!-- log4j2 web -->
+<dependency>
+	<groupId>org.apache.logging.log4j</groupId>
+	<artifactId>log4j-web</artifactId>
+</dependency>
+```
 
 ***
