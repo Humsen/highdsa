@@ -18,10 +18,10 @@
 	</bean>
 
 	<!-- 缓存管理器 使用redis实现 -->
-	<bean id="cacheManager" class="pers.husen.highdsa.service.shiro.cache.ShiroRedisCacheManager"></bean>
+	<bean id="cacheManager" class="pers.husen.highdsa.security.client.cas.cache.ShiroRedisCacheManager"></bean>
 
 	<!-- 会话ID生成器 -->
-	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
+	<bean id="sessionIdGenerator" class="pers.husen.highdsa.security.client.cas.session.SequenceSessionIdGenerator" />
 
 	<!-- 会话Cookie模板 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -48,18 +48,16 @@
 	</bean>
 
 	<!-- 会话验证调度器 -->
-	<bean id="sessionValidationScheduler" class="pers.husen.highdsa.service.shiro.session.MysqlSessionValidationScheduler">
+	<bean id="sessionValidationScheduler" class="pers.husen.highdsa.security.client.cas.session.MysqlSessionValidationScheduler">
 		<property name="sysSessionsManager" ref="sysSessionsManager" />
 		<property name="interval" value="1800000" />
 		<property name="sessionManager" ref="sessionManager" />
 	</bean>
-	<!-- <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler"> <property name="sessionValidationInterval" value="1800000" /> <property name="sessionManager" 
-		ref="sessionManager" /> </bean> -->
 
 	<!-- 会话 DAO -->
-	<bean id="sessionDAO" class="pers.husen.highdsa.service.shiro.session.MysqlRedisSessionDao">
-		<property name="sysSessionsManager" ref="sysSessionsManager" />
-		<property name="redisOperation" ref="redisOperation" />
+	<bean id="sessionDAO" class="pers.husen.highdsa.security.client.cas.session.MysqlRedisSessionDao">
+		<constructor-arg name="sysSessionsManager" ref="sysSessionsManager" />
+		<constructor-arg name="redisOperation" ref="redisOperation" />
 		<property name="activeSessionsCacheName" value="shiro_redis_session:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
@@ -91,8 +89,8 @@
 	</bean>
 
 	<!-- Realm实现 -->
-	<bean id="userRealm" class="pers.husen.highdsa.service.shiro.realm.UserRealm">
-		<property name="sysUserManager" ref="sysUserManager" />
+	<bean id="userRealm" class="pers.husen.highdsa.security.client.cas.realm.UserRealm">
+		<constructor-arg name="sysUserManager" ref="sysUserManager" />
 		<property name="cachingEnabled" value="true" />
 		<property name="authenticationCachingEnabled" value="true" />
 		<property name="authenticationCacheName" value="authenticationCache" />
@@ -104,7 +102,7 @@
 		<property name="casService" value="${casService}"></property>
 	</bean>
 
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	<bean id="shiroFilter" class="pers.husen.highdsa.security.client.cas.filter.ClientShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager"></property>
 		<!-- 设定角色的登录链接，这里为cas登录页面的链接可配置回调地址 -->
 		<property name="loginUrl" value="${loginUrl}"></property>
@@ -115,18 +113,10 @@
 				<entry key="logout" value-ref="logout" />
 			</util:map>
 		</property>
-		<!-- <property name="filterChainDefinitionsLocation"> <value>classpath:shiro/shiro-urls.ini</value> </property> -->
-		<property name="filterChainDefinitions">
-			<value>
-				/static/**=anon
-				/cas=casFilter
-				/logout=logout
-				/login**=authc
-				/login/**=authc
-				/index=authc
-				/**=authc
-			</value>
+		<property name="filterChainDefinitionsLocation">
+			<value>classpath:shiro/shiro-urls.ini</value>
 		</property>
+		<!-- <property name="filterChainDefinitions"> <value> /static/**=anon /cas=casFilter /logout=logout /login**=authc /login/**=authc /index=authc /**=authc </value> </property> -->
 	</bean>
 
 	<!-- shiro-cas登录过滤器 -->
@@ -157,7 +147,7 @@
 	</bean>
 
 	<!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使shiro实现第三方缓存 -->
-	<bean id="shiroRedisCacheTransfer" class="pers.husen.highdsa.service.shiro.cache.ShiroRedisCacheTransfer">
+	<bean id="shiroRedisCacheTransfer" class="pers.husen.highdsa.security.client.cas.cache.ShiroRedisCacheTransfer">
 		<constructor-arg name="redisOperation" ref="redisOperation" />
 	</bean>
 </beans>

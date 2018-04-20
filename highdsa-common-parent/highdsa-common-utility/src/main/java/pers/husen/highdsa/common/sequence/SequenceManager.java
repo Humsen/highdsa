@@ -1,12 +1,11 @@
 package pers.husen.highdsa.common.sequence;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import pers.husen.highdsa.common.constant.ConfigFilePath;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.utility.ReadConfigFile;
 
@@ -63,20 +62,19 @@ public class SequenceManager {
 	 */
 	private static void init() {
 		try {
-			sequenceConfig = ReadConfigFile.readByRelativePath("sequence/sequence.properties");
-		} catch (UnsupportedEncodingException e) {
-			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
-		} catch (IOException e) {
-			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
-		}
+			sequenceConfig = ReadConfigFile.readByRelativePath(ConfigFilePath.SEQUENCE_ID_FILE);
+			
+			workerId = sequenceConfig.getProperty("workerId", "0");
+			logger.debug("workerId: {}", getWorkerId());
 
-		workerId = sequenceConfig.getProperty("workerId", "0");
-		logger.debug("workerId: {}", getWorkerId());
+			datacenterId = sequenceConfig.getProperty("datacenterId", "0");
+			logger.debug("datacenterId: {}", getDatacenterId());
 
-		datacenterId = sequenceConfig.getProperty("datacenterId", "0");
-		logger.debug("datacenterId: {}", getDatacenterId());
-
-		sequence = new Sequence(Long.valueOf(workerId), Long.valueOf(datacenterId));
+			sequence = new Sequence(Long.valueOf(workerId), Long.valueOf(datacenterId));
+		} catch (Exception e) {
+			logger.warn(StackTrace2Str.exceptionStackTrace2Str(e));
+			sequence = new Sequence(0, 0);
+		} 
 	}
 
 	private static String getWorkerId() {

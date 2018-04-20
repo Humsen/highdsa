@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.realm;
+package pers.husen.highdsa.security.client.cas.realm;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +26,14 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
 public class UserRealm extends CasRealm {
 
 	private SysUserManager sysUserManager;
+
+	/**
+	 * @param sysUserManager
+	 */
+	public UserRealm(SysUserManager sysUserManager) {
+		super();
+		this.sysUserManager = sysUserManager;
+	}
 
 	/**
 	 * @param sysUserManager

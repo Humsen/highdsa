@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.cache;
+package pers.husen.highdsa.security.client.cas.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

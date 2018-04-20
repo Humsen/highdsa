@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.cache;
+package pers.husen.highdsa.security.client.cas.cache;
 
 import java.io.Serializable;
 import java.util.ArrayList;

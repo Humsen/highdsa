@@ -98,6 +98,11 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
+	<bean id="custSessionsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.customer.CustSessionsMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
 	<bean id="sysPermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
@@ -122,5 +127,6 @@
 		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
+
 	<!-- <import resource="mybatis-provider.xml" /> <import resource="redis-consumer.xml" /> -->
 </beans> 

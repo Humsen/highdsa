@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.session;
+package pers.husen.highdsa.security.client.cas.session;
 
 import java.io.Serializable;
 import java.util.Date;

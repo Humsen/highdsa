@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.client;
+package pers.husen.highdsa.security.client.cas;
 
 import pers.husen.highdsa.common.sequence.Sequence;
 import pers.husen.highdsa.common.sequence.SequenceManager;

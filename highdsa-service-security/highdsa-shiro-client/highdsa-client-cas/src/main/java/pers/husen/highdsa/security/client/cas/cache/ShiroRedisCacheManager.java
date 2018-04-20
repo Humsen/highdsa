@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.cache;
+package pers.husen.highdsa.security.client.cas.cache;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

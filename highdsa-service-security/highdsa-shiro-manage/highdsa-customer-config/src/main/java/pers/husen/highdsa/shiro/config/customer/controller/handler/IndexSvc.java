@@ -3,6 +3,7 @@ package pers.husen.highdsa.shiro.config.customer.controller.handler;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,12 @@ public class IndexSvc {
 	public ModelAndView index(ModelMap map, HttpServletRequest request) {
 		ModelAndView mov = new ModelAndView("index");
 
-		HttpServletRequest httpReq = (HttpServletRequest) request;
-
 		String userName = (String) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
 		List<?> navigationBar = sysUserManager.findNavigationBar(userName);
-		httpReq.getSession().setAttribute("navibar", navigationBar);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("navibar", navigationBar);
+		session.setAttribute("userName", userName);
 
 		return mov;
 	}

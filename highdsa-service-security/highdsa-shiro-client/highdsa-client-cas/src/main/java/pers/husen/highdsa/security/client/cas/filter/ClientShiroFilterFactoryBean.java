@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.filter;
+package pers.husen.highdsa.security.client.cas.filter;
 
 import java.io.IOException;
 import java.io.InputStream;
