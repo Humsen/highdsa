@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.cas.client.handler;
+package pers.husen.highdsa.security.client.pac4j.handler;
 
 import org.pac4j.cas.logout.DefaultCasLogoutHandler;
 import org.pac4j.core.context.WebContext;
@@ -14,7 +14,7 @@ import io.buji.pac4j.profile.ShiroProfileManager;
  *
  * @Created at 2018年4月16日 下午11:59:55
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class ShiroCasLogoutHandler<C extends WebContext> extends DefaultCasLogoutHandler<C> {
 

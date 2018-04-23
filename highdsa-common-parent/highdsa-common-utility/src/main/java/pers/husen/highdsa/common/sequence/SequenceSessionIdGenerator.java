@@ -1,4 +1,4 @@
-package pers.husen.highdsa.security.client.cas.session;
+package pers.husen.highdsa.common.sequence;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ import pers.husen.highdsa.common.sequence.SequenceManager;
  *
  * @Created at 2018年4月20日 上午9:34:32
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class SequenceSessionIdGenerator implements SessionIdGenerator {
 	@Override

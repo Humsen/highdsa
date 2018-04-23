@@ -30,7 +30,7 @@
 	</bean>
 
 	<!-- cas客户端配置 -->
-	<bean id="casClient" class="pers.husen.highdsa.service.cas.client.MyCasClient">
+	<bean id="casClient" class="pers.husen.highdsa.security.client.pac4j.MyCasClient">
 		<constructor-arg ref="casConfig" />
 		<property name="includeClientNameInCallbackUrl" value="false"></property>
 		<!-- 客户端回调地址 -->
@@ -38,11 +38,11 @@
 	</bean>
 
 	<!-- shiro登出处理器，销毁session及登录状态等 -->
-	<bean id="casLogoutHandler" class="pers.husen.highdsa.service.cas.client.handler.ShiroCasLogoutHandler">
+	<bean id="casLogoutHandler" class="pers.husen.highdsa.security.client.pac4j.handler.ShiroCasLogoutHandler">
 		<property name="destroySession" value="true"></property>
 	</bean>
 
-	<bean id="sessionStore" class="pers.husen.highdsa.service.shiro.session.ShiroSessionStore"></bean>
+	<bean id="sessionStore" class="pers.husen.highdsa.security.client.pac4j.session.ShiroSessionStore"></bean>
 
 	<!-- pac4j配置 -->
 	<bean id="authcConfig" class="org.pac4j.core.config.Config">
@@ -53,9 +53,9 @@
 	<!-- shiro configurations -->
 
 	<!-- 缓存管理器 使用redis实现 -->
-	<!-- <bean id="cacheManager" class="pers.husen.highdsa.service.shiro.cache.ShiroRedisCacheManager"></bean> -->
+	<bean id="cacheManager" class="pers.husen.highdsa.security.client.pac4j.cache.ShiroRedisCacheManager"></bean>
 
-	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
+	<bean id="sessionIdGenerator" class="pers.husen.highdsa.common.sequence.SequenceSessionIdGenerator" />
 
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
 		<constructor-arg value="highdsa-session-id" />
@@ -81,14 +81,15 @@
 	</bean>
 
 	<!-- 会话 DAO -->
-	<bean id="sessionDAO" class="pers.husen.highdsa.service.shiro.session.RedisSessionDao">
-		<property name="sysSessionsManager" ref="sysSessionsManager" />
-		<property name="activeSessionsCacheName" value="highdsa-sysuser-config-activeSessionCache" />
+	<bean id="sessionDAO" class="pers.husen.highdsa.security.client.pac4j.session.MysqlRedisSessionDao">
+		<constructor-arg name="sysSessionsManager" ref="sysSessionsManager" />
+		<constructor-arg name="redisOperation" ref="redisOperation" />
+		<property name="activeSessionsCacheName" value="shiro_redis_session_sys:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
 
 	<!-- 会话验证调度器 -->
-	<bean id="sessionValidationScheduler" class="pers.husen.highdsa.service.shiro.session.MysqlSessionValidationScheduler">
+	<bean id="sessionValidationScheduler" class="pers.husen.highdsa.security.client.pac4j.session.MysqlSessionValidationScheduler">
 		<property name="sysSessionsManager" ref="sysSessionsManager" />
 		<property name="interval" value="1800000" />
 		<property name="sessionManager" ref="sessionManager" />
@@ -115,11 +116,13 @@
 			</list>
 		</property>
 		<property name="subjectFactory" ref="pac4jSubjectFactory"></property>
-		<!-- <property name="sessionManager" ref="sessionManager" /> <property name="cacheManager" ref="cacheManager" /> <property name="rememberMeManager" ref="rememberMeManager" /> -->
+		<property name="sessionManager" ref="sessionManager" />
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="rememberMeManager" ref="rememberMeManager" />
 	</bean>
 
 	<!-- Realm实现 -->
-	<bean id="userRealm" class="pers.husen.highdsa.service.shiro.realm.UserRealm">
+	<bean id="userRealm" class="pers.husen.highdsa.security.client.pac4j.realm.UserRealm">
 		<property name="sysUserManager" ref="sysUserManager" />
 		<property name="cachingEnabled" value="false" />
 		<property name="authenticationCachingEnabled" value="false" />
@@ -128,11 +131,7 @@
 		<property name="authorizationCacheName" value="authorizationCache" />
 	</bean>
 
-	<!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
-	<!-- <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager" /> <property name="arguments" 
-		ref="securityManager" /> </bean> -->
-
-	<bean id="shiroFilter" class="pers.husen.highdsa.service.shiro.filter.ClientShiroFilterFactoryBean">
+	<bean id="shiroFilter" class="pers.husen.highdsa.security.client.pac4j.filter.ClientShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager"></property>
 		<property name="filters">
 			<util:map>
@@ -161,7 +160,7 @@
 				</entry>
 				<!-- 拦截/login,并作一些操作，测试用，可以忽略 -->
 				<entry key="login">
-					<bean class="pers.husen.highdsa.service.shiro.filter.Redirect2CasLoginFilter"></bean>
+					<bean class="pers.husen.highdsa.security.client.pac4j.filter.Redirect2CasLoginFilter"></bean>
 				</entry>
 
 			</util:map>
@@ -185,7 +184,7 @@
 	</bean>
 
 	<!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使shiro实现第三方缓存 -->
-	<bean id="shiroRedisCacheTransfer" class="pers.husen.highdsa.service.shiro.cache.ShiroRedisCacheTransfer">
+	<bean id="shiroRedisCacheTransfer" class="pers.husen.highdsa.security.client.pac4j.cache.ShiroRedisCacheTransfer">
 		<constructor-arg name="redisOperation" ref="redisOperation" />
 	</bean>
 </beans>

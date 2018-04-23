@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.cache;
+package pers.husen.highdsa.security.client.pac4j.cache;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -16,7 +16,7 @@ import org.apache.shiro.cache.CacheManager;
  *
  * @Created at 2018年3月30日 上午8:29:21
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @SuppressWarnings("rawtypes")
 public class ShiroRedisCacheManager implements CacheManager {

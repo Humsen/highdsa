@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Shiro的简单应用</title>
+    <title>Highdsa 后台配置系统</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">

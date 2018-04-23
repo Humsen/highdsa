@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.session;
+package pers.husen.highdsa.security.client.pac4j.session;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +15,7 @@ import org.pac4j.core.context.session.SessionStore;
  *
  * @Created at 2018年4月17日 上午12:00:49
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class ShiroSessionStore implements SessionStore<J2EContext> {
 	private final static Logger logger = LogManager.getLogger(ShiroSessionStore.class.getName());

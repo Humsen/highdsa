@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.cache;
+package pers.husen.highdsa.security.client.pac4j.cache;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年3月30日 上午12:07:58
  * 
- * @Version 1.0.5
+ * @Version 1.0.6
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ShiroRedisCache<K, V> implements Cache<K, V> {

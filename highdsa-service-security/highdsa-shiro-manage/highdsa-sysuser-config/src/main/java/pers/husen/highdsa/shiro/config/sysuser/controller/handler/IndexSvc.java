@@ -3,6 +3,7 @@ package pers.husen.highdsa.shiro.config.sysuser.controller.handler;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.pac4j.core.profile.CommonProfile;
@@ -41,11 +42,12 @@ public class IndexSvc {
 			map.put("profile", profile);
 		}
 
-		HttpServletRequest httpReq = (HttpServletRequest) request;
-
 		String userName = p.getProfile().getId();
 		List<?> navigationBar = sysUserManager.findNavigationBar(userName);
-		httpReq.getSession().setAttribute("navibar", navigationBar);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("navibar", navigationBar);
+		session.setAttribute("userName", userName);
 
 		return mov;
 	}

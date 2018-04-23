@@ -21,7 +21,7 @@
 	<bean id="cacheManager" class="pers.husen.highdsa.security.client.cas.cache.ShiroRedisCacheManager"></bean>
 
 	<!-- 会话ID生成器 -->
-	<bean id="sessionIdGenerator" class="pers.husen.highdsa.security.client.cas.session.SequenceSessionIdGenerator" />
+	<bean id="sessionIdGenerator" class="pers.husen.highdsa.common.sequence.SequenceSessionIdGenerator" />
 
 	<!-- 会话Cookie模板 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -58,7 +58,7 @@
 	<bean id="sessionDAO" class="pers.husen.highdsa.security.client.cas.session.MysqlRedisSessionDao">
 		<constructor-arg name="sysSessionsManager" ref="sysSessionsManager" />
 		<constructor-arg name="redisOperation" ref="redisOperation" />
-		<property name="activeSessionsCacheName" value="shiro_redis_session:" />
+		<property name="activeSessionsCacheName" value="shiro_redis_session_customer:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
 

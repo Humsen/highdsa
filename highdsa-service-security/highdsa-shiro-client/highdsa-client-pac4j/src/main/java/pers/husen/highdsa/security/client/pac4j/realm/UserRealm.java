@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.realm;
+package pers.husen.highdsa.security.client.pac4j.realm;
 
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +23,7 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  *
  * @Created at 2018年4月13日 下午3:07:00
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class UserRealm extends Pac4jRealm {
 

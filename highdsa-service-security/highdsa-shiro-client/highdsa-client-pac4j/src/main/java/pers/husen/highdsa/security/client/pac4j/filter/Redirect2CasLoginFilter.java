@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.filter;
+package pers.husen.highdsa.security.client.pac4j.filter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @Created at 2018年4月9日 下午10:37:51
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class Redirect2CasLoginFilter extends AccessControlFilter {
 

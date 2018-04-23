@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.cas.client;
+package pers.husen.highdsa.security.client.pac4j;
 
 import org.pac4j.cas.client.CasClient;
 import org.pac4j.cas.config.CasConfiguration;
@@ -8,17 +8,15 @@ import org.pac4j.core.exception.HttpAction;
 import org.pac4j.core.redirect.RedirectAction;
 
 /**
- * 
- * 类功能说明
- * IndirectClient的getRedirectAction方法会报401错误，在这个类里重写getRedirectAction方法，并屏蔽掉异常代码
- * 
+ * @Desc IndirectClient的getRedirectAction方法会报401错误，在这个类里重写getRedirectAction方法，并屏蔽掉异常代码
+ *
  * @see org.pac4j.core.client.IndirectClient#getRedirectAction(org.pac4j.core.context.WebContext)
- *      <p>
- * 		Title: MyCasClient.java
- *      </p>
- * @author hxm
- * @date 2018年2月1日 上午10:58:27 类修改者 修改日期 修改说明
- * @version V1.0
+ * 
+ * @Author 何明胜
+ *
+ * @Created at 2018年4月23日 上午9:39:23
+ * 
+ * @Version 1.0.0
  */
 public class MyCasClient extends CasClient {
 
@@ -58,5 +56,4 @@ public class MyCasClient extends CasClient {
 	private void cleanRequestedUrl(final WebContext context) {
 		context.setSessionAttribute(Pac4jConstants.REQUESTED_URL, "");
 	}
-
 }

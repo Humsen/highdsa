@@ -1,4 +1,4 @@
-package pers.husen.highdsa.security.client.cas.session;
+package pers.husen.highdsa.security.client.pac4j.session;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,16 +20,16 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Author 何明胜
  *
- * @Created at 2018年4月20日 上午12:10:04
+ * @Created at 2018年4月23日 上午8:59:11
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class MysqlRedisSessionDao extends CachingSessionDAO {
 	private static final Logger logger = LogManager.getLogger(MysqlRedisSessionDao.class.getName());
 
 	private SysSessionsManager sysSessionsManager;
 	private RedisOperation redisOperation;
-	private static final String PREFIX = RedisCacheConstants.SHIRO_REDIS_SESSION_CUSTOMER;
+	private static final String PREFIX = RedisCacheConstants.SHIRO_REDIS_SESSION_SYSTEM;
 	private static final int EXPRIE = 10000;
 
 	/**

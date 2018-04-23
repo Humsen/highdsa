@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.session;
+package pers.husen.highdsa.security.client.pac4j.session;
 
 import org.apache.shiro.session.Session;
 
@@ -9,7 +9,7 @@ import org.apache.shiro.session.Session;
  *
  * @Created at 2018年4月17日 上午12:00:09
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class ShiroProvidedSessionStore extends ShiroSessionStore {
 

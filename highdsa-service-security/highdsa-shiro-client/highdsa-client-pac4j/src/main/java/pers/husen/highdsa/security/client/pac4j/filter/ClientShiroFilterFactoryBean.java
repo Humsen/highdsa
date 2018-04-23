@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.filter;
+package pers.husen.highdsa.security.client.pac4j.filter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
  *
  * @Created at 2018年4月16日 下午1:28:31
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class ClientShiroFilterFactoryBean extends ShiroFilterFactoryBean implements ApplicationContextAware {
 	@SuppressWarnings("unused")

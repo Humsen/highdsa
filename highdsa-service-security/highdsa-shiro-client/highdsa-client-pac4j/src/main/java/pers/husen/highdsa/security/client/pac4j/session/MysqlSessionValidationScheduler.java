@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.shiro.session;
+package pers.husen.highdsa.security.client.pac4j.session;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -33,7 +33,7 @@ import pers.husen.highdsa.service.mybatis.SysSessionsManager;
  *
  * @Created at 2018年4月3日 下午3:49:25
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class MysqlSessionValidationScheduler implements SessionValidationScheduler {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionValidationScheduler.class.getName());

@@ -1,9 +1,8 @@
-package pers.husen.highdsa.service.shiro.cache;
+package pers.husen.highdsa.security.client.pac4j.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import pers.husen.highdsa.service.redis.RedisOperation;
-import pers.husen.highdsa.service.shiro.session.RedisSessionDao;
 
 /**
  * @Desc 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使shiro实现第三方缓存
@@ -12,7 +11,7 @@ import pers.husen.highdsa.service.shiro.session.RedisSessionDao;
  *
  * @Created at 2018年3月30日 上午10:13:09
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class ShiroRedisCacheTransfer {
 	/**
@@ -23,6 +22,5 @@ public class ShiroRedisCacheTransfer {
 	@Autowired
 	public ShiroRedisCacheTransfer(RedisOperation redisOperation) {
 		ShiroRedisCache.setRedisOperation(redisOperation);
-		RedisSessionDao.setRedisOperation(redisOperation);
 	}
 }
