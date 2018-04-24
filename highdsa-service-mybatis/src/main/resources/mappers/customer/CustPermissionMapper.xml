@@ -60,7 +60,7 @@
 		permission_url, permission_create_time, permission_last_modify_time,
 		permission_valid
 		from cust_permission
-		order by permission_id ASC,
+		order by permission_id ASC
 	</select>
 	<!-- 根据角色id查询所有导航结点 -->
 	<select id="findNavisByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">

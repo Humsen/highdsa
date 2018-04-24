@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.husen.highdsa.service.mybatis.dao.customer.CustUserRoleMapper">
+	<!-- 自定义二级缓存 -->
+	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
+
 	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustUserRole">
 		<constructor>
 			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<idArg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 		</constructor>
 	</resultMap>
+	
 	<delete id="deleteByPrimaryKey" parameterType="map">
 		delete from cust_user_role
 		where user_id = #{userId,jdbcType=BIGINT}

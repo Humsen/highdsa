@@ -1020,8 +1020,15 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	@Override
 	public byte[] get(byte[] key) {
 		byte[] value = null;
-		Jedis jedis = getJedis();
-		value = jedis.get(key);
+		Jedis jedis;
+
+		try {
+			jedis = getJedis();
+
+			value = jedis.get(key);
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis缓存出错", e));
+		}
 
 		return value;
 	}
@@ -1035,8 +1042,15 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	 */
 	@Override
 	public byte[] set(byte[] key, byte[] value) {
-		Jedis jedis = getJedis();
-		jedis.set(key, value);
+		Jedis jedis = null;
+
+		try {
+			jedis = getJedis();
+
+			jedis.set(key, value);
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("设置redis缓存出错", e));
+		}
 
 		return value;
 	}
@@ -1051,10 +1065,17 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	 */
 	@Override
 	public byte[] set(byte[] key, byte[] value, int expire) {
-		Jedis jedis = getJedis();
-		jedis.set(key, value);
-		if (expire != 0) {
-			jedis.expire(key, expire);
+		Jedis jedis;
+
+		try {
+			jedis = getJedis();
+			jedis.set(key, value);
+			
+			if (expire != 0) {
+				jedis.expire(key, expire);
+			}
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("设置redis缓存出错", e));
 		}
 
 		return value;
@@ -1067,8 +1088,15 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	 */
 	@Override
 	public void del(byte[] key) {
-		Jedis jedis = getJedis();
-		jedis.del(key);
+		Jedis jedis;
+
+		try {
+			jedis = getJedis();
+			
+			jedis.del(key);
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("设置redis缓存出错", e));
+		}
 	}
 
 	/**
@@ -1076,9 +1104,16 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	 */
 	@Override
 	public Long dbSize() {
+		Jedis jedis;
 		Long dbSize = 0L;
-		Jedis jedis = getJedis();
-		dbSize = jedis.dbSize();
+
+		try {
+			jedis = getJedis();
+			
+			dbSize = jedis.dbSize();
+		} catch (Exception e) {
+			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis缓存数量出错", e));
+		}
 
 		return dbSize;
 	}

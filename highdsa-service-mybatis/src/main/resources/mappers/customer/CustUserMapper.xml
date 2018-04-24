@@ -22,7 +22,7 @@
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<!-- property指的是在bean中字段名 ofType类的全定向名 -->
-		<collection property="sysRoleList" ofType="pers.husen.highdsa.common.entity.po.customer.CustRole">
+		<collection property="custRoleList" ofType="pers.husen.highdsa.common.entity.po.customer.CustRole">
 			<result column="role_id" property="roleId" />
 			<result column="role_name" property="roleName" />
 			<result column="role_code" property="roleCode" />
@@ -38,10 +38,10 @@
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<!-- property指的是在bean中字段名 ofType类的全定向名 -->
-		<collection property="sysRolePermissionList" ofType="pers.husen.highdsa.common.entity.po.customer.CustRolePermission">
+		<collection property="custRolePermissionList" ofType="pers.husen.highdsa.common.entity.po.customer.CustRolePermission">
 			<result column="role_id" property="roleId" />
 			<result column="permission_id" property="permissionId" />
-			<association property="sysPermission" javaType="pers.husen.highdsa.common.entity.po.customer.CustPermission">
+			<association property="custPermission" javaType="pers.husen.highdsa.common.entity.po.customer.CustPermission">
 				<result column="permission_name" property="permissionName" />
 				<result column="permission_code" property="permissionCode" />
 				<result column="permission_desc" property="permissionDesc" />
@@ -103,8 +103,8 @@
 	</select>
 	<select id="selectRolesByUserName" parameterType="java.lang.String" resultMap="rolesResultMap">
 		SELECT
-		sys_user.user_id,
-		sys_user.user_name,
+		cust_user.user_id,
+		cust_user.user_name,
 		role.role_id,
 		role.role_name,
 		role.role_code,
@@ -124,8 +124,8 @@
 	</select>
 	<select id="selectPermissionsByUserName" parameterType="java.lang.String" resultMap="permissionResultMap">
 		SELECT
-		sys_user.user_id,
-		sys_user.user_name,
+		cust_user.user_id,
+		cust_user.user_name,
 		role_permission.role_id,
 		role_permission.permission_id,
 		permission.permission_name,
