@@ -29,7 +29,7 @@ public class SysSessionsManagerImpl implements SysSessionsManager {
 
 	@Override
 	public int deleteBySessionId(String sessionId) {
-		Integer reply = sysSessionsMapper.deleteByPrimaryKey(sessionId);
+		int reply = sysSessionsMapper.deleteByPrimaryKey(sessionId);
 		// sqlSession.commit();
 
 		logger.info("delete reply: {}", reply);
@@ -39,7 +39,7 @@ public class SysSessionsManagerImpl implements SysSessionsManager {
 
 	@Override
 	public int createSession(SysSessions sysSessions) {
-		Integer reply = sysSessionsMapper.insert(sysSessions);
+		int reply = sysSessionsMapper.insert(sysSessions);
 
 		logger.info("insert reply: {}", reply);
 
@@ -66,7 +66,7 @@ public class SysSessionsManagerImpl implements SysSessionsManager {
 
 	@Override
 	public int updateBySessionId(SysSessions sysSessions) {
-		Integer reply = sysSessionsMapper.updateByPrimaryKey(sysSessions);
+		int reply = sysSessionsMapper.updateByPrimaryKey(sysSessions);
 
 		logger.info("update reply: {}", reply);
 

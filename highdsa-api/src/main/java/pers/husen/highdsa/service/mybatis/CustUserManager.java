@@ -4,27 +4,27 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import pers.husen.highdsa.common.entity.po.system.SysNavigation;
-import pers.husen.highdsa.common.entity.po.system.SysUser;
+import pers.husen.highdsa.common.entity.po.customer.CustNavigation;
+import pers.husen.highdsa.common.entity.po.customer.CustUser;
 
 /**
- * @Desc 系统用户管理
+ * @Desc 客户管理
  *
  * @Author 何明胜
  *
- * @Created at 2018年3月29日 上午9:21:33
+ * @Created at 2018年4月24日 上午10:16:04
  * 
- * @Version 1.0.4
+ * @Version 1.0.0
  */
-@Service("sysUserManager")
-public interface SysUserManager {
+@Service("custUserManager")
+public interface CustUserManager {
 	/**
 	 * 创建用户
 	 * 
-	 * @param sysUser
+	 * @param custUser
 	 * @return
 	 */
-	public int createUser(SysUser sysUser);
+	public int createUser(CustUser custUser);
 
 	/**
 	 * 修改密码
@@ -53,11 +53,11 @@ public interface SysUserManager {
 	/**
 	 * 增加用户和用户-角色关联
 	 * 
-	 * @param sysUser
+	 * @param custUser
 	 * @param roleIds
 	 * @return
 	 */
-	SysUser addUser(SysUser sysUser, Long... roleIds);
+	CustUser addUser(CustUser custUser, Long... roleIds);
 
 	/**
 	 * 根据id删除用户
@@ -79,14 +79,14 @@ public interface SysUserManager {
 	 * @param userName
 	 * @return
 	 */
-	SysUser findUserByUserName(String userName);
+	CustUser findUserByUserName(String userName);
 
 	/**
 	 * 获取所有用户
 	 * 
 	 * @return
 	 */
-	List<SysUser> getAllUsers();
+	List<CustUser> getAllUsers();
 
 	/**
 	 * 更新用户-角色关联
@@ -102,7 +102,7 @@ public interface SysUserManager {
 	 * @param userName
 	 * @return
 	 */
-	SysUser findRolesByUserName(String userName);
+	CustUser findRolesByUserName(String userName);
 
 	/**
 	 * 根据用户名查找权限集合
@@ -110,7 +110,7 @@ public interface SysUserManager {
 	 * @param userName
 	 * @return
 	 */
-	SysUser findPermissionsByUserName(String userName);
+	CustUser findPermissionsByUserName(String userName);
 
 	/**
 	 * 根据用户名查找导航栏
@@ -118,5 +118,5 @@ public interface SysUserManager {
 	 * @param userName
 	 * @return
 	 */
-	List<SysNavigation> findNavigationBar(String userName);
+	List<CustNavigation> findNavigationBar(String userName);
 }

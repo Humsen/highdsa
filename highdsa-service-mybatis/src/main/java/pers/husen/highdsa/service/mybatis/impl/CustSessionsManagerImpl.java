@@ -29,7 +29,7 @@ public class CustSessionsManagerImpl implements CustSessionsManager {
 
 	@Override
 	public int deleteBySessionId(String sessionId) {
-		Integer reply = custSessionsMapper.deleteByPrimaryKey(sessionId);
+		int reply = custSessionsMapper.deleteByPrimaryKey(sessionId);
 
 		logger.info("delete reply: {}", reply);
 
@@ -38,7 +38,7 @@ public class CustSessionsManagerImpl implements CustSessionsManager {
 
 	@Override
 	public int createSession(CustSessions custSessions) {
-		Integer reply = custSessionsMapper.insert(custSessions);
+		int reply = custSessionsMapper.insert(custSessions);
 
 		logger.info("insert reply: {}", reply);
 
@@ -65,7 +65,7 @@ public class CustSessionsManagerImpl implements CustSessionsManager {
 
 	@Override
 	public int updateBySessionId(CustSessions sysSessions) {
-		Integer reply = custSessionsMapper.updateByPrimaryKey(sysSessions);
+		int reply = custSessionsMapper.updateByPrimaryKey(sysSessions);
 
 		logger.info("update reply: {}", reply);
 

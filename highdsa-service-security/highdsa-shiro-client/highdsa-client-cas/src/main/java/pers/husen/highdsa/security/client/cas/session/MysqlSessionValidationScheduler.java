@@ -22,9 +22,9 @@ import org.springframework.util.ReflectionUtils;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-import pers.husen.highdsa.common.entity.po.system.SysSessions;
+import pers.husen.highdsa.common.entity.po.customer.CustSessions;
 import pers.husen.highdsa.common.transform.ShiroSessionSerializer;
-import pers.husen.highdsa.service.mybatis.SysSessionsManager;
+import pers.husen.highdsa.service.mybatis.CustSessionsManager;
 
 /**
  * @Desc 数据库会话过期验证 调度器
@@ -38,22 +38,8 @@ import pers.husen.highdsa.service.mybatis.SysSessionsManager;
 public class MysqlSessionValidationScheduler implements SessionValidationScheduler {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionValidationScheduler.class.getName());
 
-	private SysSessionsManager sysSessionsManager;
-
-	/**
-	 * @return the sysSessionsManager
-	 */
-	public SysSessionsManager getSysSessionsManager() {
-		return sysSessionsManager;
-	}
-
-	/**
-	 * @param sysSessionsManager
-	 *            the sysSessionsManager to set
-	 */
-	public void setSysSessionsManager(SysSessionsManager sysSessionsManager) {
-		this.sysSessionsManager = sysSessionsManager;
-	}
+	/** 客户会话管理 */
+	private CustSessionsManager custSessionsManager;
 
 	private ValidatingSessionManager sessionManager;
 	private ScheduledExecutorService service;
@@ -62,6 +48,21 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 
 	public MysqlSessionValidationScheduler() {
 		super();
+	}
+
+	/**
+	 * @return the custSessionsManager
+	 */
+	public CustSessionsManager getCustSessionsManager() {
+		return custSessionsManager;
+	}
+
+	/**
+	 * @param custSessionsManager
+	 *            the custSessionsManager to set
+	 */
+	public void setCustSessionsManager(CustSessionsManager custSessionsManager) {
+		this.custSessionsManager = custSessionsManager;
 	}
 
 	public ValidatingSessionManager getSessionManager() {
@@ -119,12 +120,12 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 		int start = 0;
 		// 每页大小
 		int size = 20;
-		List<SysSessions> sessionList = sysSessionsManager.findListByPage(start, size);
+		List<CustSessions> sessionList = custSessionsManager.findListByPage(start, size);
 
 		while (sessionList.size() > 0) {
-			for (SysSessions sysSessions : sessionList) {
+			for (CustSessions custSessions : sessionList) {
 				try {
-					Session session = ShiroSessionSerializer.deserialize(sysSessions.getSessionValue());
+					Session session = ShiroSessionSerializer.deserialize(custSessions.getSessionValue());
 					Method validateMethod = ReflectionUtils.findMethod(AbstractValidatingSessionManager.class, "validate", Session.class, SessionKey.class);
 					validateMethod.setAccessible(true);
 					ReflectionUtils.invokeMethod(validateMethod, sessionManager, session, new DefaultSessionKey(session.getId()));
@@ -134,7 +135,7 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 			}
 			start = start + size;
 
-			sessionList = sysSessionsManager.findListByPage(start, size);
+			sessionList = custSessionsManager.findListByPage(start, size);
 		}
 
 		long stopTime = System.currentTimeMillis();

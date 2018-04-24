@@ -1,6 +1,7 @@
 package pers.husen.highdsa.service.mybatis.dao.customer;
 
 import java.util.List;
+
 import pers.husen.highdsa.common.entity.po.customer.CustUserInfo;
 
 /**
@@ -10,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustUserInfo;
  *
  * @Created at 2018年4月16日 下午11:51:33
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public interface CustUserInfoMapper {
 	/**
@@ -51,4 +52,12 @@ public interface CustUserInfoMapper {
 	 * @return
 	 */
 	int updateByPrimaryKey(CustUserInfo record);
+
+	/**
+	 * 根据用户名查找用户信息
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	CustUserInfo selectUserInfoByUserName(String userName);
 }

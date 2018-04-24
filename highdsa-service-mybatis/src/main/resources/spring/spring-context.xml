@@ -98,11 +98,6 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
-	<bean id="custSessionsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.customer.CustSessionsMapper" />
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
-
 	<bean id="sysPermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysPermissionMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
@@ -125,6 +120,42 @@
 
 	<bean id="sysUserRoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 客户表 -->
+	<bean id="custUserInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.customer.CustUserInfoMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="custSessionsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.customer.CustSessionsMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="custPermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.customer.CustPermissionMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="custRoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.customer.CustRoleMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="custRolePermissionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.customer.CustRolePermissionMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="custUserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.customer.CustUserMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="custUserRoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="pers.husen.highdsa.service.mybatis.dao.customer.CustUserRoleMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 

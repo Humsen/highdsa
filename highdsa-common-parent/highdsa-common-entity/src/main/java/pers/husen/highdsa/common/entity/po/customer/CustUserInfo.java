@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @Created at 2018年4月11日 下午1:34:35
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 public class CustUserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +19,7 @@ public class CustUserInfo implements Serializable {
 
 	private String userNickName;
 
-	private Date userRegisterDate;
+	private Date userRegisterTime;
 
 	private String userHeadUrl;
 
@@ -37,30 +37,17 @@ public class CustUserInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CustUserInfo [userId=" + userId + ", userNickName=" + userNickName + ", userRegisterDate=" + userRegisterDate + ", userHeadUrl=" + userHeadUrl + ", userSex=" + userSex
+		return "CustUserInfo [userId=" + userId + ", userNickName=" + userNickName + ", userRegisterTime=" + userRegisterTime + ", userHeadUrl=" + userHeadUrl + ", userSex=" + userSex
 				+ ", userAddress=" + userAddress + ", userAge=" + userAge + ", userBirthday=" + userBirthday + ", userDesc=" + userDesc + ", userLastLoginTime=" + userLastLoginTime + "]";
 	}
 
-	public CustUserInfo(Long userId, String userNickName, Date userRegisterDate, String userHeadUrl, Boolean userSex, String userAddress, String userAge, String userBirthday, String userDesc,
+	public CustUserInfo(Long userId, String userNickName, Date userRegisterTime, String userHeadUrl, Boolean userSex, String userAddress, String userAge, String userBirthday, String userDesc,
 			Date userLastLoginTime) {
 		this.userId = userId;
 		this.userNickName = userNickName;
-		this.userRegisterDate = userRegisterDate;
+		this.userRegisterTime = userRegisterTime;
 		this.userHeadUrl = userHeadUrl;
 		this.userSex = userSex;
-		this.userAddress = userAddress;
-		this.userAge = userAge;
-		this.userBirthday = userBirthday;
-		this.userDesc = userDesc;
-		this.userLastLoginTime = userLastLoginTime;
-	}
-
-	public CustUserInfo(Long userId, String userNickName, Date userRegisterDate, String userHeadUrl, String userAddress, String userAge, String userBirthday, String userDesc,
-			Date userLastLoginTime) {
-		this.userId = userId;
-		this.userNickName = userNickName;
-		this.userRegisterDate = userRegisterDate;
-		this.userHeadUrl = userHeadUrl;
 		this.userAddress = userAddress;
 		this.userAge = userAge;
 		this.userBirthday = userBirthday;
@@ -88,12 +75,12 @@ public class CustUserInfo implements Serializable {
 		this.userNickName = userNickName == null ? null : userNickName.trim();
 	}
 
-	public Date getUserRegisterDate() {
-		return userRegisterDate;
+	public Date getUserRegisterTime() {
+		return userRegisterTime;
 	}
 
-	public void setUserRegisterDate(Date userRegisterDate) {
-		this.userRegisterDate = userRegisterDate;
+	public void setUserRegisterTime(Date userRegisterTime) {
+		this.userRegisterTime = userRegisterTime;
 	}
 
 	public String getUserHeadUrl() {

@@ -6,55 +6,79 @@
 
 	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustUserInfo">
 		<constructor>
-			<idArg column="user_id" javaType="java.lang.Long" jdbcType="INTEGER" />
+			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="user_nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-			<arg column="user_register_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+			<arg column="user_register_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
 			<arg column="user_head_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="user_sex" javaType="java.lang.Boolean" jdbcType="BIT" />
 			<arg column="user_address" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_age" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_birthday" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_last_login_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
 		</constructor>
-		<result column="user_sex" property="userSex" />
 	</resultMap>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from cust_user_info
-		where user_id = #{userId,jdbcType=INTEGER}
+		where user_id = #{userId,jdbcType=BIGINT}
 	</delete>
 	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.customer.CustUserInfo">
-		insert into cust_user_info (user_id, user_nick_name, user_register_date,
+		insert into cust_user_info (user_id, user_nick_name, user_register_time,
 		user_head_url, user_sex, user_address,
 		user_age, user_birthday, user_desc,
 		user_last_login_time)
-		values (#{userId,jdbcType=INTEGER}, #{userNickName,jdbcType=VARCHAR}, #{userRegisterDate,jdbcType=TIMESTAMP},
-		#{userHeadUrl,jdbcType=VARCHAR}, #{userSex,jdbcType=BIT}, #{userAddress,jdbcType=VARCHAR},
+		values (#{userId,jdbcType=BIGINT}, #{userNickName,jdbcType=VARCHAR}, #{userRegisterTime,jdbcType=TIMESTAMP},
+		#{userHeadUrl,jdbcType=VARCHAR}, #{userSex,jdbcType=BIT},
+		#{userAddress,jdbcType=VARCHAR},
 		#{userAge,jdbcType=VARCHAR}, #{userBirthday,jdbcType=VARCHAR}, #{userDesc,jdbcType=VARCHAR},
 		#{userLastLoginTime,jdbcType=TIMESTAMP})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.customer.CustUserInfo">
 		update cust_user_info
 		set user_nick_name = #{userNickName,jdbcType=VARCHAR},
-		user_register_date = #{userRegisterDate,jdbcType=TIMESTAMP},
+		user_register_time = #{userRegisterTime,jdbcType=TIMESTAMP},
 		user_head_url = #{userHeadUrl,jdbcType=VARCHAR},
 		user_sex = #{userSex,jdbcType=BIT},
 		user_address = #{userAddress,jdbcType=VARCHAR},
 		user_age = #{userAge,jdbcType=VARCHAR},
-		user_birthday = #{userBirthday,jdbcType=VARCHAR},
+		user_birthday =
+		#{userBirthday,jdbcType=VARCHAR},
 		user_desc = #{userDesc,jdbcType=VARCHAR},
 		user_last_login_time = #{userLastLoginTime,jdbcType=TIMESTAMP}
 		where user_id = #{userId,jdbcType=BIGINT}
 	</update>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select user_id, user_nick_name, user_register_date, user_head_url, user_sex, user_address,
-		user_age, user_birthday, user_desc, user_last_login_time
+		select user_id, user_nick_name, user_register_time, user_head_url, user_sex, user_address,
+		user_age, user_birthday,
+		user_desc, user_last_login_time
 		from cust_user_info
 		where user_id = #{userId,jdbcType=BIGINT}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
-		select user_id, user_nick_name, user_register_date, user_head_url, user_sex, user_address,
+		select user_id, user_nick_name, user_register_time, user_head_url, user_sex, user_address,
 		user_age, user_birthday, user_desc, user_last_login_time
-		from cust_user_info
-		order by user_id ASC,userCreateDate DESC
+		from
+		cust_user_info
+		order by user_id ASC
+	</select>
+	<!-- 根据用户名查询用户信息 -->
+	<select id="selectUserInfoByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+		user_info.user_id,
+		user_info.user_nick_name,
+		user_info.user_register_time,
+		user_info.user_head_url,
+		user_info.user_sex,
+		user_info.user_birthday,
+		user_info.user_desc,
+		user_info.user_last_login_time
+		FROM
+		cust_user,
+		cust_user_info AS user_info
+		WHERE
+		cust_user.user_name =
+		#{userName,jdbcType=VARCHAR} AND
+		cust_user.user_id = user_info.user_id
 	</select>
 </mapper>

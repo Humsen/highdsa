@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import pers.husen.highdsa.common.entity.po.system.SysUser;
+import pers.husen.highdsa.common.entity.po.customer.CustUser;
 import pers.husen.highdsa.shiro.config.customer.controller.handler.UserSvc;
 
 /**
@@ -21,7 +21,7 @@ import pers.husen.highdsa.shiro.config.customer.controller.handler.UserSvc;
  *
  * @Created at 2018年4月13日 下午3:06:00
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Controller
 @RequestMapping("/user")
@@ -30,8 +30,8 @@ public class UserController {
 	private UserSvc userSvc;
 
 	@RequestMapping("/login")
-	public ModelAndView login(HttpServletRequest req) {
-		return userSvc.login(req);
+	public ModelAndView login(HttpServletRequest request) {
+		return userSvc.login(request);
 	}
 
 	@RequiresPermissions("user:list")
@@ -43,8 +43,8 @@ public class UserController {
 	@RequiresPermissions("user:add")
 	@RequestMapping("/add")
 	@ResponseBody
-	public SysUser addUser(SysUser user, Long... roleIds) {
-		return userSvc.addUser(user, roleIds);
+	public CustUser addUser(CustUser custUser, Long... roleIds) {
+		return userSvc.addUser(custUser, roleIds);
 	}
 
 	@RequiresPermissions("user:showroles")

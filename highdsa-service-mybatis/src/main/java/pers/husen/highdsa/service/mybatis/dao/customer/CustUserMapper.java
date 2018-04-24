@@ -1,6 +1,7 @@
 package pers.husen.highdsa.service.mybatis.dao.customer;
 
 import java.util.List;
+
 import pers.husen.highdsa.common.entity.po.customer.CustUser;
 
 /**
@@ -10,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustUser;
  *
  * @Created at 2018年4月16日 下午11:52:51
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public interface CustUserMapper {
 	/**
@@ -46,4 +47,28 @@ public interface CustUserMapper {
 	 * @return
 	 */
 	int updateByPrimaryKey(CustUser record);
+	
+	/**
+	 * 根据用户名查找用户信息
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	CustUser selectUserByUserName(String userName);
+
+	/**
+	 * 根据用户名查找角色集合
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	CustUser selectRolesByUserName(String userName);
+
+	/**
+	 * 根据用户名查找权限集合
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	CustUser selectPermissionsByUserName(String userName);
 }

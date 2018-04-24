@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import pers.husen.highdsa.common.entity.po.system.SysPermission;
+import pers.husen.highdsa.common.entity.po.customer.CustPermission;
 import pers.husen.highdsa.shiro.config.customer.controller.handler.PermissionSvc;
 
 /**
@@ -17,7 +17,7 @@ import pers.husen.highdsa.shiro.config.customer.controller.handler.PermissionSvc
  *
  * @Created at 2018年4月13日 下午3:05:32
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Controller
 @RequestMapping("/perm")
@@ -35,35 +35,35 @@ public class PermissionController {
 	@RequiresPermissions("perm:add")
 	@RequestMapping("/add")
 	@ResponseBody
-	public SysPermission addPermission(SysPermission permission) {
-		return permissionSvc.addPermission(permission);
+	public CustPermission addPermission(CustPermission custPermission) {
+		return permissionSvc.addPermission(custPermission);
 	}
 
 	@RequiresPermissions("perm:delete")
 	@RequestMapping("/delete")
 	@ResponseBody
-	public void deletePermission(Long permId) {
-		permissionSvc.deletePermission(permId);
+	public void deletePermission(Long permissionId) {
+		permissionSvc.deletePermission(permissionId);
 	}
 
 	@RequiresPermissions("perm:delete")
 	@RequestMapping("/deletemore")
 	@ResponseBody
-	public void deleteMorePerms(Long... permIds) {
-		permissionSvc.deleteMorePerms(permIds);
+	public void deleteMorePerms(Long... permissionIds) {
+		permissionSvc.deleteMorePerms(permissionIds);
 	}
 
 	@RequiresPermissions("perm:update")
 	@RequestMapping("/getperm")
 	@ResponseBody
-	public SysPermission getPermById(Long permId) {
-		return permissionSvc.getPermById(permId);
+	public CustPermission getPermById(Long permissionId) {
+		return permissionSvc.getPermById(permissionId);
 	}
 
 	@RequiresPermissions("perm:update")
 	@RequestMapping("/update")
 	@ResponseBody
-	public void updatePermission(SysPermission permission) {
-		permissionSvc.updatePermission(permission);
+	public void updatePermission(CustPermission custPermission) {
+		permissionSvc.updatePermission(custPermission);
 	}
 }

@@ -2,26 +2,26 @@ package pers.husen.highdsa.service.mybatis;
 
 import java.util.List;
 
-import pers.husen.highdsa.common.entity.po.system.SysRole;
-import pers.husen.highdsa.common.entity.po.system.SysUser;
+import pers.husen.highdsa.common.entity.po.customer.CustRole;
+import pers.husen.highdsa.common.entity.po.customer.CustUser;
 
 /**
- * @Desc 系统角色管理
+ * @Desc 客户角色管理
  *
  * @Author 何明胜
  *
- * @Created at 2018年3月29日 上午9:21:03
+ * @Created at 2018年4月24日 上午10:15:39
  * 
- * @Version 1.0.1
+ * @Version 1.0.0
  */
-public interface SysRoleManager {
+public interface CustRoleManager {
 	/**
 	 * 创建角色
 	 * 
-	 * @param sysRole
+	 * @param custRole
 	 * @return
 	 */
-	public int createSysRole(SysRole sysRole);
+	public int createSysRole(CustRole custRole);
 
 	/**
 	 * 添加角色-权限之间关系
@@ -42,11 +42,11 @@ public interface SysRoleManager {
 	/**
 	 * 添加角色
 	 * 
-	 * @param sysRole
+	 * @param custRole
 	 * @param permissionIds
 	 * @return
 	 */
-	SysRole addRole(SysRole sysRole, Long... permissionIds);
+	CustRole addRole(CustRole custRole, Long... permissionIds);
 
 	/**
 	 * 根据id删除
@@ -68,7 +68,7 @@ public interface SysRoleManager {
 	 * @param roleId
 	 * @return
 	 */
-	SysRole findRoleById(Long roleId);
+	CustRole findRoleById(Long roleId);
 
 	/**
 	 * 根据用户名查找角色集合
@@ -76,22 +76,22 @@ public interface SysRoleManager {
 	 * @param userName
 	 * @return
 	 */
-	SysUser findRolesByUserName(String userName);
+	CustUser findRolesByUserName(String userName);
 
 	/**
 	 * 获取所有角色
 	 * 
 	 * @return
 	 */
-	List<SysRole> findAllRoles();
+	List<CustRole> findAllRoles();
 
 	/**
 	 * 更新角色和权限关联
 	 * 
-	 * @param role
-	 * @param permIds
+	 * @param custRole
+	 * @param permissionIds
 	 */
-	void updateRole(SysRole role, Long... permIds);
+	void updateRole(CustRole custRole, Long... permissionIds);
 
 	/**
 	 * 增加角色权限关联

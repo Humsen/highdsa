@@ -17,6 +17,7 @@
 			<arg column="permission_valid" javaType="java.lang.Boolean" jdbcType="BIT" />
 		</constructor>
 	</resultMap>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from sys_permission
 		where permission_id = #{permissionId,jdbcType=BIGINT}

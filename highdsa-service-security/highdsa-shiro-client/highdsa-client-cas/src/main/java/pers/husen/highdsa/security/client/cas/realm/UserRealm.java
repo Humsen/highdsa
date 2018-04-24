@@ -9,10 +9,10 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cas.CasRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import pers.husen.highdsa.common.entity.po.system.SysRole;
-import pers.husen.highdsa.common.entity.po.system.SysRolePermission;
-import pers.husen.highdsa.common.entity.po.system.SysUser;
-import pers.husen.highdsa.service.mybatis.SysUserManager;
+import pers.husen.highdsa.common.entity.po.customer.CustRole;
+import pers.husen.highdsa.common.entity.po.customer.CustRolePermission;
+import pers.husen.highdsa.common.entity.po.customer.CustUser;
+import pers.husen.highdsa.service.mybatis.CustUserManager;
 
 /**
  * @Desc 用户域
@@ -25,22 +25,29 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  */
 public class UserRealm extends CasRealm {
 
-	private SysUserManager sysUserManager;
+	private CustUserManager custUserManager;
 
 	/**
 	 * @param sysUserManager
 	 */
-	public UserRealm(SysUserManager sysUserManager) {
+	public UserRealm(CustUserManager custUserManager) {
 		super();
-		this.sysUserManager = sysUserManager;
+		this.custUserManager = custUserManager;
 	}
 
 	/**
-	 * @param sysUserManager
-	 *            the sysUserManager to set
+	 * @return the custUserManager
 	 */
-	public void setSysUserManager(SysUserManager sysUserManager) {
-		this.sysUserManager = sysUserManager;
+	public CustUserManager getCustUserManager() {
+		return custUserManager;
+	}
+
+	/**
+	 * @param custUserManager
+	 *            the custUserManager to set
+	 */
+	public void setCustUserManager(CustUserManager custUserManager) {
+		this.custUserManager = custUserManager;
 	}
 
 	@Override
@@ -53,10 +60,10 @@ public class UserRealm extends CasRealm {
 		// 根据用户名查询当前用户拥有的角色
 		Set<String> roleNames = new HashSet<String>();
 
-		SysUser userRole = sysUserManager.findRolesByUserName(userName);
-		List<SysRole> roleList = userRole.getSysRoleList();
+		CustUser userRole = custUserManager.findRolesByUserName(userName);
+		List<CustRole> roleList = userRole.getCustRoleList();
 
-		for (SysRole role : roleList) {
+		for (CustRole role : roleList) {
 			roleNames.add(role.getRoleCode());
 		}
 		// 将角色名称提供给info
@@ -65,11 +72,11 @@ public class UserRealm extends CasRealm {
 		// 根据用户名查询当前用户权限
 		Set<String> permissionNames = new HashSet<String>();
 
-		SysUser userPermission = sysUserManager.findPermissionsByUserName(userName);
-		List<SysRolePermission> rolePermissionList = userPermission.getSysRolePermissionList();
+		CustUser userPermission = custUserManager.findPermissionsByUserName(userName);
+		List<CustRolePermission> rolePermissionList = userPermission.getCustRolePermissionList();
 
-		for (SysRolePermission rolePermission : rolePermissionList) {
-			permissionNames.add(rolePermission.getSysPermission().getPermissionCode());
+		for (CustRolePermission rolePermission : rolePermissionList) {
+			permissionNames.add(rolePermission.getCustPermission().getPermissionCode());
 		}
 		// 将权限名称提供给info
 		authorizationInfo.setStringPermissions(permissionNames);

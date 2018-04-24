@@ -41,7 +41,7 @@ public interface SysUserRoleMapper {
 	List<SysUserRole> selectAll();
 
 	/**
-	 * 根据用户id删除 用户-角色联系, 删除用户时此用户联系的所有角色都失效
+	 * 根据用户id删除 用户-角色联系, 删除用户时此用户关联的所有角色都失效
 	 * 
 	 * @param userId
 	 * @return

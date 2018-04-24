@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @Created at 2018年4月20日 上午12:30:47
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class CustSessions implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -41,6 +41,11 @@ public class CustSessions implements Serializable {
 
 	public CustSessions() {
 		super();
+	}
+
+	public CustSessions(String sessionId, String sessionValue) {
+		this.sessionId = sessionId;
+		this.sessionValue = sessionValue;
 	}
 
 	public String getSessionId() {

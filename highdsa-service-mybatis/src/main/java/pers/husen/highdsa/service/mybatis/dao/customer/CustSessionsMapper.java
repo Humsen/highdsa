@@ -24,7 +24,7 @@ public interface CustSessionsMapper {
 	/**
 	 * 插入新记录
 	 * 
-	 * @param sysSessions
+	 * @param custSessions
 	 * @return
 	 */
 	int insert(CustSessions custSessions);
@@ -47,7 +47,7 @@ public interface CustSessionsMapper {
 	/**
 	 * 根据主键更新
 	 * 
-	 * @param sysSessions
+	 * @param custSessions
 	 * @return
 	 */
 	int updateByPrimaryKey(CustSessions custSessions);

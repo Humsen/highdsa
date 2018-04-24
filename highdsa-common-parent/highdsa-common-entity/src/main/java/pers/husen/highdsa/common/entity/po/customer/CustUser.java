@@ -1,6 +1,10 @@
 package pers.husen.highdsa.common.entity.po.customer;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
+import pers.husen.highdsa.common.entity.po.system.SysUser;
 
 /**
  * @Desc 客户用户实体类
@@ -9,7 +13,7 @@ import java.io.Serializable;
  *
  * @Created at 2018年4月11日 下午1:36:36
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class CustUser implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,10 +32,14 @@ public class CustUser implements Serializable {
 
 	private String userState;
 
+	private List<CustRole> custRoleList;
+
+	private List<CustRolePermission> custRolePermissionList;
+
 	@Override
 	public String toString() {
 		return "CustUser [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userPassword=" + userPassword + ", userPwdSalt=" + userPwdSalt
-				+ ", userState=" + userState + "]";
+				+ ", userState=" + userState + ", custRoleList=" + custRoleList + ", custRolePermissionList=" + custRolePermissionList + "]";
 	}
 
 	public CustUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt, String userState) {
@@ -102,5 +110,58 @@ public class CustUser implements Serializable {
 
 	public void setUserState(String userState) {
 		this.userState = userState == null ? null : userState.trim();
+	}
+
+	/**
+	 * @return the custRoleList
+	 */
+	public List<CustRole> getCustRoleList() {
+		return custRoleList;
+	}
+
+	/**
+	 * @param custRoleList
+	 *            the custRoleList to set
+	 */
+	public void setCustRoleList(List<CustRole> custRoleList) {
+		this.custRoleList = custRoleList;
+	}
+
+	/**
+	 * @return the custRolePermissionList
+	 */
+	public List<CustRolePermission> getCustRolePermissionList() {
+		return custRolePermissionList;
+	}
+
+	/**
+	 * @param custRolePermissionList
+	 *            the custRolePermissionList to set
+	 */
+	public void setCustRolePermissionList(List<CustRolePermission> custRolePermissionList) {
+		this.custRolePermissionList = custRolePermissionList;
+	}
+
+	/**
+	 * 重写equals和hashCode来定义判断相等的规则
+	 */
+	@Override
+	public boolean equals(Object object) {
+		if (object == this) {
+			return true;
+		}
+
+		if (!(object instanceof SysUser)) {
+			return false;
+		}
+		CustUser user = (CustUser) object;
+
+		return Objects.equals(userId, user.userId) && Objects.equals(userName, user.userName) && Objects.equals(userEmail, user.userEmail) && Objects.equals(userPhone, user.userPhone)
+				&& Objects.equals(userPassword, user.userPassword) && Objects.equals(userPwdSalt, user.userPwdSalt) && Objects.equals(userState, user.userState);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId, userName, userPassword);
 	}
 }

@@ -69,6 +69,7 @@
 		WHERE
 		sys_user.user_name = #{userName,jdbcType=VARCHAR} AND
 		sys_user.user_id = user_role.user_id
-		AND user_role.role_id = role.role_id;
+		AND user_role.role_id
+		= role.role_id;
 	</select>
 </mapper>

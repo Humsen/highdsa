@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import pers.husen.highdsa.common.entity.po.system.SysRole;
+import pers.husen.highdsa.common.entity.po.customer.CustRole;
 import pers.husen.highdsa.shiro.config.customer.controller.handler.RoleSvc;
 
 /**
@@ -19,7 +19,7 @@ import pers.husen.highdsa.shiro.config.customer.controller.handler.RoleSvc;
  *
  * @Created at 2018年4月13日 下午3:05:50
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Controller
 @RequestMapping("/role")
@@ -43,9 +43,9 @@ public class RoleController {
 	@RequiresPermissions("role:add")
 	@RequestMapping("/add")
 	@ResponseBody
-	public SysRole addRole(SysRole role, Long... permIds) {
+	public CustRole addRole(CustRole custRole, Long... permissionIds) {
 
-		return roleSvc.addRole(role, permIds);
+		return roleSvc.addRole(custRole, permissionIds);
 	}
 
 	@RequiresPermissions("role:delete")
@@ -72,14 +72,14 @@ public class RoleController {
 	@RequiresPermissions("role:findinfo")
 	@RequestMapping("/getrole")
 	@ResponseBody
-	public SysRole getRoleById(Long roleId) {
+	public CustRole getRoleById(Long roleId) {
 		return roleSvc.getRoleById(roleId);
 	}
 
 	@RequiresPermissions("role:corelationperm")
 	@RequestMapping("/updaterole")
 	@ResponseBody()
-	public void updateRole(SysRole role, Long... permIds) {
-		roleSvc.updateRole(role, permIds);
+	public void updateRole(CustRole custRole, Long... permissionIds) {
+		roleSvc.updateRole(custRole, permissionIds);
 	}
 }

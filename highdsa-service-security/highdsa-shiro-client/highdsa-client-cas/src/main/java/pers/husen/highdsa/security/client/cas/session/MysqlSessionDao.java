@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
 
-import pers.husen.highdsa.common.entity.po.system.SysSessions;
+import pers.husen.highdsa.common.entity.po.customer.CustSessions;
 import pers.husen.highdsa.common.transform.ShiroSessionSerializer;
-import pers.husen.highdsa.service.mybatis.SysSessionsManager;
+import pers.husen.highdsa.service.mybatis.CustSessionsManager;
 
 /**
  * @Desc mysql 会话存储,先super判断redis缓存,没有再从数据库取
@@ -24,21 +24,21 @@ import pers.husen.highdsa.service.mybatis.SysSessionsManager;
 public class MysqlSessionDao extends CachingSessionDAO {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionDao.class.getName());
 
-	private SysSessionsManager sysSessionsManager;
+	private CustSessionsManager custSessionsManager;
 
 	/**
-	 * @return the sysSessionsManager
+	 * @return the custSessionsManager
 	 */
-	public SysSessionsManager getSysSessionsManager() {
-		return sysSessionsManager;
+	public CustSessionsManager getCustSessionsManager() {
+		return custSessionsManager;
 	}
 
 	/**
-	 * @param sysSessionsManager
-	 *            the sysSessionsManager to set
+	 * @param custSessionsManager
+	 *            the custSessionsManager to set
 	 */
-	public void setSysSessionsManager(SysSessionsManager sysSessionsManager) {
-		this.sysSessionsManager = sysSessionsManager;
+	public void setCustSessionsManager(CustSessionsManager custSessionsManager) {
+		this.custSessionsManager = custSessionsManager;
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public class MysqlSessionDao extends CachingSessionDAO {
 		assignSessionId(session, sessionId);
 		logger.debug("sessionId: {}", sessionId);
 
-		SysSessions sysSessions = new SysSessions(String.valueOf(sessionId), ShiroSessionSerializer.serialize(session));
-		sysSessions.setSessionCreateTime(new Date());
-		sysSessions.setSessionLastModifyTime(new Date());
-		sysSessions.setSessionValid(true);
+		CustSessions custSessions = new CustSessions(String.valueOf(sessionId), ShiroSessionSerializer.serialize(session));
+		custSessions.setSessionCreateTime(new Date());
+		custSessions.setSessionLastModifyTime(new Date());
+		custSessions.setSessionValid(true);
 
-		sysSessionsManager.createSession(sysSessions);
+		custSessionsManager.createSession(custSessions);
 
 		return sessionId;
 	}
@@ -64,24 +64,24 @@ public class MysqlSessionDao extends CachingSessionDAO {
 
 		String sessionValue = ShiroSessionSerializer.serialize(session);
 		logger.debug("session长度：{}", sessionValue.length());
-		SysSessions sysSessions = new SysSessions(String.valueOf(session.getId()), sessionValue);
-		sysSessions.setSessionLastModifyTime(new Date());
-		sysSessions.setSessionValid(true);
+		CustSessions custSessions = new CustSessions(String.valueOf(session.getId()), sessionValue);
+		custSessions.setSessionLastModifyTime(new Date());
+		custSessions.setSessionValid(true);
 
-		sysSessionsManager.updateBySessionId(sysSessions);
+		custSessionsManager.updateBySessionId(custSessions);
 	}
 
 	@Override
 	protected void doDelete(Session session) {
 		logger.trace("--------super.delete-----");
-		sysSessionsManager.deleteBySessionId(String.valueOf(session.getId()));
+		custSessionsManager.deleteBySessionId(String.valueOf(session.getId()));
 	}
 
 	@Override
 	protected Session doReadSession(Serializable sessionId) {
 		logger.trace("--------super.doReadSession-----");
-		SysSessions sysSessions = sysSessionsManager.findBySessionId(String.valueOf(sessionId));
+		CustSessions custSessions = custSessionsManager.findBySessionId(String.valueOf(sessionId));
 
-		return ShiroSessionSerializer.deserialize(sysSessions.getSessionValue());
+		return ShiroSessionSerializer.deserialize(custSessions.getSessionValue());
 	}
 }

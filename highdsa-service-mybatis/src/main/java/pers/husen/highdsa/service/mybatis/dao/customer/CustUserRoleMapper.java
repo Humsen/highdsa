@@ -11,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustUserRole;
  *
  * @Created at 2018年4月16日 下午11:54:23
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public interface CustUserRoleMapper {
 	/**
@@ -37,4 +37,20 @@ public interface CustUserRoleMapper {
 	 * @return
 	 */
 	List<CustUserRole> selectAll();
+
+	/**
+	 * 根据用户id删除 用户-角色联系, 删除用户时此用户关联的所有角色都失效
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	int deleteByUserId(Long userId);
+
+	/**
+	 * 根据角色id删除 用户-角色 联系, 删除角色时拥有此角色的所有用户的此角色默认都失效
+	 * 
+	 * @param roleId
+	 * @return
+	 */
+	int deleteByRoleId(Long roleId);
 }

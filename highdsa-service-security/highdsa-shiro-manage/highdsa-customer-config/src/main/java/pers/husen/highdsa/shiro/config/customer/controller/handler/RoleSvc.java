@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import pers.husen.highdsa.common.entity.po.system.SysRole;
-import pers.husen.highdsa.service.mybatis.SysPermissionManager;
-import pers.husen.highdsa.service.mybatis.SysRoleManager;
+import pers.husen.highdsa.common.entity.po.customer.CustRole;
+import pers.husen.highdsa.service.mybatis.CustPermissionManager;
+import pers.husen.highdsa.service.mybatis.CustRoleManager;
 
 /**
  * @Desc 角色服务类
@@ -17,17 +17,17 @@ import pers.husen.highdsa.service.mybatis.SysRoleManager;
  *
  * @Created at 2018年4月16日 上午11:26:55
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service
 public class RoleSvc {
 	@Autowired
-	private SysRoleManager sysRoleManager;
+	private CustRoleManager custRoleManager;
 	@Autowired
-	private SysPermissionManager sysPermissionManager;
+	private CustPermissionManager custPermissionManager;
 
 	public ModelAndView showRoleList() {
-		List<?> list = sysRoleManager.findAllRoles();
+		List<?> list = custRoleManager.findAllRoles();
 
 		ModelAndView mav = new ModelAndView("role-list");
 		mav.addObject("roles", list);
@@ -35,34 +35,34 @@ public class RoleSvc {
 	}
 
 	public List<?> getPerms() {
-		return sysPermissionManager.getAllPermissions();
+		return custPermissionManager.getAllPermissions();
 	}
 
-	public SysRole addRole(SysRole role, Long... permIds) {
-		SysRole sysRole = sysRoleManager.addRole(role, permIds);
+	public CustRole addRole(CustRole custRole, Long... permissionIds) {
+		CustRole role = custRoleManager.addRole(custRole, permissionIds);
 
-		return sysRole;
+		return role;
 	}
 
 	public void deleteRole(Long roleId) {
-		sysRoleManager.deleteRole(roleId);
+		custRoleManager.deleteRole(roleId);
 	}
 
 	public void deleteMoreRoles(Long... roleIds) {
-		sysRoleManager.deleteMoreRoles(roleIds);
+		custRoleManager.deleteMoreRoles(roleIds);
 	}
 
 	public List<?> showRolePerms(Long roleId) {
-		List<?> perms = sysPermissionManager.findPermissionsByRoleId(roleId);
+		List<?> perms = custPermissionManager.findPermissionsByRoleId(roleId);
 
 		return perms;
 	}
 
-	public SysRole getRoleById(Long roleId) {
-		return sysRoleManager.findRoleById(roleId);
+	public CustRole getRoleById(Long roleId) {
+		return custRoleManager.findRoleById(roleId);
 	}
 
-	public void updateRole(SysRole role, Long... permIds) {
-		sysRoleManager.updateRole(role, permIds);
+	public void updateRole(CustRole custRole, Long... permissionIds) {
+		custRoleManager.updateRole(custRole, permissionIds);
 	}
 }

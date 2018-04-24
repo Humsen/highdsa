@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import pers.husen.highdsa.common.entity.po.system.SysUser;
-import pers.husen.highdsa.service.mybatis.SysRoleManager;
-import pers.husen.highdsa.service.mybatis.SysUserManager;
+import pers.husen.highdsa.common.entity.po.customer.CustUser;
+import pers.husen.highdsa.service.mybatis.CustRoleManager;
+import pers.husen.highdsa.service.mybatis.CustUserManager;
 
 /**
  * @Desc 用户服务类
@@ -21,18 +21,18 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  *
  * @Created at 2018年4月16日 上午11:27:02
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service
 public class UserSvc {
 	@Autowired
-	private SysUserManager sysUserManager;
+	private CustUserManager custUserManager;
 	@Autowired
-	private SysRoleManager sysRoleManager;
+	private CustRoleManager custRoleManager;
 
-	public ModelAndView login(HttpServletRequest req) {
+	public ModelAndView login(HttpServletRequest request) {
 		String error = null;
-		String exceptionClassName = (String) req.getAttribute("shiroLoginFailure");
+		String exceptionClassName = (String) request.getAttribute("shiroLoginFailure");
 		if (UnknownAccountException.class.getName().equals(exceptionClassName)) {
 			error = "用户名/密码错误";
 		} else if (IncorrectCredentialsException.class.getName().equals(exceptionClassName)) {
@@ -46,35 +46,35 @@ public class UserSvc {
 	}
 
 	public ModelAndView showUserList() {
-		List<?> list = sysUserManager.getAllUsers();
+		List<?> list = custUserManager.getAllUsers();
 		ModelAndView mav = new ModelAndView("user-list");
 		mav.addObject("users", list);
 		return mav;
 	}
 
-	public SysUser addUser(SysUser user, Long... roleIds) {
-		SysUser sysUser = sysUserManager.addUser(user, roleIds);
+	public CustUser addUser(CustUser custUser, Long... roleIds) {
+		CustUser user = custUserManager.addUser(custUser, roleIds);
 
-		return sysUser;
+		return user;
 	}
 
 	public List<?> shwoRoles(String userName) {
-		return sysRoleManager.findRolesByUserName(userName).getSysRoleList();
+		return custRoleManager.findRolesByUserName(userName).getCustRoleList();
 	}
 
 	public List<?> getRoles() {
-		return sysRoleManager.findAllRoles();
+		return custRoleManager.findAllRoles();
 	}
 
 	public void deleteUser(Long userId) {
-		sysUserManager.deleteUser(userId);
+		custUserManager.deleteUser(userId);
 	}
 
 	public void deleteMoreUsers(Long... userIds) {
-		sysUserManager.deleteMoreUsers(userIds);
+		custUserManager.deleteMoreUsers(userIds);
 	}
 
 	public void corelationRole(Long userId, Long... roleIds) {
-		sysUserManager.updateUserRoles(userId, roleIds);
+		custUserManager.updateUserRoles(userId, roleIds);
 	}
 }

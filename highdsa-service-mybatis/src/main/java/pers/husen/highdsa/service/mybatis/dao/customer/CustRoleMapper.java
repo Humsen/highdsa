@@ -1,6 +1,7 @@
 package pers.husen.highdsa.service.mybatis.dao.customer;
 
 import java.util.List;
+
 import pers.husen.highdsa.common.entity.po.customer.CustRole;
 
 /**
@@ -10,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustRole;
  *
  * @Created at 2018年4月16日 下午11:48:51
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public interface CustRoleMapper {
 	/**
@@ -51,4 +52,12 @@ public interface CustRoleMapper {
 	 * @return
 	 */
 	int updateByPrimaryKey(CustRole custRole);
+
+	/**
+	 * 根据用户名查找角色
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	List<CustRole> selectRolesByUserName(String userName);
 }

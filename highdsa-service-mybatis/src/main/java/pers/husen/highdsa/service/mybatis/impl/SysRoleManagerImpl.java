@@ -24,7 +24,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
  *
  * @Created at 2018年3月29日 上午10:10:57
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @Service("sysRoleManager")
 public class SysRoleManagerImpl implements SysRoleManager {
@@ -38,8 +38,8 @@ public class SysRoleManagerImpl implements SysRoleManager {
 	private SysUserMapper sysUserMapper;
 
 	@Override
-	public int createSysRole(SysRole role) {
-		return sysRoleMapper.insert(role);
+	public int createSysRole(SysRole sysRole) {
+		return sysRoleMapper.insert(sysRole);
 	}
 
 	/**
@@ -125,15 +125,15 @@ public class SysRoleManagerImpl implements SysRoleManager {
 	}
 
 	@Override
-	public void updateRole(SysRole role, Long... permissionIds) {
+	public void updateRole(SysRole sysRole, Long... permissionIds) {
 		// 设置角色有效
-		role.setRoleValid(true);
+		sysRole.setRoleValid(true);
 		// 设置最后更新时间
-		role.setRoleLastModifyTime(new Date());
+		sysRole.setRoleLastModifyTime(new Date());
 
-		sysRoleMapper.updateByPrimaryKey(role);
-		sysRolePermissionMapper.deleteByRoleId(role.getRoleId());
-		addRolePermissions(role.getRoleId(), permissionIds);
+		sysRoleMapper.updateByPrimaryKey(sysRole);
+		sysRolePermissionMapper.deleteByRoleId(sysRole.getRoleId());
+		addRolePermissions(sysRole.getRoleId(), permissionIds);
 	}
 
 	@Override

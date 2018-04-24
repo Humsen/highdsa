@@ -9,10 +9,10 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
 
 import pers.husen.highdsa.common.constant.RedisCacheConstants;
-import pers.husen.highdsa.common.entity.po.system.SysSessions;
+import pers.husen.highdsa.common.entity.po.customer.CustSessions;
 import pers.husen.highdsa.common.transform.Serializer;
 import pers.husen.highdsa.common.transform.ShiroSessionSerializer;
-import pers.husen.highdsa.service.mybatis.SysSessionsManager;
+import pers.husen.highdsa.service.mybatis.CustSessionsManager;
 import pers.husen.highdsa.service.redis.RedisOperation;
 
 /**
@@ -22,12 +22,12 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年4月20日 上午12:10:04
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class MysqlRedisSessionDao extends CachingSessionDAO {
 	private static final Logger logger = LogManager.getLogger(MysqlRedisSessionDao.class.getName());
 
-	private SysSessionsManager sysSessionsManager;
+	private CustSessionsManager custSessionsManager;
 	private RedisOperation redisOperation;
 	private static final String PREFIX = RedisCacheConstants.SHIRO_REDIS_SESSION_CUSTOMER;
 	private static final int EXPRIE = 10000;
@@ -36,9 +36,9 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 	 * @param sysSessionsManager
 	 * @param redisOperation
 	 */
-	public MysqlRedisSessionDao(SysSessionsManager sysSessionsManager, RedisOperation redisOperation) {
+	public MysqlRedisSessionDao(CustSessionsManager custSessionsManager, RedisOperation redisOperation) {
 		super();
-		this.sysSessionsManager = sysSessionsManager;
+		this.custSessionsManager = custSessionsManager;
 		this.redisOperation = redisOperation;
 	}
 
@@ -58,18 +58,18 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 	}
 
 	/**
-	 * @return the sysSessionsManager
+	 * @return the custSessionsManager
 	 */
-	public SysSessionsManager getSysSessionsManager() {
-		return sysSessionsManager;
+	public CustSessionsManager getCustSessionsManager() {
+		return custSessionsManager;
 	}
 
 	/**
-	 * @param sysSessionsManager
-	 *            the sysSessionsManager to set
+	 * @param custSessionsManager
+	 *            the custSessionsManager to set
 	 */
-	public void setSysSessionsManager(SysSessionsManager sysSessionsManager) {
-		this.sysSessionsManager = sysSessionsManager;
+	public void setCustSessionsManager(CustSessionsManager custSessionsManager) {
+		this.custSessionsManager = custSessionsManager;
 	}
 
 	@Override
@@ -78,11 +78,11 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 		assignSessionId(session, sessionId);
 		logger.debug("sessionId: {}", sessionId);
 
-		SysSessions sysSessions = new SysSessions(String.valueOf(sessionId), ShiroSessionSerializer.serialize(session));
-		sysSessions.setSessionCreateTime(new Date());
-		sysSessions.setSessionLastModifyTime(new Date());
-		sysSessions.setSessionValid(true);
-		sysSessionsManager.createSession(sysSessions);
+		CustSessions custSessions = new CustSessions(String.valueOf(sessionId), ShiroSessionSerializer.serialize(session));
+		custSessions.setSessionCreateTime(new Date());
+		custSessions.setSessionLastModifyTime(new Date());
+		custSessions.setSessionValid(true);
+		custSessionsManager.createSession(custSessions);
 
 		byte[] key = this.getByteKey(sessionId);
 		byte[] value = Serializer.serialize(session);
@@ -96,10 +96,10 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 	protected void doUpdate(Session session) {
 		String sessionValue = ShiroSessionSerializer.serialize(session);
 		logger.debug("session长度：{}", sessionValue.length());
-		SysSessions sysSessions = new SysSessions(String.valueOf(session.getId()), sessionValue);
-		sysSessions.setSessionLastModifyTime(new Date());
-		sysSessions.setSessionValid(true);
-		sysSessionsManager.updateBySessionId(sysSessions);
+		CustSessions custSessions = new CustSessions(String.valueOf(session.getId()), sessionValue);
+		custSessions.setSessionLastModifyTime(new Date());
+		custSessions.setSessionValid(true);
+		custSessionsManager.updateBySessionId(custSessions);
 
 		byte[] key = this.getByteKey(session.getId());
 		byte[] value = Serializer.serialize(session);
@@ -110,7 +110,7 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 	@Override
 	protected void doDelete(Session session) {
 		logger.trace("--------super.delete-----");
-		sysSessionsManager.deleteBySessionId(String.valueOf(session.getId()));
+		custSessionsManager.deleteBySessionId(String.valueOf(session.getId()));
 
 		redisOperation.del(this.getByteKey(session.getId()));
 	}
@@ -122,8 +122,8 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 		if (session == null) {
 			logger.trace("redis缓存为空，从数据库获取");
 
-			SysSessions sysSessions = sysSessionsManager.findBySessionId(String.valueOf(sessionId));
-			session = ShiroSessionSerializer.deserialize(sysSessions.getSessionValue());
+			CustSessions custSessions = custSessionsManager.findBySessionId(String.valueOf(sessionId));
+			session = ShiroSessionSerializer.deserialize(custSessions.getSessionValue());
 		}
 
 		if (session != null) {

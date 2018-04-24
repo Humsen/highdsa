@@ -1,6 +1,7 @@
 package pers.husen.highdsa.service.mybatis.dao.customer;
 
 import java.util.List;
+
 import pers.husen.highdsa.common.entity.po.customer.CustPermission;
 
 /**
@@ -10,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustPermission;
  *
  * @Created at 2018年4月16日 下午11:44:55
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public interface CustPermissionMapper {
 	/**
@@ -51,4 +52,20 @@ public interface CustPermissionMapper {
 	 * @return
 	 */
 	int updateByPrimaryKey(CustPermission custPermission);
+
+	/**
+	 * 根据角色id查询所有导航结点
+	 * 
+	 * @param roleId
+	 * @return
+	 */
+	List<CustPermission> findNavisByRoleId(Long roleId);
+
+	/**
+	 * 根据角色id查询所有权限
+	 * 
+	 * @param roleId
+	 * @return
+	 */
+	List<CustPermission> findPermissionsByRoleId(Long roleId);
 }

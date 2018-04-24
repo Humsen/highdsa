@@ -49,14 +49,14 @@
 
 	<!-- 会话验证调度器 -->
 	<bean id="sessionValidationScheduler" class="pers.husen.highdsa.security.client.cas.session.MysqlSessionValidationScheduler">
-		<property name="sysSessionsManager" ref="sysSessionsManager" />
+		<property name="custSessionsManager" ref="custSessionsManager" />
 		<property name="interval" value="1800000" />
 		<property name="sessionManager" ref="sessionManager" />
 	</bean>
 
 	<!-- 会话 DAO -->
 	<bean id="sessionDAO" class="pers.husen.highdsa.security.client.cas.session.MysqlRedisSessionDao">
-		<constructor-arg name="sysSessionsManager" ref="sysSessionsManager" />
+		<constructor-arg name="custSessionsManager" ref="custSessionsManager" />
 		<constructor-arg name="redisOperation" ref="redisOperation" />
 		<property name="activeSessionsCacheName" value="shiro_redis_session_customer:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
@@ -81,7 +81,7 @@
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- <property name="realms"> <list> <ref bean="userRealm" /> </list> </property> -->
 		<property name="realm" ref="userRealm" />
-		<property name="sessionMode" value="http"></property>
+		<!-- <property name="sessionMode" value="http"></property> -->
 		<property name="subjectFactory" ref="casSubjectFactory"></property>
 		<property name="sessionManager" ref="sessionManager" />
 		<property name="cacheManager" ref="cacheManager" />
@@ -90,7 +90,7 @@
 
 	<!-- Realm实现 -->
 	<bean id="userRealm" class="pers.husen.highdsa.security.client.cas.realm.UserRealm">
-		<constructor-arg name="sysUserManager" ref="sysUserManager" />
+		<constructor-arg name="custUserManager" ref="custUserManager" />
 		<property name="cachingEnabled" value="true" />
 		<property name="authenticationCachingEnabled" value="true" />
 		<property name="authenticationCacheName" value="authenticationCache" />

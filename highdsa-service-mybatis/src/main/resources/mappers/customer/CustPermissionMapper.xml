@@ -8,35 +8,97 @@
 		<constructor>
 			<idArg column="permission_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="permission_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="permission_code" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="permission_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="permission_navi" javaType="java.lang.Boolean" jdbcType="BIT" />
+			<arg column="permission_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<arg column="permission_create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+			<arg column="permission_last_modify_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
 			<arg column="permission_valid" javaType="java.lang.Boolean" jdbcType="BIT" />
 		</constructor>
 	</resultMap>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from cust_permission
 		where permission_id = #{permissionId,jdbcType=BIGINT}
 	</delete>
 	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.customer.CustPermission">
-		insert into cust_permission (permission_id, permission_name, permission_desc,
+		insert into cust_permission (permission_id, permission_name, permission_code,
+		permission_desc, permission_navi, permission_url,
+		permission_create_time,
+		permission_last_modify_time,
 		permission_valid)
-		values (#{permissionId,jdbcType=BIGINT}, #{permissionName,jdbcType=VARCHAR}, #{permissionDesc,jdbcType=VARCHAR},
+		values (#{permissionId,jdbcType=BIGINT}, #{permissionName,jdbcType=VARCHAR}, #{permissionCode,jdbcType=VARCHAR},
+		#{permissionDesc,jdbcType=VARCHAR},
+		#{permissionNavi,jdbcType=BIT}, #{permissionUrl,jdbcType=VARCHAR},
+		#{permissionCreateTime,jdbcType=TIMESTAMP}, #{permissionLastModifyTime,jdbcType=TIMESTAMP},
 		#{permissionValid,jdbcType=BIT})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.customer.CustPermission">
 		update cust_permission
 		set permission_name = #{permissionName,jdbcType=VARCHAR},
+		permission_code = #{permissionCode,jdbcType=VARCHAR},
 		permission_desc = #{permissionDesc,jdbcType=VARCHAR},
+		permission_navi = #{permissionNavi,jdbcType=BIT},
+		permission_url = #{permissionUrl,jdbcType=VARCHAR},
+		permission_create_time =
+		#{permissionCreateTime,jdbcType=TIMESTAMP},
+		permission_last_modify_time = #{permissionLastModifyTime,jdbcType=TIMESTAMP},
 		permission_valid = #{permissionValid,jdbcType=BIT}
-		where permission_id = #{permissionId,jdbcType=BIGINT}
+		where permission_id =
+		#{permissionId,jdbcType=BIGINT}
 	</update>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select permission_id, permission_name, permission_desc, permission_valid
+		select permission_id, permission_name, permission_code, permission_desc, permission_navi,
+		permission_url,
+		permission_create_time, permission_last_modify_time, permission_valid
 		from cust_permission
 		where permission_id = #{permissionId,jdbcType=BIGINT}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
-		select permission_id, permission_name, permission_desc, permission_valid
+		select permission_id, permission_name, permission_code, permission_desc, permission_navi,
+		permission_url, permission_create_time, permission_last_modify_time,
+		permission_valid
 		from cust_permission
-		order by user_id ASC,userCreateDate DESC
+		order by permission_id ASC,
+	</select>
+	<!-- 根据角色id查询所有导航结点 -->
+	<select id="findNavisByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		permission.permission_id,
+		permission.permission_name,
+		permission.permission_code,
+		permission.permission_desc,
+		permission.permission_valid,
+		permission.permission_navi,
+		permission.permission_url,
+		permission.permission_create_time,
+		permission.permission_last_modify_time
+		FROM
+		cust_role_permission AS role_permission,
+		cust_permission AS permission
+		WHERE
+		role_permission.role_id = #{roleId,jdbcType=BIGINT} AND
+		role_permission.permission_id = permission.permission_id
+		AND permission.permission_navi = 1
+	</select>
+	<!-- 根据角色id查询所有权限 -->
+	<select id="findPermissionsByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		permission.permission_id,
+		permission.permission_name,
+		permission.permission_code,
+		permission.permission_desc,
+		permission.permission_valid,
+		permission.permission_navi,
+		permission.permission_url,
+		permission.permission_create_time,
+		permission.permission_last_modify_time
+		FROM
+		cust_role_permission AS role_permission ,
+		cust_permission AS permission
+		WHERE
+		role_permission.role_id = #{roleId,jdbcType=BIGINT} AND
+		role_permission.permission_id = permission.permission_id
 	</select>
 </mapper>

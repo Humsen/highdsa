@@ -12,7 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import pers.husen.highdsa.service.mybatis.SysUserManager;
+import pers.husen.highdsa.service.mybatis.CustUserManager;
 
 /**
  * @Desc 首页服务类
@@ -21,20 +21,20 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  *
  * @Created at 2018年4月16日 上午11:26:30
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service
 public class IndexSvc {
 	@Autowired
-	private SysUserManager sysUserManager;
+	private CustUserManager custUserManager;
 
 	@RequestMapping(value = { "/", "/index" })
 	public ModelAndView index(ModelMap map, HttpServletRequest request) {
 		ModelAndView mov = new ModelAndView("index");
 
 		String userName = (String) SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal();
-		List<?> navigationBar = sysUserManager.findNavigationBar(userName);
-		
+		List<?> navigationBar = custUserManager.findNavigationBar(userName);
+
 		HttpSession session = request.getSession();
 		session.setAttribute("navibar", navigationBar);
 		session.setAttribute("userName", userName);

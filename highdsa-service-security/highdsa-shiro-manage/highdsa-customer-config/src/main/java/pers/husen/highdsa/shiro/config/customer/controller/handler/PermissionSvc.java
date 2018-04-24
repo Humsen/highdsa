@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import pers.husen.highdsa.common.entity.po.system.SysPermission;
-import pers.husen.highdsa.service.mybatis.SysPermissionManager;
+import pers.husen.highdsa.common.entity.po.customer.CustPermission;
+import pers.husen.highdsa.service.mybatis.CustPermissionManager;
 
 /**
  * @Desc 权限服务类
@@ -16,15 +16,15 @@ import pers.husen.highdsa.service.mybatis.SysPermissionManager;
  *
  * @Created at 2018年4月16日 上午11:26:41
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service
 public class PermissionSvc {
 	@Autowired
-	private SysPermissionManager sysPermissionManager;
+	private CustPermissionManager custPermissionManager;
 
 	public ModelAndView showRoleList() {
-		List<SysPermission> list = sysPermissionManager.getAllPermissions();
+		List<CustPermission> list = custPermissionManager.getAllPermissions();
 
 		ModelAndView mav = new ModelAndView("permission-list");
 		mav.addObject("perms", list);
@@ -32,25 +32,25 @@ public class PermissionSvc {
 		return mav;
 	}
 
-	public SysPermission addPermission(SysPermission permission) {
-		SysPermission sysPermission = sysPermissionManager.createPermission(permission);
+	public CustPermission addPermission(CustPermission custPermission) {
+		CustPermission permission = custPermissionManager.createPermission(custPermission);
 
-		return sysPermission;
+		return permission;
 	}
 
-	public void deletePermission(Long permId) {
-		sysPermissionManager.deletePermission(permId);
+	public void deletePermission(Long permissionId) {
+		custPermissionManager.deletePermission(permissionId);
 	}
 
-	public void deleteMorePerms(Long... permIds) {
-		sysPermissionManager.deleteMorePermissions(permIds);
+	public void deleteMorePerms(Long... permissionIds) {
+		custPermissionManager.deleteMorePermissions(permissionIds);
 	}
 
-	public SysPermission getPermById(Long permId) {
-		return sysPermissionManager.findSysPermissionById(permId);
+	public CustPermission getPermById(Long permissionId) {
+		return custPermissionManager.findSysPermissionById(permissionId);
 	}
 
-	public void updatePermission(SysPermission permission) {
-		sysPermissionManager.updatePermissionByPrimaryKey(permission);
+	public void updatePermission(CustPermission custPermission) {
+		custPermissionManager.updatePermissionByPrimaryKey(custPermission);
 	}
 }
