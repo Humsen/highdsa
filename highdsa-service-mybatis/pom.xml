@@ -104,6 +104,7 @@
 				<includes>
 					<include>mappers/*</include>
 					<include>mybatis/*</include>
+					<include>sequence/*</include>
 					<include>mysql.properties</include>
 					<include>dubbo.properties</include>
 				</includes>

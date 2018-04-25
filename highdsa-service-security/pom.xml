@@ -14,7 +14,7 @@
 
 	<modules>
 		<module>highdsa-cas-server</module>
-		<module>highdsa-cas-manage</module>
+		<module>highdsa-cas-manager</module>
 		<module>highdsa-shiro-client</module>
 		<module>highdsa-shiro-manage</module>
 	</modules>
