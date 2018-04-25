@@ -11,20 +11,21 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * @Created at 2018年3月29日 下午10:13:28
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class RegisterMybatisService {
 	public static void main(String[] args) {
-		String[] configLocation = new String[] { "spring/mybatis-provider.xml", "spring/redis-consumer.xml", "spring/spring-context.xml" };
+		String[] configLocation = new String[] { "spring/dubbo-mybatis.xml", "spring/spring-context.xml" };
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(configLocation);
 		context.start();
-		
-		//SysUserInfoManagerImpl sysUserInfoManagerImpl = (SysUserInfoManagerImpl) context.getBean("sysUserInfoManager");
+
+		// SysUserInfoManagerImpl sysUserInfoManagerImpl = (SysUserInfoManagerImpl)
+		// context.getBean("sysUserInfoManager");
 		System.out.println("=============== mybatis已经启动... ==================");
 
-		//SysUserInfo sysUserInfo = sysUserInfoManagerImpl.selectById(1000L);
-		//System.out.println(sysUserInfo);
+		// SysUserInfo sysUserInfo = sysUserInfoManagerImpl.selectById(1000L);
+		// System.out.println(sysUserInfo);
 
 		System.out.println("=============== 阻塞开始... ==================");
 		try {

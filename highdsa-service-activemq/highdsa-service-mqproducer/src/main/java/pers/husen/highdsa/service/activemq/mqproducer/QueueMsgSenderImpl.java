@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 import pers.husen.highdsa.service.activemq.QueueMsgSender;
 
 /**
- * @Desc 队列消息发送
+ * @Desc 队列消息发送,只有一个消费者能收到
  *
  * @Author 何明胜
  *
  * @Created at 2018年3月20日 下午4:11:14
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @Resource
 @Service("queueMsgSender")

@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 import pers.husen.highdsa.common.aop.BaseSpringAspect;
 
@@ -17,10 +18,11 @@ import pers.husen.highdsa.common.aop.BaseSpringAspect;
  *
  * @Created at 2018年3月5日 上午8:37:13
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Aspect
-public class RedisDeleteOperationAdvice extends BaseSpringAspect{
+@Component
+public class RedisDeleteOperationAdvice extends BaseSpringAspect {
 	private static final Logger logger = LogManager.getLogger(RedisDeleteOperationAdvice.class.getName());
 
 	@Override
@@ -32,18 +34,17 @@ public class RedisDeleteOperationAdvice extends BaseSpringAspect{
 	@Around("aspectJMethod()")
 	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object[] argsArr = getArgs(joinPoint);
-		
+
 		String methodName = getAimMethodName(joinPoint);
-		
+
 		Object retval = joinPoint.proceed();
 
-		if(argsArr != null && argsArr.length != 0) {
+		if (argsArr != null && argsArr.length != 0) {
 			Object key = argsArr[0];
 			logger.info("<{}> redis cache [delete], key={},reply={}", methodName, key, retval);
-		}else {
+		} else {
 			logger.info("<{}> redis cache [delete], reply={}", methodName, retval);
 		}
-		
 
 		return retval;
 	}
@@ -51,7 +52,7 @@ public class RedisDeleteOperationAdvice extends BaseSpringAspect{
 	@Override
 	public void doBefore(JoinPoint joinPoint) {
 	}
-	
+
 	@Override
 	public void doAfter(JoinPoint joinPoint) {
 	}

@@ -13,8 +13,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		classpath*:spring/redis-consumer.xml,
-		classpath*:spring/mybatis-provider.xml,
+		classpath*:spring/dubbo-mybatis.xml,
 		classpath*:spring/spring-context.xml
 	</param-value>
 	</context-param>

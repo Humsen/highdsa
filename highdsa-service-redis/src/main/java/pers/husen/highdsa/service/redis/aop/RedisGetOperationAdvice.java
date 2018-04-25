@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 import pers.husen.highdsa.common.aop.BaseSpringAspect;
 
@@ -17,9 +18,10 @@ import pers.husen.highdsa.common.aop.BaseSpringAspect;
  *
  * @Created at 2018年3月4日 下午10:06:51
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Aspect
+@Component
 public class RedisGetOperationAdvice extends BaseSpringAspect {
 	private static final Logger logger = LogManager.getLogger(RedisGetOperationAdvice.class.getName());
 
@@ -32,15 +34,15 @@ public class RedisGetOperationAdvice extends BaseSpringAspect {
 	@Around("aspectJMethod()")
 	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object[] argsArray = getArgs(joinPoint);
-		
+
 		String methodName = getAimMethodName(joinPoint);
 		// 核心逻辑
 		Object retval = joinPoint.proceed();
 
-		if(argsArray != null && argsArray.length != 0) {
+		if (argsArray != null && argsArray.length != 0) {
 			Object key = getArgs(joinPoint)[0];
 			logger.info("<{}> redis cache [get] success, key={},value={}", methodName, key, retval);
-		}else {
+		} else {
 			logger.info("<{}> redis cache [get] success,value={}", methodName, retval);
 		}
 

@@ -159,5 +159,5 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
-	<!-- <import resource="mybatis-provider.xml" /> <import resource="redis-consumer.xml" /> -->
+	<!-- <import resource="dubbo-mybatis.xml" /> -->
 </beans> 

@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 import pers.husen.highdsa.common.aop.BaseSpringAspect;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
@@ -19,9 +20,10 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  *
  * @Created at 2018年3月5日 上午8:35:26
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Aspect
+@Component
 public class RedisAppendOperationAdvice extends BaseSpringAspect{
 	private static final Logger logger = LogManager.getLogger(RedisAppendOperationAdvice.class.getName());
 	

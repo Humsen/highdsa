@@ -28,15 +28,15 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年2月5日 下午1:03:55
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/mybatis-provider.xml", "classpath:spring/redis-consumer.xml", "classpath:spring/spring-context.xml" }) 
-public class MybatisAndRedisCacheTest extends AbstractJUnit4SpringContextTests{
+@ContextConfiguration(locations = { "classpath:spring/dubbo-mybatis.xml", "classpath:spring/spring-context.xml" })
+public class MybatisAndRedisCacheTest extends AbstractJUnit4SpringContextTests {
 
 	@Before
 	public void before() {
-		System.out.println("=============== dubbo已经启动... ==================");
+		System.out.println("=============== myabtis服务已经启动... ==================");
 	}
 
 	@Test

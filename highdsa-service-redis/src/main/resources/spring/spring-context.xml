@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd    
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd    
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd    
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<!-- 采用注解的方式配置bean -->
+	<context:annotation-config />
+
+	<!-- 配置要扫描的包 -->
 	<context:component-scan base-package="pers.husen.highdsa.service.redis" />
 
 	<!-- 启用Spring对基于@AspectJ aspects的配置支持 -->
 	<!-- 激活自动代理功能 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 
-
-	<bean id="redisOperationImpl" class="pers.husen.highdsa.service.redis.RedisOperationImpl"></bean>
-
-	<!-- AOP切面注解类 -->
-	<bean id="redisSetOperationAdvice"
-		class="pers.husen.highdsa.service.redis.aop.RedisSetOperationAdvice"></bean>
-	<bean id="redisGetOperationAdvice"
-		class="pers.husen.highdsa.service.redis.aop.RedisGetOperationAdvice"></bean>
-	<bean id="redisAppendOperationAdvice"
-		class="pers.husen.highdsa.service.redis.aop.RedisAppendOperationAdvice"></bean>
-	<bean id="redisExistsOperationAdvice"
-		class="pers.husen.highdsa.service.redis.aop.RedisExistsOperationAdvice"></bean>
-	<bean id="redisDeleteOperationAdvice"
-		class="pers.husen.highdsa.service.redis.aop.RedisDeleteOperationAdvice"></bean>
-
+	<!-- AOP切面注解类使用注解实现 -->
 </beans>  

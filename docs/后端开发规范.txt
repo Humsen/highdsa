@@ -1,7 +1,7 @@
 版本：V1.1
 创建者：何明胜
 创建时间：2018年2月4日
-最后修改时间：2018年3月12日
+最后修改时间：2018年4月25日
 
 -------------    分割线        ------------------------
 
@@ -28,7 +28,10 @@
 	dubbo 消费者类，在web模块或者需要使用其他提供者的提供者类中，建立消费者类，命名资源名+Consumer，同名映射所有提供者接口
 	spring mvc 控制器类（接收http），资源名+Controller，如RedisController
 	
-7、dubbo和spring配置文件都放在resources/spring文件夹下
+7、配置文件规范
+	dubbo和spring配置文件都放在resources/spring文件夹下
+	spring配置文件以spring-×.xml 格式命名
+	dubbo配置文件以dubbo-×.xml 格式命名
 
 8、类命名
 	优先使用包路径表示类含义，避免类名重复可在类名后面加上包路径最后一个词。如×××.core.SendSmsCore

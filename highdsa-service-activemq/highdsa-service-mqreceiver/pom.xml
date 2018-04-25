@@ -70,7 +70,7 @@
 				<directory>src/main/resources/spring</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>activemq-consumer.xml</include>
+					<include>dubbo-mq-receiver.xml</include>
 					<include>spring-activemq.xml</include>
 					<include>spring-context.xml</include>
 				</includes>

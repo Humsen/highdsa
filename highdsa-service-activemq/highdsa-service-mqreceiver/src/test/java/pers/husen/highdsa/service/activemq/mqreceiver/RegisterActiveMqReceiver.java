@@ -9,13 +9,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * @Created at 2018年3月21日 上午9:44:47
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class RegisterActiveMqReceiver {
 	public static void main(String[] args) {
 		try {
-			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-					"classpath:spring/spring-context.xml");
+			String[] configLocations = new String[] { "spring/spring-context.xml", "spring/spring-activemq.xml", "spring/dubbo-mq-receiver.xml" };
+			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(configLocations);
 			context.start();
 			System.out.println("=============== activemq 接收者已经启动... ==================");
 

@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 import pers.husen.highdsa.service.activemq.TopicMsgPublisher;
 
 /**
- * @Desc 订阅消息
+ * @Desc 订阅消息,所有订阅这个topic的服务都能得到这个消息
  *
  * @Author 何明胜
  *
  * @Created at 2018年3月20日 下午4:13:28
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Service("topicMsgPublisher")
 public class TopicMsgPublisherImpl implements TopicMsgPublisher {

@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
+import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
 
@@ -25,8 +26,9 @@ import redis.clients.jedis.Jedis;
  *
  * @Created at 2018年2月28日 下午2:19:37
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
+@Service("redisOperation")
 public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation {
 	private static final Logger logger = LogManager.getLogger(RedisOperationImpl.class.getName());
 

@@ -11,11 +11,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * @Created at 2018年2月5日 下午1:03:55
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class RegisterActiveMqProducer {
 	public static void main(String[] args) throws IOException {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-context.xml");
+		String[] configLocations = new String[] {"spring/spring-context.xml", "spring/spring-activemq.xml", "spring/dubbo-mq-producer.xml"};
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(configLocations);
 		context.start();
 		
 		System.out.println("=============== activemq 生产者服务已经启动... ==================");

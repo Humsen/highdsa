@@ -18,8 +18,8 @@ import pers.husen.highdsa.service.redis.RedisOperationImpl;
  */
 public class TestSpringAop {
 	public static void main(String[] args) {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
-		RedisOperationImpl redisOperationImpl = (RedisOperationImpl) context.getBean("redisOperationImpl");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-context.xml");
+		RedisOperationImpl redisOperationImpl = (RedisOperationImpl) context.getBean("redisOperation");
 		/*redisOperationImpl.set("aop-key", "hello");
 		redisOperationImpl.get("aop-key");
 		redisOperationImpl.append("aop-key", " world");

@@ -11,15 +11,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * @Created at 2018年2月5日 下午1:03:55
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class RegisterRedisService {
 	public static void main(String[] args) throws IOException {
-		String[] configLocation = new String[] { "classpath:spring/redis-provider.xml", "classpath:spring/spring-context.xml" };
+		String[] configLocation = new String[] { "classpath:spring/dubbo-redis.xml", "classpath:spring/spring-context.xml" };
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(configLocation);
 		context.start();
 
 		System.out.println("=============== redis服务已经启动... ==================");
+		
 		System.in.read();
 		context.close();
 	}

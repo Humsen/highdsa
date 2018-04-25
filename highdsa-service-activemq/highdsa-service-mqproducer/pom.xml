@@ -71,7 +71,7 @@
 				<directory>src/main/resources/spring</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>activemq-provider.xml</include>
+					<include>dubbo-mq-producer.xml</include>
 					<include>spring-activemq.xml</include>
 					<include>spring-context.xml</include>
 				</includes>

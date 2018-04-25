@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.utility.ReadConfigFile;
@@ -20,8 +21,9 @@ import redis.clients.jedis.JedisPoolConfig;
  *
  * @Created at 2018年2月28日 上午9:51:35
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
+@Service("redisPools")
 public class RedisPoolsImpl implements RedisPools {
 	protected static JedisPool jedisPool = null;
 	private static final Logger logger = LogManager.getLogger(RedisPoolsImpl.class.getName());

@@ -73,7 +73,7 @@
 				<directory>src/main/resources/spring</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>message-provider.xml</include>
+					<include>dubbo-message.xml</include>
 				</includes>
 			</resource>
 		</resources>

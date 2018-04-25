@@ -43,7 +43,7 @@
 				<directory>src/main/resources/spring</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>fastdfs-provider.xml</include>
+					<include>dubbo-fastdfs.xml</include>
 				</includes>
 			</resource>
 		</resources>

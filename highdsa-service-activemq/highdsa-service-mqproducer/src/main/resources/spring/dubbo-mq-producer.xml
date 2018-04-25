@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 	<!--定义了提供方应用信息，用于计算依赖关系；在 dubbo-admin 或 dubbo-monitor 会显示这个名字，方便辨识 -->
-	<dubbo:application name="message-provider" owner="husen" organization="pers" />
+	<dubbo:application name="activemq-producer" owner="husen" organization="pers" />
 
 	<!--使用 zookeeper 注册中心暴露服务，注意要先开启 zookeeper -->
 	<dubbo:registry address="zookeeper://115.159.64.86:2181" />
@@ -14,12 +13,8 @@
 
 	<!-- 用dubbo协议在20880端口暴露服务 -->
 	<dubbo:protocol name="dubbo" port="20882" payload="104857600" />
-	
-	<!--使用 dubbo 协议实现定义好的 api.PermissionService 接口 -->
-	<dubbo:service interface="pers.husen.highdsa.service.message.SendSms" ref="aliSendMessage" protocol="dubbo" timeout="100000" />
-	<dubbo:service interface="pers.husen.highdsa.service.message.PushMsg" ref="goEasyPushMsg" protocol="dubbo" timeout="100000" />
-	
-	<!--具体实现该接口的 bean -->
-	<bean id="aliSendMessage" class="pers.husen.highdsa.service.message.sms.AliSendSms" />
-	<bean id="goEasyPushMsg" class="pers.husen.highdsa.service.message.comet.GoEasyPushMsg" />
+
+	<!-- 定义邮件接口接口和实现类，实现类通过注解声明 -->
+	<dubbo:service interface="pers.husen.highdsa.service.activemq.QueueMsgSender" ref="queueMsgSender" protocol="dubbo" timeout="100000" />
+	<dubbo:service interface="pers.husen.highdsa.service.activemq.TopicMsgPublisher" ref="topicMsgPublisher" protocol="dubbo" timeout="100000" />
 </beans>

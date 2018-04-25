@@ -11,14 +11,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * @Created at 2018年2月5日 下午1:03:55
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class RegisterMessageService {
 	public static void main(String[] args) throws IOException {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-				new String[] { "spring/message-provider.xml" });
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "spring/dubbo-message.xml" });
 		context.start();
-		System.out.println("========== 服务已经启动... ===========");
+		
+		System.out.println("========== 短信和消息服务已经启动... ===========");
+		
 		System.in.read();
 		context.close();
 	}
