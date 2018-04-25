@@ -60,7 +60,7 @@
 				<!-- 每个日志文件最大2MB -->
 				<SizeBasedTriggeringPolicy size="2MB" />
 			</Policies>
-			<Filters><!-- 此Filter意思是，只输出debug级别的数据 -->
+			<Filters><!-- 此Filter意思是，只输出trace级别的数据 -->
 				<!-- DENY，日志将立即被抛弃不再经过其他过滤器； NEUTRAL，有序列表里的下个过滤器过接着处理日志； ACCEPT，日志会被立即处理，不再经过剩余过滤器。 -->
 				<ThresholdFilter level="debug" onMatch="DENY"
 					onMismatch="NEUTRAL" />

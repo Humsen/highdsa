@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.message;
+package pers.husen.highdsa.service.message.sms;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -23,14 +23,14 @@ import pers.husen.highdsa.service.message.sms.template.SmsQueryParams;
  *
  * @Created at 2018年3月11日 下午5:00:41
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class AliSendSmsTest {
 	AliSendSms aliSendSms = new AliSendSms();
 
 	@Test
 	public void testSendSmsCaptcha() {
-		String phoneNumber = "18626422426";
+		String phoneNumber = "16621002640";
 		String chptcha = RandomCode.producedRandomCodeStr(8);
 
 		SendSmsResponse response = null;

@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import io.goeasy.GoEasy;
 import pers.husen.highdsa.common.utility.ReadConfigFile;
 import pers.husen.highdsa.service.message.PushMsg;
-import pers.husen.highdsa.service.message.comet.template.CustomPublishListener;
+import pers.husen.highdsa.service.message.comet.listener.CustomPublishListener;
 
 /**
  * @Desc GoEasy 推送方案

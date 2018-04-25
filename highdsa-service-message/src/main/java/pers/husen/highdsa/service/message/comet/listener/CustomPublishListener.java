@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.message.comet.template;
+package pers.husen.highdsa.service.message.comet.listener;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
