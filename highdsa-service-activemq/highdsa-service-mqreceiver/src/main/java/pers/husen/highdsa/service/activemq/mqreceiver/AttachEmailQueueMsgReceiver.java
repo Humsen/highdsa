@@ -19,51 +19,49 @@ import org.springframework.jms.support.converter.MessageConversionException;
 import org.springframework.stereotype.Component;
 
 import pers.husen.highdsa.common.constant.MsgQueueDefine;
-import pers.husen.highdsa.common.entity.vo.email.EmailParams;
+import pers.husen.highdsa.common.entity.vo.email.AttachEmailParams;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.service.activemq.mqreceiver.handler.EmailQueueMsgSvc;
+import pers.husen.highdsa.service.activemq.mqreceiver.handler.AttachEmailQueueMsgSvc;
 
 /**
- * @Desc 队列接收(一对一)，根据队列名称调用相关服务
+ * @Desc 队列接收,根据队列名称调用相关服务.这里是发送带附件的邮件.
  *
  * @Author 何明胜
  *
- * @Created at 2018年3月20日 下午4:16:02
+ * @Created at 2018年4月26日 上午9:16:14
  * 
- * @Version 1.0.4
+ * @Version 1.0.0
  */
-@Component("queueMsgReceiver")
-public class EmailQueueMsgReceiver extends MessageListenerAdapter {
-	private static final Logger logger = LogManager.getLogger(EmailQueueMsgReceiver.class.getName());
+@Component("attachEmailQueueMsgReceiver")
+public class AttachEmailQueueMsgReceiver extends MessageListenerAdapter {
+	private static final Logger logger = LogManager.getLogger(AttachEmailQueueMsgReceiver.class.getName());
 
 	/** 通过@Qualifier修饰符来注入对应的bean */
 	@Resource(name = "jmsQueueTemplate")
 	private JmsTemplate jmsQueueTemplate;
 
 	@Autowired
-	EmailQueueMsgSvc emailQueueMsgSvc;
+	AttachEmailQueueMsgSvc attachEmailQueueMsgSvc;
 
 	@Override
-	@JmsListener(containerFactory = "jmsListenerContainerFactory", destination = MsgQueueDefine.SIMPLE_EMAIL_QUEUE, concurrency = "5-10")
+	@JmsListener(containerFactory = "jmsListenerContainerFactory", destination = MsgQueueDefine.ATTACH_EMAIL_QUEUE, concurrency = "5-10")
 	public synchronized void onMessage(Message message, Session session) throws JMSException {
 		try {
-			// TextMessage msg = (TextMessage) message;
-			// final String ms = msg.getText();
-			EmailParams emailParams = (EmailParams) getMessageConverter().fromMessage(message);
+			AttachEmailParams attachEmailParams = (AttachEmailParams) getMessageConverter().fromMessage(message);
 
-			logger.trace("点对点收到：{}", emailParams.getMailTo());
+			logger.trace("带附件点对点收到：{}", attachEmailParams.getMailTo());
 			logger.debug("当前会话详情：{}", session);
 
 			// 根据函数名称和参数类型获取方法
-			Method method = EmailQueueMsgSvc.class.getMethod(emailParams.getMailFor(), EmailParams.class);
-			method.invoke(emailQueueMsgSvc, emailParams);
+			Method method = AttachEmailQueueMsgSvc.class.getMethod(attachEmailParams.getMailFor(), AttachEmailParams.class);
+			method.invoke(attachEmailQueueMsgSvc, attachEmailParams);
 
 			message.acknowledge();
 		} catch (MessageConversionException | JMSException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			logger.warn(StackTrace2Str.exceptionStackTrace2Str("业务异常，重新放回队列", e));
 
 			// 业务异常，重新放回队列
-			jmsQueueTemplate.send(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, new MessageCreator() {
+			jmsQueueTemplate.send(MsgQueueDefine.ATTACH_EMAIL_QUEUE, new MessageCreator() {
 				@Override
 				public Message createMessage(Session session) throws JMSException {
 					return jmsQueueTemplate.getMessageConverter().toMessage(message, session);

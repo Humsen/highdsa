@@ -13,10 +13,10 @@ import pers.husen.highdsa.service.email.SimpleHtmlEmailImpl;
  */
 public class SendEmail {
 	public static void main(String[] args) {
-		SendEmail main = new SendEmail();
+		SendEmail sendEmail = new SendEmail();
 
-		//main.sendEmail2Register("940706904@qq.com", 123123);
-		main.sendEmail2Admin();
+		sendEmail.sendEmail2Register("2796407738@qq.com", 123123);
+		//sendEmail.sendEmail2Admin();
 	}
 
 	public int sendEmail2Register(String email, int randomCode) {

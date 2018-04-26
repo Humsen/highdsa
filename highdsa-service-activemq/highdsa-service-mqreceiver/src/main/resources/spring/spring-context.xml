@@ -16,6 +16,5 @@
 	<!-- 扫描包起始位置 -->
 	<context:component-scan base-package="pers.husen.highdsa.service.activemq" />
 
-	<!-- <import resource="classpath:spring/spring-activemq.xml" />
-	<import resource="classpath:spring/dubbo-mq-receiver.xml" /> -->
+	<!-- <import resource="classpath:spring/spring-activemq.xml" /> <import resource="classpath:spring/dubbo-mq-receiver.xml" /> -->
 </beans>

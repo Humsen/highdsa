@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
-	xmlns:jms="http://www.springframework.org/schema/jms"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:amq="http://activemq.apache.org/schema/core" xmlns:jms="http://www.springframework.org/schema/jms"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
@@ -23,16 +21,14 @@
 		<property name="trustAllPackages" value="true" />
 	</bean>
 
-	<!-- ActiveMQ为我们提供了一个PooledConnectionFactory，通过往里面注入一个ActiveMQConnectionFactory 
-		可以用来将Connection、Session和MessageProducer池化，这样可以大大的减少我们的资源消耗,要依赖于 activemq-pool包 -->
+	<!-- ActiveMQ为我们提供了一个PooledConnectionFactory，通过往里面注入一个ActiveMQConnectionFactory 可以用来将Connection、Session和MessageProducer池化，这样可以大大的减少我们的资源消耗,要依赖于 activemq-pool包 -->
 	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
 		<property name="connectionFactory" ref="mqConnectionFactory" />
 		<property name="maxConnections" value="${activemq.pool.maxConnections}" />
 	</bean>
 
 	<!-- Spring用于管理真正的连接工厂的ConnectionFactory -->
-	<bean id="connectionFactory"
-		class="org.springframework.jms.connection.CachingConnectionFactory">
+	<bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
 		<!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->
 		<property name="targetConnectionFactory" ref="pooledConnectionFactory" />
 		<property name="sessionCacheSize" value="100" />
@@ -60,20 +56,24 @@
 	<jms:annotation-driven />
 
 	<!-- 消息处理器 -->
-	<bean id="jmsMessageConverter"
-		class="org.springframework.jms.support.converter.SimpleMessageConverter" />
+	<bean id="jmsMessageConverter" class="org.springframework.jms.support.converter.SimpleMessageConverter" />
 
 	<!-- queue监听器容器 -->
-	<bean id="jmsListenerContainerFactory"
-		class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+	<bean id="jmsListenerContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
 		<property name="connectionFactory" ref="connectionFactory" />
 	</bean>
 
-	<!-- Topic消息监听器 -->
-	<bean id="messageListenerContainer"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+	<!-- Topic邮件消息监听器 -->
+	<bean id="emailTopicMsgListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory"></property>
 		<property name="destination" ref="topicDestination"></property>
-		<property name="messageListener" ref="topicMsgReceiver"></property>
+		<property name="messageListener" ref="emailTopicMsgReceiver"></property>
+	</bean>
+
+	<!-- Topic附件邮件消息监听器 -->
+	<bean id="attachEmailTopicMsgListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory"></property>
+		<property name="destination" ref="attachEmailTopicMsgDestination"></property>
+		<property name="messageListener" ref="attachEmailTopicMsgReceiver"></property>
 	</bean>
 </beans>

@@ -33,9 +33,9 @@ import pers.husen.highdsa.service.activemq.mqreceiver.handler.AttachEmailQueueMs
  * 
  * @Version 1.0.1
  */
-@Component("emailTopicMsgReceiver")
-public class EmailTopicMsgReceiver extends MessageListenerAdapter {
-	private static final Logger logger = LogManager.getLogger(EmailTopicMsgReceiver.class.getName());
+@Component("attachEmailTopicMsgReceiver")
+public class AttachEmailTopicMsgReceiver extends MessageListenerAdapter {
+	private static final Logger logger = LogManager.getLogger(AttachEmailTopicMsgReceiver.class.getName());
 
 	@Resource(name = "jmsTopicTemplate")
 	private JmsTemplate jmsTopicTemplate;
@@ -48,9 +48,9 @@ public class EmailTopicMsgReceiver extends MessageListenerAdapter {
 	 * 
 	 * @return
 	 */
-	@Bean(name = "topicDestination")
+	@Bean(name = "attachEmailTopicMsgDestination")
 	private ActiveMQTopic initTopicDestination() {
-		return new ActiveMQTopic(MsgQueueDefine.SIMPLE_EMAIL_TOPIC);
+		return new ActiveMQTopic(MsgQueueDefine.ATTACH_EMAIL_TOPIC);
 	}
 
 	@Override
@@ -65,11 +65,11 @@ public class EmailTopicMsgReceiver extends MessageListenerAdapter {
 			method.invoke(attachEmailQueueMsgSvc, attachEmailParams);
 
 			message.acknowledge();
-		} catch (MessageConversionException | JMSException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+		} catch (MessageConversionException | JMSException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			logger.warn(StackTrace2Str.exceptionStackTrace2Str("发送异常，重新放回队列", e));
 
 			// 发送异常，重新放回队列
-			jmsTopicTemplate.send(MsgQueueDefine.SIMPLE_EMAIL_TOPIC, new MessageCreator() {
+			jmsTopicTemplate.send(MsgQueueDefine.ATTACH_EMAIL_TOPIC, new MessageCreator() {
 				@Override
 				public Message createMessage(Session session) throws JMSException {
 					return jmsTopicTemplate.getMessageConverter().toMessage(message, session);

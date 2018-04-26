@@ -2,6 +2,7 @@ package pers.husen.highdsa.service.email;
 
 import java.io.File;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -51,8 +52,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			MimeMessage message = new MimeMessage(session);
 
 			// Set From: 头部头字段
-			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(),
-					Encode.DEFAULT_ENCODE));
+			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(), Encode.DEFAULT_ENCODE));
 
 			// 收件人电子邮箱
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
@@ -117,8 +117,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			MimeMessage message = new MimeMessage(session);
 
 			// Set From: 头部头字段
-			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(),
-					Encode.DEFAULT_ENCODE));
+			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(), Encode.DEFAULT_ENCODE));
 
 			// 收件人电子邮箱
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
@@ -137,7 +136,13 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 添加附件的内容
 			if (attachUrl != null) {
 				BodyPart attachmentBodyPart = new MimeBodyPart();
-				DataSource dataSource = new URLDataSource(new URL(attachUrl));
+
+				int index = attachUrl.indexOf("?");
+				String queryStr = attachUrl.substring(index + 1, attachUrl.length());
+				String attachUrlEncode = URLEncoder.encode(queryStr, Encode.DEFAULT_ENCODE);
+				String beforeQueryStr = attachUrl.substring(0, index + 1);
+
+				DataSource dataSource = new URLDataSource(new URL(beforeQueryStr + attachUrlEncode));
 
 				attachmentBodyPart.setDataHandler(new DataHandler(dataSource));
 
@@ -183,8 +188,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			MimeMessage message = new MimeMessage(session);
 
 			// Set From: 头部头字段
-			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(),
-					Encode.DEFAULT_ENCODE));
+			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(), Encode.DEFAULT_ENCODE));
 
 			// 收件人电子邮箱
 			message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(sendEmailCore.getRecipients()));
@@ -225,8 +229,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 关闭连接
 			transport.close();
 
-			logger.info("发送邮件给站长成功! 虚拟发件人：{}, 收件人：{}, 发件内容：{}, 附件名称：{}", mailFrom, sendEmailCore.getRecipients(),
-					content, attachFile.getName());
+			logger.info("发送邮件给站长成功! 虚拟发件人：{}, 收件人：{}, 发件内容：{}, 附件名称：{}", mailFrom, sendEmailCore.getRecipients(), content, attachFile.getName());
 
 			// 保存邮件
 			new SaveEmail(message);
@@ -240,8 +243,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 	}
 
 	@Override
-	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, String attachUrl,
-			String attachName) {
+	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, String attachUrl, String attachName) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			Session session = sendEmailCore.getSession("email/all2admin-mail.properties");
@@ -250,8 +252,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			MimeMessage message = new MimeMessage(session);
 
 			// Set From: 头部头字段
-			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(),
-					Encode.DEFAULT_ENCODE));
+			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(), Encode.DEFAULT_ENCODE));
 
 			// 收件人电子邮箱
 			message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(sendEmailCore.getRecipients()));
@@ -292,8 +293,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 关闭连接
 			transport.close();
 
-			logger.info("发送邮件给站长成功! 虚拟发件人：{}, 收件人：{}, 发件内容：{}, 附件名称：{}", mailFrom, sendEmailCore.getRecipients(),
-					content, attachName);
+			logger.info("发送邮件给站长成功! 虚拟发件人：{}, 收件人：{}, 发件内容：{}, 附件名称：{}", mailFrom, sendEmailCore.getRecipients(), content, attachName);
 
 			// 保存邮件
 			new SaveEmail(message);
