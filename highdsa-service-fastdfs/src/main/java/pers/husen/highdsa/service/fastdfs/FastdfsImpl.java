@@ -46,7 +46,7 @@ public class FastdfsImpl implements Fastdfs {
 		}
 
 		/*
-		 * 也可以使用代码设置配置 // 连接超时的时限 ClientGlobal.setG_connect_timeout(2); // 网络超时的时限，单位为秒
+		 * 也可以使用代码设置配置 // 连接超时的时限 ClientGlobal.setG_connect_timeout(2); // 网络超时的时限,单位为秒
 		 * ClientGlobal.setG_network_timeout(30);
 		 * ClientGlobal.setG_anti_steal_token(false); // 字符集
 		 * ClientGlobal.setG_charset("UTF-8"); ClientGlobal.setG_secret_key(null); //

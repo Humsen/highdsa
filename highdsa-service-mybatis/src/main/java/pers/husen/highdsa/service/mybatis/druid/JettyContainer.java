@@ -58,7 +58,7 @@ public class JettyContainer implements Container {
 		pageHolder.setInitParameter("pages", ConfigUtils.getProperty(JETTY_PAGES));
 		pageHolder.setInitOrder(2);
 
-		// 这里是新添加的，作用于druid日志监控系统的
+		// 这里是新添加的,作用于druid日志监控系统的
 		String loginUsername = ConfigUtils.getProperty(DRUID_LOGIN_USERNAME);
 		String loginPassword = ConfigUtils.getProperty(DRUID_LOGIN_PASSWORD);
 		if (loginUsername == null || loginPassword == null) {

@@ -21,7 +21,7 @@ public class SendEmail {
 
 	public int sendEmail2Register(String email, int randomCode) {
 		String subject = "【何明胜的个人网站】新用户注册邮箱验证";
-		String content = "欢迎在【何明胜的个人网站】注册账号。";
+		String content = "欢迎在【何明胜的个人网站】注册账号.";
 
 		return new SimpleHtmlEmailImpl().sendEmail2User(email, subject, content);
 	}

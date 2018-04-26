@@ -48,7 +48,7 @@
 				<directory>src/main/resources/spring</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>dubbo-email.xml</include>
+					<include>dubbo-service-email.xml</include>
 				</includes>
 			</resource>
 		</resources>

@@ -1,7 +1,7 @@
-版本：V1.1
+版本：V1.3
 创建者：何明胜
 创建时间：2018年2月4日
-最后修改时间：2018年4月25日
+最后修改时间：2018年4月27日
 
 -------------    分割线        ------------------------
 
@@ -30,8 +30,14 @@
 	
 7、配置文件规范
 	dubbo和spring配置文件都放在resources/spring文件夹下
-	spring配置文件以spring-×.xml 格式命名
-	dubbo配置文件以dubbo-×.xml 格式命名
+	spring配置文件
+		通常以spring-×.xml 格式命名
+		一般开启注解放、扫描包配置、读取配置文件等在spring-context.xml里
+		mvc配置文件为spring-mvc-servlet.xml
+		
+	dubbo配置文件
+		通常以dubbo-×.xml 格式命名,因为有的提供者里面也有消费者，所以dubbo 提供者为 dubbo-service-×（该模块名称，如fastdfs。如果模块下有子模块，可以再加，如client-cas）.xml, dubbo消费者  dubbo-consumer-×（该模块名称，如fastdfs）.xml
+		配置文件里的应用名称，提供者为service-×（该模块名称，如fastdfs），消费者为consumer-×（该模块名称，如fastdfs），跟随配置文件名称，去掉dubbo前缀
 
 8、类命名
 	优先使用包路径表示类含义，避免类名重复可在类名后面加上包路径最后一个词。如×××.core.SendSmsCore
@@ -47,4 +53,5 @@
 	实体类字段命名可省略系统属性，如sysUserId可为userId	 
 	
 11、标点符号规范
-	一律使用英文标点,除、(顿号)                                                                     
+	Java类、XML等配置文件、前端HTML和js等，逗号（,）、句号（.）、分号（;）、感叹号（!）一律使用英文标点，其余视实际情况而定. 
+	                                                                    

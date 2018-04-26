@@ -66,7 +66,7 @@ public class AesEncrypt {
 		Cipher cipher = Cipher.getInstance(AES_TRANSFORMATION);
 		cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
 		byte[] encrypted = cipher.doFinal(dataSource.getBytes("utf-8"));
-		// 此处使用BASE64做转码功能，同时能起到2次加密的作用。
+		// 此处使用BASE64做转码功能,同时能起到2次加密的作用.
 		return Base64.getEncoder().encodeToString(encrypted);
 	}
 

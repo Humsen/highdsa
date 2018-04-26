@@ -55,7 +55,7 @@ public class AliSendSms implements SendSms {
 
 		SmsSendParams smsSendParams = new SmsSendParams();
 		smsSendParams.setSignName(MessageParams.SIGN_NAME);
-		// 现在写死了，以后要动态设置为templateId
+		// 现在写死了,以后要动态设置为templateId
 		smsSendParams.setTemplateCode(MessageParams.TEMPLATE_REGISTER);
 		smsSendParams.setPhoneNumbers(phoneNumber);
 		smsSendParams.setTemplateParam(templateParam);

@@ -81,7 +81,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @param value
 	 * @param cacheSeconds
-	 *            超时时间，0为不超时
+	 *            超时时间,0为不超时
 	 * @return
 	 */
 	public String setObject(String key, Object value, int cacheSeconds);
@@ -142,7 +142,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @param value
 	 * @param cacheSeconds
-	 *            超时时间，0为不超时
+	 *            超时时间,0为不超时
 	 * @return
 	 */
 	public Long setList(String key, List<String> value, int cacheSeconds);
@@ -170,7 +170,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @param value
 	 * @param cacheSeconds
-	 *            超时时间，0为不超时
+	 *            超时时间,0为不超时
 	 * @return
 	 */
 	public String setObjectList(String key, List<Object> value, int cacheSeconds);
@@ -193,7 +193,7 @@ public interface RedisOperation {
 	public String appendObjectList(String key, Object... value);
 
 	/**
-	 * 一次设置多个 key 的值，成功返回 ok 表示所有的值都设置了，失败返回 0 表示没有任何值被设置 key1, value1, key2, value2
+	 * 一次设置多个 key 的值,成功返回 ok 表示所有的值都设置了,失败返回 0 表示没有任何值被设置 key1, value1, key2, value2
 	 * 
 	 * @param keys3Values
 	 * @return
@@ -214,7 +214,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @param value
 	 * @param cacheSeconds
-	 *            超时时间，0为不超时
+	 *            超时时间,0为不超时
 	 * @return
 	 */
 	public Long setSet(String key, Set<String> value, int cacheSeconds);
@@ -242,7 +242,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @param value
 	 * @param cacheSeconds
-	 *            超时时间，0为不超时
+	 *            超时时间,0为不超时
 	 * @return
 	 */
 	public String setObjectSet(String key, Set<Object> value, int cacheSeconds);
@@ -270,7 +270,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @param value
 	 * @param cacheSeconds
-	 *            超时时间，0为不超时
+	 *            超时时间,0为不超时
 	 * @return
 	 */
 	public String setMap(String key, Map<String, String> value, int cacheSeconds);
@@ -325,7 +325,7 @@ public interface RedisOperation {
 	 * @param key
 	 * @param value
 	 * @param cacheSeconds
-	 *            超时时间，0为不超时
+	 *            超时时间,0为不超时
 	 * @return
 	 */
 	public String setObjectMap(String key, Map<String, Object> value, int cacheSeconds);

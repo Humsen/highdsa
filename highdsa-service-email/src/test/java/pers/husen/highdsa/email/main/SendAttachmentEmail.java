@@ -24,7 +24,7 @@ public class SendAttachmentEmail {
 		aImpl.sendEmail2User("2796407738@qq.com", "邮件主题", "邮件内容", file);
 		aImpl.sendEmail2User("2796407738@qq.com", "邮件主题url", "邮件内容", attachUrl, "删除.reg");
 		
-		//aImpl.sendEmail2Admin("何明胜", "1123767053@qq.com", "18626422426", "测试发送附件给管理员，带附件", file);
-		//aImpl.sendEmail2Admin("何明胜", "1123767053@qq.com", "18626422426", "测试发送附件给管理员，带附件url", attachUrl, "删除.reg");
+		//aImpl.sendEmail2Admin("何明胜", "1123767053@qq.com", "18626422426", "测试发送附件给管理员,带附件", file);
+		//aImpl.sendEmail2Admin("何明胜", "1123767053@qq.com", "18626422426", "测试发送附件给管理员,带附件url", attachUrl, "删除.reg");
 	}
 }

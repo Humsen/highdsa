@@ -39,7 +39,7 @@ public interface CustRolePermissionMapper {
 	List<CustRolePermission> selectAll();
 
 	/**
-	 * 根据角色id删除,删除角色时，此角色对应的所有权限关联失效
+	 * 根据角色id删除,删除角色时,此角色对应的所有权限关联失效
 	 * 
 	 * @param roleId
 	 * @return

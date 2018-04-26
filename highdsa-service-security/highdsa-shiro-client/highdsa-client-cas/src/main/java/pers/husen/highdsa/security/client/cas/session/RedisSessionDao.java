@@ -99,7 +99,7 @@ public class RedisSessionDao extends MysqlSessionDao {
 	}
 
 	/**
-	 * 先从缓存中获取session，如果没有再去数据库中获取
+	 * 先从缓存中获取session,如果没有再去数据库中获取
 	 */
 	@Override
 	protected Session doReadSession(Serializable sessionId) {
@@ -112,7 +112,7 @@ public class RedisSessionDao extends MysqlSessionDao {
 		Session session = (Session) Serializer.unserialize(redisOperation.get(this.getByteKey(sessionId)));
 
 		if (session == null) {
-			logger.trace("redis缓存为空，从数据库获取");
+			logger.trace("redis缓存为空,从数据库获取");
 			session = super.doReadSession(sessionId);
 		}
 

@@ -99,7 +99,7 @@ public class ShiroSessionStore implements SessionStore<J2EContext> {
 	}
 
 	/**
-	 * 刷新session属性，这里暂返回false，实际应用中需实现
+	 * 刷新session属性,这里暂返回false,实际应用中需实现
 	 */
 	@Override
 	public boolean renewSession(final J2EContext context) {

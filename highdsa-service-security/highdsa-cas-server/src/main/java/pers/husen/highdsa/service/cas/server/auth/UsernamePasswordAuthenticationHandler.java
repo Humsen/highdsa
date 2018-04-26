@@ -43,7 +43,7 @@ public class UsernamePasswordAuthenticationHandler extends AbstractUsernamePassw
 	}
 
 	/**
-	 * 用于判断用户的Credential(换而言之，就是登录信息)，是否是俺能处理的 就是有可能是，子站点的登录信息中不止有用户名密码等信息，还有部门信息的情况
+	 * 用于判断用户的Credential(换而言之,就是登录信息),是否是俺能处理的 就是有可能是,子站点的登录信息中不止有用户名密码等信息,还有部门信息的情况
 	 */
 	@Override
 	public boolean supports(Credential credential) {
@@ -72,7 +72,7 @@ public class UsernamePasswordAuthenticationHandler extends AbstractUsernamePassw
 			throw new FailedLoginException("没有该用户");
 		}
 
-		// 返回多属性（暂时不知道怎么用，没研究）
+		// 返回多属性（暂时不知道怎么用,没研究）
 		Map<String, Object> map = new HashMap<>(5);
 		map.put("email", "XXXXX@qq.com");
 

@@ -23,7 +23,7 @@ import pers.husen.highdsa.service.email.core.SaveEmail;
 import pers.husen.highdsa.service.email.core.SendEmailCore;
 
 /**
- * @Desc 发送邮件类，提供调用
+ * @Desc 发送邮件类,提供调用
  *
  * @Author 何明胜
  *
@@ -39,10 +39,10 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	@Override
 	public int sendEmail4RetrivePwd(String email, int randomCode) {
 		String subject = "【highdsa项目组】找回密码邮箱验证";
-		String mode = "您正在使用找回密码功能。";
+		String mode = "您正在使用找回密码功能.";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>"
-				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】，请于10分钟内输入，任何人都不会向您索取，请勿泄露。"
-				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求，说明您的邮箱可能被人冒用或者存在风险，请留意。" + "<br/><br/><br/>此致，highdsa项目组";
+				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】,请于10分钟内输入,任何人都不会向您索取,请勿泄露."
+				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求,说明您的邮箱可能被人冒用或者存在风险,请留意." + "<br/><br/><br/>此致,highdsa项目组";
 
 		logger.info("发送邮件给用户-->找回密码 <method:sendEmail4RetrivePwd>");
 		return sendEmail2User(email, subject, content);
@@ -51,10 +51,10 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	@Override
 	public int sendEmail4Register(String email, int randomCode) {
 		String subject = "【highdsa项目组】新用户注册邮箱验证";
-		String mode = "欢迎在【highdsa项目组】注册账号。";
+		String mode = "欢迎在【highdsa项目组】注册账号.";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>"
-				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】，请于10分钟内输入，任何人都不会向您索取，请勿泄露。"
-				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求，说明您的邮箱可能被人冒用或者存在风险，请留意。" + "<br/><br/><br/>此致，highdsa项目组";
+				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】,请于10分钟内输入,任何人都不会向您索取,请勿泄露."
+				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求,说明您的邮箱可能被人冒用或者存在风险,请留意." + "<br/><br/><br/>此致,highdsa项目组";
 
 		logger.info("发送邮件给用户-->注册 <method:sendEmail4Register>");
 		return sendEmail2User(email, subject, content);
@@ -63,10 +63,10 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	@Override
 	public int sendEmail4ModifyEmailAuth(String email, int randomCode) {
 		String subject = "【highdsa项目组】用户修改邮箱验证原邮箱";
-		String mode = "您正在使用修改邮箱功能。第一步，验证码您的原邮箱。";
+		String mode = "您正在使用修改邮箱功能.第一步,验证码您的原邮箱.";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>"
-				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】，请于10分钟内输入，任何人都不会向您索取，请勿泄露。"
-				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求，说明您的邮箱可能被人冒用或者存在风险，请留意。" + "<br/><br/><br/>此致，highdsa项目组";
+				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】,请于10分钟内输入,任何人都不会向您索取,请勿泄露."
+				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求,说明您的邮箱可能被人冒用或者存在风险,请留意." + "<br/><br/><br/>此致,highdsa项目组";
 
 		logger.info("发送邮件给用户-->修改邮箱验证 <method:sendEmail4ModufyEmailAuth>");
 		return sendEmail2User(email, subject, content);
@@ -75,10 +75,10 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	@Override
 	public int sendEmail4ModifyEmailBind(String email, int randomCode) {
 		String subject = "【highdsa项目组】用户修改邮箱绑定新邮箱";
-		String mode = "您正在使用修改邮箱功能。第二步，绑定您的新邮箱。";
+		String mode = "您正在使用修改邮箱功能.第二步,绑定您的新邮箱.";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>"
-				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】，请于10分钟内输入，任何人都不会向您索取，请勿泄露。"
-				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求，说明您的邮箱可能被人冒用或者存在风险，请留意。" + "<br/><br/><br/>此致，highdsa项目组";
+				+ "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】,请于10分钟内输入,任何人都不会向您索取,请勿泄露."
+				+ "<br/>&emsp;&emsp;注：如果不是您发出的请求,说明您的邮箱可能被人冒用或者存在风险,请留意." + "<br/><br/><br/>此致,highdsa项目组";
 
 		logger.info("发送邮件给用户-->修改邮箱绑定新邮箱 <method:sendEmail4ModufyEmailBind>");
 		return sendEmail2User(email, subject, content);
@@ -131,7 +131,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	
 	@Override
 	public int sendEmail4UserFeedback(String name, String userEmail, String phone, String content) {
-		content = "highdsa项目组：<br/>&emsp;&emsp;你好! 我是您的机器人。<br/>&emsp;&emsp;现在有人通过您的\"联系管理员\"功能给您发邮件，详情如下：" + "<br/>"
+		content = "highdsa项目组：<br/>&emsp;&emsp;你好! 我是您的机器人.<br/>&emsp;&emsp;现在有人通过您的\"联系管理员\"功能给您发邮件,详情如下：" + "<br/>"
 				+ "<br/>&emsp;&emsp;姓名：" + name + "<br/>&emsp;&emsp;手机：" + phone + "<br/>&emsp;&emsp;邮箱：" + userEmail
 				+ "<br/>&emsp;&emsp;邮件内容：<br/>&emsp;&emsp;&emsp;&emsp;" + content;
 

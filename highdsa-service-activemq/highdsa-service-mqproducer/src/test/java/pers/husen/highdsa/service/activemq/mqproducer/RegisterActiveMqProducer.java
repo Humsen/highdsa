@@ -15,7 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class RegisterActiveMqProducer {
 	public static void main(String[] args) throws IOException {
-		String[] configLocations = new String[] {"spring/spring-context.xml", "spring/spring-activemq.xml", "spring/dubbo-mq-producer.xml"};
+		String[] configLocations = new String[] {"spring/spring-context.xml", "spring/spring-activemq.xml", "spring/dubbo-service-mq-producer.xml"};
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(configLocations);
 		context.start();
 		

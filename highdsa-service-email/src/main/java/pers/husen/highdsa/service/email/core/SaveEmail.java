@@ -70,12 +70,12 @@ public class SaveEmail {
 			// 获取存储服务器
 			IMAPStore store = (IMAPStore) imapSession.getStore(properties.getProperty("mail.store.protocol"));
 			// 连接
-			logger.info("用户名：{}， 密码:{}", properties.getProperty("mail.store.username"),
+			logger.info("用户名：{}, 密码:{}", properties.getProperty("mail.store.username"),
 					properties.getProperty("mail.store.password"));
 			store.connect(properties.getProperty("mail.store.username"), properties.getProperty("mail.store.password"));
 			// 获取 已发送 文件夹
 			IMAPFolder folder = (IMAPFolder) store.getFolder("Sent Messages");
-			// 如果不存在，则创建
+			// 如果不存在,则创建
 			if (!folder.exists()) {
 				logger.info("已发送文件夹在服务器不存在, 已创建!");
 				folder.create(Folder.HOLDS_MESSAGES);

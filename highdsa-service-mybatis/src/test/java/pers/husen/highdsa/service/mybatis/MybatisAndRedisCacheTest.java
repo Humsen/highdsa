@@ -31,7 +31,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  * @Version 1.0.5
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/dubbo-mybatis.xml", "classpath:spring/spring-context.xml" })
+@ContextConfiguration(locations = { "classpath:spring/dubbo-service-mybatis.xml", "classpath:spring/spring-context.xml" })
 public class MybatisAndRedisCacheTest extends AbstractJUnit4SpringContextTests {
 
 	@Before
@@ -98,7 +98,7 @@ public class MybatisAndRedisCacheTest extends AbstractJUnit4SpringContextTests {
 	public void after() {
 		try {
 			System.out.println("=============== 阻塞开始... ==================");
-			// 为保证服务一直开着，利用输入流的阻塞来模拟
+			// 为保证服务一直开着,利用输入流的阻塞来模拟
 			System.in.read();
 		} catch (IOException e) {
 			e.printStackTrace();

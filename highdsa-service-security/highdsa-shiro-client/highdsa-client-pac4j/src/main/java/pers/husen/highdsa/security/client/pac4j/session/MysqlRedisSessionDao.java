@@ -120,7 +120,7 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 		Session session = (Session) Serializer.unserialize(redisOperation.get(this.getByteKey(sessionId)));
 
 		if (session == null) {
-			logger.trace("redis缓存为空，从数据库获取");
+			logger.trace("redis缓存为空,从数据库获取");
 
 			SysSessions sysSessions = sysSessionsManager.findBySessionId(String.valueOf(sessionId));
 			session = ShiroSessionSerializer.deserialize(sysSessions.getSessionValue());

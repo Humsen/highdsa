@@ -10,7 +10,7 @@
 	<!-- 自动扫描的包名 -->
 	<context:component-scan base-package="pers.husen.highdsa" />
 
-	<!-- 默认的注解映射的支持，自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter -->
+	<!-- 默认的注解映射的支持,自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter -->
 	<mvc:annotation-driven />
 
 	<!-- 视图解释类 -->

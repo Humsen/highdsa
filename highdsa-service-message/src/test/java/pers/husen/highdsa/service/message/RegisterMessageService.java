@@ -15,7 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class RegisterMessageService {
 	public static void main(String[] args) throws IOException {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "spring/dubbo-message.xml" });
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "spring/dubbo-service-message.xml" });
 		context.start();
 		
 		System.out.println("========== 短信和消息服务已经启动... ===========");

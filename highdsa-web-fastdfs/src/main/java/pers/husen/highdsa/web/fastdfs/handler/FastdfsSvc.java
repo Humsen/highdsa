@@ -57,7 +57,7 @@ public class FastdfsSvc {
 				// 按照传统方式获取数据
 				return null;
 			}
-			// 4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，每一个FileItem对应一个Form表单的输入项
+			// 4、使用ServletFileUpload解析器解析上传数据,解析结果返回的是一个List<FileItem>集合,每一个FileItem对应一个Form表单的输入项
 			List<FileItem> list = upload.parseRequest(request);
 			for (FileItem item : list) {
 				// 如果fileitem中封装的是普通输入项的数据
@@ -67,13 +67,13 @@ public class FastdfsSvc {
 					String value = item.getString("UTF-8");
 					logger.info("普通表单（暂不处理）：" + name + "=" + value);
 				} else {// 如果fileitem中封装的是上传文件
-						// 得到上传的文件名称，
+						// 得到上传的文件名称,
 					String filename = item.getName();
 					if (filename == null || filename.trim().equals("")) {
 						continue;
 					}
-					// 注意：不同的浏览器提交的文件名是不一样的，有些浏览器提交上来的文件名是带有路径的，如： c:\a\b\1.txt，而有些只是单纯的文件名，如：1.txt
-					// 处理获取到的上传文件的文件名的路径部分，只保留文件名部分
+					// 注意：不同的浏览器提交的文件名是不一样的,有些浏览器提交上来的文件名是带有路径的,如： c:\a\b\1.txt,而有些只是单纯的文件名,如：1.txt
+					// 处理获取到的上传文件的文件名的路径部分,只保留文件名部分
 					filename = filename.substring(filename.lastIndexOf("\\") + 1);
 
 					// 获取item中的上传文件的输入流

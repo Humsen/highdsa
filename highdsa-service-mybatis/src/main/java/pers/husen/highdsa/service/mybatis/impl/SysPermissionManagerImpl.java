@@ -42,7 +42,7 @@ public class SysPermissionManagerImpl implements SysPermissionManager {
 		
 		// 设置权限有效
 		sysPermission.setPermissionValid(true);
-		// 如果是否为导航属性为null,说明创建时没有被勾选，设置为false
+		// 如果是否为导航属性为null,说明创建时没有被勾选,设置为false
 		if (sysPermission.getPermissionNavi() == null) {
 			sysPermission.setPermissionNavi(false);
 		}
@@ -88,7 +88,7 @@ public class SysPermissionManagerImpl implements SysPermissionManager {
 
 	@Override
 	public void updatePermissionByPrimaryKey(SysPermission sysPermission) {
-		// 如果是否为导航属性为null,说明创建时没有被勾选，设置为false
+		// 如果是否为导航属性为null,说明创建时没有被勾选,设置为false
 		if (sysPermission.getPermissionNavi() == null) {
 			sysPermission.setPermissionNavi(false);
 		}

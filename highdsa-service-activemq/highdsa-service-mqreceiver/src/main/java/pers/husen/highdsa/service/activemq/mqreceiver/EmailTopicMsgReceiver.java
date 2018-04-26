@@ -66,9 +66,9 @@ public class EmailTopicMsgReceiver extends MessageListenerAdapter {
 
 			message.acknowledge();
 		} catch (MessageConversionException | JMSException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			logger.warn(StackTrace2Str.exceptionStackTrace2Str("发送异常，重新放回队列", e));
+			logger.warn(StackTrace2Str.exceptionStackTrace2Str("发送异常,重新放回队列", e));
 
-			// 发送异常，重新放回队列
+			// 发送异常,重新放回队列
 			jmsTopicTemplate.send(MsgQueueDefine.SIMPLE_EMAIL_TOPIC, new MessageCreator() {
 				@Override
 				public Message createMessage(Session session) throws JMSException {

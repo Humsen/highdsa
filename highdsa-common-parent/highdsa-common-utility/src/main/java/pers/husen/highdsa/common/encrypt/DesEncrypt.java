@@ -36,7 +36,7 @@ public class DesEncrypt {
 	public static final String DEFAULT_DES_KEY = "IwL1EOba";
 
 	/**
-	 * DES加密，使用默认密钥
+	 * DES加密,使用默认密钥
 	 * 
 	 * @param dataSource
 	 * @return
@@ -73,7 +73,7 @@ public class DesEncrypt {
 
 		try {
 			// 为了防止解密时报javax.crypto.IllegalBlockSizeException: Input length must
-			// be multiple of 8 when decrypting with padded cipher异常，
+			// be multiple of 8 when decrypting with padded cipher异常,
 			// 不能把加密后的字节数组直接转换成字符串
 			byte[] buf = cipher.doFinal(dataSource.getBytes());
 
@@ -92,7 +92,7 @@ public class DesEncrypt {
 	}
 
 	/**
-	 * DES解密，使用默认密钥
+	 * DES解密,使用默认密钥
 	 * 
 	 * @param dataSource
 	 * @return

@@ -26,7 +26,7 @@ public class TripleDesEncrypt {
 	public static final String DEFAULT_TRIPLE_DES_KEY = "IwL1EObaoKTjhTN8wkuY+tXA";
 
 	/**
-	 * 3DES加密，使用默认密钥
+	 * 3DES加密,使用默认密钥
 	 * 
 	 * @param dataSource
 	 * @return
@@ -42,7 +42,7 @@ public class TripleDesEncrypt {
 	 * @param dataSource
 	 *            数据源
 	 * @param secretKey
-	 *            密钥，长度必须是8的倍数
+	 *            密钥,长度必须是8的倍数
 	 * @return 返回加密后的数据 Base64编码
 	 * @throws Exception
 	 */
@@ -62,7 +62,7 @@ public class TripleDesEncrypt {
 	}
 
 	/**
-	 * 3DES解密，使用默认密钥
+	 * 3DES解密,使用默认密钥
 	 * 
 	 * @param dataSource
 	 * @return
@@ -78,7 +78,7 @@ public class TripleDesEncrypt {
 	 * @param dataSource
 	 *            加密之后的数据
 	 * @param secretKey
-	 *            密钥，长度必须是8的倍数
+	 *            密钥,长度必须是8的倍数
 	 * @return 明码
 	 * @throws Exception
 	 */

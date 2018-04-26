@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @Desc 类功能说明 ,拦截/login请求，重定向到cas登录验证
+ * @Desc 类功能说明 ,拦截/login请求,重定向到cas登录验证
  *
  * @Author 何明胜
  *
@@ -30,7 +30,7 @@ public class Redirect2CasLoginFilter extends AccessControlFilter {
 
 		String requestUri = httpResq.getRequestURI();
 
-		// 得到企业的eid发到cas服务，但得到的值有可能不是eid而是其他字符串
+		// 得到企业的eid发到cas服务,但得到的值有可能不是eid而是其他字符串
 		String eidParam = requestUri.substring(requestUri.lastIndexOf("/") + 1);
 
 		loginUrl += "&eid=" + eidParam;

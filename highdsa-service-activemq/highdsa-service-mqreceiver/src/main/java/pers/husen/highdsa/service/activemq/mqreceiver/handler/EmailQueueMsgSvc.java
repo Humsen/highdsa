@@ -9,7 +9,7 @@ import pers.husen.highdsa.common.entity.vo.email.EmailParams;
 import pers.husen.highdsa.service.email.SimpleHtmlEmail;
 
 /**
- * @Desc 队列消息接收简单邮件之后，反射调用这里的类
+ * @Desc 队列消息接收简单邮件之后,反射调用这里的类
  *
  * @Author 何明胜
  *

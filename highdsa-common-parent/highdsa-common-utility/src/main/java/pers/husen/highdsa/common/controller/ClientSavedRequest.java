@@ -61,14 +61,14 @@ public class ClientSavedRequest extends SavedRequest {
 		if (backUrl != null) {
 			String httpHeader = "http://";
 			String httpsHeader = "https://";
-			// 如果从外部传入了successUrl（登录成功之后重定向的地址），且以http://或https://开头那么直接返回
+			// 如果从外部传入了successUrl（登录成功之后重定向的地址）,且以http://或https://开头那么直接返回
 			if (backUrl.toLowerCase().startsWith(httpHeader) || backUrl.toLowerCase().startsWith(httpsHeader)) {
 				return backUrl;
 			} else if (!backUrl.startsWith(contextPath)) {
-				// 如果successUrl有值但没有上下文，拼上上下文
+				// 如果successUrl有值但没有上下文,拼上上下文
 				requestURI = contextPath + backUrl;
 			} else {
-				// 否则，如果successUrl有值，直接赋值给requestUrl即可；否则，如果successUrl没值，那么requestUrl就是当前请求的地址；
+				// 否则,如果successUrl有值,直接赋值给requestUrl即可；否则,如果successUrl没值,那么requestUrl就是当前请求的地址；
 				requestURI = backUrl;
 			}
 		}
@@ -90,7 +90,7 @@ public class ClientSavedRequest extends SavedRequest {
 		}
 		// 拼上重定向到的地址（带上下文）
 		requestUrl.append(requestURI);
-		// 如果successUrl没值，且有查询参数，拼上
+		// 如果successUrl没值,且有查询参数,拼上
 		if (backUrl == null && getQueryString() != null) {
 			requestUrl.append("?").append(getQueryString());
 		}

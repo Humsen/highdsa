@@ -13,9 +13,9 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		classpath*:spring/dubbo-mybatis.xml,
-		classpath*:spring/spring-context.xml
-	</param-value>
+			classpath*:spring/dubbo-service-mybatis.xml,
+			classpath*:spring/spring-context.xml
+		</param-value>
 	</context-param>
 	<!-- logj4 日志存放 应用根目录 -->
 	<context-param>

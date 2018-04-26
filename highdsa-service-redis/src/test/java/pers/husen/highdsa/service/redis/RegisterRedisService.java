@@ -15,7 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class RegisterRedisService {
 	public static void main(String[] args) throws IOException {
-		String[] configLocation = new String[] { "classpath:spring/dubbo-redis.xml", "classpath:spring/spring-context.xml" };
+		String[] configLocation = new String[] { "classpath:spring/dubbo-service-redis.xml", "classpath:spring/spring-context.xml" };
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(configLocation);
 		context.start();
 

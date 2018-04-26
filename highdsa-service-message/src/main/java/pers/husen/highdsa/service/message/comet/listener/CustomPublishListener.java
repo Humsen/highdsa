@@ -7,7 +7,7 @@ import io.goeasy.publish.GoEasyError;
 import io.goeasy.publish.PublishListener;
 
 /**
- * @Desc 继承发布消息监听类，自定义日志消息，返回操作结果
+ * @Desc 继承发布消息监听类,自定义日志消息,返回操作结果
  *
  * @Author 何明胜
  *

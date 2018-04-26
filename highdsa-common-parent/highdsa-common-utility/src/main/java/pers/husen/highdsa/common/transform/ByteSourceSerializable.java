@@ -11,8 +11,8 @@ import org.apache.shiro.codec.Hex;
 import org.apache.shiro.util.ByteSource;
 
 /**
- * @Desc 采用redis缓存shiro, 在序列化的时候, SimpleByteSource类没有实现Serializable接口，导致序列化失败,
- *       SimpleByteSource没有默认构造方法，导致反序列化的时候失败,
+ * @Desc 采用redis缓存shiro, 在序列化的时候, SimpleByteSource类没有实现Serializable接口,导致序列化失败,
+ *       SimpleByteSource没有默认构造方法,导致反序列化的时候失败,
  *       自定义ByteSource的实现类,模仿SimpleByteSource的方法.
  * 
  *

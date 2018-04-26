@@ -82,10 +82,10 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- CasRealm 3.0以后被废弃,所以使用2.6.0版本 -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-cas</artifactId>
-			<version>1.2.2</version>
 		</dependency>
 		<!-- Spring -->
 		<dependency>

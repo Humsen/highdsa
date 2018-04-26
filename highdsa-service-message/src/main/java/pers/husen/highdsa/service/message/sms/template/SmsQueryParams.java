@@ -18,7 +18,7 @@ public class SmsQueryParams {
 	QuerySendDetailsRequest request = new QuerySendDetailsRequest();
 
 	private String phoneNumber;
-	/** 发送日期 支持30天内记录查询，格式yyyyMMdd */
+	/** 发送日期 支持30天内记录查询,格式yyyyMMdd */
 	private String sendDate;
 	private Long pageSize;
 	/** 当前页码从1开始计数 */

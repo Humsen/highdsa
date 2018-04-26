@@ -88,7 +88,7 @@ public class DateFormat {
 	}
 
 	/**
-	 * 获取当前日期数字格式，如20171020为2017年10月20日
+	 * 获取当前日期数字格式,如20171020为2017年10月20日
 	 */
 	public static String dateNumberFormat() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");

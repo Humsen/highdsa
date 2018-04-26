@@ -65,7 +65,7 @@ public class ActiveMqProducerTest {
 	@After
 	public void after() {
 		try {
-			// 为保证服务一直开着，利用输入流的阻塞来模拟
+			// 为保证服务一直开着,利用输入流的阻塞来模拟
 			System.in.read();
 		} catch (IOException e) {
 			e.printStackTrace();

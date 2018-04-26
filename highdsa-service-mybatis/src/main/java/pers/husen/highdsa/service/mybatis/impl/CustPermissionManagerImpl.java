@@ -42,7 +42,7 @@ public class CustPermissionManagerImpl implements CustPermissionManager {
 
 		// 设置权限有效
 		custPermission.setPermissionValid(true);
-		// 如果是否为导航属性为null,说明创建时没有被勾选，设置为false
+		// 如果是否为导航属性为null,说明创建时没有被勾选,设置为false
 		if (custPermission.getPermissionNavi() == null) {
 			custPermission.setPermissionNavi(false);
 		}
@@ -88,7 +88,7 @@ public class CustPermissionManagerImpl implements CustPermissionManager {
 
 	@Override
 	public void updatePermissionByPrimaryKey(CustPermission custPermission) {
-		// 如果是否为导航属性为null,说明创建时没有被勾选，设置为false
+		// 如果是否为导航属性为null,说明创建时没有被勾选,设置为false
 		if (custPermission.getPermissionNavi() == null) {
 			custPermission.setPermissionNavi(false);
 		}

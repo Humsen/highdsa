@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class SimpleJson implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/** 不使用封装，默认为false */
+	/** 不使用封装,默认为false */
 	private Boolean success;
 	private String message;
 

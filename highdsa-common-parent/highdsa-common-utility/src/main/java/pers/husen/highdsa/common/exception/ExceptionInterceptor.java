@@ -41,8 +41,8 @@ public class ExceptionInterceptor implements HandlerExceptionResolver {
 
 		if (!isAjax) {
 			logger.fatal("不是ajax");
-			// 如果不是ajax，JSP格式返回
-			// 为安全起见，只有业务异常我们对前端可见，否则否则统一归为系统异常
+			// 如果不是ajax,JSP格式返回
+			// 为安全起见,只有业务异常我们对前端可见,否则否则统一归为系统异常
 			Map<String, Object> map = new HashMap<String, Object>(200);
 			map.put("success", false);
 
@@ -55,19 +55,19 @@ public class ExceptionInterceptor implements HandlerExceptionResolver {
 				logger.error("show exception:{}", JsonKey3Value.SYS_EXCEPTION);
 			}
 
-			// 对于非ajax请求，我们都统一跳转到error.jsp页面
+			// 对于非ajax请求,我们都统一跳转到error.jsp页面
 			return new ModelAndView("redirect:/error.jsp", map);
 		} else {
 			logger.fatal("是ajax");
 			Map<String, Object> map = new HashMap<String, Object>(200);
-			// 如果是ajax请求，JSON格式返回
+			// 如果是ajax请求,JSON格式返回
 			try {
 				response.setContentType("application/json;charset=UTF-8");
 				response.setCharacterEncoding("UTF-8");
 				PrintWriter writer = response.getWriter();
 
 				map.put("success", false);
-				// 为安全起见，只有业务异常我们对前端可见，否则统一归为系统异常
+				// 为安全起见,只有业务异常我们对前端可见,否则统一归为系统异常
 				if (exception instanceof SqlException) {
 					map.put(JsonKey3Value.ERROR_MSG, exception.getMessage());
 					logger.error("show business exception:{}", exception.getMessage());

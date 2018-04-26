@@ -42,9 +42,9 @@ public class ReadConfigFile {
 
 	/**
 	 * 读取类路径下的文件（需要指定相对类根目录路径）
-	 * 注意:只能读取类路径下的，不能读取resources下的。估计编译后能够读取。并且被读取的文件名称不加后缀。 这是国际化的类，所以要加zh_CN类似的。
+	 * 注意:只能读取类路径下的,不能读取resources下的.估计编译后能够读取.并且被读取的文件名称不加后缀. 这是国际化的类,所以要加zh_CN类似的.
 	 * <br/>
-	 * config为属性文件名，放在包com.test.config下，如果是放在src下，直接用config即可
+	 * config为属性文件名,放在包com.test.config下,如果是放在src下,直接用config即可
 	 * 
 	 * @param fileRelativePath
 	 *            无后缀的文件名称

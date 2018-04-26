@@ -12,7 +12,7 @@
 		<property name="brokerURL" value="${activemq.brokerURL}" />
 		<property name="userName" value="${activemq.userName}"></property>
 		<property name="password" value="${activemq.password}"></property>
-		<!-- 是否异步发送消息. 将该值开启官方说法是可以取得更高的发送速度(5倍) -->
+		<!-- 是否异步发送消息.将该值开启官方说法是可以取得更高的发送速度(5倍) -->
 		<property name="useAsyncSend" value="true" />
 		<!-- 异步发送消息 -->
 		<property name="alwaysSessionAsync" value="true" />
@@ -21,7 +21,7 @@
 		<property name="trustAllPackages" value="true" />
 	</bean>
 
-	<!-- ActiveMQ为我们提供了一个PooledConnectionFactory，通过往里面注入一个ActiveMQConnectionFactory 可以用来将Connection、Session和MessageProducer池化，这样可以大大的减少我们的资源消耗,要依赖于 activemq-pool包 -->
+	<!-- ActiveMQ为我们提供了一个PooledConnectionFactory,通过往里面注入一个ActiveMQConnectionFactory 可以用来将Connection、Session和MessageProducer池化,这样可以大大的减少我们的资源消耗,要依赖于 activemq-pool包 -->
 	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
 		<property name="connectionFactory" ref="mqConnectionFactory" />
 		<property name="maxConnections" value="${activemq.pool.maxConnections}" />

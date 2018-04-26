@@ -24,7 +24,7 @@ public class EmailParams implements Serializable {
 	private String mailFrom;
 	private String phoneFrom;
 
-	/** 发送邮件目标，用于反射调用对应函数 */
+	/** 发送邮件目标,用于反射调用对应函数 */
 	private String mailFor;
 
 	@Override

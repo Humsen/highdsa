@@ -24,7 +24,7 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.activemq.mqreceiver.handler.EmailQueueMsgSvc;
 
 /**
- * @Desc 队列接收(一对一)，根据队列名称调用相关服务
+ * @Desc 队列接收(一对一),根据队列名称调用相关服务
  *
  * @Author 何明胜
  *
@@ -60,9 +60,9 @@ public class EmailQueueMsgReceiver extends MessageListenerAdapter {
 
 			message.acknowledge();
 		} catch (MessageConversionException | JMSException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			logger.warn(StackTrace2Str.exceptionStackTrace2Str("业务异常，重新放回队列", e));
+			logger.warn(StackTrace2Str.exceptionStackTrace2Str("业务异常,重新放回队列", e));
 
-			// 业务异常，重新放回队列
+			// 业务异常,重新放回队列
 			jmsQueueTemplate.send(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, new MessageCreator() {
 				@Override
 				public Message createMessage(Session session) throws JMSException {

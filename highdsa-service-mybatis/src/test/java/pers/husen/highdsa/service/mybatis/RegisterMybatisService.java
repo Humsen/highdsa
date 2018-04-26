@@ -15,7 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class RegisterMybatisService {
 	public static void main(String[] args) {
-		String[] configLocation = new String[] { "spring/dubbo-mybatis.xml", "spring/spring-context.xml" };
+		String[] configLocation = new String[] { "spring/dubbo-service-mybatis.xml", "spring/spring-context.xml" };
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(configLocation);
 		context.start();

@@ -72,7 +72,7 @@ public class SendSmsCore {
 			throws ClientException, UnsupportedEncodingException, IOException {
 		IAcsClient acsClient = initIAcsClient();
 
-		// hint 此处可能会抛出异常，注意catch
+		// hint 此处可能会抛出异常,注意catch
 		SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(sendSmsRequest);
 
 		logger.info("发送短信成功");
@@ -93,7 +93,7 @@ public class SendSmsCore {
 			throws ClientException, UnsupportedEncodingException, IOException {
 		IAcsClient acsClient = initIAcsClient();
 
-		// hint 此处可能会抛出异常，注意catch
+		// hint 此处可能会抛出异常,注意catch
 		QuerySendDetailsResponse querySendDetailsResponse = acsClient.getAcsResponse(querySendDetailsRequest);
 
 		logger.info("查询短信成功");

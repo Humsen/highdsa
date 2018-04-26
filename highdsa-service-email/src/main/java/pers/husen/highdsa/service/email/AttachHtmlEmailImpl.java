@@ -60,7 +60,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 设置标题
 			message.setSubject(subject);
 
-			// 向multipart对象中添加邮件的各个部分内容，包括文本内容和附件
+			// 向multipart对象中添加邮件的各个部分内容,包括文本内容和附件
 			Multipart multipart = new MimeMultipart();
 
 			// 添加邮件正文
@@ -125,7 +125,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 设置标题
 			message.setSubject(subject);
 
-			// 向multipart对象中添加邮件的各个部分内容，包括文本内容和附件
+			// 向multipart对象中添加邮件的各个部分内容,包括文本内容和附件
 			Multipart multipart = new MimeMultipart();
 
 			// 添加邮件正文
@@ -196,7 +196,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 设置标题
 			message.setSubject("联系管理员邮件(带附件)");
 
-			// 向multipart对象中添加邮件的各个部分内容，包括文本内容和附件
+			// 向multipart对象中添加邮件的各个部分内容,包括文本内容和附件
 			Multipart multipart = new MimeMultipart();
 
 			// 添加邮件正文
@@ -222,7 +222,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 发送信息的工具
 			Transport transport = session.getTransport("smtp");
-			// smtp验证，就是你用来发邮件的邮箱用户名密码
+			// smtp验证,就是你用来发邮件的邮箱用户名密码
 			transport.connect();
 			// 发送
 			transport.sendMessage(message, message.getAllRecipients());
@@ -260,7 +260,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 设置标题
 			message.setSubject("联系管理员邮件(带附件)");
 
-			// 向multipart对象中添加邮件的各个部分内容，包括文本内容和附件
+			// 向multipart对象中添加邮件的各个部分内容,包括文本内容和附件
 			Multipart multipart = new MimeMultipart();
 
 			// 添加邮件正文
@@ -286,7 +286,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 发送信息的工具
 			Transport transport = session.getTransport("smtp");
-			// smtp验证，就是你用来发邮件的邮箱用户名密码
+			// smtp验证,就是你用来发邮件的邮箱用户名密码
 			transport.connect();
 			// 发送
 			transport.sendMessage(message, message.getAllRecipients());

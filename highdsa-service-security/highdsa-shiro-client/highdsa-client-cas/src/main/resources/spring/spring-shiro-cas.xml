@@ -74,7 +74,7 @@
 		<property name="sessionIdCookie" ref="sessionIdCookie" />
 	</bean>
 
-	<!-- 如果要实现cas的remember me的功能，需要用到下面这个bean，并设置到securityManager的subjectFactory中 -->
+	<!-- 如果要实现cas的remember me的功能,需要用到下面这个bean,并设置到securityManager的subjectFactory中 -->
 	<bean id="casSubjectFactory" class="org.apache.shiro.cas.CasSubjectFactory" />
 
 	<!-- 安全管理器 -->
@@ -98,7 +98,7 @@
 		<property name="authorizationCacheName" value="authorizationCache" />
 		<!-- 配置cas服务器地址 -->
 		<property name="casServerUrlPrefix" value="${casServerUrlPrefix}"></property>
-		<!-- 客户端的回调地址设置，必须和上面的shiro-cas过滤器casFilter拦截的地址一致 -->
+		<!-- 客户端的回调地址设置,必须和上面的shiro-cas过滤器casFilter拦截的地址一致 -->
 		<property name="casService" value="${casService}"></property>
 	</bean>
 
@@ -121,7 +121,7 @@
 
 	<!-- shiro-cas登录过滤器 -->
 	<bean id="casFilter" class="org.apache.shiro.cas.CasFilter">
-		<!-- 配置验证错误时的失败页面 ，这里配置为登录页面 -->
+		<!-- 配置验证错误时的失败页面 ,这里配置为登录页面 -->
 		<property name="failureUrl" value="${failureUrl}" />
 	</bean>
 	<!-- 退出登录过滤器 -->
@@ -138,7 +138,7 @@
 	<!-- 生命周期处理 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
-	<!-- 开启shiro的注解，需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证 -->
+	<!-- 开启shiro的注解,需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证 -->
 	<bean id="annotationProxy" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
 		<property name="proxyTargetClass" value="true" />
 	</bean>
@@ -146,7 +146,7 @@
 		<property name="securityManager" ref="securityManager" />
 	</bean>
 
-	<!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使shiro实现第三方缓存 -->
+	<!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入,从而使shiro实现第三方缓存 -->
 	<bean id="shiroRedisCacheTransfer" class="pers.husen.highdsa.security.client.cas.cache.ShiroRedisCacheTransfer">
 		<constructor-arg name="redisOperation" ref="redisOperation" />
 	</bean>

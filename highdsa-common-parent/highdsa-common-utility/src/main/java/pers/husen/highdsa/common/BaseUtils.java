@@ -49,7 +49,7 @@ public class BaseUtils {
 	 * 
 	 * @param targetStr
 	 * @param cutBasis
-	 *            用竖线分隔不同的条件，如 ,|。
+	 *            用竖线分隔不同的条件,如 ,|.
 	 * @param trimSpace
 	 *            是否先去掉所有空格
 	 * @return 剪切后的数组

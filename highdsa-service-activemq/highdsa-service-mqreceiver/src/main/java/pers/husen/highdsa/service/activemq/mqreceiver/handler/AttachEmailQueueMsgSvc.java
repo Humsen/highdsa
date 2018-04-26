@@ -14,7 +14,7 @@ import pers.husen.highdsa.common.entity.vo.email.AttachEmailParams;
 import pers.husen.highdsa.service.email.AttachHtmlEmail;
 
 /**
- * @Desc 队列消息接收带附件的邮件之后，反射调用这里的类
+ * @Desc 队列消息接收带附件的邮件之后,反射调用这里的类
  *
  * @Author 何明胜
  *

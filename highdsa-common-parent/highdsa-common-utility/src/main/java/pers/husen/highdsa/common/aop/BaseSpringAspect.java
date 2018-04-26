@@ -26,7 +26,7 @@ import javassist.bytecode.MethodInfo;
  */
 public abstract class BaseSpringAspect {
 	/**
-	 * Pointcut 定义Pointcut，Pointcut名称为aspectjMethod,必须无参，无返回值 只是一个标识，并不进行调用
+	 * Pointcut 定义Pointcut,Pointcut名称为aspectjMethod,必须无参,无返回值 只是一个标识,并不进行调用
 	 */
 	protected abstract void aspectJMethod();
 

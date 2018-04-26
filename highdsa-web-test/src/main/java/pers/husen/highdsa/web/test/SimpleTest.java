@@ -13,7 +13,7 @@ public class SimpleTest {
 	public static void splitTest() {
 		String string = "husen@hemingsheng.cn";
 
-		String[] result = string.trim().split(",|，");
+		String[] result = string.trim().split(",|,");
 
 		for (String str : result) {
 			System.out.println(str);

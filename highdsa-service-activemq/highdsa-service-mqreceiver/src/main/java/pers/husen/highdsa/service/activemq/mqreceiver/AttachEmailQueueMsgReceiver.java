@@ -58,9 +58,9 @@ public class AttachEmailQueueMsgReceiver extends MessageListenerAdapter {
 
 			message.acknowledge();
 		} catch (MessageConversionException | JMSException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			logger.warn(StackTrace2Str.exceptionStackTrace2Str("业务异常，重新放回队列", e));
+			logger.warn(StackTrace2Str.exceptionStackTrace2Str("业务异常,重新放回队列", e));
 
-			// 业务异常，重新放回队列
+			// 业务异常,重新放回队列
 			jmsQueueTemplate.send(MsgQueueDefine.ATTACH_EMAIL_QUEUE, new MessageCreator() {
 				@Override
 				public Message createMessage(Session session) throws JMSException {

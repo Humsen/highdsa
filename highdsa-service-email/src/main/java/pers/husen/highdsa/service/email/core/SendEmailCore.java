@@ -29,7 +29,7 @@ import pers.husen.highdsa.common.exception.StackTrace2Str;
  */
 public class SendEmailCore {
 	private final Logger logger = LogManager.getLogger(SendEmailCore.class.getName());
-	/** 不设置静态，可以有任意多的Session */
+	/** 不设置静态,可以有任意多的Session */
 	public Session session = null;
 	/** 存储参数 */
 	private Properties properties = null;

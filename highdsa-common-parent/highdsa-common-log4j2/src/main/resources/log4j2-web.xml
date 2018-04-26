@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 本配置文件的目标是将不同级别的日志输出到不同文件 -->
-<!-- 最大2MB一个文件， 文件数据达到最大值时，旧数据会被压缩并放进指定文件夹 -->
+<!-- 最大2MB一个文件,文件数据达到最大值时,旧数据会被压缩并放进指定文件夹 -->
 <!-- status : 这个用于设置log4j2自身内部的信息输出,可以不设置 -->
 <!-- 当设置成trace时,会看到log4j2内部各种详细输出 monitorInterval -->
-<!-- monitorInterval="60"表示每60秒配置文件会动态加载一次。在程序运行过程中，如果修改配置文件，程序会随之改变。 -->
+<!-- monitorInterval="60"表示每60秒配置文件会动态加载一次.在程序运行过程中,如果修改配置文件,程序会随之改变. -->
 <Configuration monitorInterval="60" status="warn">
 	<!-- 定义通用的属性 -->
 	<Properties>
 		<!-- 云端部署 这里的logs为项目根目录下的logs文件夹 -->
-		<!-- web:rootDir指向web应用根目录，需使用log4j-web.jar -->
+		<!-- web:rootDir指向web应用根目录,需使用log4j-web.jar -->
 		<!-- <Property name="log_path">logs/highdsa</Property> -->
 		<Property name="log_path">${web:rootDir}/logs/highdsa</Property>
 
@@ -22,11 +22,8 @@
 
 	<appenders>
 		<!-- Gelf输出到logstash -->
-		<Gelf name="logstash_gelf_appender" host="udp:39.106.185.126"
-			port="12201" version="1.0" extractStackTrace="true" filterStackTrace="true"
-			mdcProfiling="true" includeFullMdc="true" maximumMessageSize="8192"
-			originHost="developer host" additionalFieldTypes="fieldName1=String,fieldName2=Double,fieldName3=Long"
-			ignoreExceptions="true">
+		<Gelf name="logstash_gelf_appender" host="udp:39.106.185.126" port="12201" version="1.0" extractStackTrace="true" filterStackTrace="true" mdcProfiling="true" includeFullMdc="true"
+			maximumMessageSize="8192" originHost="developer host" additionalFieldTypes="fieldName1=String,fieldName2=Double,fieldName3=Long" ignoreExceptions="true">
 
 			<Field name="timestamp" pattern="%d{yyyy-MM-dd HH:mm:ss,sss}" />
 			<Field name="level" pattern="%level" />
@@ -34,25 +31,21 @@
 			<Field name="className" pattern="%C.%M" />
 			<Field name="server" pattern="%host" />
 			<!-- <Field name="server.fqdn" pattern="%host{fqdn}" /> -->
-			<!-- <Field name="fieldName2" literal="fieldValue2" /> This is a static 
-				field <Field name="mdcField2" mdc="mdcField2" /> This is a field using MDC 
-				<DynamicMdcFields regex="mdc.*" /> <DynamicMdcFields regex="(mdc|MDC)fields" -->
+			<!-- <Field name="fieldName2" literal="fieldValue2" /> This is a static field <Field name="mdcField2" mdc="mdcField2" /> This is a field using MDC <DynamicMdcFields regex="mdc.*" /> <DynamicMdcFields 
+				regex="(mdc|MDC)fields" -->
 			/>
 		</Gelf>
 
 		<!-- 控制台输出 -->
 		<Console name="console_out_appender" target="SYSTEM_OUT">
 			<!-- level定义级别 -->
-			<ThresholdFilter level="trace" onMatch="ACCEPT"
-				onMismatch="DENY" />
+			<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="${log_pattern_highlight}" />
 		</Console>
 
 		<!-- TRACE级别日志 -->
-		<!-- 设置日志格式并配置日志压缩格式，压缩文件独立放在一个文件夹内， 日期格式不能为冒号，否则无法生成，因为文件名不允许有冒号，此appender只输出trace级别的数据到trace.log -->
-		<RollingRandomAccessFile fileName="${log_path}/trace.log"
-			filePattern="${log_path}/trace/trace - %d{yyyy-MM-dd HH-mm-ss}.log.gz"
-			immediateFlush="true" name="trace_appender">
+		<!-- 设置日志格式并配置日志压缩格式,压缩文件独立放在一个文件夹内, 日期格式不能为冒号,否则无法生成,因为文件名不允许有冒号,此appender只输出trace级别的数据到trace.log -->
+		<RollingRandomAccessFile fileName="${log_path}/trace.log" filePattern="${log_path}/trace/trace - %d{yyyy-MM-dd HH-mm-ss}.log.gz" immediateFlush="true" name="trace_appender">
 			<PatternLayout>
 				<pattern>${log_pattern}</pattern>
 			</PatternLayout>
@@ -60,20 +53,16 @@
 				<!-- 每个日志文件最大2MB -->
 				<SizeBasedTriggeringPolicy size="2MB" />
 			</Policies>
-			<Filters><!-- 此Filter意思是，只输出debug级别的数据 -->
-				<!-- DENY，日志将立即被抛弃不再经过其他过滤器； NEUTRAL，有序列表里的下个过滤器过接着处理日志； ACCEPT，日志会被立即处理，不再经过剩余过滤器。 -->
-				<ThresholdFilter level="debug" onMatch="DENY"
-					onMismatch="NEUTRAL" />
-				<ThresholdFilter level="trace" onMatch="ACCEPT"
-					onMismatch="DENY" />
+			<Filters><!-- 此Filter意思是,只输出trace级别的数据 -->
+				<!-- DENY,日志将立即被抛弃不再经过其他过滤器; NEUTRAL,有序列表里的下个过滤器过接着处理日志; ACCEPT,日志会被立即处理,不再经过剩余过滤器. -->
+				<ThresholdFilter level="debug" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
 			</Filters>
 		</RollingRandomAccessFile>
 
 		<!-- DEBUG级别日志 -->
-		<!-- 设置日志格式并配置日志压缩格式，压缩文件独立放在一个文件夹内， 日期格式不能为冒号，否则无法生成，因为文件名不允许有冒号，此appender只输出debug级别的数据到debug.log -->
-		<RollingRandomAccessFile fileName="${log_path}/debug.log"
-			filePattern="${log_path}/debug/debug - %d{yyyy-MM-dd HH-mm-ss}.log.gz"
-			immediateFlush="true" name="debug_appender">
+		<!-- 设置日志格式并配置日志压缩格式,压缩文件独立放在一个文件夹内, 日期格式不能为冒号,否则无法生成,因为文件名不允许有冒号,此appender只输出debug级别的数据到debug.log -->
+		<RollingRandomAccessFile fileName="${log_path}/debug.log" filePattern="${log_path}/debug/debug - %d{yyyy-MM-dd HH-mm-ss}.log.gz" immediateFlush="true" name="debug_appender">
 			<PatternLayout>
 				<pattern>${log_pattern}</pattern>
 			</PatternLayout>
@@ -81,19 +70,15 @@
 				<!-- 每个日志文件最大2MB -->
 				<SizeBasedTriggeringPolicy size="2MB" />
 			</Policies>
-			<Filters><!-- 此Filter意思是，只输出debug级别的数据 -->
-				<!-- DENY，日志将立即被抛弃不再经过其他过滤器； NEUTRAL，有序列表里的下个过滤器过接着处理日志； ACCEPT，日志会被立即处理，不再经过剩余过滤器。 -->
-				<ThresholdFilter level="info" onMatch="DENY"
-					onMismatch="NEUTRAL" />
-				<ThresholdFilter level="debug" onMatch="ACCEPT"
-					onMismatch="DENY" />
+			<Filters><!-- 此Filter意思是,只输出debug级别的数据 -->
+				<!-- DENY,日志将立即被抛弃不再经过其他过滤器; NEUTRAL,有序列表里的下个过滤器过接着处理日志; ACCEPT,日志会被立即处理,不再经过剩余过滤器. -->
+				<ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
 			</Filters>
 		</RollingRandomAccessFile>
 
 		<!-- INFO级别日志 -->
-		<RollingRandomAccessFile fileName="${log_path}/info.log"
-			filePattern="${log_path}/info/info - %d{yyyy-MM-dd HH-mm-ss}.log.gz"
-			immediateFlush="true" name="info_appender">
+		<RollingRandomAccessFile fileName="${log_path}/info.log" filePattern="${log_path}/info/info - %d{yyyy-MM-dd HH-mm-ss}.log.gz" immediateFlush="true" name="info_appender">
 			<PatternLayout>
 				<pattern>${log_pattern}</pattern>
 			</PatternLayout>
@@ -101,17 +86,13 @@
 				<SizeBasedTriggeringPolicy size="2MB" />
 			</Policies>
 			<Filters>
-				<ThresholdFilter level="warn" onMatch="DENY"
-					onMismatch="NEUTRAL" />
-				<ThresholdFilter level="info" onMatch="ACCEPT"
-					onMismatch="DENY" />
+				<ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
 			</Filters>
 		</RollingRandomAccessFile>
 
 		<!-- WARN级别日志 -->
-		<RollingRandomAccessFile fileName="${log_path}/warn.log"
-			filePattern="${log_path}/warn/warn - %d{yyyy-MM-dd HH-mm-ss}.log.gz"
-			immediateFlush="true" name="warn_appender">
+		<RollingRandomAccessFile fileName="${log_path}/warn.log" filePattern="${log_path}/warn/warn - %d{yyyy-MM-dd HH-mm-ss}.log.gz" immediateFlush="true" name="warn_appender">
 			<PatternLayout>
 				<pattern>${log_pattern}</pattern>
 			</PatternLayout>
@@ -119,17 +100,13 @@
 				<SizeBasedTriggeringPolicy size="2MB" />
 			</Policies>
 			<Filters>
-				<ThresholdFilter level="error" onMatch="DENY"
-					onMismatch="NEUTRAL" />
-				<ThresholdFilter level="warn" onMatch="ACCEPT"
-					onMismatch="DENY" />
+				<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />
 			</Filters>
 		</RollingRandomAccessFile>
 
 		<!-- ERROR级别日志 -->
-		<RollingRandomAccessFile fileName="${log_path}/error.log"
-			filePattern="${log_path}/error/error - %d{yyyy-MM-dd HH-mm-ss}.log.gz"
-			immediateFlush="true" name="error_appender">
+		<RollingRandomAccessFile fileName="${log_path}/error.log" filePattern="${log_path}/error/error - %d{yyyy-MM-dd HH-mm-ss}.log.gz" immediateFlush="true" name="error_appender">
 			<PatternLayout>
 				<pattern>${log_pattern}</pattern>
 			</PatternLayout>
@@ -137,8 +114,7 @@
 				<SizeBasedTriggeringPolicy size="2MB" />
 			</Policies>
 			<Filters>
-				<ThresholdFilter level="error" onMatch="ACCEPT"
-					onMismatch="DENY" />
+				<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
 			</Filters>
 		</RollingRandomAccessFile>
 	</appenders>
@@ -156,9 +132,7 @@
 		</root>
 
 		<!-- 过滤第三方日志系统 -->
-		<!-- <logger level="info" name="org.springframework.core"/> <logger level="info" 
-			name="org.springframework.beans"/> <logger level="info" name="org.springframework.context"/> 
-			<logger level="info" name="org.springframework.web"/> <logger level="warn" 
-			name="org.jboss.netty"/> -->
+		<!-- <logger level="info" name="org.springframework.core"/> <logger level="info" name="org.springframework.beans"/> <logger level="info" name="org.springframework.context"/> <logger level="info" name="org.springframework.web"/> 
+			<logger level="warn" name="org.jboss.netty"/> -->
 	</Loggers>
 </Configuration>

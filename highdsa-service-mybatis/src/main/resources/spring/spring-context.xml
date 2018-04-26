@@ -15,7 +15,7 @@
 	<!-- 配置要扫描的包 -->
 	<context:component-scan base-package="pers.husen.highdsa.service.mybatis" />
 
-	<!-- 数据源配置, 使用 Druid 数据库连接池 -->
+	<!-- 数据源配置,使用 Druid 数据库连接池 -->
 	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="url" value="${mysql.url}" />
 		<property name="username" value="${mysql.username}" />
@@ -26,26 +26,26 @@
 		<property name="maxActive" value="20" />
 		<!-- 配置获取连接等待超时的时间 -->
 		<property name="maxWait" value="60000" />
-		<!-- 这里建议配置为TRUE，防止取到的连接不可用。获取链接的时候，不校验是否可用，开启会有损性能 -->
+		<!-- 这里建议配置为TRUE,防止取到的连接不可用.获取链接的时候,不校验是否可用,开启会有损性能 -->
 		<property name="testOnBorrow" value="true" />
 		<!-- 归还链接到连接池的时候校验链接是否可用 -->
 		<property name="testOnReturn" value="false" />
-		<!-- 此项配置为true即可，不影响性能，并且保证安全性。意义为：申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效 -->
+		<!-- 此项配置为true即可,不影响性能,并且保证安全性.意义为：申请连接的时候检测.如果空闲时间大于timeBetweenEvictionRunsMillis,执行validationQuery检测连接是否有效 -->
 		<property name="testWhileIdle" value="true" />
-		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒 -->
+		<!-- 配置间隔多久才进行一次检测,检测需要关闭的空闲连接,单位毫秒 -->
 		<property name="timeBetweenEvictionRunsMillis" value="60000" />
-		<!-- 配置一个连接在池中最小生存的时间，单位毫秒 -->
+		<!-- 配置一个连接在池中最小生存的时间,单位毫秒 -->
 		<property name="minEvictableIdleTimeMillis" value="300000" />
 		<!-- 链接使用超过时间限制是否回收 -->
 		<property name="removeAbandoned" value="true" />
-		<!-- 超过时间限制时间（单位秒），目前为5分钟，如果有业务处理时间超过5分钟，可以适当调整。 -->
+		<!-- 超过时间限制时间（单位秒）,目前为5分钟,如果有业务处理时间超过5分钟,可以适当调整. -->
 		<property name="removeAbandonedTimeout" value="300" />
-		<!-- #链接回收的时候控制台打印信息，测试环境可以加上true，线上环境false。会影响性能。 -->
+		<!-- #链接回收的时候控制台打印信息,测试环境可以加上true,线上环境false.会影响性能. -->
 		<property name="logAbandoned" value="true" />
-		<!-- 验证连接有效与否的SQL，不同的数据配置不同 -->
+		<!-- 验证连接有效与否的SQL,不同的数据配置不同 -->
 		<property name="validationQuery" value="select 1 " />
-		<!-- 配置监控统计拦截的filters，用于在界面中统计sql和开启druid防火墙。注意： -->
-		<!-- 监控中有jdbcSqlStat，原因是：com.alibaba.druid.statJdbcDataSourceStat中的createSqlStat方法中， 用了一个map来存放所有的sql语句，这样会导致线上触发FullGC，可将此处注释掉 -->
+		<!-- 配置监控统计拦截的filters,用于在界面中统计sql和开启druid防火墙.注意： -->
+		<!-- 监控中有jdbcSqlStat,原因是：com.alibaba.druid.statJdbcDataSourceStat中的createSqlStat方法中, 用了一个map来存放所有的sql语句,这样会导致线上触发FullGC,可将此处注释掉 -->
 		<property name="filters" value="wall,stat,log4j2" />
 		<!-- 映射慢sql -->
 		<property name="proxyFilters">
@@ -78,11 +78,11 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath*:mappers/**/*.xml" />
 		<property name="typeAliasesPackage" value="pers.husen.highdsa.common.entity.po" />
-		<!-- 可以单独指定mybatis的配置文件，或者写在本文件里面。 用下面的自动扫描装配(推荐)或者单独mapper -->
+		<!-- 可以单独指定mybatis的配置文件,或者写在本文件里面. 用下面的自动扫描装配(推荐)或者单独mapper -->
 		<property name="configLocation" value="classpath:mybatis/mybatis-spring-config.xml" />
 	</bean>
 
-	<!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使MyBatis实现第三方缓存 -->
+	<!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入,从而使MyBatis实现第三方缓存 -->
 	<bean id="redisCacheTransfer" class="pers.husen.highdsa.service.mybatis.cache.RedisCacheTransfer">
 		<property name="redisOperation" ref="redisOperation" />
 	</bean>
@@ -159,5 +159,5 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
-	<!-- <import resource="dubbo-mybatis.xml" /> -->
+	<!-- <import resource="dubbo-service-mybatis.xml" /> -->
 </beans> 
