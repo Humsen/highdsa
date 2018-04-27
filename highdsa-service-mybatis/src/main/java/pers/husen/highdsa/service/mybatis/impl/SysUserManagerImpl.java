@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.encrypt.Md5Encrypt;
+import pers.husen.highdsa.common.entity.constants.SysUserState;
 import pers.husen.highdsa.common.entity.po.system.SysNavigation;
 import pers.husen.highdsa.common.entity.po.system.SysRole;
 import pers.husen.highdsa.common.entity.po.system.SysUser;
@@ -28,7 +29,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
  *
  * @Created at 2018年3月29日 上午9:29:44
  * 
- * @Version 1.0.7
+ * @Version 1.0.8
  */
 @Service("sysUserManager")
 public class SysUserManagerImpl implements SysUserManager {
@@ -54,6 +55,16 @@ public class SysUserManagerImpl implements SysUserManager {
 	}
 
 	/**
+	 * 根据userId更新
+	 * 
+	 * @param userId
+	 */
+	@Override
+	public void updateByUserId(SysUser sysUser) {
+		sysUserMapper.updateByUserId(sysUser);
+	}
+
+	/**
 	 * 修改密码
 	 * 
 	 * @param userId
@@ -61,10 +72,23 @@ public class SysUserManagerImpl implements SysUserManager {
 	 */
 	@Override
 	public void modifyPassword(Long userId, String newPassword) {
-		SysUser user = sysUserMapper.selectByPrimaryKey(userId);
+		SysUser user = sysUserMapper.selectUserByUserId(userId);
 		user.setUserPassword(newPassword);
 		encryptPassword(user);
-		sysUserMapper.updateByPrimaryKey(user);
+		sysUserMapper.updateByUserId(user);
+	}
+
+	/**
+	 * 根据用户id查找用户
+	 * 
+	 * @param userId
+	 * @param newPassword
+	 */
+	@Override
+	public SysUser findUserByUserId(Long userId) {
+		SysUser sysUser = sysUserMapper.selectUserByUserId(userId);
+
+		return sysUser;
 	}
 
 	/**
@@ -104,9 +128,9 @@ public class SysUserManagerImpl implements SysUserManager {
 		} else {
 			throw new NullPointerException("获取的userId为空");
 		}
-		
+
 		// 设置正常状态
-		sysUser.setUserState("100");
+		sysUser.setUserState(SysUserState.VALID);
 
 		sysUserMapper.insert(sysUser);
 

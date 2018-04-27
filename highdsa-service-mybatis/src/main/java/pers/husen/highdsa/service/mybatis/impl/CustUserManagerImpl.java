@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.encrypt.Md5Encrypt;
+import pers.husen.highdsa.common.entity.constants.CustUserState;
 import pers.husen.highdsa.common.entity.po.customer.CustNavigation;
 import pers.husen.highdsa.common.entity.po.customer.CustRole;
 import pers.husen.highdsa.common.entity.po.customer.CustUser;
@@ -28,7 +29,7 @@ import pers.husen.highdsa.service.mybatis.dao.customer.CustUserRoleMapper;
  *
  * @Created at 2018年4月24日 上午10:26:55
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service("custUserManager")
 public class CustUserManagerImpl implements CustUserManager {
@@ -54,6 +55,16 @@ public class CustUserManagerImpl implements CustUserManager {
 	}
 
 	/**
+	 * 根据userId更新
+	 * 
+	 * @param userId
+	 */
+	@Override
+	public void updateByUserId(CustUser custUser) {
+		custUserMapper.updateByUserId(custUser);
+	}
+
+	/**
 	 * 修改密码
 	 * 
 	 * @param userId
@@ -61,10 +72,23 @@ public class CustUserManagerImpl implements CustUserManager {
 	 */
 	@Override
 	public void modifyPassword(Long userId, String newPassword) {
-		CustUser user = custUserMapper.selectByPrimaryKey(userId);
+		CustUser user = custUserMapper.selectUserByUserId(userId);
 		user.setUserPassword(newPassword);
 		encryptPassword(user);
-		custUserMapper.updateByPrimaryKey(user);
+		custUserMapper.updateByUserId(user);
+	}
+
+	/**
+	 * 根据用户id查找用户
+	 * 
+	 * @param userId
+	 * @param newPassword
+	 */
+	@Override
+	public CustUser findUserByUserId(Long userId) {
+		CustUser custUser = custUserMapper.selectUserByUserId(userId);
+
+		return custUser;
 	}
 
 	/**
@@ -106,7 +130,7 @@ public class CustUserManagerImpl implements CustUserManager {
 		}
 
 		// 设置正常状态
-		custUser.setUserState("100");
+		custUser.setUserState(CustUserState.VALID);
 
 		custUserMapper.insert(custUser);
 

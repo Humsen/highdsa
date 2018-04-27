@@ -14,7 +14,7 @@ import pers.husen.highdsa.common.entity.po.system.SysUser;
  *
  * @Created at 2018年3月29日 上午9:21:33
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 @Service("sysUserManager")
 public interface SysUserManager {
@@ -27,12 +27,27 @@ public interface SysUserManager {
 	public int createUser(SysUser sysUser);
 
 	/**
+	 * 根据userId更新
+	 * 
+	 * @param sysUser
+	 */
+	public void updateByUserId(SysUser sysUser);
+
+	/**
 	 * 修改密码
 	 * 
 	 * @param userId
 	 * @param newPassword
 	 */
 	public void modifyPassword(Long userId, String newPassword);
+
+	/**
+	 * 根据用户id查找用户
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	SysUser findUserByUserId(Long userId);
 
 	/**
 	 * 添加用户-角色关系

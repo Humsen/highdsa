@@ -17,9 +17,27 @@
 		<setting name="aggressiveLazyLoading" value="false" />
 	</settings>
 
-	<!-- <typeAliases>
-		<typeAlias alias="UserInfo"
-			type="pers.husen.highdsa.common.entity.po.UserInfo" />
-	</typeAliases> -->
+	<typeAliases>
+		<!-- 系统实体类别名 -->
+		<typeAlias alias="SysUser" type="pers.husen.highdsa.common.entity.po.system.SysUser" />
+		<typeAlias alias="SysUserInfo" type="pers.husen.highdsa.common.entity.po.system.SysUserInfo" />
+		<typeAlias alias="SysUserRole" type="pers.husen.highdsa.common.entity.po.system.SysUserRole" />
+		<typeAlias alias="SysRole" type="pers.husen.highdsa.common.entity.po.system.SysRole" />
+		<typeAlias alias="SysRolePermission" type="pers.husen.highdsa.common.entity.po.system.SysRolePermission" />
+		<typeAlias alias="SysPermission" type="pers.husen.highdsa.common.entity.po.system.SysPermission" />
+		<typeAlias alias="SysSessions" type="pers.husen.highdsa.common.entity.po.system.SysSessions" />
+		<!-- 客户实体类别名 -->
+		<typeAlias alias="CustUser" type="pers.husen.highdsa.common.entity.po.customer.CustUser" />
+		<typeAlias alias="CustUserInfo" type="pers.husen.highdsa.common.entity.po.customer.CustUserInfo" />
+		<typeAlias alias="CustUserRole" type="pers.husen.highdsa.common.entity.po.customer.CustUserRole" />
+		<typeAlias alias="CustRole" type="pers.husen.highdsa.common.entity.po.customer.CustRole" />
+		<typeAlias alias="CustRolePermission" type="pers.husen.highdsa.common.entity.po.customer.CustRolePermission" />
+		<typeAlias alias="CustPermission" type="pers.husen.highdsa.common.entity.po.customer.CustPermission" />
+		<typeAlias alias="CustSessions" type="pers.husen.highdsa.common.entity.po.customer.CustSessions" />
+	</typeAliases>
 
+	<typeHandlers>
+		<typeHandler javaType="pers.husen.highdsa.common.entity.constants.SysUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
+		<typeHandler javaType="pers.husen.highdsa.common.entity.constants.CustUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
+	</typeHandlers>
 </configuration>

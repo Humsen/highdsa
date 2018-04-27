@@ -21,9 +21,13 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias alias="SysUserInfo"
-			type="pers.husen.highdsa.common.entity.po.system.SysUserInfo" />
+		<typeAlias alias="SysUserInfo" type="pers.husen.highdsa.common.entity.po.system.SysUserInfo" />
 	</typeAliases>
+
+	<typeHandlers>
+		<typeHandler javaType="pers.husen.highdsa.common.entity.constants.SysUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
+		<typeHandler javaType="pers.husen.highdsa.common.entity.constants.CustUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
+	</typeHandlers>
 
 	<!-- 配置mybatis运行环境 -->
 	<environments default="development">

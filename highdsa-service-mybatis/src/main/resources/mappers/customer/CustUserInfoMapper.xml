@@ -4,7 +4,7 @@
 	<!-- 自定义二级缓存 -->
 	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
 
-	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustUserInfo">
+	<resultMap id="BaseResultMap" type="CustUserInfo">
 		<constructor>
 			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="user_nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
 		delete from cust_user_info
 		where user_id = #{userId,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.customer.CustUserInfo">
+	<insert id="insert" parameterType="CustUserInfo">
 		insert into cust_user_info (user_id, user_nick_name, user_register_time,
 		user_head_url, user_sex, user_address,
 		user_age, user_birthday, user_desc,
@@ -34,7 +34,7 @@
 		#{userAge,jdbcType=VARCHAR}, #{userBirthday,jdbcType=VARCHAR}, #{userDesc,jdbcType=VARCHAR},
 		#{userLastLoginTime,jdbcType=TIMESTAMP})
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.customer.CustUserInfo">
+	<update id="updateByPrimaryKey" parameterType="CustUserInfo">
 		update cust_user_info
 		set user_nick_name = #{userNickName,jdbcType=VARCHAR},
 		user_register_time = #{userRegisterTime,jdbcType=TIMESTAMP},

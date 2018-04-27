@@ -1,4 +1,4 @@
-package pers.husen.highdsa.service.mybatis;
+package pers.husen.highdsa.service.mybatis.system;
 
 import java.io.IOException;
 import java.util.Date;

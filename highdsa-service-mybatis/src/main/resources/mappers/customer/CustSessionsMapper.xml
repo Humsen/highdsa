@@ -4,7 +4,7 @@
 	<!-- 自定义二级缓存 -->
 	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
 
-	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustSessions">
+	<resultMap id="BaseResultMap" type="CustSessions">
 		<constructor>
 			<idArg column="session_id" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="session_create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -18,14 +18,14 @@
 		delete from cust_sessions
 		where session_id = #{sessionId,jdbcType=VARCHAR}
 	</delete>
-	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.customer.CustSessions">
+	<insert id="insert" parameterType="CustSessions">
 		insert into cust_sessions (session_id, session_create_time, session_last_modify_time,
 		session_valid, session_value)
 		values (#{sessionId,jdbcType=VARCHAR},
 		#{sessionCreateTime,jdbcType=TIMESTAMP}, #{sessionLastModifyTime,jdbcType=TIMESTAMP},
 		#{sessionValid,jdbcType=BIT}, #{sessionValue,jdbcType=LONGVARCHAR})
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.customer.CustSessions">
+	<update id="updateByPrimaryKey" parameterType="CustSessions">
 		update cust_sessions
 		set session_create_time = #{sessionCreateTime,jdbcType=TIMESTAMP},
 		session_last_modify_time =

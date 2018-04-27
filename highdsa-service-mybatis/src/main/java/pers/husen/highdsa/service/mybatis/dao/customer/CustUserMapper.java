@@ -11,11 +11,12 @@ import pers.husen.highdsa.common.entity.po.customer.CustUser;
  *
  * @Created at 2018年4月16日 下午11:52:51
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public interface CustUserMapper {
 	/**
 	 * 根据主键删除
+	 * 
 	 * @param userId
 	 * @return
 	 */
@@ -23,31 +24,35 @@ public interface CustUserMapper {
 
 	/**
 	 * 插入新记录
+	 * 
 	 * @param record
 	 * @return
 	 */
 	int insert(CustUser record);
 
 	/**
-	 * 根据主键查找
+	 * 根据id查找
+	 * 
 	 * @param userId
 	 * @return
 	 */
-	CustUser selectByPrimaryKey(Long userId);
+	CustUser selectUserByUserId(Long userId);
 
 	/**
-	 * 查找所有
+	 * 查找所有记录
+	 * 
 	 * @return
 	 */
 	List<CustUser> selectAll();
 
 	/**
 	 * 根据主键更新
-	 * @param record
+	 * 
+	 * @param custUser
 	 * @return
 	 */
-	int updateByPrimaryKey(CustUser record);
-	
+	int updateByUserId(CustUser custUser);
+
 	/**
 	 * 根据用户名查找用户信息
 	 * 

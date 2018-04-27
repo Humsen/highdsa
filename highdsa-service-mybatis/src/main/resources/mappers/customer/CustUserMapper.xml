@@ -5,7 +5,7 @@
 	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
 
 	<!-- 基础结果集 -->
-	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustUser">
+	<resultMap id="BaseResultMap" type="CustUser">
 		<constructor>
 			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -13,16 +13,17 @@
 			<arg column="user_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_password" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_pwd_salt" javaType="java.lang.String" jdbcType="VARCHAR" />
-			<arg column="user_state" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<!-- <arg column="user_state" javaType="java.lang.String" jdbcType="VARCHAR" /> -->
 		</constructor>
+		<result column="user_state" property="userState" jdbcType="VARCHAR" />
 	</resultMap>
 	<!-- 查询角色结果集 -->
-	<resultMap id="rolesResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustUser" autoMapping="true">
+	<resultMap id="rolesResultMap" type="CustUser" autoMapping="true">
 		<!--column指向数据库列名 property指向pojo对象中字段名 -->
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<!-- property指的是在bean中字段名 ofType类的全定向名 -->
-		<collection property="custRoleList" ofType="pers.husen.highdsa.common.entity.po.customer.CustRole">
+		<collection property="custRoleList" ofType="CustRole">
 			<result column="role_id" property="roleId" />
 			<result column="role_name" property="roleName" />
 			<result column="role_code" property="roleCode" />
@@ -33,15 +34,15 @@
 		</collection>
 	</resultMap>
 	<!-- 查询权限结果集 -->
-	<resultMap id="permissionResultMap" type="pers.husen.highdsa.common.entity.po.customer.CustUser" autoMapping="true">
+	<resultMap id="permissionResultMap" type="CustUser" autoMapping="true">
 		<!--column指向数据库列名 property指向pojo对象中字段名 -->
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<!-- property指的是在bean中字段名 ofType类的全定向名 -->
-		<collection property="custRolePermissionList" ofType="pers.husen.highdsa.common.entity.po.customer.CustRolePermission">
+		<collection property="custRolePermissionList" ofType="CustRolePermission">
 			<result column="role_id" property="roleId" />
 			<result column="permission_id" property="permissionId" />
-			<association property="custPermission" javaType="pers.husen.highdsa.common.entity.po.customer.CustPermission">
+			<association property="custPermission" javaType="CustPermission">
 				<result column="permission_name" property="permissionName" />
 				<result column="permission_code" property="permissionCode" />
 				<result column="permission_desc" property="permissionDesc" />
@@ -58,7 +59,7 @@
 		delete from cust_user
 		where user_id = #{userId,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.customer.CustUser">
+	<insert id="insert" parameterType="CustUser">
 		insert into cust_user (user_id, user_name, user_email,
 		user_phone, user_password, user_pwd_salt,
 		user_state)
@@ -67,7 +68,7 @@
 		#{userPhone,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{userPwdSalt,jdbcType=VARCHAR},
 		#{userState,jdbcType=VARCHAR})
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.customer.CustUser">
+	<update id="updateByUserId" parameterType="CustUser">
 		update cust_user
 		set user_name = #{userName,jdbcType=VARCHAR},
 		user_email = #{userEmail,jdbcType=VARCHAR},
@@ -79,7 +80,7 @@
 		where user_id =
 		#{userId,jdbcType=BIGINT}
 	</update>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+	<select id="selectUserByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select user_id, user_name, user_email, user_phone, user_password, user_pwd_salt,
 		user_state
 		from cust_user

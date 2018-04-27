@@ -4,7 +4,7 @@
 	<!-- 自定义二级缓存 -->
 	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
 
-	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.system.SysPermission">
+	<resultMap id="BaseResultMap" type="SysPermission">
 		<constructor>
 			<idArg column="permission_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="permission_name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -22,7 +22,7 @@
 		delete from sys_permission
 		where permission_id = #{permissionId,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.system.SysPermission">
+	<insert id="insert" parameterType="SysPermission">
 		insert into sys_permission (permission_id, permission_name, permission_code,
 		permission_desc, permission_navi, permission_url,
 		permission_create_time,
@@ -34,7 +34,7 @@
 		#{permissionCreateTime,jdbcType=TIMESTAMP}, #{permissionLastModifyTime,jdbcType=TIMESTAMP},
 		#{permissionValid,jdbcType=BIT})
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.system.SysPermission">
+	<update id="updateByPrimaryKey" parameterType="SysPermission">
 		update sys_permission
 		set permission_name = #{permissionName,jdbcType=VARCHAR},
 		permission_code = #{permissionCode,jdbcType=VARCHAR},

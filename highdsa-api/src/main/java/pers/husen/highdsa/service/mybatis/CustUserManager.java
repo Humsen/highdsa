@@ -14,7 +14,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustUser;
  *
  * @Created at 2018年4月24日 上午10:16:04
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 @Service("custUserManager")
 public interface CustUserManager {
@@ -27,12 +27,27 @@ public interface CustUserManager {
 	public int createUser(CustUser custUser);
 
 	/**
+	 * 根据userId更新
+	 * 
+	 * @param custUser
+	 */
+	public void updateByUserId(CustUser custUser);
+
+	/**
 	 * 修改密码
 	 * 
 	 * @param userId
 	 * @param newPassword
 	 */
 	public void modifyPassword(Long userId, String newPassword);
+
+	/**
+	 * 根据用户id查找用户
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	CustUser findUserByUserId(Long userId);
 
 	/**
 	 * 添加用户-角色关系

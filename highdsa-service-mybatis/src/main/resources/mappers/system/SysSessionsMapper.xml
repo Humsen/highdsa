@@ -4,7 +4,7 @@
 	<!-- 自定义二级缓存 -->
 	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
 
-	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.system.SysSessions">
+	<resultMap id="BaseResultMap" type="SysSessions">
 		<constructor>
 			<idArg column="session_id" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="session_value" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -18,14 +18,14 @@
 		delete from sys_sessions
 		where session_id = #{sessionId,jdbcType=VARCHAR}
 	</delete>
-	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.system.SysSessions">
+	<insert id="insert" parameterType="SysSessions">
 		insert into sys_sessions (session_id, session_value, session_create_time,
 		session_last_modify_time, session_valid)
 		values (#{sessionId,jdbcType=VARCHAR},
 		#{sessionValue,jdbcType=VARCHAR}, #{sessionCreateTime,jdbcType=TIMESTAMP},
 		#{sessionLastModifyTime,jdbcType=TIMESTAMP}, #{sessionValid,jdbcType=BIT})
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.system.SysSessions">
+	<update id="updateByPrimaryKey" parameterType="SysSessions">
 		update sys_sessions
 		set session_value = #{sessionValue,jdbcType=VARCHAR},
 		session_last_modify_time = #{sessionLastModifyTime,jdbcType=TIMESTAMP},

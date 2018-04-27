@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import pers.husen.highdsa.common.entity.constants.SysUserState;
+
 /**
  * @Desc 系统用户实体类
  *
@@ -11,7 +13,7 @@ import java.util.Objects;
  *
  * @Created at 2018年3月29日 下午3:34:45
  * 
- * @Version 1.0.7
+ * @Version 1.0.8
  */
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +30,7 @@ public class SysUser implements Serializable {
 
 	private String userPwdSalt;
 
-	private String userState;
+	private SysUserState userState;
 
 	private List<SysRole> sysRoleList;
 
@@ -40,7 +42,7 @@ public class SysUser implements Serializable {
 				+ ", userState=" + userState + ", sysRoleList=" + sysRoleList + ", sysRolePermissionList=" + sysRolePermissionList + "]";
 	}
 
-	public SysUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt, String userState) {
+	public SysUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt, SysUserState userState) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userEmail = userEmail;
@@ -48,6 +50,47 @@ public class SysUser implements Serializable {
 		this.userPassword = userPassword;
 		this.userPwdSalt = userPwdSalt;
 		this.userState = userState;
+	}
+
+	/**
+	 * @param userId
+	 * @param userName
+	 * @param userEmail
+	 * @param userPhone
+	 * @param userPassword
+	 * @param userPwdSalt
+	 */
+	public SysUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.userPhone = userPhone;
+		this.userPassword = userPassword;
+		this.userPwdSalt = userPwdSalt;
+	}
+
+	/**
+	 * @param userId
+	 * @param userName
+	 * @param userEmail
+	 * @param userPhone
+	 * @param userPassword
+	 * @param userPwdSalt
+	 * @param sysRoleList
+	 * @param sysRolePermissionList
+	 */
+	public SysUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt, List<SysRole> sysRoleList,
+			List<SysRolePermission> sysRolePermissionList) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.userPhone = userPhone;
+		this.userPassword = userPassword;
+		this.userPwdSalt = userPwdSalt;
+		this.sysRoleList = sysRoleList;
+		this.sysRolePermissionList = sysRolePermissionList;
 	}
 
 	public SysUser() {
@@ -102,12 +145,12 @@ public class SysUser implements Serializable {
 		this.userPwdSalt = userPwdSalt == null ? null : userPwdSalt.trim();
 	}
 
-	public String getUserState() {
+	public SysUserState getUserState() {
 		return userState;
 	}
 
-	public void setUserState(String userState) {
-		this.userState = userState == null ? null : userState.trim();
+	public void setUserState(SysUserState userState) {
+		this.userState = userState;
 	}
 
 	/**

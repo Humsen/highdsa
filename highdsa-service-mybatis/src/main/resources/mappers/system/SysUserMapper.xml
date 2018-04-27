@@ -5,7 +5,7 @@
 	<cache eviction="LRU" type="pers.husen.highdsa.service.mybatis.cache.RedisCache" />
 
 	<!-- 基础结果集 -->
-	<resultMap id="BaseResultMap" type="pers.husen.highdsa.common.entity.po.system.SysUser">
+	<resultMap id="BaseResultMap" type="SysUser">
 		<constructor>
 			<idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
 			<arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -13,16 +13,17 @@
 			<arg column="user_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_password" javaType="java.lang.String" jdbcType="VARCHAR" />
 			<arg column="user_pwd_salt" javaType="java.lang.String" jdbcType="VARCHAR" />
-			<arg column="user_state" javaType="java.lang.String" jdbcType="VARCHAR" />
+			<!-- <arg column="user_state" jdbcType="VARCHAR" /> -->
 		</constructor>
+		<result column="user_state" property="userState" jdbcType="VARCHAR" />
 	</resultMap>
 	<!-- 查询角色结果集 -->
-	<resultMap id="rolesResultMap" type="pers.husen.highdsa.common.entity.po.system.SysUser" autoMapping="true">
+	<resultMap id="rolesResultMap" type="SysUser" autoMapping="true">
 		<!--column指向数据库列名 property指向pojo对象中字段名 -->
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<!-- property指的是在bean中字段名 ofType类的全定向名 -->
-		<collection property="sysRoleList" ofType="pers.husen.highdsa.common.entity.po.system.SysRole">
+		<collection property="sysRoleList" ofType="SysRole">
 			<result column="role_id" property="roleId" />
 			<result column="role_name" property="roleName" />
 			<result column="role_code" property="roleCode" />
@@ -33,15 +34,15 @@
 		</collection>
 	</resultMap>
 	<!-- 查询权限结果集 -->
-	<resultMap id="permissionResultMap" type="pers.husen.highdsa.common.entity.po.system.SysUser" autoMapping="true">
+	<resultMap id="permissionResultMap" type="SysUser" autoMapping="true">
 		<!--column指向数据库列名 property指向pojo对象中字段名 -->
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
 		<!-- property指的是在bean中字段名 ofType类的全定向名 -->
-		<collection property="sysRolePermissionList" ofType="pers.husen.highdsa.common.entity.po.system.SysRolePermission">
+		<collection property="sysRolePermissionList" ofType="SysRolePermission">
 			<result column="role_id" property="roleId" />
 			<result column="permission_id" property="permissionId" />
-			<association property="sysPermission" javaType="pers.husen.highdsa.common.entity.po.system.SysPermission">
+			<association property="sysPermission" javaType="SysPermission">
 				<result column="permission_name" property="permissionName" />
 				<result column="permission_code" property="permissionCode" />
 				<result column="permission_desc" property="permissionDesc" />
@@ -58,7 +59,7 @@
 		delete from sys_user
 		where user_id = #{userId,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" parameterType="pers.husen.highdsa.common.entity.po.system.SysUser">
+	<insert id="insert" parameterType="SysUser">
 		insert into sys_user (user_id, user_name, user_email,
 		user_phone, user_password, user_pwd_salt,
 		user_state)
@@ -67,7 +68,7 @@
 		#{userPhone,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{userPwdSalt,jdbcType=VARCHAR},
 		#{userState,jdbcType=VARCHAR})
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="pers.husen.highdsa.common.entity.po.system.SysUser">
+	<update id="updateByUserId" parameterType="SysUser">
 		update sys_user
 		set user_name = #{userName,jdbcType=VARCHAR},
 		user_email = #{userEmail,jdbcType=VARCHAR},
@@ -77,7 +78,7 @@
 		user_state = #{userState,jdbcType=VARCHAR}
 		where user_id = #{userId,jdbcType=BIGINT}
 	</update>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+	<select id="selectUserByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select user_id, user_name, user_email, user_phone, user_password, user_pwd_salt,
 		user_state
 		from sys_user

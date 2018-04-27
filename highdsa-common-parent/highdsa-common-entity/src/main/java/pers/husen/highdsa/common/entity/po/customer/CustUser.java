@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import pers.husen.highdsa.common.entity.constants.CustUserState;
 import pers.husen.highdsa.common.entity.po.system.SysUser;
 
 /**
@@ -13,7 +14,7 @@ import pers.husen.highdsa.common.entity.po.system.SysUser;
  *
  * @Created at 2018年4月11日 下午1:36:36
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class CustUser implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +31,7 @@ public class CustUser implements Serializable {
 
 	private String userPwdSalt;
 
-	private String userState;
+	private CustUserState userState;
 
 	private List<CustRole> custRoleList;
 
@@ -42,7 +43,7 @@ public class CustUser implements Serializable {
 				+ ", userState=" + userState + ", custRoleList=" + custRoleList + ", custRolePermissionList=" + custRolePermissionList + "]";
 	}
 
-	public CustUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt, String userState) {
+	public CustUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt, CustUserState userState) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userEmail = userEmail;
@@ -50,6 +51,24 @@ public class CustUser implements Serializable {
 		this.userPassword = userPassword;
 		this.userPwdSalt = userPwdSalt;
 		this.userState = userState;
+	}
+
+	/**
+	 * @param userId
+	 * @param userName
+	 * @param userEmail
+	 * @param userPhone
+	 * @param userPassword
+	 * @param userPwdSalt
+	 */
+	public CustUser(Long userId, String userName, String userEmail, String userPhone, String userPassword, String userPwdSalt) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.userPhone = userPhone;
+		this.userPassword = userPassword;
+		this.userPwdSalt = userPwdSalt;
 	}
 
 	public CustUser() {
@@ -104,12 +123,12 @@ public class CustUser implements Serializable {
 		this.userPwdSalt = userPwdSalt == null ? null : userPwdSalt.trim();
 	}
 
-	public String getUserState() {
+	public CustUserState getUserState() {
 		return userState;
 	}
 
-	public void setUserState(String userState) {
-		this.userState = userState == null ? null : userState.trim();
+	public void setUserState(CustUserState userState) {
+		this.userState = userState;
 	}
 
 	/**
