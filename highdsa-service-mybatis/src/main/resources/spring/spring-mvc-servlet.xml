@@ -8,6 +8,11 @@
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
 	default-lazy-init="false">
 
+	<context:component-scan base-package="pers.husen.highdsa.serivce.mybatis" />
+
+	<!-- 异常处理类 -->
+	<bean id="exceptionResolver" class="pers.husen.highdsa.common.exception.ExceptionInterceptor"></bean>
+
 	<mvc:annotation-driven>
 		<!-- 消息转换器 -->
 		<mvc:message-converters register-defaults="true">
@@ -15,13 +20,14 @@
 				<property name="supportedMediaTypes" value="text/html;charset=UTF-8" />
 			</bean>
 			<bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
-			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+			<!-- 请求信息转换器,负责读取和写入json格式的数据 -->
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-
-	<!-- 异常处理类 -->
-	<bean id="exceptionResolver" class="pers.husen.highdsa.common.exception.ExceptionInterceptor">
-	</bean>
-
-	<context:component-scan base-package="pers.husen.highdsa.serivce.mybatis" />
 </beans>

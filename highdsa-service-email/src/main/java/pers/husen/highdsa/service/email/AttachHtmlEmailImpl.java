@@ -22,6 +22,7 @@ import javax.mail.internet.MimeUtility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import pers.husen.highdsa.common.constant.EmailConstants;
 import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.constant.ResponseConstants;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
@@ -36,17 +37,17 @@ import pers.husen.highdsa.service.email.core.SendEmailCore;
  *
  * @Created at 2018年2月5日 下午5:30:54
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class AttachHtmlEmailImpl implements AttachHtmlEmail {
-	private final Logger logger = LogManager.getLogger(AttachHtmlEmailImpl.class.getName());
+	private static final Logger logger = LogManager.getLogger(AttachHtmlEmailImpl.class.getName());
 
 	@Override
 	public int sendEmail2User(String mailTo, String subject, String content, File attachFile) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			// 获取配置文件
-			Session session = sendEmailCore.getSession("email/robot2user-mail.properties");
+			Session session = sendEmailCore.getSession(EmailConstants.CONFIG_FILE_2USER);
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
@@ -65,7 +66,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 添加邮件正文
 			BodyPart contentPart = new MimeBodyPart();
-			contentPart.setContent(content, "text/html;charset=UTF-8");
+			contentPart.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
 			multipart.addBodyPart(contentPart);
 
 			// 添加附件的内容
@@ -111,7 +112,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			// 获取配置文件
-			Session session = sendEmailCore.getSession("email/robot2user-mail.properties");
+			Session session = sendEmailCore.getSession(EmailConstants.CONFIG_FILE_2USER);
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
@@ -130,18 +131,23 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 添加邮件正文
 			BodyPart contentPart = new MimeBodyPart();
-			contentPart.setContent(content, "text/html;charset=UTF-8");
+			contentPart.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
 			multipart.addBodyPart(contentPart);
 
 			// 添加附件的内容
 			if (attachUrl != null) {
 				BodyPart attachmentBodyPart = new MimeBodyPart();
 
+				// 查询参数的起始位置
 				int index = attachUrl.indexOf("?");
+				// 获取查询参数
 				String queryStr = attachUrl.substring(index + 1, attachUrl.length());
+				// url转义
 				String attachUrlEncode = URLEncoder.encode(queryStr, Encode.DEFAULT_ENCODE);
+				// 查询参数前的所有
 				String beforeQueryStr = attachUrl.substring(0, index + 1);
 
+				// 重新拼接并设置数据源
 				DataSource dataSource = new URLDataSource(new URL(beforeQueryStr + attachUrlEncode));
 
 				attachmentBodyPart.setDataHandler(new DataHandler(dataSource));
@@ -182,7 +188,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, File attachFile) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
-			Session session = sendEmailCore.getSession("email/all2admin-mail.properties");
+			Session session = sendEmailCore.getSession(EmailConstants.CONFIG_FILE_2ADMIN);
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
@@ -201,7 +207,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 添加邮件正文
 			BodyPart contentPart = new MimeBodyPart();
-			contentPart.setContent(content, "text/html;charset=UTF-8");
+			contentPart.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
 			multipart.addBodyPart(contentPart);
 
 			// 添加附件的内容
@@ -221,7 +227,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			message.saveChanges();
 
 			// 发送信息的工具
-			Transport transport = session.getTransport("smtp");
+			Transport transport = session.getTransport(SendEmailCore.mailSmtpProtocol);
 			// smtp验证,就是你用来发邮件的邮箱用户名密码
 			transport.connect();
 			// 发送
@@ -246,7 +252,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, String attachUrl, String attachName) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
-			Session session = sendEmailCore.getSession("email/all2admin-mail.properties");
+			Session session = sendEmailCore.getSession(EmailConstants.CONFIG_FILE_2ADMIN);
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
@@ -265,7 +271,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 添加邮件正文
 			BodyPart contentPart = new MimeBodyPart();
-			contentPart.setContent(content, "text/html;charset=UTF-8");
+			contentPart.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
 			multipart.addBodyPart(contentPart);
 
 			// 添加附件的内容
@@ -285,7 +291,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			message.saveChanges();
 
 			// 发送信息的工具
-			Transport transport = session.getTransport("smtp");
+			Transport transport = session.getTransport(SendEmailCore.mailSmtpProtocol);
 			// smtp验证,就是你用来发邮件的邮箱用户名密码
 			transport.connect();
 			// 发送

@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import io.goeasy.GoEasy;
+import pers.husen.highdsa.common.constant.MessageConstants;
 import pers.husen.highdsa.common.utility.ReadConfigFile;
 import pers.husen.highdsa.service.message.PushMsg;
 import pers.husen.highdsa.service.message.comet.listener.CustomPublishListener;
@@ -21,7 +22,7 @@ import pers.husen.highdsa.service.message.comet.listener.CustomPublishListener;
  *
  * @Created at 2018年3月12日 下午1:24:53
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class GoEasyPushMsg implements PushMsg {
 	private static final Logger logger = LogManager.getLogger(GoEasyPushMsg.class.getName());
@@ -39,11 +40,11 @@ public class GoEasyPushMsg implements PushMsg {
 	@Override
 	@PostConstruct
 	public void initGoEasy() throws UnsupportedEncodingException, IOException {
-		logger.info("开始执行初始化操作...");
-		Properties properties = ReadConfigFile.readByRelativePath("appkey.properties");
+		logger.trace("开始执行初始化操作...");
+		Properties properties = ReadConfigFile.readByRelativePath(MessageConstants.COMET_CONFIG_FILE);
 
-		REST_HOST = properties.getProperty("rest_host");
-		APP_KEY = properties.getProperty("common_key");
+		REST_HOST = properties.getProperty(MessageConstants.REST_HOST);
+		APP_KEY = properties.getProperty(MessageConstants.COMMON_KEY);
 
 		goEasy = new GoEasy(REST_HOST, APP_KEY);
 	}
@@ -51,7 +52,7 @@ public class GoEasyPushMsg implements PushMsg {
 	@Override
 	public Boolean publish(String channel, String content) throws UnsupportedEncodingException, IOException {
 		if (goEasy == null) {
-			logger.info("暂无实例, 开始初始化...");
+			logger.trace("暂无实例, 开始初始化...");
 			initGoEasy();
 		}
 
@@ -66,11 +67,11 @@ public class GoEasyPushMsg implements PushMsg {
 	@Override
 	public String getRestHost() throws UnsupportedEncodingException, IOException {
 		if (REST_HOST == null) {
-			logger.info("restHost为空, 开始初始化...");
+			logger.trace("restHost为空, 开始初始化...");
 			initGoEasy();
 		}
-		
-		logger.info("获取restHost成功, restHost={}", REST_HOST);
+
+		logger.debug("获取restHost成功, restHost={}", REST_HOST);
 
 		return REST_HOST;
 	}
@@ -78,12 +79,12 @@ public class GoEasyPushMsg implements PushMsg {
 	@Override
 	public String getAppKey() throws UnsupportedEncodingException, IOException {
 		if (APP_KEY == null) {
-			logger.info("restHost为空, 开始初始化...");
+			logger.trace("restHost为空, 开始初始化...");
 			initGoEasy();
 		}
 
-		logger.info("获取appKey成功, appKey={}", APP_KEY);
-		
+		logger.debug("获取appKey成功, appKey={}", APP_KEY);
+
 		return APP_KEY;
 	}
 }

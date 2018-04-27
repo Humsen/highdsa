@@ -5,7 +5,7 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import pers.husen.highdsa.common.constant.ConfigFilePath;
+import pers.husen.highdsa.common.constant.SequenceConstants;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.utility.ReadConfigFile;
 
@@ -16,7 +16,7 @@ import pers.husen.highdsa.common.utility.ReadConfigFile;
  *
  * @Created at 2018年4月16日 下午10:07:43
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class SequenceManager {
 	private static final Logger logger = LogManager.getLogger(SequenceManager.class.getName());
@@ -62,19 +62,19 @@ public class SequenceManager {
 	 */
 	private static void init() {
 		try {
-			sequenceConfig = ReadConfigFile.readByRelativePath(ConfigFilePath.SEQUENCE_ID_FILE);
-			
-			workerId = sequenceConfig.getProperty("workerId", "0");
+			sequenceConfig = ReadConfigFile.readByRelativePath(SequenceConstants.SEQUENCE_ID_FILE);
+
+			workerId = sequenceConfig.getProperty(SequenceConstants.WORKER_ID, "0");
 			logger.debug("workerId: {}", getWorkerId());
 
-			datacenterId = sequenceConfig.getProperty("datacenterId", "0");
+			datacenterId = sequenceConfig.getProperty(SequenceConstants.DATA_CENTER_ID, "0");
 			logger.debug("datacenterId: {}", getDatacenterId());
 
 			sequence = new Sequence(Long.valueOf(workerId), Long.valueOf(datacenterId));
 		} catch (Exception e) {
 			logger.warn(StackTrace2Str.exceptionStackTrace2Str(e));
 			sequence = new Sequence(0, 0);
-		} 
+		}
 	}
 
 	private static String getWorkerId() {

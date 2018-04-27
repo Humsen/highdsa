@@ -13,7 +13,7 @@ import io.goeasy.publish.PublishListener;
  *
  * @Created at 2018年3月12日 下午5:39:13
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class CustomPublishListener extends PublishListener {
 	private static final Logger logger = LogManager.getLogger(CustomPublishListener.class.getName());
@@ -37,13 +37,13 @@ public class CustomPublishListener extends PublishListener {
 
 	@Override
 	public void onSuccess() {
-		logger.info("消息发布成功");
+		logger.trace("消息发布成功");
 		result = true;
 	}
 
 	@Override
 	public void onFailed(GoEasyError error) {
-		logger.error("消息发布失败, 错误编码：{}, 错误信息： {}", error.getCode() + error.getContent());
+		logger.warn("消息发布失败, 错误编码：{}, 错误信息： {}", error.getCode() + error.getContent());
 		result = false;
 	}
 }

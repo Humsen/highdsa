@@ -12,7 +12,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsRequest;
  *
  * @Created at 2018年3月11日 下午5:09:16
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class SmsQueryParams {
 	QuerySendDetailsRequest request = new QuerySendDetailsRequest();
@@ -29,8 +29,7 @@ public class SmsQueryParams {
 
 	@Override
 	public String toString() {
-		return "SmsQueryParams [request=" + request + ", phoneNumber=" + phoneNumber + ", sendDate=" + sendDate
-				+ ", PageSize=" + pageSize + ", currentPage=" + currentPage + ", bizId=" + bizId + "]";
+		return "SmsQueryParams [request=" + request + ", phoneNumber=" + phoneNumber + ", sendDate=" + sendDate + ", PageSize=" + pageSize + ", currentPage=" + currentPage + ", bizId=" + bizId + "]";
 	}
 
 	public SmsQueryParams() {
@@ -44,8 +43,7 @@ public class SmsQueryParams {
 	 * @param currentPage
 	 * @param bizId
 	 */
-	public SmsQueryParams(QuerySendDetailsRequest request, String phoneNumber, String sendDate, Long pageSize,
-			Long currentPage, String bizId) {
+	public SmsQueryParams(QuerySendDetailsRequest request, String phoneNumber, String sendDate, Long pageSize, Long currentPage, String bizId) {
 		super();
 		this.request = request;
 		this.phoneNumber = phoneNumber;
@@ -60,14 +58,14 @@ public class SmsQueryParams {
 	 */
 	public QuerySendDetailsRequest getRequest() {
 		request.setPhoneNumber(phoneNumber);
-        request.setSendDate(new SimpleDateFormat(sendDate).format(new Date()));
-        request.setPageSize(pageSize);
-        request.setCurrentPage(currentPage);
-        
-        if(bizId != null) {
-        	request.setBizId(bizId);
-        }
-        
+		request.setSendDate(new SimpleDateFormat(sendDate).format(new Date()));
+		request.setPageSize(pageSize);
+		request.setCurrentPage(currentPage);
+
+		if (bizId != null) {
+			request.setBizId(bizId);
+		}
+
 		return request;
 	}
 

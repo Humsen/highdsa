@@ -8,10 +8,22 @@
        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
 	<!-- 自动扫描的包名 -->
-	<context:component-scan base-package="pers.husen.highdsa" />
+	<context:component-scan base-package="pers.husen.highdsa.web.shiro" />
 
-	<!-- 默认的注解映射的支持,自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter -->
-	<mvc:annotation-driven />
+	<!-- 异常处理类 -->
+	<bean id="exceptionResolver" class="pers.husen.highdsa.common.exception.ExceptionInterceptor"></bean>
+
+	<!-- 返回String json用这个 -->
+	<mvc:annotation-driven>
+		<!-- 消息转换器 -->
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes" value="text/html;charset=UTF-8" />
+			</bean>
+			<bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
 	<!-- 视图解释类 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

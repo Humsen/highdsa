@@ -8,6 +8,12 @@
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
 	default-lazy-init="false">
 
+	<context:component-scan base-package="pers.husen.highdsa.web.fastdfs" />
+
+	<!-- 异常处理类 -->
+	<bean id="exceptionResolver" class="pers.husen.highdsa.common.exception.ExceptionInterceptor"></bean>
+
+	<!-- 返回String json用这个 -->
 	<mvc:annotation-driven>
 		<!-- 消息转换器 -->
 		<mvc:message-converters register-defaults="true">
@@ -18,10 +24,4 @@
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-
-	<!-- 异常处理类 -->
-	<bean id="exceptionResolver" class="pers.husen.highdsa.common.exception.ExceptionInterceptor">
-	</bean>
-
-	<context:component-scan base-package="pers.husen.highdsa.web" />
 </beans>

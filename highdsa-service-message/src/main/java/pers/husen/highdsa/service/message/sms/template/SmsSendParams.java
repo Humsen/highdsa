@@ -9,7 +9,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
  *
  * @Created at 2018年3月11日 下午3:37:40
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class SmsSendParams {
 	private SendSmsRequest request = new SendSmsRequest();
@@ -19,6 +19,12 @@ public class SmsSendParams {
 	private String phoneNumbers;
 	private String templateParam;
 	private String outId;
+
+	@Override
+	public String toString() {
+		return "RegisterCaptcha [request=" + request + ", phoneNumbers=" + phoneNumbers + ", signName=" + signName + ", templateCode=" + templateCode + ", templateParam=" + templateParam + ", outId="
+				+ outId + "]";
+	}
 
 	/**
 	 * @return the request
@@ -118,11 +124,5 @@ public class SmsSendParams {
 	 */
 	public void setOutId(String outId) {
 		this.outId = outId;
-	}
-
-	@Override
-	public String toString() {
-		return "RegisterCaptcha [request=" + request + ", phoneNumbers=" + phoneNumbers + ", signName=" + signName
-				+ ", templateCode=" + templateCode + ", templateParam=" + templateParam + ", outId=" + outId + "]";
 	}
 }

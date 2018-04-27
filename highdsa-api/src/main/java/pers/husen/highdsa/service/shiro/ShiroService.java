@@ -8,13 +8,13 @@ import pers.husen.highdsa.common.entity.po.system.SysUser;
 import java.io.Serializable;
 
 /**
- * @Desc shiro API
+ * @Desc shiro API,用于远程会话管理.此处暂维使用.
  *
  * @Author 何明胜
  *
  * @Created at 2018年4月2日 下午10:44:23
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public interface ShiroService {
 	/**

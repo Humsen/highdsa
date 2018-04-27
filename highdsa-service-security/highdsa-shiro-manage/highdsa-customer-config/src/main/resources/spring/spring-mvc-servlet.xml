@@ -6,12 +6,24 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+	<!-- 扫描生成controller组件 -->
+	<context:component-scan base-package="pers.husen.highdsa.shiro.config.customer.controller" />
+
+	<!-- 异常处理类 -->
+	<bean id="exceptionResolver" class="pers.husen.highdsa.common.exception.ExceptionInterceptor"></bean>
+
+	<!-- 返回实体类 json用这个 -->
 	<mvc:annotation-driven>
-		<mvc:message-converters register-defaults="false">
+		<!-- 消息转换器 -->
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes" value="text/html;charset=UTF-8" />
+			</bean>
+			<bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+			<!-- 请求信息转换器,负责读取和写入json格式的数据 -->
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
-						<value>text/html;charset=UTF-8</value>
 						<value>application/json;charset=UTF-8</value>
 					</list>
 				</property>
@@ -22,9 +34,6 @@
 	<!-- 静态资源文件映射 -->
 	<mvc:resources location="/static/" mapping="/static/**" />
 
-	<!-- 扫描生成controller组件 -->
-	<context:component-scan base-package="pers.husen.highdsa.shiro.config.customer.controller" />
-
 	<aop:config proxy-target-class="true"></aop:config>
 
 	<!-- 默认的视图解析器- -->
@@ -34,7 +43,4 @@
 		<property name="prefix" value="/WEB-INF/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
-	<!-- 异常处理类 -->
-	<bean id="exceptionResolver" class="pers.husen.highdsa.common.exception.ExceptionInterceptor"></bean>
 </beans>

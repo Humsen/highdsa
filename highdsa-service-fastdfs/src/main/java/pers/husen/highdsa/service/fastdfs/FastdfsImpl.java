@@ -23,6 +23,7 @@ import org.csource.fastdfs.StorageServer;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 
+import pers.husen.highdsa.common.constant.ConfigFilePath;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.common.transform.ConvertType;
 
@@ -33,14 +34,14 @@ import pers.husen.highdsa.common.transform.ConvertType;
  *
  * @Created at 2018年2月13日 下午2:58:20
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 public class FastdfsImpl implements Fastdfs {
 	private final Logger logger = LogManager.getLogger(FastdfsImpl.class.getName());
 
 	public void init() {
 		try {
-			ClientGlobal.init("fdfs_client.conf");
+			ClientGlobal.init(ConfigFilePath.FASTDFS_CLIENT_CONF);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
@@ -69,7 +70,7 @@ public class FastdfsImpl implements Fastdfs {
 
 		// 初始化
 		init();
-		logger.info("开始上传文件...");
+		logger.trace("开始上传文件...");
 		// byte[] fileBuff = getFileBuffer(inputStream);
 		String[] files = null;
 		String fileExtName = "";
@@ -103,6 +104,7 @@ public class FastdfsImpl implements Fastdfs {
 
 		if (files == null) {
 			logger.error("upload file fail, error code: " + client.getErrorCode());
+			
 			return null;
 		} else {
 			replyMap.put("group_name", files[0]);
@@ -161,7 +163,6 @@ public class FastdfsImpl implements Fastdfs {
 
 			replyMap.put("file_url", fileUrl);
 			logger.info("上传文件成功, file http url:\t" + fileUrl);
-
 		}
 		trackerServer.close();
 
@@ -169,11 +170,10 @@ public class FastdfsImpl implements Fastdfs {
 	}
 
 	@Override
-	public void downloadFile(String groupName, String remoteFilenNme, String saveFilePath)
-			throws IOException, MyException {
+	public void downloadFile(String groupName, String remoteFilenNme, String saveFilePath) throws IOException, MyException {
 		// 初始化
 		init();
-		logger.info("开始下载文件...");
+		logger.trace("开始下载文件...");
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
 		StorageServer storageServer = null;
@@ -197,7 +197,7 @@ public class FastdfsImpl implements Fastdfs {
 	@Override
 	public InputStream downloadFile(String groupName, String remoteFilenNme) throws Exception {
 		init();
-		logger.info("开始下载文件...");
+		logger.trace("开始下载文件...");
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
 		StorageServer storageServer = null;
@@ -220,7 +220,7 @@ public class FastdfsImpl implements Fastdfs {
 	public void deleteFile(String groupName, String filepath) throws Exception {
 		// 初始化
 		init();
-		logger.info("开始删除文件");
+		logger.trace("开始删除文件");
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
 		StorageServer storageServer = null;
@@ -233,13 +233,14 @@ public class FastdfsImpl implements Fastdfs {
 	public void getFileInfo(String groupName, String filepath) throws Exception {
 		// 初始化
 		init();
-		logger.info("开始获取文件信息");
+		logger.trace("开始获取文件信息");
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
 		StorageServer storageServer = null;
 
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
 		FileInfo fi = storageClient.get_file_info(groupName, filepath);
+	
 		logger.info("所在服务器地址: {}", fi.getSourceIpAddr());
 		logger.info("文件大小: {}", fi.getFileSize());
 		logger.info("文件创建时间: {}", fi.getCreateTimestamp());
@@ -250,7 +251,7 @@ public class FastdfsImpl implements Fastdfs {
 	public void getFileMate(String groupName, String filepath) throws Exception {
 		// 初始化
 		init();
-		logger.info("开始获取文件meta");
+		logger.trace("开始获取文件meta");
 		TrackerClient tracker = new TrackerClient();
 		TrackerServer trackerServer = tracker.getConnection();
 		StorageServer storageServer = null;

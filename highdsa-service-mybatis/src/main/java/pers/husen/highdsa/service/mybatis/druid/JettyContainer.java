@@ -1,5 +1,7 @@
 package pers.husen.highdsa.service.mybatis.druid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.FilterHolder;
@@ -7,8 +9,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import com.alibaba.druid.support.http.StatViewServlet;
-import com.alibaba.dubbo.common.logger.Logger;
-import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.dubbo.common.utils.ConfigUtils;
 import com.alibaba.dubbo.common.utils.NetUtils;
 import com.alibaba.dubbo.container.Container;
@@ -22,22 +22,25 @@ import com.alibaba.dubbo.container.page.ResourceFilter;
  *
  * @Created at 2018年3月19日 下午11:59:42
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class JettyContainer implements Container {
+	private static final Logger logger = LogManager.getLogger(JettyContainer.class);
+
 	public static final String JETTY_PORT = "dubbo.jetty.port";
 	public static final String JETTY_DIRECTORY = "dubbo.jetty.directory";
 	public static final String JETTY_PAGES = "dubbo.jetty.page";
 	public static final int DEFAULT_JETTY_PORT = 8082;
 	public static final String DRUID_LOGIN_USERNAME = "druid.login.username";
 	public static final String DRUID_LOGIN_PASSWORD = "druid.login.password";
-	private static final Logger logger = LoggerFactory.getLogger(JettyContainer.class);
+
 	SelectChannelConnector connector;
 
 	@Override
 	public void start() {
 		String serverPort = ConfigUtils.getProperty(JETTY_PORT);
 		int port;
+		
 		if (serverPort == null || serverPort.length() == 0) {
 			port = DEFAULT_JETTY_PORT;
 		} else {
@@ -76,8 +79,7 @@ public class JettyContainer implements Container {
 		try {
 			server.start();
 		} catch (Exception e) {
-			throw new IllegalStateException("Failed to start jetty server on " + NetUtils.getLocalHost() + ":" + port
-					+ ", cause: " + e.getMessage(), e);
+			throw new IllegalStateException("Failed to start jetty server on " + NetUtils.getLocalHost() + ":" + port + ", cause: " + e.getMessage(), e);
 		}
 	}
 

@@ -30,7 +30,7 @@ public class AliSendSmsTest {
 
 	@Test
 	public void testSendSmsCaptcha() {
-		String phoneNumber = "16621002640";
+		String phoneNumber = "18626422426";
 		String chptcha = RandomCode.producedRandomCodeStr(8);
 
 		SendSmsResponse response = null;
@@ -81,7 +81,7 @@ public class AliSendSmsTest {
 	@Test
 	public void testQuerySendDetailsByBizId() {
 		String phoneNumber = "18626422426";
-		String bizId = "147508620906323851^0";
+		String bizId = "356008924791413222^0";
 
 		QuerySendDetailsResponse querySendDetailsResponse = null;
 
