@@ -35,6 +35,18 @@
 			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- restful -->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-support-rest</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+			<version>${cas.version}</version>
+		</dependency>
 		<!-- 单独导入cas的配置依赖到项目中 -->
 		<dependency>
 			<groupId>org.apereo.cas</groupId>

@@ -42,14 +42,14 @@ public class ConvertType {
 	 * @throws IOException
 	 */
 	public static byte[] inStream2ByteArray(InputStream inStream) throws IOException {
-		logger.fatal(inStream.available());
+		logger.trace(inStream.available());
 		byte[] buffer = new byte[256 * 1024];
 		ByteArrayOutputStream bOutputStream = new ByteArrayOutputStream();
 
 		int length = 0;
 
 		while ((length = inStream.read(buffer)) != -1) {
-			logger.fatal(length);
+			logger.trace(length);
 			bOutputStream.write(buffer, 0, length);
 		}
 

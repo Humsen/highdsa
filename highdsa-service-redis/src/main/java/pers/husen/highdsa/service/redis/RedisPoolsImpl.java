@@ -47,7 +47,7 @@ public class RedisPoolsImpl implements RedisPools {
 		jedisconfig.setTestOnReturn(Boolean.valueOf(bundle.getString(RedisConstants.REDIS_POOL_TESTONRETURN)));
 
 		String authPwd = bundle.getString(RedisConstants.REDIS_AUTH);
-		if (authPwd == null || authPwd == "") {
+		if (authPwd == null || authPwd.trim().equals("")) {
 			logger.trace("redis连接没有密码");
 			jedisPool = new JedisPool(jedisconfig, bundle.getString(RedisConstants.REDIS_IP), Integer.valueOf(bundle.getString(RedisConstants.REDIS_PORT)),
 					Integer.valueOf(bundle.getString(RedisConstants.REDIS_TIMEOUT)));

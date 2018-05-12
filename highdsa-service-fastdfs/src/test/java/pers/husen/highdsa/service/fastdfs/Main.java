@@ -26,7 +26,7 @@ public class Main {
 		Map<String, String> files = fastDFSImpl.uploadFile(new FileInputStream(file), "fdfs_client.conf");
 
 		// 下载文件
-		//fastDFSImpl.downloadFile(files[0], files[1]);
+		fastDFSImpl.downloadFile(files.get("group_name"), files.get("remote_filename"), "B:\\Desktop\\fdfs_client.conf");
 		
 		// 查看文件信息
 		fastDFSImpl.getFileInfo(files.get("group_name"), files.get("remote_filename"));
