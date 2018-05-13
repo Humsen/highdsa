@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.message.sms.handler;
+package pers.husen.highdsa.web.app.handler;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -13,9 +13,13 @@ import com.aliyuncs.exceptions.ClientException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
 
+import pers.husen.highdsa.common.constant.RedisCacheConstants;
+import pers.husen.highdsa.common.entity.vo.SimpleJson;
 import pers.husen.highdsa.common.entity.vo.message.SmsQueryRequest;
 import pers.husen.highdsa.common.entity.vo.message.SmsSendResponse;
+import pers.husen.highdsa.common.utility.RandomCode;
 import pers.husen.highdsa.service.message.SendSms;
+import pers.husen.highdsa.service.redis.RedisOperation;
 
 /**
  * @Desc 发送短信业务调用服务类
@@ -24,7 +28,7 @@ import pers.husen.highdsa.service.message.SendSms;
  *
  * @Created at 2018年3月13日 上午10:11:18
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 @Service
 public class SendSmsSvc {
@@ -33,12 +37,36 @@ public class SendSmsSvc {
 
 	@Autowired
 	private SendSms sendSms;
+	@Autowired
+	private RedisOperation redisOperation;
 
-	public String sendSmsCaptcha(String phoneNumber, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
+	public String sendSmsCaptcha(String phoneNumber) throws UnsupportedEncodingException, ClientException, IOException {
+		String chptcha = RandomCode.producedRandomCodeStr6();
+		// 验证码缓存到redis
+		redisOperation.set(RedisCacheConstants.REGISTER_REDIS_CODE + phoneNumber, chptcha, 3600);
+
 		SmsSendResponse smsSendResponse = sendSms.sendSmsCaptcha(phoneNumber, chptcha);
 
 		String reply = objectMapper.writeValueAsString(smsSendResponse);
 		logger.info("返回结果为: {}", reply);
+
+		return reply;
+	}
+
+	public String validateSmsCaptcha(String phoneNumber, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
+		String reply = null;
+		SimpleJson simpleJson;
+
+		String cacheCode = redisOperation.get(RedisCacheConstants.REGISTER_REDIS_CODE + phoneNumber);
+
+		if (chptcha != null && chptcha.equals(cacheCode)) {
+			simpleJson = new SimpleJson(true, "手机验证成功");
+		} else {
+			simpleJson = new SimpleJson(false, "手机验证失败");
+		}
+
+		reply = objectMapper.writeValueAsString(simpleJson);
+		logger.info(reply);
 
 		return reply;
 	}

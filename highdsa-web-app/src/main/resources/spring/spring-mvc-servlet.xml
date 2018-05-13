@@ -8,7 +8,7 @@
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
 	default-lazy-init="false">
 
-	<context:component-scan base-package="pers.husen.highdsa.web.shiro" />
+	<context:component-scan base-package="pers.husen.highdsa.web.app" />
 
 	<!-- 异常处理类 -->
 	<bean id="exceptionResolver" class="pers.husen.highdsa.common.exception.ExceptionInterceptor"></bean>

@@ -22,7 +22,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年4月20日 上午12:10:04
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class MysqlRedisSessionDao extends CachingSessionDAO {
 	private static final Logger logger = LogManager.getLogger(MysqlRedisSessionDao.class.getName());
@@ -123,7 +123,10 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 			logger.trace("redis缓存为空,从数据库获取");
 
 			CustSessions custSessions = custSessionsManager.findBySessionId(String.valueOf(sessionId));
-			session = ShiroSessionSerializer.deserialize(custSessions.getSessionValue());
+			
+			if(custSessions != null) {
+				session = ShiroSessionSerializer.deserialize(custSessions.getSessionValue());
+			}
 		}
 
 		if (session != null) {

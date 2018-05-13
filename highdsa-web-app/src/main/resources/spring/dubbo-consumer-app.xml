@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:reference id="sendSms" interface="pers.husen.highdsa.service.message.SendSms" timeout="100000" check="false" />
+	<dubbo:reference id="pushMsg" interface="pers.husen.highdsa.service.message.PushMsg" timeout="100000" check="false" />
+
+</beans>

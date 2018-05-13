@@ -129,6 +129,6 @@
 			</resource>
 		</resources>
 
-		<finalName>highdsa-service-mybatis</finalName>
+		<!-- <finalName>highdsa-service-mybatis</finalName> -->
 	</build>
 </project>

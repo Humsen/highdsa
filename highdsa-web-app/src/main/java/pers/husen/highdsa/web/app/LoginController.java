@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.shiro;
+package pers.husen.highdsa.web.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import pers.husen.highdsa.web.shiro.handler.AppSvc;
+import pers.husen.highdsa.web.app.handler.LoginSvc;
 
 /**
  * @Desc app 调用
@@ -18,31 +18,38 @@ import pers.husen.highdsa.web.shiro.handler.AppSvc;
  *
  * @Created at 2018年5月12日 下午5:30:05
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Controller
 @RequestMapping(value = "/app/v1")
-public class AppController {
+public class LoginController {
 	@Autowired
-	AppSvc shiroSvc;
+	LoginSvc loginSvc;
 
 	@ResponseBody
 	@RequestMapping(value = "/hello", produces = "application/json;charset=UTF-8")
 	public String helloWorld() {
-		return shiroSvc.helloWorld();
+		return loginSvc.helloWorld();
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String login(@RequestParam(value = "username") String userName, @RequestParam(value = "password") String userPassword) throws JsonProcessingException {
 		
-		return shiroSvc.login(userName, userPassword);
+		return loginSvc.login(userName, userPassword);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/login/phone", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String loginWithPhone(@RequestParam(value = "phone") String phone, @RequestParam(value = "password") String userPassword) throws JsonProcessingException {
+		
+		return loginSvc.loginWithPhone(phone, userPassword);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/logout", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String logout() throws JsonProcessingException {
 		
-		return shiroSvc.logout();
+		return loginSvc.logout();
 	}
 }

@@ -7,7 +7,7 @@ package pers.husen.highdsa.common.constant;
  *
  * @Created at 2018年3月30日 下午1:12:46
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class RedisCacheConstants {
 	/** mybatis缓存 */
@@ -21,6 +21,8 @@ public class RedisCacheConstants {
 	public static final String SHIRO_REDIS_SESSION_SYSTEM = "shiro_redis_session_system:";
 	/** 客户配置shiro会话缓存 */
 	public static final String SHIRO_REDIS_SESSION_CUSTOMER = "shiro_redis_session_customer:";
+	/** 注册验证码缓存 */
+	public static final String REGISTER_REDIS_CODE = "register_redis_code:";
 	
 	/** 登录失败次数限制缓存 */
 	public static final String SHIRO_LOGIN_FAIL_COUNT = "shiro_login_fail_count:";

@@ -42,7 +42,7 @@ public class AliSendSms implements SendSms {
 	ObjectMapper mapper = new ObjectMapper();
 
 	@Override
-	public SmsSendResponse sendSmsCaptcha(String phoneNumber, String templateId, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
+	public SmsSendResponse sendSmsCaptcha(String phoneNumber, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
 		RegisterCaptcha registerCaptchaVo = new RegisterCaptcha(chptcha);
 
 		String templateParam = null;
@@ -87,7 +87,7 @@ public class AliSendSms implements SendSms {
 			templateParam = mapper.writeValueAsString(userAdviceVo);
 		} catch (JsonProcessingException e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
-			
+
 			throw new JacksonException("对象转换为json字符串出错", e);
 		}
 

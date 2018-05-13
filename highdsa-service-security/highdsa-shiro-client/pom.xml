@@ -13,5 +13,6 @@
 	<modules>
 		<module>highdsa-client-pac4j</module>
 		<module>highdsa-client-cas</module>
+		<module>highdsa-client-restful</module>
 	</modules>
 </project>

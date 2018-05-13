@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.message.sms;
+package pers.husen.highdsa.web.app;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aliyuncs.exceptions.ClientException;
 
 import pers.husen.highdsa.common.transform.ConvertRequestParams;
-import pers.husen.highdsa.web.message.sms.handler.SendSmsSvc;
+import pers.husen.highdsa.web.app.handler.SendSmsSvc;
 
 /**
  * @Desc 发送短信控制器
@@ -35,9 +35,16 @@ public class SendSmsController {
 
 	@ResponseBody
 	@RequestMapping(value = "/captcha.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	public String sendSmsCaptcha(@RequestParam("phone_number") String phoneNumber, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
+	public String sendSmsCaptcha(@RequestParam("phone_number") String phoneNumber) throws UnsupportedEncodingException, ClientException, IOException {
 
-		return sendSmsSvc.sendSmsCaptcha(phoneNumber, chptcha);
+		return sendSmsSvc.sendSmsCaptcha(phoneNumber);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/validate.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String validateSmsCaptcha(@RequestParam("phone_number") String phoneNumber, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
+
+		return sendSmsSvc.validateSmsCaptcha(phoneNumber, chptcha);
 	}
 
 	@ResponseBody

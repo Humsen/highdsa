@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import pers.husen.highdsa.web.shiro.handler.AppSvc;
+import pers.husen.highdsa.web.app.handler.LoginSvc;
 
 /**
  * @Desc 测试shiro服务
@@ -27,7 +27,7 @@ public class TestShiroRestful {
 
 		System.out.println("=============== shiro消费者已经启动... ==================");
 
-		AppSvc shiroSvc = (AppSvc) context.getBean("shiroSvc");
+		LoginSvc shiroSvc = (LoginSvc) context.getBean("shiroSvc");
 
 		Serializable sessionId = null;
 		try {

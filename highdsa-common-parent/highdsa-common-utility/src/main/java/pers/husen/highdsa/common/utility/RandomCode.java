@@ -7,7 +7,7 @@ package pers.husen.highdsa.common.utility;
  *
  * @Created at 2018年2月28日 下午12:11:20
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class RandomCode {
 	/**
@@ -36,5 +36,15 @@ public class RandomCode {
 	 */
 	public static String producedRandomCodeStr(double length) {
 		return String.valueOf(producedRandomCode(length));
+	}
+	
+	/**
+	 * 返回长度为6的字符串验证码
+	 * 
+	 * @param length
+	 * @return
+	 */
+	public static String producedRandomCodeStr6() {
+		return String.valueOf(producedRandomCode(6));
 	}
 }

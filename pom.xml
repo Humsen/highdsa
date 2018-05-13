@@ -12,7 +12,7 @@
 	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<modules>
-		<module>highdsa-api</module>
+		<module>highdsa-api-dubbo</module>
 		<module>highdsa-common-parent</module>
 		<module>highdsa-common</module>
 		<module>highdsa-service-email</module>
@@ -27,6 +27,7 @@
 		<module>highdsa-web-redis</module>
 		<module>highdsa-web-message</module>
 		<module>highdsa-web-shiro</module>
+		<module>highdsa-web-app</module>
 		<module>highdsa-web-test</module>
 	</modules>
 
@@ -76,7 +77,7 @@
 		<biz.paluch.logging.logstash-gelf.version>1.11.2</biz.paluch.logging.logstash-gelf.version>
 		<com.aliyun.aliyun-java-sdk-dysmsapi.version>1.1.0</com.aliyun.aliyun-java-sdk-dysmsapi.version>
 		<org.eclipse.jetty.jetty-servlet.version>7.6.21.v20160908</org.eclipse.jetty.jetty-servlet.version>
-				
+
 		<!-- 插件版本管理 -->
 		<org.eclipse.m2e.lifecycle-mapping.version>1.0.0</org.eclipse.m2e.lifecycle-mapping.version>
 		<org.apache.maven.plugins.maven-jar-plugin.version>3.0.2</org.apache.maven.plugins.maven-jar-plugin.version>
@@ -93,7 +94,7 @@
 			<!-- 所有模块统一版本 -->
 			<dependency>
 				<groupId>pers.husen.highdsa</groupId>
-				<artifactId>highdsa-api</artifactId>
+				<artifactId>highdsa-api-dubbo</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 			<dependency>
@@ -395,6 +396,12 @@
 				<artifactId>cas-server-webapp-config</artifactId>
 				<version>${cas.version}</version>
 				<scope>provided</scope>
+			</dependency>
+			<!-- restful -->
+			<dependency>
+				<groupId>org.apereo.cas</groupId>
+				<artifactId>cas-server-support-rest</artifactId>
+				<version>${cas.version}</version>
 			</dependency>
 			<!-- cas pac4j buji client -->
 			<dependency>

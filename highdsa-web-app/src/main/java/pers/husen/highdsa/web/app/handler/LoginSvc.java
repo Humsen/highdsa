@@ -1,4 +1,7 @@
-package pers.husen.highdsa.web.shiro.handler;
+package pers.husen.highdsa.web.app.handler;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,11 +23,11 @@ import pers.husen.highdsa.common.entity.vo.SimpleJson;
  *
  * @Created at 2018年4月3日 下午4:22:19
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service
-public class AppSvc {
-	private static final Logger logger = LogManager.getLogger(AppSvc.class.getName());
+public class LoginSvc {
+	private static final Logger logger = LogManager.getLogger(LoginSvc.class.getName());
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private SimpleJson simpleJson;
@@ -61,6 +65,36 @@ public class AppSvc {
 		return reply;
 	}
 
+	/**
+	 * 使用手机登录
+	 * 
+	 * @param phone
+	 * @param userPassword
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	public String loginWithPhone(@RequestParam(value = "phone") String phone, @RequestParam(value = "password") String userPassword) throws JsonProcessingException {
+		String reply = null;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		Map<String, Object> userMap = new HashMap<>();
+		userMap.put("id", 10001L);
+		userMap.put("username", "何明胜");
+		userMap.put("email", "940706904@qq.com");
+		userMap.put("mobi", "18626422426");
+		userMap.put("logo_url", "https://www.hemingsheng.cn/imageDownload.hms?imageUrl=20180513/71522000.jpg");
+		
+		map.put("token", SecurityUtils.getSubject().getSession().getId());
+		map.put("data", userMap);
+		
+		reply = objectMapper.writeValueAsString(map);
+
+		logger.info(reply);
+
+		return reply;
+	}
+	
 	/**
 	 * 退出登录
 	 * 

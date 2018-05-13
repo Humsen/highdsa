@@ -16,14 +16,13 @@ import pers.husen.highdsa.common.entity.vo.message.SmsSendResponse;
  *
  * @Created at 2018年3月11日 下午8:40:21
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 public interface SendSms {
 	/**
 	 * 发送短信验证码
 	 * 
 	 * @param phoneNumber
-	 * @param templateId
 	 * @param chptcha
 	 *            验证码
 	 * @return
@@ -31,8 +30,7 @@ public interface SendSms {
 	 * @throws ClientException
 	 * @throws UnsupportedEncodingException
 	 */
-	public SmsSendResponse sendSmsCaptcha(String phoneNumber, String templateId, String chptcha)
-			throws UnsupportedEncodingException, ClientException, IOException;
+	public SmsSendResponse sendSmsCaptcha(String phoneNumber, String chptcha) throws UnsupportedEncodingException, ClientException, IOException;
 
 	/**
 	 * 发送短信通知
@@ -45,8 +43,7 @@ public interface SendSms {
 	 * @throws ClientException
 	 * @throws UnsupportedEncodingException
 	 */
-	public SmsSendResponse sendSmsNotice(String phoneNumber, String userName, String chptcha)
-			throws UnsupportedEncodingException, ClientException, IOException;
+	public SmsSendResponse sendSmsNotice(String phoneNumber, String userName, String chptcha) throws UnsupportedEncodingException, ClientException, IOException;
 
 	/**
 	 * 根据流水号查询发送结果详情
@@ -59,8 +56,7 @@ public interface SendSms {
 	 * @throws ClientException
 	 * @throws IOException
 	 */
-	public Map<?, ?> querySendDetailsByBizId(String phoneNumber, String bizId)
-			throws UnsupportedEncodingException, ClientException, IOException;
+	public Map<?, ?> querySendDetailsByBizId(String phoneNumber, String bizId) throws UnsupportedEncodingException, ClientException, IOException;
 
 	/**
 	 * 多条件查询发送结果详情
@@ -71,6 +67,5 @@ public interface SendSms {
 	 * @throws ClientException
 	 * @throws UnsupportedEncodingException
 	 */
-	public Map<?, ?> querySendDetails(SmsQueryRequest smsQueryRequest)
-			throws UnsupportedEncodingException, ClientException, IOException;
+	public Map<?, ?> querySendDetails(SmsQueryRequest smsQueryRequest) throws UnsupportedEncodingException, ClientException, IOException;
 }

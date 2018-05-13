@@ -36,7 +36,7 @@ public class AliSendSmsTest {
 		SendSmsResponse response = null;
 
 		try {
-			response = aliSendSms.sendSmsCaptcha(phoneNumber, "", chptcha);
+			response = aliSendSms.sendSmsCaptcha(phoneNumber, chptcha);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientException e) {
@@ -105,7 +105,7 @@ public class AliSendSmsTest {
 		smsQueryParams.setSendDate("20180313");
 		smsQueryParams.setPageSize(10L);
 		smsQueryParams.setCurrentPage(1L);
-		//smsQueryParams.setBizId("489008620917931265^0");
+		// smsQueryParams.setBizId("489008620917931265^0");
 
 		QuerySendDetailsRequest querySendDetailsRequest = smsQueryParams.getRequest();
 

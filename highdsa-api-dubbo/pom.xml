@@ -10,10 +10,10 @@
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
-	<artifactId>highdsa-api</artifactId>
+	<artifactId>highdsa-api-dubbo</artifactId>
 	<packaging>jar</packaging>
 
-	<name>highdsa-api</name>
+	<name>highdsa-api-dubbo</name>
 	<url>https://github.com/CrazyHusen/highdsa</url>
 
 	<dependencies>

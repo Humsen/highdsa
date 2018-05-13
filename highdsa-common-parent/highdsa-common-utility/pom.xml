@@ -17,15 +17,15 @@
 		<!-- 内部模块 -->
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
-			<artifactId>highdsa-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common-log4j2</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-common-exception</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>pers.husen.highdsa</groupId>
+			<artifactId>highdsa-api-dubbo</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

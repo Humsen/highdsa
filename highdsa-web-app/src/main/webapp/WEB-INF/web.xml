@@ -16,6 +16,7 @@
 			classpath*:**/dubbo-consumer-client-app.xml,
 		    classpath*:**/spring-shiro-cas.xml,
 		    classpath*:**/spring-context.xml,
+		    classpath*:**/dubbo-consumer-app.xml,
 		</param-value>
 	</context-param>
 	<!-- logj4 日志存放 应用根目录 -->
