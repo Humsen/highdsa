@@ -16,11 +16,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>pers.husen.highdsa</groupId>
 			<artifactId>highdsa-client-restful</artifactId>
 		</dependency>
