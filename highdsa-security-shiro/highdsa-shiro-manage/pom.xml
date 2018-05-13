@@ -3,17 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>pers.husen</groupId>
-		<artifactId>highdsa</artifactId>
+		<groupId>pers.husen.highdsa</groupId>
+		<artifactId>highdsa-security-shiro</artifactId>
 		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>pers.husen.highdsa</groupId>
-	<artifactId>highdsa-service-activemq</artifactId>
+	<artifactId>highdsa-shiro-manage</artifactId>
 	<packaging>pom</packaging>
 	
 	<modules>
-		<module>highdsa-service-mqproducer</module>
-		<module>highdsa-service-mqreceiver</module>
+		<module>highdsa-manage-customer</module>
+		<module>highdsa-manage-sysuser</module>
 	</modules>
 </project>

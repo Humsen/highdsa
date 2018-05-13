@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pers.husen</groupId>
 	<artifactId>highdsa</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>highdsa</name>
@@ -21,14 +21,15 @@
 		<module>highdsa-service-message</module>
 		<module>highdsa-service-mybatis</module>
 		<module>highdsa-service-activemq</module>
-		<module>highdsa-service-security</module>
-		<module>highdsa-web-email</module>
-		<module>highdsa-web-fastdfs</module>
-		<module>highdsa-web-redis</module>
-		<module>highdsa-web-message</module>
-		<module>highdsa-web-shiro</module>
-		<module>highdsa-web-app</module>
-		<module>highdsa-web-test</module>
+		<module>highdsa-restful-email</module>
+		<module>highdsa-restful-fastdfs</module>
+		<module>highdsa-restful-redis</module>
+		<module>highdsa-restful-message</module>
+		<module>highdsa-restful-shiro</module>
+		<module>highdsa-restful-test</module>
+		<module>highdsa-restful-app</module>
+		<module>highdsa-security-cas</module>
+		<module>highdsa-security-shiro</module>
 	</modules>
 
 	<properties>

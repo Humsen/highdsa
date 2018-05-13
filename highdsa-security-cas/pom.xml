@@ -9,16 +9,11 @@
 	</parent>
 
 	<groupId>pers.husen.highdsa</groupId>
-	<artifactId>highdsa-common-parent</artifactId>
+	<artifactId>highdsa-security-cas</artifactId>
 	<packaging>pom</packaging>
 
-	<name>highdsa-common-parent</name>
-	<url>https://github.com/CrazyHusen/highdsa</url>
-
 	<modules>
-		<module>highdsa-common-exception</module>
-		<module>highdsa-common-log4j2</module>
-		<module>highdsa-common-utility</module>
-		<module>highdsa-common-entity</module>
+		<module>highdsa-cas-server</module>
+		<module>highdsa-cas-manager</module>
 	</modules>
 </project>
