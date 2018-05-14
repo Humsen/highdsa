@@ -7,7 +7,7 @@ package pers.husen.highdsa.common.constant;
  *
  * @Created at 2018年3月11日 下午4:41:28
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class MessageConstants {
 	/** 产品名称:云通信短信API产品,开发者无需替换 */
@@ -19,7 +19,7 @@ public class MessageConstants {
 	public static final String SIGN_NAME = "何明胜highdsa项目";
 
 	/** 用户注册短信模板 */
-	public static final String TEMPLATE_REGISTER = "SMS_126970475";
+	public static final String TEMPLATE_REGISTER = "SMS_134318564";
 	/** 用户通知短信模板 */
 	public static final String TEMPLATE_ADVICE = "SMS_126900105";
 
