@@ -11,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustUser;
  *
  * @Created at 2018年4月16日 下午11:52:51
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 public interface CustUserMapper {
 	/**
@@ -62,6 +62,22 @@ public interface CustUserMapper {
 	CustUser selectUserByUserName(String userName);
 
 	/**
+	 * 根据用户邮箱查找用户信息
+	 * 
+	 * @param userPhone
+	 * @return
+	 */
+	CustUser selectUserByUserPhone(String userPhone);
+
+	/**
+	 * 根据用户邮箱查找用户信息
+	 * 
+	 * @param userEmail
+	 * @return
+	 */
+	CustUser selectUserByUserEmail(String userEmail);
+
+	/**
 	 * 根据用户名查找角色集合
 	 * 
 	 * @param userName
@@ -70,10 +86,42 @@ public interface CustUserMapper {
 	CustUser selectRolesByUserName(String userName);
 
 	/**
+	 * 根据用户手机号查找角色集合
+	 * 
+	 * @param userPhone
+	 * @return
+	 */
+	CustUser selectRolesByUserPhone(String userPhone);
+
+	/**
+	 * 根据用户邮箱查找角色集合
+	 * 
+	 * @param userEmail
+	 * @return
+	 */
+	CustUser selectRolesByUserEmail(String userEmail);
+
+	/**
 	 * 根据用户名查找权限集合
 	 * 
 	 * @param userName
 	 * @return
 	 */
 	CustUser selectPermissionsByUserName(String userName);
+
+	/**
+	 * 根据用户手机号查找权限集合
+	 * 
+	 * @param userPhone
+	 * @return
+	 */
+	CustUser selectPermissionsByUserPhone(String userPhone);
+
+	/**
+	 * 根据用户邮箱查找权限集合
+	 * 
+	 * @param userEmail
+	 * @return
+	 */
+	CustUser selectPermissionsByUserEmail(String userEmail);
 }

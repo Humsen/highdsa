@@ -77,15 +77,13 @@
 		user_password = #{userPassword,jdbcType=VARCHAR},
 		user_pwd_salt = #{userPwdSalt,jdbcType=VARCHAR},
 		user_state = #{userState,jdbcType=VARCHAR}
-		where user_id =
-		#{userId,jdbcType=BIGINT}
+		where user_id = #{userId,jdbcType=BIGINT}
 	</update>
 	<select id="selectUserByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select user_id, user_name, user_email, user_phone, user_password, user_pwd_salt,
 		user_state
 		from cust_user
-		where user_id =
-		#{userId,jdbcType=BIGINT}
+		where user_id = #{userId,jdbcType=BIGINT}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
 		select user_id, user_name, user_email, user_phone, user_password, user_pwd_salt,
@@ -93,15 +91,29 @@
 		from cust_user
 		order by user_id ASC
 	</select>
-	<!-- 新增的复合查询 -->
+	<!-- 查询用户 -->
 	<select id="selectUserByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select user_id, user_name, user_password, user_email, user_phone, user_pwd_salt,
 		user_state
 		from cust_user
 		where
-		user_name =
-		#{userName,jdbcType=VARCHAR}
+		user_name = #{userName,jdbcType=VARCHAR}
 	</select>
+	<select id="selectUserByUserPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select user_id, user_name, user_password, user_email, user_phone, user_pwd_salt,
+		user_state
+		from cust_user
+		where
+		user_phone = #{userPhone,jdbcType=VARCHAR}
+	</select>
+	<select id="selectUserByUserEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select user_id, user_name, user_password, user_email, user_phone, user_pwd_salt,
+		user_state
+		from cust_user
+		where
+		user_email = #{userEmail,jdbcType=VARCHAR}
+	</select>
+	<!-- 查询角色 -->
 	<select id="selectRolesByUserName" parameterType="java.lang.String" resultMap="rolesResultMap">
 		SELECT
 		cust_user.user_id,
@@ -119,10 +131,50 @@
 		cust_role AS role
 		WHERE
 		cust_user.user_name = #{userName,jdbcType=VARCHAR} AND
-		cust_user.user_id =
-		user_role.user_id
+		cust_user.user_id = user_role.user_id
 		AND user_role.role_id = role.role_id
 	</select>
+	<select id="selectRolesByUserPhone" parameterType="java.lang.String" resultMap="rolesResultMap">
+		SELECT
+		cust_user.user_id,
+		cust_user.user_phone,
+		role.role_id,
+		role.role_name,
+		role.role_code,
+		role.role_desc,
+		role.role_create_time,
+		role.role_last_modify_time,
+		role.role_valid
+		FROM
+		cust_user,
+		cust_user_role AS user_role,
+		cust_role AS role
+		WHERE
+		cust_user.user_phone = #{userPhone,jdbcType=VARCHAR} AND
+		cust_user.user_id = user_role.user_id
+		AND user_role.role_id = role.role_id
+	</select>
+	<select id="selectRolesByUserEmail" parameterType="java.lang.String" resultMap="rolesResultMap">
+		SELECT
+		cust_user.user_id,
+		cust_user.user_email,
+		role.role_id,
+		role.role_name,
+		role.role_code,
+		role.role_desc,
+		role.role_create_time,
+		role.role_last_modify_time,
+		role.role_valid
+		FROM
+		cust_user,
+		cust_user_role AS user_role,
+		cust_role AS role
+		WHERE
+		cust_user.user_email = #{userEmail,jdbcType=VARCHAR} AND
+		cust_user.user_id = user_role.user_id
+		AND user_role.role_id = role.role_id
+	</select>
+	<!-- 查询权限 -->
 	<select id="selectPermissionsByUserName" parameterType="java.lang.String" resultMap="permissionResultMap">
 		SELECT
 		cust_user.user_id,
@@ -145,8 +197,59 @@
 		WHERE
 		cust_user.user_name =
 		#{userName,jdbcType=VARCHAR}
-		AND cust_user.user_id =
-		user_role.user_id
+		AND cust_user.user_id = user_role.user_id
+		AND user_role.role_id = role_permission.role_id
+		AND role_permission.permission_id = permission.permission_id
+	</select>
+	<select id="selectPermissionsByUserPhone" parameterType="java.lang.String" resultMap="permissionResultMap">
+		SELECT
+		cust_user.user_id,
+		cust_user.user_phone,
+		role_permission.role_id,
+		role_permission.permission_id,
+		permission.permission_name,
+		permission.permission_code,
+		permission.permission_desc,
+		permission.permission_valid,
+		permission.permission_navi,
+		permission.permission_url,
+		permission.permission_create_time,
+		permission.permission_last_modify_time
+		FROM
+		cust_role_permission AS role_permission,
+		cust_user,
+		cust_permission AS permission,
+		cust_user_role AS user_role
+		WHERE
+		cust_user.user_phone =
+		#{userPhone,jdbcType=VARCHAR}
+		AND cust_user.user_id = user_role.user_id
+		AND user_role.role_id = role_permission.role_id
+		AND role_permission.permission_id = permission.permission_id
+	</select>
+	<select id="selectPermissionsByUserEmail" parameterType="java.lang.String" resultMap="permissionResultMap">
+		SELECT
+		cust_user.user_id,
+		cust_user.user_email,
+		role_permission.role_id,
+		role_permission.permission_id,
+		permission.permission_name,
+		permission.permission_code,
+		permission.permission_desc,
+		permission.permission_valid,
+		permission.permission_navi,
+		permission.permission_url,
+		permission.permission_create_time,
+		permission.permission_last_modify_time
+		FROM
+		cust_role_permission AS role_permission,
+		cust_user,
+		cust_permission AS permission,
+		cust_user_role AS user_role
+		WHERE
+		cust_user.user_email =
+		#{userEmail,jdbcType=VARCHAR}
+		AND cust_user.user_id = user_role.user_id
 		AND user_role.role_id = role_permission.role_id
 		AND role_permission.permission_id = permission.permission_id
 	</select>

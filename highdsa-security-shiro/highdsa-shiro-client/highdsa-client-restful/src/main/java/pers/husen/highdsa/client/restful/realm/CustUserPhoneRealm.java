@@ -18,7 +18,9 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import pers.husen.highdsa.client.restful.token.CustomerAccountPasswordToken;
 import pers.husen.highdsa.common.entity.constants.CustUserState;
+import pers.husen.highdsa.common.entity.constants.LoginType;
 import pers.husen.highdsa.common.entity.po.customer.CustRole;
 import pers.husen.highdsa.common.entity.po.customer.CustRolePermission;
 import pers.husen.highdsa.common.entity.po.customer.CustUser;
@@ -26,19 +28,29 @@ import pers.husen.highdsa.common.transform.ByteSourceSerializable;
 import pers.husen.highdsa.service.mybatis.CustUserManager;
 
 /**
- * @Desc 后台系统用户域
+ * @Desc 手机登录realm
  *
  * @Author 何明胜
  *
- * @Created at 2018年3月29日 上午8:36:54
+ * @Created at 2018年5月14日 下午5:53:55
  * 
- * @Version 1.0.4
+ * @Version 1.0.1
  */
-public class CustUserRealm extends AuthorizingRealm {
-	private static final Logger logger = LogManager.getLogger(CustUserRealm.class.getName());
+public class CustUserPhoneRealm extends AuthorizingRealm {
+	private static final Logger logger = LogManager.getLogger(CustUserPhoneRealm.class.getName());
 
 	@Autowired
 	private CustUserManager custUserManager;
+
+	/**
+	 * 仅支持邮箱方式登录
+	 */
+	@Override
+	public boolean supports(AuthenticationToken token) {
+		CustomerAccountPasswordToken custToken = (CustomerAccountPasswordToken) token;
+
+		return LoginType.PHONE == custToken.getLoginType();
+	}
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -49,7 +61,7 @@ public class CustUserRealm extends AuthorizingRealm {
 		// 根据用户名查询当前用户拥有的角色
 		Set<String> roleNames = new HashSet<String>();
 
-		CustUser userRole = custUserManager.findRolesByUserName(userName);
+		CustUser userRole = custUserManager.findRolesByUserPhone(userName);
 		List<CustRole> roleList = userRole.getCustRoleList();
 
 		for (CustRole role : roleList) {
@@ -64,7 +76,7 @@ public class CustUserRealm extends AuthorizingRealm {
 		// 根据用户名查询当前用户权限
 		Set<String> permissionNames = new HashSet<String>();
 
-		CustUser userPermission = custUserManager.findPermissionsByUserName(userName);
+		CustUser userPermission = custUserManager.findPermissionsByUserPhone(userName);
 		List<CustRolePermission> rolePermissionList = userPermission.getCustRolePermissionList();
 
 		for (CustRolePermission rolePermission : rolePermissionList) {
@@ -80,10 +92,9 @@ public class CustUserRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-
 		String username = (String) token.getPrincipal();
 
-		CustUser user = custUserManager.findUserByUserName(username);
+		CustUser user = custUserManager.findUserByUserPhone(username);
 
 		if (user == null) {
 			// 没找到帐号

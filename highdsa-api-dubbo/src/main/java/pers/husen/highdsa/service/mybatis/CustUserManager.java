@@ -14,7 +14,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustUser;
  *
  * @Created at 2018年4月24日 上午10:16:04
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @Service("custUserManager")
 public interface CustUserManager {
@@ -97,6 +97,70 @@ public interface CustUserManager {
 	CustUser findUserByUserName(String userName);
 
 	/**
+	 * 根据用户手机号查找用户
+	 * 
+	 * @param userPhone
+	 * @return
+	 */
+	CustUser findUserByUserPhone(String userPhone);
+
+	/**
+	 * 根据用户邮箱查找用户
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	CustUser findUserByUserEmail(String userEmail);
+
+	/**
+	 * 根据用户名查找角色集合
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	CustUser findRolesByUserName(String userName);
+
+	/**
+	 * 根据用户手机号查找角色集合
+	 * 
+	 * @param userPhone
+	 * @return
+	 */
+	CustUser findRolesByUserPhone(String userPhone);
+
+	/**
+	 * 根据用户邮箱查找角色集合
+	 * 
+	 * @param userEmail
+	 * @return
+	 */
+	CustUser findRolesByUserEmail(String userEmail);
+
+	/**
+	 * 根据用户名查找权限集合
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	CustUser findPermissionsByUserName(String userName);
+
+	/**
+	 * 根据用户手机号查找权限集合
+	 * 
+	 * @param userPhone
+	 * @return
+	 */
+	CustUser findPermissionsByUserPhone(String userPhone);
+
+	/**
+	 * 根据用户邮箱查找权限集合
+	 * 
+	 * @param userEmail
+	 * @return
+	 */
+	CustUser findPermissionsByUserEmail(String userEmail);
+
+	/**
 	 * 获取所有用户
 	 * 
 	 * @return
@@ -110,22 +174,6 @@ public interface CustUserManager {
 	 * @param roleIds
 	 */
 	void updateUserRoles(Long userId, Long... roleIds);
-
-	/**
-	 * 根据用户名查找角色集合
-	 * 
-	 * @param userName
-	 * @return
-	 */
-	CustUser findRolesByUserName(String userName);
-
-	/**
-	 * 根据用户名查找权限集合
-	 * 
-	 * @param userName
-	 * @return
-	 */
-	CustUser findPermissionsByUserName(String userName);
 
 	/**
 	 * 根据用户名查找导航栏

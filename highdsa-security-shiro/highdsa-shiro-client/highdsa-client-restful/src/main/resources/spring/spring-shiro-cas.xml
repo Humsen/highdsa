@@ -15,7 +15,23 @@
 	</bean>
 
 	<!-- Realm实现 -->
-	<bean id="custUserRealm" class="pers.husen.highdsa.client.restful.realm.CustUserRealm">
+	<bean id="CustUserNameRealm" class="pers.husen.highdsa.client.restful.realm.CustUserNameRealm">
+		<property name="credentialsMatcher" ref="credentialsMatcher" />
+		<property name="cachingEnabled" value="false" />
+		<property name="authenticationCachingEnabled" value="true" />
+		<property name="authenticationCacheName" value="authenticationCache" />
+		<property name="authorizationCachingEnabled" value="true" />
+		<property name="authorizationCacheName" value="authorizationCache" />
+	</bean>
+	<bean id="custUserPhoneRealm" class="pers.husen.highdsa.client.restful.realm.CustUserPhoneRealm">
+		<property name="credentialsMatcher" ref="credentialsMatcher" />
+		<property name="cachingEnabled" value="false" />
+		<property name="authenticationCachingEnabled" value="true" />
+		<property name="authenticationCacheName" value="authenticationCache" />
+		<property name="authorizationCachingEnabled" value="true" />
+		<property name="authorizationCacheName" value="authorizationCache" />
+	</bean>
+	<bean id="custUserEmailRealm" class="pers.husen.highdsa.client.restful.realm.CustUserEmailRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
 		<property name="cachingEnabled" value="false" />
 		<property name="authenticationCachingEnabled" value="true" />
@@ -79,7 +95,9 @@
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realms">
 			<list>
-				<ref bean="custUserRealm" />
+				<ref bean="CustUserNameRealm" />
+				<ref bean="custUserPhoneRealm" />
+				<ref bean="custUserEmailRealm" />
 			</list>
 		</property>
 		<property name="sessionManager" ref="sessionManager" />

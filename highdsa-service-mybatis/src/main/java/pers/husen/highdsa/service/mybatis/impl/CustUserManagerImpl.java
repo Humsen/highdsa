@@ -29,7 +29,7 @@ import pers.husen.highdsa.service.mybatis.dao.customer.CustUserRoleMapper;
  *
  * @Created at 2018年4月24日 上午10:26:55
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Service("custUserManager")
 public class CustUserManagerImpl implements CustUserManager {
@@ -164,6 +164,46 @@ public class CustUserManagerImpl implements CustUserManager {
 	}
 
 	@Override
+	public CustUser findUserByUserPhone(String userPhone) {
+		return custUserMapper.selectUserByUserPhone(userPhone);
+	}
+
+	@Override
+	public CustUser findUserByUserEmail(String userEmail) {
+		return custUserMapper.selectUserByUserEmail(userEmail);
+	}
+
+	@Override
+	public CustUser findRolesByUserName(String userName) {
+		return custUserMapper.selectRolesByUserName(userName);
+	}
+
+	@Override
+	public CustUser findRolesByUserPhone(String userPhone) {
+		return custUserMapper.selectRolesByUserPhone(userPhone);
+	}
+
+	@Override
+	public CustUser findRolesByUserEmail(String userEmail) {
+		return custUserMapper.selectRolesByUserEmail(userEmail);
+	}
+
+	@Override
+	public CustUser findPermissionsByUserName(String userName) {
+		return custUserMapper.selectPermissionsByUserName(userName);
+	}
+
+	@Override
+	public CustUser findPermissionsByUserPhone(String userPhone) {
+		return null;
+	}
+
+	@Override
+	public CustUser findPermissionsByUserEmail(String userEmail) {
+		return null;
+	}
+
+	@Override
 	public List<CustUser> getAllUsers() {
 		return custUserMapper.selectAll();
 	}
@@ -177,16 +217,6 @@ public class CustUserManagerImpl implements CustUserManager {
 				custUserRoleMapper.insert(new CustUserRole(userId, roleId));
 			}
 		}
-	}
-
-	@Override
-	public CustUser findRolesByUserName(String userName) {
-		return custUserMapper.selectRolesByUserName(userName);
-	}
-
-	@Override
-	public CustUser findPermissionsByUserName(String userName) {
-		return custUserMapper.selectPermissionsByUserName(userName);
 	}
 
 	@Override

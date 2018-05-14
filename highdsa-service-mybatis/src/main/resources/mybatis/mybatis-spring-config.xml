@@ -36,6 +36,7 @@
 		<typeAlias alias="CustSessions" type="pers.husen.highdsa.common.entity.po.customer.CustSessions" />
 	</typeAliases>
 
+	<!-- 处理枚举类 -->
 	<typeHandlers>
 		<typeHandler javaType="pers.husen.highdsa.common.entity.constants.SysUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
 		<typeHandler javaType="pers.husen.highdsa.common.entity.constants.CustUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
