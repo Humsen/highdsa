@@ -17,7 +17,9 @@ public class EmailConstants {
 	public static final String CONFIG_FILE_2USER = "email/robot2user-mail.properties";
 	/** 发给管理员的配置文件 */
 	public static final String CONFIG_FILE_2ADMIN = "email/all2admin-mail.properties";
+	
 	// 以下是相关属性的key
+	
 	public static final String MAIL_SMTP_PROTOCOL = "mail.smtp.protocol";
 	public static final String MAIL_SMTP_HOST = "mail.smtp.host";
 	public static final String MAIL_SMTP_PORT = "mail.smtp.port";
@@ -32,7 +34,9 @@ public class EmailConstants {
 
 	/** 保存邮件配置文件路径 */
 	public static final String SAVE_MAIL_CONFIG_FILE = "email/savemail.properties";
+	
 	// 以下是相关属性的key
+	
 	public static final String MAIL_STORE_PROTOCOL = "mail.store.protocol";
 	public static final String MAIL_IMAP_HOST = "mail.imap.host";
 	public static final String MAIL_IMAP_PORT = "mail.imap.port";

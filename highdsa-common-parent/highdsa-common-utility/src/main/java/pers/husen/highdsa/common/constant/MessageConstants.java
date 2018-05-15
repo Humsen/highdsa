@@ -25,7 +25,9 @@ public class MessageConstants {
 
 	/** 短信配置文件名称 */
 	public static final String SMS_CONFIG_FILE = "message.properties";
+	
 	// 以下是相关属性的key
+	
 	public static final String ACCESS_KEY_ID = "access_key_id";
 	public static final String ACCESS_KEY_SECRET = "access_key_secret";
 
@@ -42,7 +44,9 @@ public class MessageConstants {
 
 	/** 短信配置文件名称 */
 	public static final String COMET_CONFIG_FILE = "appkey.properties";
+	
 	// 以下是相关属性的key
+	
 	public static final String REST_HOST = "rest_host";
 	public static final String COMMON_KEY = "common_key";
 }

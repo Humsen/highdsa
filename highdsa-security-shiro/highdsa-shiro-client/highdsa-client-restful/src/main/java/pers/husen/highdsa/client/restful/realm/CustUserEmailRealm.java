@@ -19,8 +19,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import pers.husen.highdsa.client.restful.token.CustomerAccountPasswordToken;
-import pers.husen.highdsa.common.entity.constants.CustUserState;
-import pers.husen.highdsa.common.entity.constants.LoginType;
+import pers.husen.highdsa.common.entity.enums.CustUserState;
+import pers.husen.highdsa.common.entity.enums.LoginType;
 import pers.husen.highdsa.common.entity.po.customer.CustRole;
 import pers.husen.highdsa.common.entity.po.customer.CustRolePermission;
 import pers.husen.highdsa.common.entity.po.customer.CustUser;

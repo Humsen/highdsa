@@ -12,7 +12,9 @@ package pers.husen.highdsa.common.constant;
 public class SequenceConstants {
 	/** sequence分布式id配置文件相对路径 */
 	public static final String SEQUENCE_ID_FILE = "sequence/sequence.properties";
+	
 	// 以下是相关属性的key
+	
 	public static final String WORKER_ID = "workerId";
 	public static final String DATA_CENTER_ID = "datacenterId";
 }

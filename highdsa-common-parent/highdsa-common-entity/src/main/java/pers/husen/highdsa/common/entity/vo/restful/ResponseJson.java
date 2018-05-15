@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.entity.vo;
+package pers.husen.highdsa.common.entity.vo.restful;
 
 import java.io.Serializable;
 
@@ -6,28 +6,28 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
- * @Desc RESTful 简单json
+ * @Desc RESTful 返回json
  *
  * @Author 何明胜
  *
  * @Created at 2018年3月21日 下午3:52:46
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @JsonInclude(Include.NON_NULL)
-public class SimpleJson implements Serializable {
+public class ResponseJson implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 不使用封装,默认为false */
 	private Boolean success;
-	private String message;
+	private Object message;
 
 	@Override
 	public String toString() {
 		return "SimpleJson [success=" + success + ", message=" + message + "]";
 	}
 
-	public SimpleJson() {
+	public ResponseJson() {
 		super();
 	}
 
@@ -36,7 +36,7 @@ public class SimpleJson implements Serializable {
 	 * 
 	 * @param success
 	 */
-	public SimpleJson(Boolean success) {
+	public ResponseJson(Boolean success) {
 		super();
 		this.success = success;
 	}
@@ -47,7 +47,7 @@ public class SimpleJson implements Serializable {
 	 * @param success
 	 * @param message
 	 */
-	public SimpleJson(Boolean success, String message) {
+	public ResponseJson(Boolean success, String message) {
 		super();
 		this.success = success;
 		this.message = message;
@@ -71,7 +71,7 @@ public class SimpleJson implements Serializable {
 	/**
 	 * @return the message
 	 */
-	public String getMessage() {
+	public Object getMessage() {
 		return message;
 	}
 
@@ -79,7 +79,7 @@ public class SimpleJson implements Serializable {
 	 * @param message
 	 *            the message to set
 	 */
-	public void setMessage(String message) {
+	public void setMessage(Object message) {
 		this.message = message;
 	}
 }

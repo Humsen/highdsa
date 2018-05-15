@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.entity.constants;
+package pers.husen.highdsa.common.entity.enums;
 
 /**
  * @Desc 登录方式枚举
@@ -10,7 +10,12 @@ package pers.husen.highdsa.common.entity.constants;
  * @Version 1.0.0
  */
 public enum LoginType implements BaseEnum<Enum<LoginType>, String> {
-	USERNAME("100", "用户名登录"), EMAIL("200", "邮箱登录"), PHONE("300", "手机登录");
+	/** 使用用户名登录 */
+	USERNAME("100", "用户名登录"),
+	/** 使用有效登录 */
+	EMAIL("200", "邮箱登录"),
+	/** 使用手机号登录 */
+	PHONE("300", "手机登录");
 
 	private String stateCode;
 	private String description;

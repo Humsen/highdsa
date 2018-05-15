@@ -17,18 +17,10 @@
 	<mvc:annotation-driven>
 		<!-- 消息转换器 -->
 		<mvc:message-converters register-defaults="true">
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<property name="supportedMediaTypes" value="text/html;charset=UTF-8" />
-			</bean>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter"></bean>
 			<bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
 			<!-- 请求信息转换器,负责读取和写入json格式的数据 -->
-			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-				<property name="supportedMediaTypes">
-					<list>
-						<value>application/json;charset=UTF-8</value>
-					</list>
-				</property>
-			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 </beans>

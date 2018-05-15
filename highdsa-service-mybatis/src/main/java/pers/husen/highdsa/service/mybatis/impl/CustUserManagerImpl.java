@@ -1,6 +1,7 @@
 package pers.husen.highdsa.service.mybatis.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.shiro.crypto.RandomNumberGenerator;
@@ -9,16 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.encrypt.Md5Encrypt;
-import pers.husen.highdsa.common.entity.constants.CustUserState;
+import pers.husen.highdsa.common.entity.enums.CustUserState;
 import pers.husen.highdsa.common.entity.po.customer.CustNavigation;
 import pers.husen.highdsa.common.entity.po.customer.CustRole;
 import pers.husen.highdsa.common.entity.po.customer.CustUser;
+import pers.husen.highdsa.common.entity.po.customer.CustUserInfo;
 import pers.husen.highdsa.common.entity.po.customer.CustUserRole;
 import pers.husen.highdsa.common.exception.db.NullPointerException;
 import pers.husen.highdsa.common.sequence.SequenceManager;
+import pers.husen.highdsa.common.utility.DateFormat;
 import pers.husen.highdsa.service.mybatis.CustUserManager;
 import pers.husen.highdsa.service.mybatis.dao.customer.CustPermissionMapper;
 import pers.husen.highdsa.service.mybatis.dao.customer.CustRoleMapper;
+import pers.husen.highdsa.service.mybatis.dao.customer.CustUserInfoMapper;
 import pers.husen.highdsa.service.mybatis.dao.customer.CustUserMapper;
 import pers.husen.highdsa.service.mybatis.dao.customer.CustUserRoleMapper;
 
@@ -29,12 +33,14 @@ import pers.husen.highdsa.service.mybatis.dao.customer.CustUserRoleMapper;
  *
  * @Created at 2018年4月24日 上午10:26:55
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @Service("custUserManager")
 public class CustUserManagerImpl implements CustUserManager {
 	@Autowired
 	private CustUserMapper custUserMapper;
+	@Autowired
+	private CustUserInfoMapper custUserInfoMapper;
 	@Autowired
 	private CustUserRoleMapper custUserRoleMapper;
 	@Autowired
@@ -48,10 +54,33 @@ public class CustUserManagerImpl implements CustUserManager {
 	 * @param user
 	 */
 	@Override
-	public int createUser(CustUser custUser) {
-		// 加密密码
+	public String createUser(CustUser custUser) {
+		// 注册用户设置默认用户名
+		custUser.setUserName("用户" + custUser.getUserPhone() + DateFormat.formatDateYMD("ss"));
+
+		// 密码加密
 		encryptPassword(custUser);
-		return custUserMapper.insert(custUser);
+		// 设置分布式用户id
+		Long userId = SequenceManager.getNextId();
+		if (userId != null) {
+			custUser.setUserId(userId);
+		} else {
+			throw new NullPointerException("获取的userId为空");
+		}
+
+		// 设置正常状态
+		custUser.setUserState(CustUserState.VALID);
+
+		// 创建用户
+		custUserMapper.insert(custUser);
+		// 创建用户用户信息
+		CustUserInfo custUserInfo = new CustUserInfo();
+		custUserInfo.setUserId(userId);
+		custUserInfo.setUserRegisterTime(new Date());
+		custUserInfo.setUserLastLoginTime(new Date());
+		custUserInfoMapper.insert(custUserInfo);
+
+		return custUser.getUserName();
 	}
 
 	/**

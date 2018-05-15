@@ -1,6 +1,6 @@
 package pers.husen.highdsa.common.entity;
 
-import pers.husen.highdsa.common.entity.constants.SysUserState;
+import pers.husen.highdsa.common.entity.enums.SysUserState;
 
 /**
  * @Desc 测试枚举

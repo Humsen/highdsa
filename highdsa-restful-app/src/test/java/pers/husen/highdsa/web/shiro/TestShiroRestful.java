@@ -31,7 +31,7 @@ public class TestShiroRestful {
 
 		Serializable sessionId = null;
 		try {
-			sessionId = shiroSvc.login("highdsa", "highdsa");
+			sessionId = shiroSvc.loginWithName("highdsa", "highdsa");
 		} catch (JsonProcessingException e1) {
 			e1.printStackTrace();
 		}

@@ -1,58 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>shiro</display-name>
-  <description>app</description>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+	<display-name>app</display-name>
+	<description>app</description>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
 			classpath*:**/dubbo-consumer-client-app.xml,
 		    classpath*:**/spring-shiro-cas.xml,
 		    classpath*:**/spring-context.xml,
 		    classpath*:**/dubbo-consumer-app.xml,
 		</param-value>
-  </context-param>
-  <context-param>
-    <param-name>webAppRootKey</param-name>
-    <param-value>webapp.root</param-value>
-  </context-param>
-  <context-param>
-    <param-name>log4jConfiguration</param-name>
-    <param-value>classpath:log4j2-web.xml</param-value>
-  </context-param>
-  <listener>
-    <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
-  </listener>
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  <filter>
-    <filter-name>shiroFilter</filter-name>
-    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    <async-supported>true</async-supported>
-    <init-param>
-      <param-name>targetFilterLifecycle</param-name>
-      <param-value>true</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-    <filter-name>shiroFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <servlet>
-    <servlet-name>appServlet</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-      <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:spring/spring-mvc-servlet.xml</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-    <async-supported>true</async-supported>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>appServlet</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
+	</context-param>
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>webapp.root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>log4jConfiguration</param-name>
+		<param-value>classpath:log4j2-web.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/spring-mvc-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 </web-app>

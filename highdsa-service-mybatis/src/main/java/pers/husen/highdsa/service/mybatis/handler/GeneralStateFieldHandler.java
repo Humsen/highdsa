@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
-import pers.husen.highdsa.common.entity.constants.BaseEnum;
+import pers.husen.highdsa.common.entity.enums.BaseEnum;
 
 /**
  * @Desc 实现Mybatis中系统用户状态枚举转换成状态码,通用状态字段处理类
@@ -31,14 +31,17 @@ public final class GeneralStateFieldHandler<E extends BaseEnum> extends BaseType
 	 *            配置文件中设置的转换类
 	 */
 	public GeneralStateFieldHandler(Class<E> type) {
-		if (type == null)
+		if (type == null) {
 			throw new IllegalArgumentException("Type argument cannot be null");
+		}
 
 		this.type = type;
 		this.enums = type.getEnumConstants();
 
-		if (this.enums == null)
+		if (this.enums == null) {
 			throw new IllegalArgumentException(type.getSimpleName() + " does not represent an enum type.");
+		}
+
 	}
 
 	@Override

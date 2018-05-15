@@ -11,7 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import pers.husen.highdsa.common.entity.constants.CustUserState;
+import pers.husen.highdsa.common.entity.enums.CustUserState;
 import pers.husen.highdsa.common.entity.po.customer.CustUser;
 import pers.husen.highdsa.service.mybatis.impl.CustUserManagerImpl;
 

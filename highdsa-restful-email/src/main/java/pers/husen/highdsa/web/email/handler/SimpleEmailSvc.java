@@ -9,8 +9,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pers.husen.highdsa.common.constant.MsgQueueDefine;
-import pers.husen.highdsa.common.entity.vo.SimpleJson;
 import pers.husen.highdsa.common.entity.vo.email.EmailParams;
+import pers.husen.highdsa.common.entity.vo.restful.ResponseJson;
 import pers.husen.highdsa.service.activemq.QueueMsgSender;
 
 /**
@@ -27,7 +27,7 @@ public class SimpleEmailSvc {
 	private static final Logger logger = LogManager.getLogger(SimpleEmailSvc.class.getName());
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
-	private SimpleJson simpleJson;
+	private ResponseJson simpleJson;
 
 	@Autowired
 	private QueueMsgSender queueMsgSender;
@@ -40,7 +40,7 @@ public class SimpleEmailSvc {
 				Thread.currentThread().getStackTrace()[1].getMethodName());
 
 		queueMsgSender.sendMessage(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, simpleEmailParams);
-		simpleJson = new SimpleJson(true, "找回密码邮件发送成功");
+		simpleJson = new ResponseJson(true, "找回密码邮件发送成功");
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);
@@ -54,7 +54,7 @@ public class SimpleEmailSvc {
 				Thread.currentThread().getStackTrace()[1].getMethodName());
 
 		queueMsgSender.sendMessage(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, simpleEmailParams);
-		simpleJson = new SimpleJson(true, "注册邮件发送成功");
+		simpleJson = new ResponseJson(true, "注册邮件发送成功");
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);
@@ -68,7 +68,7 @@ public class SimpleEmailSvc {
 				Thread.currentThread().getStackTrace()[1].getMethodName());
 
 		queueMsgSender.sendMessage(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, simpleEmailParams);
-		simpleJson = new SimpleJson(true, "修改密码验证邮件发送成功");
+		simpleJson = new ResponseJson(true, "修改密码验证邮件发送成功");
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);
@@ -82,7 +82,7 @@ public class SimpleEmailSvc {
 				Thread.currentThread().getStackTrace()[1].getMethodName());
 
 		queueMsgSender.sendMessage(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, simpleEmailParams);
-		simpleJson = new SimpleJson(true, "修改密码绑定邮件发送成功");
+		simpleJson = new ResponseJson(true, "修改密码绑定邮件发送成功");
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);
@@ -96,7 +96,7 @@ public class SimpleEmailSvc {
 				Thread.currentThread().getStackTrace()[1].getMethodName());
 
 		queueMsgSender.sendMessage(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, simpleEmailParams);
-		simpleJson = new SimpleJson(true, "发送给用户邮件发送成功");
+		simpleJson = new ResponseJson(true, "发送给用户邮件发送成功");
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);
@@ -114,7 +114,7 @@ public class SimpleEmailSvc {
 		EmailParams simpleEmailParams = new EmailParams(nameFrom, mailFrom, phoneFrom, content);
 
 		queueMsgSender.sendMessage(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, simpleEmailParams);
-		simpleJson = new SimpleJson(true, "用户反馈邮件发送成功");
+		simpleJson = new ResponseJson(true, "用户反馈邮件发送成功");
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);
@@ -128,7 +128,7 @@ public class SimpleEmailSvc {
 		EmailParams simpleEmailParams = new EmailParams(nameFrom, mailFrom, phoneFrom, content);
 
 		queueMsgSender.sendMessage(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, simpleEmailParams);
-		simpleJson = new SimpleJson(true, "发送给管理员邮件发送成功");
+		simpleJson = new ResponseJson(true, "发送给管理员邮件发送成功");
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);

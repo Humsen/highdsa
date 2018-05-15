@@ -18,7 +18,7 @@ import pers.husen.highdsa.web.message.comet.handler.PushMsgSvc;
  *
  * @Created at 2018年3月13日 下午4:27:11
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @RestController
 @RequestMapping("/comet/v1")
@@ -27,31 +27,31 @@ public class PushMsgController {
 	PushMsgSvc pushMsgSvc;
 
 	@ResponseBody
-	@RequestMapping(value = "/init.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/init", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String initGoEasy() throws UnsupportedEncodingException, IOException {
 		pushMsgSvc.initGoEasy();
-		
+
 		return null;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/goeasy.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/goeasy", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String publish(String channel, String content) throws UnsupportedEncodingException, IOException {
-		
+
 		return pushMsgSvc.publish(channel, content);
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/rest_host.hms", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/rest-host", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String getRestHost() throws UnsupportedEncodingException, IOException {
-		
+
 		return pushMsgSvc.getRestHost();
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/app_key.hms", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/app-key", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String getAppKey() throws UnsupportedEncodingException, IOException {
-		
+
 		return pushMsgSvc.getAppKey();
 	}
 }

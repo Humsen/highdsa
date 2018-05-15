@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import pers.husen.highdsa.common.entity.constants.SysUserState;
+import pers.husen.highdsa.common.entity.enums.SysUserState;
 
 /**
  * @Desc 系统用户实体类

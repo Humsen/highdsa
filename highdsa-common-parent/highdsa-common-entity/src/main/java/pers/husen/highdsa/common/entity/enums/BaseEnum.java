@@ -1,4 +1,4 @@
-package pers.husen.highdsa.common.entity.constants;
+package pers.husen.highdsa.common.entity.enums;
 
 /**
  * @Desc 数据库状态字段枚举基类

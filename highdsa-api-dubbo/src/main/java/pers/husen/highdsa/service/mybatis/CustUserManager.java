@@ -2,8 +2,6 @@ package pers.husen.highdsa.service.mybatis;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import pers.husen.highdsa.common.entity.po.customer.CustNavigation;
 import pers.husen.highdsa.common.entity.po.customer.CustUser;
 
@@ -14,9 +12,8 @@ import pers.husen.highdsa.common.entity.po.customer.CustUser;
  *
  * @Created at 2018年4月24日 上午10:16:04
  * 
- * @Version 1.0.3
+ * @Version 1.0.5
  */
-@Service("custUserManager")
 public interface CustUserManager {
 	/**
 	 * 创建用户
@@ -24,7 +21,7 @@ public interface CustUserManager {
 	 * @param custUser
 	 * @return
 	 */
-	public int createUser(CustUser custUser);
+	public String createUser(CustUser custUser);
 
 	/**
 	 * 根据userId更新
@@ -107,7 +104,7 @@ public interface CustUserManager {
 	/**
 	 * 根据用户邮箱查找用户
 	 * 
-	 * @param userName
+	 * @param userEmail
 	 * @return
 	 */
 	CustUser findUserByUserEmail(String userEmail);

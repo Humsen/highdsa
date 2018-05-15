@@ -14,9 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
 
 import pers.husen.highdsa.common.constant.RedisCacheConstants;
-import pers.husen.highdsa.common.entity.vo.SimpleJson;
 import pers.husen.highdsa.common.entity.vo.message.SmsQueryRequest;
 import pers.husen.highdsa.common.entity.vo.message.SmsSendResponse;
+import pers.husen.highdsa.common.entity.vo.restful.ResponseJson;
 import pers.husen.highdsa.common.utility.RandomCode;
 import pers.husen.highdsa.service.message.SendSms;
 import pers.husen.highdsa.service.redis.RedisOperation;
@@ -41,28 +41,39 @@ public class SendSmsSvc {
 	private RedisOperation redisOperation;
 
 	public String sendSmsCaptcha(String phoneNumber) throws UnsupportedEncodingException, ClientException, IOException {
+		String reply = null;
+		ResponseJson responseJson;
 		String chptcha = RandomCode.producedRandomCodeStr6();
-		// 验证码缓存到redis
-		redisOperation.set(RedisCacheConstants.REGISTER_REDIS_CODE + phoneNumber, chptcha, 3600);
-
-		SmsSendResponse smsSendResponse = sendSms.sendSmsCaptcha(phoneNumber, chptcha);
-
-		String reply = objectMapper.writeValueAsString(smsSendResponse);
-		logger.info("返回结果为: {}", reply);
-
+		
+		try {
+			SmsSendResponse smsSendResponse = sendSms.sendSmsCaptcha(phoneNumber, chptcha);
+			logger.info("返回结果为: {}", smsSendResponse);
+			
+			logger.trace("缓存验证码:{}", chptcha);
+			// 验证码缓存到redis
+			redisOperation.set(RedisCacheConstants.REGISTER_REDIS_CODE + phoneNumber, chptcha, 3600);
+			
+			responseJson = new ResponseJson(true, "验证码发送成功");
+		} catch (Exception e) {
+			responseJson = new ResponseJson(false, "验证码发送失败");
+		}
+		
+		reply = objectMapper.writeValueAsString(responseJson);
+		
 		return reply;
 	}
 
-	public String validateSmsCaptcha(String phoneNumber, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
+	public String validateSmsCaptcha(String phoneNumber, String captcha) throws UnsupportedEncodingException, ClientException, IOException {
 		String reply = null;
-		SimpleJson simpleJson;
+		ResponseJson simpleJson;
 
 		String cacheCode = redisOperation.get(RedisCacheConstants.REGISTER_REDIS_CODE + phoneNumber);
+		logger.trace("缓存的验证码:{}, 用户输入的验证码:{}", cacheCode, captcha);
 
-		if (chptcha != null && chptcha.equals(cacheCode)) {
-			simpleJson = new SimpleJson(true, "手机验证成功");
+		if (captcha != null && captcha.equals(cacheCode)) {
+			simpleJson = new ResponseJson(true, "手机验证成功");
 		} else {
-			simpleJson = new SimpleJson(false, "手机验证失败");
+			simpleJson = new ResponseJson(false, "手机验证失败");
 		}
 
 		reply = objectMapper.writeValueAsString(simpleJson);
@@ -73,6 +84,7 @@ public class SendSmsSvc {
 
 	public String sendSmsNotice(String phoneNumber, String userName, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
 		SmsSendResponse smsSendResponse = sendSms.sendSmsNotice(phoneNumber, userName, chptcha);
+		logger.trace("发送通知, 手机号:{}, 姓名:{}, 验证码:{}", phoneNumber, chptcha, chptcha);
 
 		String reply = objectMapper.writeValueAsString(smsSendResponse);
 		logger.info("返回结果为: {}", reply);

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pers.husen.highdsa.common.encrypt.Md5Encrypt;
-import pers.husen.highdsa.common.entity.constants.SysUserState;
+import pers.husen.highdsa.common.entity.enums.SysUserState;
 import pers.husen.highdsa.common.entity.po.system.SysNavigation;
 import pers.husen.highdsa.common.entity.po.system.SysRole;
 import pers.husen.highdsa.common.entity.po.system.SysUser;

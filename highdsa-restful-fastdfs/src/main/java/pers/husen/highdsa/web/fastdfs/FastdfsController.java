@@ -20,7 +20,7 @@ import pers.husen.highdsa.web.fastdfs.handler.FastdfsSvc;
  *
  * @Created at 2018年2月26日 上午11:10:36
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @RestController
 @RequestMapping("/fastdfs/v1")
@@ -29,7 +29,7 @@ public class FastdfsController {
 	FastdfsSvc fastdfsSvc;
 
 	@ResponseBody
-	@RequestMapping(value = "/upload.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String fileUpload(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
 
 		return fastdfsSvc.fileUpload(request, response);

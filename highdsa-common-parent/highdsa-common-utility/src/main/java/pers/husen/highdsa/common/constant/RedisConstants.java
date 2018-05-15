@@ -12,7 +12,9 @@ package pers.husen.highdsa.common.constant;
 public class RedisConstants {
 	/** redis配置文件名称 */
 	public static final String REDIS_CONFIG_FILE = "redis";
+	
 	// 以下是相关属性的key
+	
 	public static final String REDIS_POOL_MAXTOTAL = "redis.pool.maxTotal";
 	public static final String REDIS_POOL_MAXIDLE = "redis.pool.maxIdle";
 	public static final String REDIS_POOL_MAXWAIT = "redis.pool.maxWait";

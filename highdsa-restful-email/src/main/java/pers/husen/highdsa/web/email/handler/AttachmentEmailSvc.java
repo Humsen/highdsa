@@ -9,8 +9,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pers.husen.highdsa.common.constant.MsgQueueDefine;
-import pers.husen.highdsa.common.entity.vo.SimpleJson;
 import pers.husen.highdsa.common.entity.vo.email.AttachEmailParams;
+import pers.husen.highdsa.common.entity.vo.restful.ResponseJson;
 import pers.husen.highdsa.service.activemq.QueueMsgSender;
 
 /**
@@ -27,7 +27,7 @@ public class AttachmentEmailSvc {
 	private static final Logger logger = LogManager.getLogger(AttachmentEmailSvc.class.getName());
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
-	private SimpleJson simpleJson;
+	private ResponseJson simpleJson;
 
 	@Autowired
 	private QueueMsgSender queueMsgSender;
@@ -40,7 +40,7 @@ public class AttachmentEmailSvc {
 				Thread.currentThread().getStackTrace()[1].getMethodName(), attachUrl, attachName);
 
 		queueMsgSender.sendMessage(MsgQueueDefine.ATTACH_EMAIL_QUEUE, attachEmailParams);
-		simpleJson = new SimpleJson(true, "给用户发附件邮件成功");
+		simpleJson = new ResponseJson(true, "给用户发附件邮件成功");
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);
@@ -56,7 +56,7 @@ public class AttachmentEmailSvc {
 				Thread.currentThread().getStackTrace()[1].getMethodName(), attachUrl, attachName);
 
 		queueMsgSender.sendMessage(MsgQueueDefine.ATTACH_EMAIL_QUEUE, attachEmailParams);
-		simpleJson = new SimpleJson(true, "给管理员发附件邮件成功");
+		simpleJson = new ResponseJson(true, "给管理员发附件邮件成功");
 
 		reply = objectMapper.writeValueAsString(simpleJson);
 		logger.info(reply);

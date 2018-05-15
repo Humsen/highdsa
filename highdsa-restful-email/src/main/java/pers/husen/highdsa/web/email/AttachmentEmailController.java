@@ -18,7 +18,7 @@ import pers.husen.highdsa.web.email.handler.AttachmentEmailSvc;
  *
  * @Created at 2018年2月6日 上午9:27:56
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @RestController
 @RequestMapping("/email/attachment/v1")
@@ -27,7 +27,7 @@ public class AttachmentEmailController {
 	AttachmentEmailSvc attachmentEmailSvc;
 
 	@ResponseBody
-	@RequestMapping(value = "/formal/2user.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/formal/2user", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String sendAttachEmail2User(@RequestParam(value = "mail_to") String mailTo, String subject, String content,
 			@RequestParam(value = "attach_url") String attachUrl,
 			@RequestParam(value = "attach_name") String attachName) throws JsonProcessingException {
@@ -36,7 +36,7 @@ public class AttachmentEmailController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/formal/2admin.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/formal/2admin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String sendAttachEmail2Admin(@RequestParam(value = "name_from") String nameFrom,
 			@RequestParam(value = "mail_from") String mailFrom, @RequestParam(value = "phone_from") String phoneFrom,
 			String content, @RequestParam(value = "attach_url") String attachUrl,

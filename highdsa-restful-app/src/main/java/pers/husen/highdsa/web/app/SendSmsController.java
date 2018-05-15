@@ -25,7 +25,7 @@ import pers.husen.highdsa.web.app.handler.SendSmsSvc;
  *
  * @Created at 2018年3月12日 下午7:15:17
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 @RestController
 @RequestMapping("/sms/v1")
@@ -34,21 +34,21 @@ public class SendSmsController {
 	SendSmsSvc sendSmsSvc;
 
 	@ResponseBody
-	@RequestMapping(value = "/captcha.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/captcha", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String sendSmsCaptcha(@RequestParam("phone_number") String phoneNumber) throws UnsupportedEncodingException, ClientException, IOException {
 
 		return sendSmsSvc.sendSmsCaptcha(phoneNumber);
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/validate.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	public String validateSmsCaptcha(@RequestParam("phone_number") String phoneNumber, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
+	@RequestMapping(value = "/validate", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String validateSmsCaptcha(@RequestParam("phone_number") String phoneNumber, String captcha) throws UnsupportedEncodingException, ClientException, IOException {
 
-		return sendSmsSvc.validateSmsCaptcha(phoneNumber, chptcha);
+		return sendSmsSvc.validateSmsCaptcha(phoneNumber, captcha);
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/notice.hms", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/notice", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public String sendSmsNotice(@RequestParam("phone_number") String phoneNumber, @RequestParam("user_name") String userName, String chptcha)
 			throws UnsupportedEncodingException, ClientException, IOException {
 
@@ -56,14 +56,14 @@ public class SendSmsController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/reply.hms", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/reply", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String querySendDetailsByBizId(@RequestParam("phone_number") String phoneNumber, String bizId) throws UnsupportedEncodingException, ClientException, IOException {
 
 		return sendSmsSvc.querySendDetailsByBizId(phoneNumber, bizId);
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/record.hms", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/record", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String querySendDetails(HttpServletRequest request) throws UnsupportedEncodingException, ClientException, IOException {
 		Map<String, String> jsonMap = ConvertRequestParams.params2Map(request);
 

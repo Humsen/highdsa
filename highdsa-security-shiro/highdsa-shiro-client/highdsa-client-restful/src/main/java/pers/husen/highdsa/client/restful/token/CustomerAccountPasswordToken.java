@@ -2,7 +2,7 @@ package pers.husen.highdsa.client.restful.token;
 
 import org.apache.shiro.authc.UsernamePasswordToken;
 
-import pers.husen.highdsa.common.entity.constants.LoginType;
+import pers.husen.highdsa.common.entity.enums.LoginType;
 
 /**
  * @Desc 自定义token,增加登录类型字段

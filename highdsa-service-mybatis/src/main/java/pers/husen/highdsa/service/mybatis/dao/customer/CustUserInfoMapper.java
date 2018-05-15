@@ -11,7 +11,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustUserInfo;
  *
  * @Created at 2018年4月16日 下午11:51:33
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public interface CustUserInfoMapper {
 	/**
@@ -25,10 +25,10 @@ public interface CustUserInfoMapper {
 	/**
 	 * 插入新记录
 	 * 
-	 * @param record
+	 * @param custUserInfo
 	 * @return
 	 */
-	int insert(CustUserInfo record);
+	int insert(CustUserInfo custUserInfo);
 
 	/**
 	 * 根据主键查找
@@ -48,10 +48,10 @@ public interface CustUserInfoMapper {
 	/**
 	 * 根据主键更新
 	 * 
-	 * @param record
+	 * @param custUserInfo
 	 * @return
 	 */
-	int updateByPrimaryKey(CustUserInfo record);
+	int updateByPrimaryKey(CustUserInfo custUserInfo);
 
 	/**
 	 * 根据用户名查找用户信息

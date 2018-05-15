@@ -2,8 +2,6 @@ package pers.husen.highdsa.service.mybatis;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import pers.husen.highdsa.common.entity.po.system.SysNavigation;
 import pers.husen.highdsa.common.entity.po.system.SysUser;
 
@@ -14,9 +12,8 @@ import pers.husen.highdsa.common.entity.po.system.SysUser;
  *
  * @Created at 2018年3月29日 上午9:21:33
  * 
- * @Version 1.0.5
+ * @Version 1.0.6
  */
-@Service("sysUserManager")
 public interface SysUserManager {
 	/**
 	 * 创建用户
