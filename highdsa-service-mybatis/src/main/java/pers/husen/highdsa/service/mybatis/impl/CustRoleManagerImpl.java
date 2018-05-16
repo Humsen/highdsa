@@ -24,7 +24,7 @@ import pers.husen.highdsa.service.mybatis.dao.customer.CustUserRoleMapper;
  *
  * @Created at 2018年4月24日 上午10:25:36
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 @Service("custRoleManager")
 public class CustRoleManagerImpl implements CustRoleManager {
@@ -38,38 +38,12 @@ public class CustRoleManagerImpl implements CustRoleManager {
 	private CustUserMapper custUserMapper;
 
 	@Override
-	public int createSysRole(CustRole custRole) {
+	public int createRole(CustRole custRole) {
 		return custRoleMapper.insert(custRole);
 	}
 
-	/**
-	 * 添加角色-权限之间关系
-	 * 
-	 * @param roleId
-	 * @param permissionIds
-	 */
 	@Override
-	public void correlationPermissions(Long roleId, Long... permissionIds) {
-		for (Long permissionId : permissionIds) {
-			custRolePermissionMapper.insert(new CustRolePermission(roleId, permissionId));
-		}
-	}
-
-	/**
-	 * 移除角色-权限之间关系
-	 * 
-	 * @param roleId
-	 * @param permissionIds
-	 */
-	@Override
-	public void uncorrelationPermissions(Long roleId, Long... permissionIds) {
-		for (Long permissionId : permissionIds) {
-			custRolePermissionMapper.deleteByPrimaryKey(roleId, permissionId);
-		}
-	}
-
-	@Override
-	public CustRole addRole(CustRole custRole, Long... permissionIds) {
+	public CustRole addRolePermissions(CustRole custRole, Long... permissionIds) {
 		// 设置分布式角色id
 		Long roleId = SequenceManager.getNextId();
 		if (roleId != null) {
@@ -94,17 +68,10 @@ public class CustRoleManagerImpl implements CustRoleManager {
 	}
 
 	@Override
-	public void deleteRole(Long roleId) {
-		custUserRoleMapper.deleteByRoleId(roleId);
-		custRolePermissionMapper.deleteByRoleId(roleId);
-		custRoleMapper.deleteByPrimaryKey(roleId);
-	}
-
-	@Override
-	public void deleteMoreRoles(Long... roleIds) {
-		if (roleIds != null && roleIds.length > 0) {
-			for (Long roleId : roleIds) {
-				deleteRole(roleId);
+	public void addRolePermissions(Long roleId, Long... permissionIds) {
+		if (permissionIds != null && permissionIds.length > 0) {
+			for (Long permissionId : permissionIds) {
+				custRolePermissionMapper.insert(new CustRolePermission(roleId, permissionId));
 			}
 		}
 	}
@@ -125,7 +92,7 @@ public class CustRoleManagerImpl implements CustRoleManager {
 	}
 
 	@Override
-	public void updateRole(CustRole custRole, Long... permissionIds) {
+	public void modifyRolePermissions(CustRole custRole, Long... permissionIds) {
 		// 设置角色有效
 		custRole.setRoleValid(true);
 		// 设置最后更新时间
@@ -137,11 +104,32 @@ public class CustRoleManagerImpl implements CustRoleManager {
 	}
 
 	@Override
-	public void addRolePermissions(Long roleId, Long... permissionIds) {
-		if (permissionIds != null && permissionIds.length > 0) {
-			for (Long permissionId : permissionIds) {
-				custRolePermissionMapper.insert(new CustRolePermission(roleId, permissionId));
+	public void deleteRole(Long roleId) {
+		custUserRoleMapper.deleteByRoleId(roleId);
+		custRolePermissionMapper.deleteByRoleId(roleId);
+		custRoleMapper.deleteByPrimaryKey(roleId);
+	}
+
+	@Override
+	public void deleteMoreRoles(Long... roleIds) {
+		if (roleIds != null && roleIds.length > 0) {
+			for (Long roleId : roleIds) {
+				deleteRole(roleId);
 			}
+		}
+	}
+
+	@Override
+	public void correlationPermissions(Long roleId, Long... permissionIds) {
+		for (Long permissionId : permissionIds) {
+			custRolePermissionMapper.insert(new CustRolePermission(roleId, permissionId));
+		}
+	}
+
+	@Override
+	public void uncorrelationPermissions(Long roleId, Long... permissionIds) {
+		for (Long permissionId : permissionIds) {
+			custRolePermissionMapper.deleteByPrimaryKey(roleId, permissionId);
 		}
 	}
 }

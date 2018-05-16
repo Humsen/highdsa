@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pers.husen.highdsa.client.restful.token.CustomerAccountPasswordToken;
+import pers.husen.highdsa.common.constant.RedisCacheConstants;
 import pers.husen.highdsa.common.entity.enums.LoginType;
 import pers.husen.highdsa.common.entity.po.customer.CustUser;
 import pers.husen.highdsa.common.entity.po.customer.CustUserInfo;
@@ -21,6 +22,7 @@ import pers.husen.highdsa.common.entity.vo.restful.ResponseJson;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.mybatis.CustUserInfoManager;
 import pers.husen.highdsa.service.mybatis.CustUserManager;
+import pers.husen.highdsa.service.redis.RedisOperation;
 
 /**
  * @Desc shiro 控制器服务类
@@ -29,7 +31,7 @@ import pers.husen.highdsa.service.mybatis.CustUserManager;
  *
  * @Created at 2018年4月3日 下午4:22:19
  * 
- * @Version 1.0.4
+ * @Version 1.0.6
  */
 @Service
 public class LoginSvc {
@@ -42,17 +44,25 @@ public class LoginSvc {
 	private CustUserManager custUserManager;
 	@Autowired
 	private CustUserInfoManager custUserInfoManager;
+	@Autowired
+	private RedisOperation redisOperation;
 
 	/**
 	 * 测试未登录,会跳转到登录界面
 	 * 
 	 * @return
 	 */
-	public boolean helloWorld() {
+	public String helloWorld() {
+		String reply = null;
+
 		Subject subject = SecurityUtils.getSubject();
 		System.out.println("是否登录：" + subject.isAuthenticated());
 
-		return subject.isAuthenticated();
+		boolean isLogin = subject.isAuthenticated();
+
+		reply = "{\"login\":" + isLogin + "}";
+
+		return reply;
 	}
 
 	/**
@@ -148,7 +158,7 @@ public class LoginSvc {
 			if (user == null) {
 				return responseJson;
 			}
-			CustUserInfo userInfo = custUserInfoManager.selectById(user.getUserId());
+			CustUserInfo userInfo = custUserInfoManager.findUserInfoById(user.getUserId());
 
 			Map<String, Object> map = new HashMap<>(2);
 			Map<String, Object> userMap = new HashMap<>(8);
@@ -163,7 +173,7 @@ public class LoginSvc {
 			if (user.getUserPhone() != null) {
 				userMap.put("mobi", user.getUserPhone());
 			}
-			if(userInfo.getUserHeadUrl() != null) {
+			if (userInfo.getUserHeadUrl() != null) {
 				userMap.put("logo_url", userInfo.getUserHeadUrl());
 			}
 
@@ -193,6 +203,35 @@ public class LoginSvc {
 		SecurityUtils.getSubject().logout();
 
 		responseJson = new ResponseJson(true, "退出登录成功");
+
+		reply = objectMapper.writeValueAsString(responseJson);
+		logger.info(reply);
+
+		return reply;
+	}
+
+	/**
+	 * 校验密码并重置密码
+	 * 
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	public String retrivePassword(String phoneNumber, String captcha, String newPwd) throws JsonProcessingException {
+		String reply = null;
+		String cacheCode = redisOperation.get(RedisCacheConstants.REGISTER_REDIS_CODE + phoneNumber);
+		logger.trace("缓存的验证码:{}, 用户输入的验证码:{}", cacheCode, captcha);
+
+		if (captcha != null && captcha.equals(cacheCode)) {
+			try {
+				custUserManager.modifyPasswordByUserPhone(phoneNumber, newPwd);
+
+				responseJson = new ResponseJson(true, "修改密码成功");
+			} catch (Exception e) {
+				responseJson = new ResponseJson(true, "修改密码失败");
+			}
+		} else {
+			responseJson = new ResponseJson(false, "手机验证失败");
+		}
 
 		reply = objectMapper.writeValueAsString(responseJson);
 		logger.info(reply);

@@ -16,7 +16,7 @@ import pers.husen.highdsa.service.mybatis.SysPermissionManager;
  *
  * @Created at 2018年4月16日 上午11:26:41
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service
 public class PermissionSvc {
@@ -24,7 +24,7 @@ public class PermissionSvc {
 	private SysPermissionManager sysPermissionManager;
 
 	public ModelAndView showRoleList() {
-		List<SysPermission> list = sysPermissionManager.getAllPermissions();
+		List<SysPermission> list = sysPermissionManager.findAllPermissions();
 
 		ModelAndView mav = new ModelAndView("permission-list");
 		mav.addObject("perms", list);

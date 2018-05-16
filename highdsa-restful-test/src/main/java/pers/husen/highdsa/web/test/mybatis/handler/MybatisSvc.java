@@ -17,7 +17,7 @@ import pers.husen.highdsa.service.mybatis.SysUserInfoManager;
  *
  * @Created at 2018年3月20日 上午10:24:38
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @Service
 public class MybatisSvc {
@@ -25,12 +25,12 @@ public class MybatisSvc {
 
 	@Autowired
 	private SysUserInfoManager sysUserInfoManager;
-	
+
 	public SysUserInfo selectById(Long userId) throws JsonProcessingException {
-		SysUserInfo sysUserInfo = sysUserInfoManager.selectById(userId);
-		
+		SysUserInfo sysUserInfo = sysUserInfoManager.findByUserId(userId);
+
 		logger.info("返回结果为: {}", sysUserInfo);
-		
+
 		return sysUserInfo;
 	}
 }

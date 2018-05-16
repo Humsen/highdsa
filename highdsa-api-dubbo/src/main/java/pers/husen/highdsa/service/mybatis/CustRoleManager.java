@@ -6,13 +6,14 @@ import pers.husen.highdsa.common.entity.po.customer.CustRole;
 import pers.husen.highdsa.common.entity.po.customer.CustUser;
 
 /**
- * @Desc 客户角色管理
+ * @Desc 客户角色管理, dubbo api函数名称和 mybatis数据查询的对应关系为： create -> insert, find ->
+ *       select, modify -> update, delete -> delete
  *
  * @Author 何明胜
  *
  * @Created at 2018年4月24日 上午10:15:39
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public interface CustRoleManager {
 	/**
@@ -21,23 +22,7 @@ public interface CustRoleManager {
 	 * @param custRole
 	 * @return
 	 */
-	public int createSysRole(CustRole custRole);
-
-	/**
-	 * 添加角色-权限之间关系
-	 * 
-	 * @param roleId
-	 * @param permissionIds
-	 */
-	public void correlationPermissions(Long roleId, Long... permissionIds);
-
-	/**
-	 * 移除角色-权限之间关系
-	 * 
-	 * @param roleId
-	 * @param permissionIds
-	 */
-	public void uncorrelationPermissions(Long roleId, Long... permissionIds);
+	public int createRole(CustRole custRole);
 
 	/**
 	 * 添加角色
@@ -46,21 +31,15 @@ public interface CustRoleManager {
 	 * @param permissionIds
 	 * @return
 	 */
-	CustRole addRole(CustRole custRole, Long... permissionIds);
+	CustRole addRolePermissions(CustRole custRole, Long... permissionIds);
 
 	/**
-	 * 根据id删除
+	 * 增加角色权限关联
 	 * 
 	 * @param roleId
+	 * @param permissionIds
 	 */
-	void deleteRole(Long roleId);
-
-	/**
-	 * 删除一组角色
-	 * 
-	 * @param roleIds
-	 */
-	void deleteMoreRoles(Long... roleIds);
+	void addRolePermissions(Long roleId, Long... permissionIds);
 
 	/**
 	 * 根据角色id查找角色
@@ -91,13 +70,36 @@ public interface CustRoleManager {
 	 * @param custRole
 	 * @param permissionIds
 	 */
-	void updateRole(CustRole custRole, Long... permissionIds);
+	void modifyRolePermissions(CustRole custRole, Long... permissionIds);
 
 	/**
-	 * 增加角色权限关联
+	 * 根据id删除
+	 * 
+	 * @param roleId
+	 */
+	void deleteRole(Long roleId);
+
+	/**
+	 * 删除一组角色
+	 * 
+	 * @param roleIds
+	 */
+	void deleteMoreRoles(Long... roleIds);
+
+	/**
+	 * 添加角色-权限之间关系
 	 * 
 	 * @param roleId
 	 * @param permissionIds
 	 */
-	void addRolePermissions(Long roleId, Long... permissionIds);
+	public void correlationPermissions(Long roleId, Long... permissionIds);
+
+	/**
+	 * 移除角色-权限之间关系
+	 * 
+	 * @param roleId
+	 * @param permissionIds
+	 */
+	public void uncorrelationPermissions(Long roleId, Long... permissionIds);
+
 }

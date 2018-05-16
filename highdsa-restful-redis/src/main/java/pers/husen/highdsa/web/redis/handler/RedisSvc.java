@@ -49,8 +49,7 @@ public class RedisSvc {
 	 * @param cacheSeconds
 	 * @return
 	 */
-	public String setString(String key, String value,
-			@RequestParam(value = "expire", defaultValue = "-1") int cacheSeconds) {
+	public String setString(String key, String value, @RequestParam(value = "expire", defaultValue = "-1") int cacheSeconds) {
 		String reply = null;
 
 		if (-1 == cacheSeconds) {
@@ -74,8 +73,7 @@ public class RedisSvc {
 	 * @param cacheSeconds
 	 * @return
 	 */
-	public String setObject(String key, String value,
-			@RequestParam(value = "expire", defaultValue = "0") int cacheSeconds) {
+	public String setObject(String key, String value, @RequestParam(value = "expire", defaultValue = "0") int cacheSeconds) {
 		String reply = null;
 
 		reply = redisOperation.setObject(key, getTargetObject(value), cacheSeconds);
@@ -132,8 +130,7 @@ public class RedisSvc {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/cache/string.hms", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-	public String modifyString(String key, String value,
-			@RequestParam(value = "expire", defaultValue = "-1") int cacheSeconds) {
+	public String modifyString(String key, String value, @RequestParam(value = "expire", defaultValue = "-1") int cacheSeconds) {
 		String reply = null;
 
 		if (-1 == cacheSeconds) {
@@ -159,8 +156,7 @@ public class RedisSvc {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/cache/object.hms", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-	public String modifyObject(String key, String value,
-			@RequestParam(value = "expire", defaultValue = "0") int cacheSeconds) {
+	public String modifyObject(String key, String value, @RequestParam(value = "expire", defaultValue = "0") int cacheSeconds) {
 		String reply = null;
 
 		reply = redisOperation.setObject(key, getTargetObject(value), cacheSeconds);
@@ -325,7 +321,7 @@ public class RedisSvc {
 			Map<?, ?> jsonMap = objectMapper.readValue(jsonString, Map.class);
 			String targetClass = (String) jsonMap.get(targetClassKey);
 
-			Class<?> clazz = Class.forName("pers.husen.highdsa.common.po." + targetClass);
+			Class<?> clazz = Class.forName("pers.husen.highdsa.common.entity.po.customer." + targetClass);
 			// objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 			object = objectMapper.readValue(jsonString, clazz);
 

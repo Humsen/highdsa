@@ -29,7 +29,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
  *
  * @Created at 2018年3月29日 上午9:29:44
  * 
- * @Version 1.0.8
+ * @Version 1.0.9
  */
 @Service("sysUserManager")
 public class SysUserManagerImpl implements SysUserManager {
@@ -60,7 +60,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	 * @param userId
 	 */
 	@Override
-	public void updateByUserId(SysUser sysUser) {
+	public void modifyByUserId(SysUser sysUser) {
 		sysUserMapper.updateByUserId(sysUser);
 	}
 
@@ -118,7 +118,7 @@ public class SysUserManagerImpl implements SysUserManager {
 	}
 
 	@Override
-	public SysUser addUser(SysUser sysUser, Long... roleIds) {
+	public SysUser createUserRoles(SysUser sysUser, Long... roleIds) {
 		// 密码加密
 		encryptPassword(sysUser);
 		// 设置分布式用户id
@@ -164,12 +164,12 @@ public class SysUserManagerImpl implements SysUserManager {
 	}
 
 	@Override
-	public List<SysUser> getAllUsers() {
+	public List<SysUser> findAllUsers() {
 		return sysUserMapper.selectAll();
 	}
 
 	@Override
-	public void updateUserRoles(Long userId, Long... roleIds) {
+	public void modifyUserRoles(Long userId, Long... roleIds) {
 		sysUserRoleMapper.deleteByUserId(userId);
 
 		if (roleIds != null && roleIds.length > 0) {

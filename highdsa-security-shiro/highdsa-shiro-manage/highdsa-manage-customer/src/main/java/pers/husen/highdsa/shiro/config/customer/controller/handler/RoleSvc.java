@@ -17,7 +17,7 @@ import pers.husen.highdsa.service.mybatis.CustRoleManager;
  *
  * @Created at 2018年4月16日 上午11:26:55
  * 
- * @Version 1.0.1
+ * @Version 1.0.3
  */
 @Service
 public class RoleSvc {
@@ -35,11 +35,11 @@ public class RoleSvc {
 	}
 
 	public List<?> getPerms() {
-		return custPermissionManager.getAllPermissions();
+		return custPermissionManager.findAllPermissions();
 	}
 
 	public CustRole addRole(CustRole custRole, Long... permissionIds) {
-		CustRole role = custRoleManager.addRole(custRole, permissionIds);
+		CustRole role = custRoleManager.addRolePermissions(custRole, permissionIds);
 
 		return role;
 	}
@@ -63,6 +63,6 @@ public class RoleSvc {
 	}
 
 	public void updateRole(CustRole custRole, Long... permissionIds) {
-		custRoleManager.updateRole(custRole, permissionIds);
+		custRoleManager.modifyRolePermissions(custRole, permissionIds);
 	}
 }

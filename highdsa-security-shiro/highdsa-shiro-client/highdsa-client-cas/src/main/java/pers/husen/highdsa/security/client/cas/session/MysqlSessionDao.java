@@ -19,7 +19,7 @@ import pers.husen.highdsa.service.mybatis.CustSessionsManager;
  *
  * @Created at 2018年4月3日 下午3:45:41
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class MysqlSessionDao extends CachingSessionDAO {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionDao.class.getName());
@@ -68,7 +68,7 @@ public class MysqlSessionDao extends CachingSessionDAO {
 		custSessions.setSessionLastModifyTime(new Date());
 		custSessions.setSessionValid(true);
 
-		custSessionsManager.updateBySessionId(custSessions);
+		custSessionsManager.modifyBySessionId(custSessions);
 	}
 
 	@Override

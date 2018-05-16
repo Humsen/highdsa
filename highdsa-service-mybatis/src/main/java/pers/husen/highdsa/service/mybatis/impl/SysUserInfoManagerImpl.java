@@ -18,7 +18,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysUserInfoMapper;
  *
  * @Created at 2018年3月7日 下午1:47:39
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @Service("sysUserInfoManager")
 public class SysUserInfoManagerImpl implements SysUserInfoManager {
@@ -28,7 +28,16 @@ public class SysUserInfoManagerImpl implements SysUserInfoManager {
 	private SysUserInfoMapper sysUserInfoMapper;
 
 	@Override
-	public SysUserInfo selectById(Long userId) {
+	public Integer createUserInfo(SysUserInfo sysUserInfo) {
+		Integer reply = sysUserInfoMapper.insert(sysUserInfo);
+
+		logger.info("insert reply: {}", reply);
+
+		return reply;
+	}
+
+	@Override
+	public SysUserInfo findByUserId(Long userId) {
 		SysUserInfo sysUserInfo = sysUserInfoMapper.selectByPrimaryKey(userId);
 
 		logger.info("select by id[{}] reply: {}", userId, sysUserInfo);
@@ -37,21 +46,12 @@ public class SysUserInfoManagerImpl implements SysUserInfoManager {
 	}
 
 	@Override
-	public List<SysUserInfo> selectAll() {
+	public List<SysUserInfo> findAll() {
 		List<SysUserInfo> userInfos = sysUserInfoMapper.selectAll();
 
 		logger.info("select all reply: {}", userInfos);
 
 		return userInfos;
-	}
-
-	@Override
-	public Integer insertUserInfo(SysUserInfo sysUserInfo) {
-		Integer reply = sysUserInfoMapper.insert(sysUserInfo);
-
-		logger.info("insert reply: {}", reply);
-
-		return reply;
 	}
 
 	@Override

@@ -16,7 +16,7 @@ import pers.husen.highdsa.service.mybatis.CustPermissionManager;
  *
  * @Created at 2018年4月16日 上午11:26:41
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Service
 public class PermissionSvc {
@@ -24,7 +24,7 @@ public class PermissionSvc {
 	private CustPermissionManager custPermissionManager;
 
 	public ModelAndView showRoleList() {
-		List<CustPermission> list = custPermissionManager.getAllPermissions();
+		List<CustPermission> list = custPermissionManager.findAllPermissions();
 
 		ModelAndView mav = new ModelAndView("permission-list");
 		mav.addObject("perms", list);
@@ -51,6 +51,6 @@ public class PermissionSvc {
 	}
 
 	public void updatePermission(CustPermission custPermission) {
-		custPermissionManager.updatePermissionByPrimaryKey(custPermission);
+		custPermissionManager.modifyPermissionByPrimaryKey(custPermission);
 	}
 }

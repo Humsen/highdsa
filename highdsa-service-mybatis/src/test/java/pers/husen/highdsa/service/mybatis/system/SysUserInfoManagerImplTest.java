@@ -22,7 +22,7 @@ import pers.husen.highdsa.service.mybatis.impl.SysUserInfoManagerImpl;
  *
  * @Created at 2018年3月7日 下午4:36:51
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/dubbo-service-mybatis.xml", "classpath:spring/spring-context.xml" })
@@ -37,13 +37,13 @@ public class SysUserInfoManagerImplTest extends AbstractJUnit4SpringContextTests
 
 	@Test
 	public void selectById() {
-		SysUserInfo sysUserInfo = sysUserInfoManagerImpl.selectById(1000L);
+		SysUserInfo sysUserInfo = sysUserInfoManagerImpl.findByUserId(1000L);
 		System.out.println(sysUserInfo);
 	}
 
 	@Test
 	public void selectAll() {
-		List<SysUserInfo> sysUserInfos = sysUserInfoManagerImpl.selectAll();
+		List<SysUserInfo> sysUserInfos = sysUserInfoManagerImpl.findAll();
 		System.out.println(sysUserInfos);
 	}
 
@@ -55,7 +55,7 @@ public class SysUserInfoManagerImplTest extends AbstractJUnit4SpringContextTests
 		sysUserInfo.setUserRegisterTime(new Date());
 		sysUserInfo.setUserLastLoginTime(new Date());
 
-		sysUserInfoManagerImpl.insertUserInfo(sysUserInfo);
+		sysUserInfoManagerImpl.createUserInfo(sysUserInfo);
 	}
 
 	@Test

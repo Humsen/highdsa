@@ -21,7 +21,7 @@ import pers.husen.highdsa.service.message.PushMsg;
  *
  * @Created at 2018年3月13日 下午4:27:26
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @Service
 public class PushMsgSvc {
@@ -63,7 +63,7 @@ public class PushMsgSvc {
 		Map<String, Object> map = new HashMap<String, Object>(200);
 		map.put("success", "true");
 		map.put("rest_host", reply);
-		
+
 		return objectMapper.writeValueAsString(map);
 
 	}
@@ -77,7 +77,7 @@ public class PushMsgSvc {
 		Map<String, Object> map = new HashMap<String, Object>(200);
 		map.put("success", "true");
 		map.put("app_key", reply);
-		
+
 		return objectMapper.writeValueAsString(map);
 	}
 }

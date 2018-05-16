@@ -22,7 +22,7 @@
 
 	<appenders>
 		<!-- Gelf输出到logstash -->
-		<Gelf name="logstash_gelf_appender" host="udp:39.106.185.126" port="12201" version="1.0" extractStackTrace="true" filterStackTrace="true" mdcProfiling="true" includeFullMdc="true"
+		<Gelf name="logstash_gelf_appender" host="udp:223.3.89.104" port="12201" version="1.0" extractStackTrace="true" filterStackTrace="true" mdcProfiling="true" includeFullMdc="true"
 			maximumMessageSize="8192" originHost="developer host" additionalFieldTypes="fieldName1=String,fieldName2=Double,fieldName3=Long" ignoreExceptions="true">
 
 			<Field name="timestamp" pattern="%d{yyyy-MM-dd HH:mm:ss,sss}" />

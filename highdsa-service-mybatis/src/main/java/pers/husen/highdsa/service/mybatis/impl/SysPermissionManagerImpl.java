@@ -20,7 +20,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysRolePermissionMapper;
  *
  * @Created at 2018年3月29日 上午10:18:13
  * 
- * @Version 1.0.5
+ * @Version 1.0.6
  */
 @Service("sysPermissionManager")
 public class SysPermissionManagerImpl implements SysPermissionManager {
@@ -32,14 +32,14 @@ public class SysPermissionManagerImpl implements SysPermissionManager {
 
 	@Override
 	public SysPermission createPermission(SysPermission sysPermission) {
-		//设置权限id
+		// 设置权限id
 		Long permissionId = SequenceManager.getNextId();
 		if (permissionId != null) {
 			sysPermission.setPermissionId(permissionId);
 		} else {
 			throw new NullPointerException("获取的permissionId为空");
 		}
-		
+
 		// 设置权限有效
 		sysPermission.setPermissionValid(true);
 		// 如果是否为导航属性为null,说明创建时没有被勾选,设置为false
@@ -57,21 +57,6 @@ public class SysPermissionManagerImpl implements SysPermissionManager {
 	}
 
 	@Override
-	public void deletePermission(Long permissionId) {
-		sysRolePermissionMapper.deleteByPermissionId(permissionId);
-		sysPermissionMapper.deleteByPrimaryKey(permissionId);
-	}
-
-	@Override
-	public void deleteMorePermissions(Long... permissionIds) {
-		if (permissionIds != null && permissionIds.length > 0) {
-			for (Long permissionId : permissionIds) {
-				deletePermission(permissionId);
-			}
-		}
-	}
-
-	@Override
 	public SysPermission findSysPermissionById(Long permissionId) {
 		return sysPermissionMapper.selectByPrimaryKey(permissionId);
 	}
@@ -82,7 +67,7 @@ public class SysPermissionManagerImpl implements SysPermissionManager {
 	}
 
 	@Override
-	public List<SysPermission> getAllPermissions() {
+	public List<SysPermission> findAllPermissions() {
 		return sysPermissionMapper.selectAll();
 	}
 
@@ -98,5 +83,20 @@ public class SysPermissionManagerImpl implements SysPermissionManager {
 		sysPermission.setPermissionLastModifyTime(new Date());
 
 		sysPermissionMapper.updateByPrimaryKey(sysPermission);
+	}
+
+	@Override
+	public void deletePermission(Long permissionId) {
+		sysRolePermissionMapper.deleteByPermissionId(permissionId);
+		sysPermissionMapper.deleteByPrimaryKey(permissionId);
+	}
+
+	@Override
+	public void deleteMorePermissions(Long... permissionIds) {
+		if (permissionIds != null && permissionIds.length > 0) {
+			for (Long permissionId : permissionIds) {
+				deletePermission(permissionId);
+			}
+		}
 	}
 }

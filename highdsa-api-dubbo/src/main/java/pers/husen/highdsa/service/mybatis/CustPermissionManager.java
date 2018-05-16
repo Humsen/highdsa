@@ -5,13 +5,14 @@ import java.util.List;
 import pers.husen.highdsa.common.entity.po.customer.CustPermission;
 
 /**
- * @Desc 客户权限管理
+ * @Desc 客户权限管理, dubbo api函数名称和 mybatis数据查询的对应关系为： create -> insert, find ->
+ *       select, modify -> update, delete -> delete
  *
  * @Author 何明胜
  *
  * @Created at 2018年4月24日 上午10:15:18
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public interface CustPermissionManager {
 	/**
@@ -21,20 +22,6 @@ public interface CustPermissionManager {
 	 * @return
 	 */
 	public CustPermission createPermission(CustPermission custPermission);
-
-	/**
-	 * 删除权限
-	 * 
-	 * @param permissionId
-	 */
-	public void deletePermission(Long permissionId);
-
-	/**
-	 * 根据权限id删除权限
-	 * 
-	 * @param permissionsIds
-	 */
-	void deleteMorePermissions(Long... permissionsIds);
 
 	/**
 	 * 根据权限id查找权限
@@ -57,12 +44,26 @@ public interface CustPermissionManager {
 	 * 
 	 * @return
 	 */
-	List<CustPermission> getAllPermissions();
+	List<CustPermission> findAllPermissions();
 
 	/**
 	 * 根据权限id更新权限
 	 * 
 	 * @param custPermission
 	 */
-	void updatePermissionByPrimaryKey(CustPermission custPermission);
+	void modifyPermissionByPrimaryKey(CustPermission custPermission);
+
+	/**
+	 * 删除权限
+	 * 
+	 * @param permissionId
+	 */
+	public void deletePermission(Long permissionId);
+
+	/**
+	 * 根据权限id删除权限
+	 * 
+	 * @param permissionsIds
+	 */
+	void deleteMorePermissions(Long... permissionsIds);
 }

@@ -11,31 +11,31 @@ import pers.husen.highdsa.common.entity.po.customer.CustUserInfo;
  *
  * @Created at 2018年4月24日 上午10:15:51
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public interface CustUserInfoManager {
-	/**
-	 * 根据id查询
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public CustUserInfo selectById(Long userId);
-
-	/**
-	 * 查询所有用户
-	 * 
-	 * @return
-	 */
-	public List<CustUserInfo> selectAll();
-
 	/**
 	 * 插入新的用户信息
 	 * 
 	 * @param custUserInfo
 	 * @return
 	 */
-	public Integer insertUserInfo(CustUserInfo custUserInfo);
+	public Integer createUserInfo(CustUserInfo custUserInfo);
+
+	/**
+	 * 根据id查询
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public CustUserInfo findUserInfoById(Long userId);
+
+	/**
+	 * 查询所有用户
+	 * 
+	 * @return
+	 */
+	public List<CustUserInfo> findAll();
 
 	/**
 	 * 根据id更新用户信息
@@ -43,7 +43,7 @@ public interface CustUserInfoManager {
 	 * @param custUserInfo
 	 * @return
 	 */
-	public Integer updateUserInfo(CustUserInfo custUserInfo);
+	public Integer modifyUserInfo(CustUserInfo custUserInfo);
 
 	/**
 	 * 删除用户信息

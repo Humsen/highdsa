@@ -22,7 +22,7 @@ import pers.husen.highdsa.service.mybatis.impl.CustUserManagerImpl;
  *
  * @Created at 2018年4月27日 下午2:44:29
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/dubbo-service-mybatis.xml", "classpath:spring/spring-context.xml" })
@@ -43,7 +43,7 @@ public class CustUserManagerImplTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void selectAll() {
-		List<CustUser> custUsers = custUserManagerImpl.getAllUsers();
+		List<CustUser> custUsers = custUserManagerImpl.findAllUsers();
 		System.out.println(custUsers);
 	}
 
@@ -68,7 +68,7 @@ public class CustUserManagerImplTest extends AbstractJUnit4SpringContextTests {
 		custUser.setUserPwdSalt("123");
 		custUser.setUserState(CustUserState.INVALID);
 
-		custUserManagerImpl.updateByUserId(custUser);
+		custUserManagerImpl.modifyUserByUserId(custUser);
 	}
 
 	@Test

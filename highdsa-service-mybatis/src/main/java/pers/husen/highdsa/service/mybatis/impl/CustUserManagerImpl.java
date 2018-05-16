@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +29,19 @@ import pers.husen.highdsa.service.mybatis.dao.customer.CustUserMapper;
 import pers.husen.highdsa.service.mybatis.dao.customer.CustUserRoleMapper;
 
 /**
- * @Desc 客户管理实现
+ * @Desc 客户管理实现, dubbo api函数名称和 mybatis数据查询的对应关系为： create -> insert, find ->
+ *       select, modify -> update, delete -> delete
  *
  * @Author 何明胜
  *
  * @Created at 2018年4月24日 上午10:26:55
  * 
- * @Version 1.0.3
+ * @Version 1.0.6
  */
 @Service("custUserManager")
 public class CustUserManagerImpl implements CustUserManager {
+	private static final Logger logger = LogManager.getLogger(CustUserManagerImpl.class.getName());
+
 	@Autowired
 	private CustUserMapper custUserMapper;
 	@Autowired
@@ -48,11 +53,6 @@ public class CustUserManagerImpl implements CustUserManager {
 	@Autowired
 	private CustPermissionMapper custPermissionMapper;
 
-	/**
-	 * 创建用户
-	 * 
-	 * @param user
-	 */
 	@Override
 	public String createUser(CustUser custUser) {
 		// 注册用户设置默认用户名
@@ -83,69 +83,6 @@ public class CustUserManagerImpl implements CustUserManager {
 		return custUser.getUserName();
 	}
 
-	/**
-	 * 根据userId更新
-	 * 
-	 * @param userId
-	 */
-	@Override
-	public void updateByUserId(CustUser custUser) {
-		custUserMapper.updateByUserId(custUser);
-	}
-
-	/**
-	 * 修改密码
-	 * 
-	 * @param userId
-	 * @param newPassword
-	 */
-	@Override
-	public void modifyPassword(Long userId, String newPassword) {
-		CustUser user = custUserMapper.selectUserByUserId(userId);
-		user.setUserPassword(newPassword);
-		encryptPassword(user);
-		custUserMapper.updateByUserId(user);
-	}
-
-	/**
-	 * 根据用户id查找用户
-	 * 
-	 * @param userId
-	 * @param newPassword
-	 */
-	@Override
-	public CustUser findUserByUserId(Long userId) {
-		CustUser custUser = custUserMapper.selectUserByUserId(userId);
-
-		return custUser;
-	}
-
-	/**
-	 * 添加用户-角色关系
-	 * 
-	 * @param userId
-	 * @param roleIds
-	 */
-	@Override
-	public void correlationRoles(Long userId, Long... roleIds) {
-		for (Long roleId : roleIds) {
-			custUserRoleMapper.insert(new CustUserRole(userId, roleId));
-		}
-	}
-
-	/**
-	 * 移除用户-角色关系
-	 * 
-	 * @param userId
-	 * @param roleIds
-	 */
-	@Override
-	public void uncorrelationRoles(Long userId, Long... roleIds) {
-		for (Long roleId : roleIds) {
-			custUserRoleMapper.deleteByPrimaryKey(userId, roleId);
-		}
-	}
-
 	@Override
 	public CustUser addUser(CustUser custUser, Long... roleIds) {
 		// 密码加密
@@ -173,18 +110,10 @@ public class CustUserManagerImpl implements CustUserManager {
 	}
 
 	@Override
-	public void deleteUser(Long userId) {
-		custUserRoleMapper.deleteByUserId(userId);
-		custUserMapper.deleteByPrimaryKey(userId);
-	}
+	public CustUser findUserByUserId(Long userId) {
+		CustUser custUser = custUserMapper.selectUserByUserId(userId);
 
-	@Override
-	public void deleteMoreUsers(Long... userIds) {
-		if (userIds != null && userIds.length > 0) {
-			for (Long userId : userIds) {
-				deleteUser(userId);
-			}
-		}
+		return custUser;
 	}
 
 	@Override
@@ -224,28 +153,17 @@ public class CustUserManagerImpl implements CustUserManager {
 
 	@Override
 	public CustUser findPermissionsByUserPhone(String userPhone) {
-		return null;
+		return custUserMapper.selectPermissionsByUserPhone(userPhone);
 	}
 
 	@Override
 	public CustUser findPermissionsByUserEmail(String userEmail) {
-		return null;
+		return custUserMapper.selectPermissionsByUserEmail(userEmail);
 	}
 
 	@Override
-	public List<CustUser> getAllUsers() {
+	public List<CustUser> findAllUsers() {
 		return custUserMapper.selectAll();
-	}
-
-	@Override
-	public void updateUserRoles(Long userId, Long... roleIds) {
-		custUserRoleMapper.deleteByUserId(userId);
-
-		if (roleIds != null && roleIds.length > 0) {
-			for (Long roleId : roleIds) {
-				custUserRoleMapper.insert(new CustUserRole(userId, roleId));
-			}
-		}
 	}
 
 	@Override
@@ -263,6 +181,73 @@ public class CustUserManagerImpl implements CustUserManager {
 		}
 
 		return navigationBar;
+	}
+
+	/**
+	 * 根据userId更新
+	 * 
+	 * @param userId
+	 */
+	@Override
+	public void modifyUserByUserId(CustUser custUser) {
+		custUserMapper.updateByUserId(custUser);
+	}
+
+	@Override
+	public void modifyUserRoles(Long userId, Long... roleIds) {
+		custUserRoleMapper.deleteByUserId(userId);
+
+		if (roleIds != null && roleIds.length > 0) {
+			for (Long roleId : roleIds) {
+				custUserRoleMapper.insert(new CustUserRole(userId, roleId));
+			}
+		}
+	}
+
+	@Override
+	public void modifyPassword(Long userId, String newPassword) {
+		CustUser user = custUserMapper.selectUserByUserId(userId);
+		user.setUserPassword(newPassword);
+		encryptPassword(user);
+		custUserMapper.updateByUserId(user);
+	}
+
+	@Override
+	public void modifyPasswordByUserPhone(String userPhone, String newPassword) {
+		CustUser user = custUserMapper.selectUserByUserPhone(userPhone);
+		user.setUserPassword(newPassword);
+		encryptPassword(user);
+		logger.debug("新密码：{}", user.getUserPassword());
+		custUserMapper.updateByUserId(user);
+	}
+
+	@Override
+	public void deleteUser(Long userId) {
+		custUserRoleMapper.deleteByUserId(userId);
+		custUserMapper.deleteByPrimaryKey(userId);
+	}
+
+	@Override
+	public void deleteMoreUsers(Long... userIds) {
+		if (userIds != null && userIds.length > 0) {
+			for (Long userId : userIds) {
+				deleteUser(userId);
+			}
+		}
+	}
+
+	@Override
+	public void correlationRoles(Long userId, Long... roleIds) {
+		for (Long roleId : roleIds) {
+			custUserRoleMapper.insert(new CustUserRole(userId, roleId));
+		}
+	}
+
+	@Override
+	public void uncorrelationRoles(Long userId, Long... roleIds) {
+		for (Long roleId : roleIds) {
+			custUserRoleMapper.deleteByPrimaryKey(userId, roleId);
+		}
 	}
 
 	/**

@@ -25,8 +25,8 @@
 	</typeAliases>
 
 	<typeHandlers>
-		<typeHandler javaType="pers.husen.highdsa.common.entity.constants.SysUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
-		<typeHandler javaType="pers.husen.highdsa.common.entity.constants.CustUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
+		<typeHandler javaType="pers.husen.highdsa.common.entity.enums.SysUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
+		<typeHandler javaType="pers.husen.highdsa.common.entity.enums.CustUserState" handler="pers.husen.highdsa.service.mybatis.handler.GeneralStateFieldHandler" />
 	</typeHandlers>
 
 	<!-- 配置mybatis运行环境 -->

@@ -18,7 +18,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysSessionsMapper;
  *
  * @Created at 2018年4月17日 上午9:49:51
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Service("sysSessionsManager")
 public class SysSessionsManagerImpl implements SysSessionsManager {
@@ -26,16 +26,6 @@ public class SysSessionsManagerImpl implements SysSessionsManager {
 
 	@Autowired
 	private SysSessionsMapper sysSessionsMapper;
-
-	@Override
-	public int deleteBySessionId(String sessionId) {
-		int reply = sysSessionsMapper.deleteByPrimaryKey(sessionId);
-		// sqlSession.commit();
-
-		logger.info("delete reply: {}", reply);
-
-		return reply;
-	}
 
 	@Override
 	public int createSession(SysSessions sysSessions) {
@@ -56,7 +46,16 @@ public class SysSessionsManagerImpl implements SysSessionsManager {
 	}
 
 	@Override
-	public List<SysSessions> selectAll() {
+	public List<SysSessions> findListByPage(int start, int size) {
+		List<SysSessions> sysSessionsList = sysSessionsMapper.selectListByPage(start, size);
+
+		logger.info("select by page reply: {}", sysSessionsList);
+
+		return sysSessionsList;
+	}
+
+	@Override
+	public List<SysSessions> findAll() {
 		List<SysSessions> sysSessionsList = sysSessionsMapper.selectAll();
 
 		logger.info("select all reply: {}", sysSessionsList);
@@ -65,7 +64,7 @@ public class SysSessionsManagerImpl implements SysSessionsManager {
 	}
 
 	@Override
-	public int updateBySessionId(SysSessions sysSessions) {
+	public int modifyBySessionId(SysSessions sysSessions) {
 		int reply = sysSessionsMapper.updateByPrimaryKey(sysSessions);
 
 		logger.info("update reply: {}", reply);
@@ -74,11 +73,12 @@ public class SysSessionsManagerImpl implements SysSessionsManager {
 	}
 
 	@Override
-	public List<SysSessions> findListByPage(int start, int size) {
-		List<SysSessions> sysSessionsList = sysSessionsMapper.selectListByPage(start, size);
+	public int deleteBySessionId(String sessionId) {
+		int reply = sysSessionsMapper.deleteByPrimaryKey(sessionId);
+		// sqlSession.commit();
 
-		logger.info("select by page reply: {}", sysSessionsList);
+		logger.info("delete reply: {}", reply);
 
-		return sysSessionsList;
+		return reply;
 	}
 }

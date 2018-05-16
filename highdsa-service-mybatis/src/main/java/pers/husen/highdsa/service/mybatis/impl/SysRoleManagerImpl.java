@@ -24,7 +24,7 @@ import pers.husen.highdsa.service.mybatis.dao.system.SysUserRoleMapper;
  *
  * @Created at 2018年3月29日 上午10:10:57
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 @Service("sysRoleManager")
 public class SysRoleManagerImpl implements SysRoleManager {
@@ -69,7 +69,7 @@ public class SysRoleManagerImpl implements SysRoleManager {
 	}
 
 	@Override
-	public SysRole addRole(SysRole sysRole, Long... permissionIds) {
+	public SysRole addRolePermissions(SysRole sysRole, Long... permissionIds) {
 		// 设置分布式角色id
 		Long roleId = SequenceManager.getNextId();
 		if (roleId != null) {
@@ -125,7 +125,7 @@ public class SysRoleManagerImpl implements SysRoleManager {
 	}
 
 	@Override
-	public void updateRole(SysRole sysRole, Long... permissionIds) {
+	public void modifyRolePermissions(SysRole sysRole, Long... permissionIds) {
 		// 设置角色有效
 		sysRole.setRoleValid(true);
 		// 设置最后更新时间

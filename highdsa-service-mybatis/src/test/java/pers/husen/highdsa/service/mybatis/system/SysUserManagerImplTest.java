@@ -22,7 +22,7 @@ import pers.husen.highdsa.service.mybatis.impl.SysUserManagerImpl;
  *
  * @Created at 2018年4月27日 下午2:44:29
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/dubbo-service-mybatis.xml", "classpath:spring/spring-context.xml" })
@@ -43,7 +43,7 @@ public class SysUserManagerImplTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void selectAll() {
-		List<SysUser> sysUsers = sysUserManagerImpl.getAllUsers();
+		List<SysUser> sysUsers = sysUserManagerImpl.findAllUsers();
 		System.out.println(sysUsers);
 	}
 
@@ -68,7 +68,7 @@ public class SysUserManagerImplTest extends AbstractJUnit4SpringContextTests {
 		sysUser.setUserPwdSalt("123");
 		sysUser.setUserState(SysUserState.INVALID);
 
-		sysUserManagerImpl.updateByUserId(sysUser);
+		sysUserManagerImpl.modifyByUserId(sysUser);
 	}
 
 	@Test

@@ -11,17 +11,9 @@ import pers.husen.highdsa.common.entity.po.customer.CustSessions;
  *
  * @Created at 2018年4月20日 上午12:32:39
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public interface CustSessionsManager {
-	/**
-	 * 根据主键删除
-	 * 
-	 * @param sessionId
-	 * @return
-	 */
-	int deleteBySessionId(String sessionId);
-
 	/**
 	 * 插入新记录
 	 * 
@@ -39,21 +31,6 @@ public interface CustSessionsManager {
 	CustSessions findBySessionId(String sessionId);
 
 	/**
-	 * 查询所有
-	 * 
-	 * @return
-	 */
-	List<CustSessions> selectAll();
-
-	/**
-	 * 根据主键更新
-	 * 
-	 * @param custSessions
-	 * @return
-	 */
-	int updateBySessionId(CustSessions custSessions);
-
-	/**
 	 * 分页查找
 	 * 
 	 * @param start
@@ -63,4 +40,27 @@ public interface CustSessionsManager {
 	 * @return
 	 */
 	List<CustSessions> findListByPage(int start, int size);
+
+	/**
+	 * 查询所有
+	 * 
+	 * @return
+	 */
+	List<CustSessions> findAll();
+
+	/**
+	 * 根据主键更新
+	 * 
+	 * @param custSessions
+	 * @return
+	 */
+	int modifyBySessionId(CustSessions custSessions);
+
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param sessionId
+	 * @return
+	 */
+	int deleteBySessionId(String sessionId);
 }

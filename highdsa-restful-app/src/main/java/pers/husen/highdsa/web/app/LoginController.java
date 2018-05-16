@@ -18,7 +18,7 @@ import pers.husen.highdsa.web.app.handler.LoginSvc;
  *
  * @Created at 2018年5月12日 下午5:30:05
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 @Controller
 @RequestMapping(value = "/app/v1")
@@ -27,8 +27,8 @@ public class LoginController {
 	LoginSvc loginSvc;
 
 	@ResponseBody
-	@RequestMapping(value = "/hello", produces = "application/json;charset=UTF-8")
-	public boolean helloWorld() {
+	@RequestMapping(value = "/hello", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	public String helloWorld() {
 		return loginSvc.helloWorld();
 	}
 
@@ -58,5 +58,12 @@ public class LoginController {
 	public String logout() throws JsonProcessingException {
 
 		return loginSvc.logout();
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/password", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+	public String retrivePassword(@RequestParam("phone_number") String phoneNumber, String captcha, @RequestParam("new_password") String newPwd) throws JsonProcessingException {
+
+		return loginSvc.retrivePassword(phoneNumber, captcha, newPwd);
 	}
 }

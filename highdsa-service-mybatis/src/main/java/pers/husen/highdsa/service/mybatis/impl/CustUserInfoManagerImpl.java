@@ -18,7 +18,7 @@ import pers.husen.highdsa.service.mybatis.dao.customer.CustUserInfoMapper;
  *
  * @Created at 2018年4月24日 上午10:26:33
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service("custUserInfoManager")
 public class CustUserInfoManagerImpl implements CustUserInfoManager {
@@ -28,25 +28,7 @@ public class CustUserInfoManagerImpl implements CustUserInfoManager {
 	private CustUserInfoMapper custUserInfoMapper;
 
 	@Override
-	public CustUserInfo selectById(Long userId) {
-		CustUserInfo custUserInfo = custUserInfoMapper.selectByPrimaryKey(userId);
-
-		logger.info("select by id[{}] reply: {}", userId, custUserInfo);
-
-		return custUserInfo;
-	}
-
-	@Override
-	public List<CustUserInfo> selectAll() {
-		List<CustUserInfo> userInfos = custUserInfoMapper.selectAll();
-
-		logger.info("select all reply: {}", userInfos);
-
-		return userInfos;
-	}
-
-	@Override
-	public Integer insertUserInfo(CustUserInfo custUserInfo) {
+	public Integer createUserInfo(CustUserInfo custUserInfo) {
 		Integer reply = custUserInfoMapper.insert(custUserInfo);
 
 		logger.info("insert reply: {}", reply);
@@ -55,7 +37,25 @@ public class CustUserInfoManagerImpl implements CustUserInfoManager {
 	}
 
 	@Override
-	public Integer updateUserInfo(CustUserInfo custUserInfo) {
+	public CustUserInfo findUserInfoById(Long userId) {
+		CustUserInfo custUserInfo = custUserInfoMapper.selectByPrimaryKey(userId);
+
+		logger.info("select by id[{}] reply: {}", userId, custUserInfo);
+
+		return custUserInfo;
+	}
+
+	@Override
+	public List<CustUserInfo> findAll() {
+		List<CustUserInfo> userInfos = custUserInfoMapper.selectAll();
+
+		logger.info("select all reply: {}", userInfos);
+
+		return userInfos;
+	}
+
+	@Override
+	public Integer modifyUserInfo(CustUserInfo custUserInfo) {
 		Integer reply = custUserInfoMapper.updateByPrimaryKey(custUserInfo);
 
 		logger.info("update reply: {}", reply);

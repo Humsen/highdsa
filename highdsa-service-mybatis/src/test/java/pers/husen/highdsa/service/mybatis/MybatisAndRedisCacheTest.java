@@ -58,10 +58,10 @@ public class MybatisAndRedisCacheTest extends AbstractJUnit4SpringContextTests {
 		SysUserInfoManagerImpl sysUserInfoManagerImpl = (SysUserInfoManagerImpl) applicationContext.getBean("sysUserInfoManager");
 
 		// userInfoDbOperImpl.deleteUserInfo(2);
-		List<SysUserInfo> userInfos = sysUserInfoManagerImpl.selectAll();
+		List<SysUserInfo> userInfos = sysUserInfoManagerImpl.findAll();
 		System.out.println(userInfos);
 
-		List<SysUserInfo> userInfos1 = sysUserInfoManagerImpl.selectAll();
+		List<SysUserInfo> userInfos1 = sysUserInfoManagerImpl.findAll();
 		System.out.println(userInfos1);
 	}
 

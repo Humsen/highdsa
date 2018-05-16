@@ -17,7 +17,7 @@ import pers.husen.highdsa.service.mybatis.SysRoleManager;
  *
  * @Created at 2018年4月16日 上午11:26:55
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 @Service
 public class RoleSvc {
@@ -35,11 +35,11 @@ public class RoleSvc {
 	}
 
 	public List<?> getPerms() {
-		return sysPermissionManager.getAllPermissions();
+		return sysPermissionManager.findAllPermissions();
 	}
 
 	public SysRole addRole(SysRole role, Long... permIds) {
-		SysRole sysRole = sysRoleManager.addRole(role, permIds);
+		SysRole sysRole = sysRoleManager.addRolePermissions(role, permIds);
 
 		return sysRole;
 	}
@@ -63,6 +63,6 @@ public class RoleSvc {
 	}
 
 	public void updateRole(SysRole role, Long... permIds) {
-		sysRoleManager.updateRole(role, permIds);
+		sysRoleManager.modifyRolePermissions(role, permIds);
 	}
 }

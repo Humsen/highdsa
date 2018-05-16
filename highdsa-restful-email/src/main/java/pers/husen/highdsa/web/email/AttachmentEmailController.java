@@ -28,8 +28,7 @@ public class AttachmentEmailController {
 
 	@ResponseBody
 	@RequestMapping(value = "/formal/2user", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	public String sendAttachEmail2User(@RequestParam(value = "mail_to") String mailTo, String subject, String content,
-			@RequestParam(value = "attach_url") String attachUrl,
+	public String sendAttachEmail2User(@RequestParam(value = "mail_to") String mailTo, String subject, String content, @RequestParam(value = "attach_url") String attachUrl,
 			@RequestParam(value = "attach_name") String attachName) throws JsonProcessingException {
 
 		return attachmentEmailSvc.sendAttachmentEmail2User(mailTo, subject, content, attachUrl, attachName);
@@ -37,10 +36,8 @@ public class AttachmentEmailController {
 
 	@ResponseBody
 	@RequestMapping(value = "/formal/2admin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	public String sendAttachEmail2Admin(@RequestParam(value = "name_from") String nameFrom,
-			@RequestParam(value = "mail_from") String mailFrom, @RequestParam(value = "phone_from") String phoneFrom,
-			String content, @RequestParam(value = "attach_url") String attachUrl,
-			@RequestParam(value = "attach_name") String attachName) throws JsonProcessingException {
+	public String sendAttachEmail2Admin(@RequestParam(value = "name_from") String nameFrom, @RequestParam(value = "mail_from") String mailFrom, @RequestParam(value = "phone_from") String phoneFrom,
+			String content, @RequestParam(value = "attach_url") String attachUrl, @RequestParam(value = "attach_name") String attachName) throws JsonProcessingException {
 
 		return attachmentEmailSvc.sendAttachEmail2Admin(nameFrom, mailFrom, phoneFrom, content, attachUrl, attachName);
 	}

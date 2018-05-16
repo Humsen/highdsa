@@ -21,7 +21,7 @@ import pers.husen.highdsa.service.mybatis.CustUserManager;
  *
  * @Created at 2018年4月16日 上午11:27:02
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 @Service
 public class UserSvc {
@@ -46,7 +46,7 @@ public class UserSvc {
 	}
 
 	public ModelAndView showUserList() {
-		List<?> list = custUserManager.getAllUsers();
+		List<?> list = custUserManager.findAllUsers();
 		ModelAndView mav = new ModelAndView("user-list");
 		mav.addObject("users", list);
 		return mav;
@@ -75,6 +75,6 @@ public class UserSvc {
 	}
 
 	public void corelationRole(Long userId, Long... roleIds) {
-		custUserManager.updateUserRoles(userId, roleIds);
+		custUserManager.modifyUserRoles(userId, roleIds);
 	}
 }

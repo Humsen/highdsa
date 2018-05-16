@@ -52,6 +52,7 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>message.properties</include>
+					<include>appkey.properties</include>
 				</includes>
 			</resource>
 			<!-- spring相关配置文件 -->

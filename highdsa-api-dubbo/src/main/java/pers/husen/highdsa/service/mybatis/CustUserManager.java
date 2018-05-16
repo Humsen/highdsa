@@ -12,7 +12,7 @@ import pers.husen.highdsa.common.entity.po.customer.CustUser;
  *
  * @Created at 2018年4月24日 上午10:16:04
  * 
- * @Version 1.0.5
+ * @Version 1.0.7
  */
 public interface CustUserManager {
 	/**
@@ -24,45 +24,6 @@ public interface CustUserManager {
 	public String createUser(CustUser custUser);
 
 	/**
-	 * 根据userId更新
-	 * 
-	 * @param custUser
-	 */
-	public void updateByUserId(CustUser custUser);
-
-	/**
-	 * 修改密码
-	 * 
-	 * @param userId
-	 * @param newPassword
-	 */
-	public void modifyPassword(Long userId, String newPassword);
-
-	/**
-	 * 根据用户id查找用户
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	CustUser findUserByUserId(Long userId);
-
-	/**
-	 * 添加用户-角色关系
-	 * 
-	 * @param userId
-	 * @param roleIds
-	 */
-	public void correlationRoles(Long userId, Long... roleIds);
-
-	/**
-	 * 移除用户-角色关系
-	 * 
-	 * @param userId
-	 * @param roleIds
-	 */
-	public void uncorrelationRoles(Long userId, Long... roleIds);
-
-	/**
 	 * 增加用户和用户-角色关联
 	 * 
 	 * @param custUser
@@ -72,18 +33,12 @@ public interface CustUserManager {
 	CustUser addUser(CustUser custUser, Long... roleIds);
 
 	/**
-	 * 根据id删除用户
+	 * 根据用户id查找用户
 	 * 
 	 * @param userId
+	 * @return
 	 */
-	void deleteUser(Long userId);
-
-	/**
-	 * 删除一组用户
-	 * 
-	 * @param userIds
-	 */
-	void deleteMoreUsers(Long... userIds);
+	CustUser findUserByUserId(Long userId);
 
 	/**
 	 * 根据用户名查找用户
@@ -162,15 +117,7 @@ public interface CustUserManager {
 	 * 
 	 * @return
 	 */
-	List<CustUser> getAllUsers();
-
-	/**
-	 * 更新用户-角色关联
-	 * 
-	 * @param userId
-	 * @param roleIds
-	 */
-	void updateUserRoles(Long userId, Long... roleIds);
+	List<CustUser> findAllUsers();
 
 	/**
 	 * 根据用户名查找导航栏
@@ -179,4 +126,65 @@ public interface CustUserManager {
 	 * @return
 	 */
 	List<CustNavigation> findNavigationBar(String userName);
+
+	/**
+	 * 根据userId更新
+	 * 
+	 * @param custUser
+	 */
+	public void modifyUserByUserId(CustUser custUser);
+
+	/**
+	 * 更新用户-角色关联
+	 * 
+	 * @param userId
+	 * @param roleIds
+	 */
+	void modifyUserRoles(Long userId, Long... roleIds);
+
+	/**
+	 * 修改密码
+	 * 
+	 * @param userId
+	 * @param newPassword
+	 */
+	public void modifyPassword(Long userId, String newPassword);
+
+	/**
+	 * 根据手机号更新密码
+	 * 
+	 * @param userPhone
+	 * @param newPassword
+	 */
+	public void modifyPasswordByUserPhone(String userPhone, String newPassword);
+
+	/**
+	 * 根据id删除用户
+	 * 
+	 * @param userId
+	 */
+	void deleteUser(Long userId);
+
+	/**
+	 * 删除一组用户
+	 * 
+	 * @param userIds
+	 */
+	void deleteMoreUsers(Long... userIds);
+
+	/**
+	 * 添加用户-角色关系
+	 * 
+	 * @param userId
+	 * @param roleIds
+	 */
+	public void correlationRoles(Long userId, Long... roleIds);
+
+	/**
+	 * 移除用户-角色关系
+	 * 
+	 * @param userId
+	 * @param roleIds
+	 */
+	public void uncorrelationRoles(Long userId, Long... roleIds);
 }

@@ -11,16 +11,9 @@ import pers.husen.highdsa.common.entity.po.system.SysSessions;
  *
  * @Created at 2018年4月17日 上午9:47:01
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public interface SysSessionsManager {
-	/**
-	 * 根据主键删除
-	 * 
-	 * @param sessionId
-	 * @return
-	 */
-	int deleteBySessionId(String sessionId);
 
 	/**
 	 * 插入新记录
@@ -39,21 +32,6 @@ public interface SysSessionsManager {
 	SysSessions findBySessionId(String sessionId);
 
 	/**
-	 * 查询所有
-	 * 
-	 * @return
-	 */
-	List<SysSessions> selectAll();
-
-	/**
-	 * 根据主键更新
-	 * 
-	 * @param sysSessions
-	 * @return
-	 */
-	int updateBySessionId(SysSessions sysSessions);
-
-	/**
 	 * 分页查找
 	 * 
 	 * @param start
@@ -63,4 +41,27 @@ public interface SysSessionsManager {
 	 * @return
 	 */
 	List<SysSessions> findListByPage(int start, int size);
+
+	/**
+	 * 查询所有
+	 * 
+	 * @return
+	 */
+	List<SysSessions> findAll();
+
+	/**
+	 * 根据主键更新
+	 * 
+	 * @param sysSessions
+	 * @return
+	 */
+	int modifyBySessionId(SysSessions sysSessions);
+
+	/**
+	 * 根据主键删除
+	 * 
+	 * @param sessionId
+	 * @return
+	 */
+	int deleteBySessionId(String sessionId);
 }

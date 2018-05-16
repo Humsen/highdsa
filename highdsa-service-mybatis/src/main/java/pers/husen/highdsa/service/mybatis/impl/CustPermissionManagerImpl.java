@@ -20,7 +20,7 @@ import pers.husen.highdsa.service.mybatis.dao.customer.CustRolePermissionMapper;
  *
  * @Created at 2018年4月24日 上午10:25:21
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 @Service("custPermissionManager")
 public class CustPermissionManagerImpl implements CustPermissionManager {
@@ -57,6 +57,35 @@ public class CustPermissionManagerImpl implements CustPermissionManager {
 	}
 
 	@Override
+	public CustPermission findSysPermissionById(Long permissionId) {
+		return custPermissionMapper.selectByPrimaryKey(permissionId);
+	}
+
+	@Override
+	public List<CustPermission> findPermissionsByRoleId(Long roleId) {
+		return custPermissionMapper.findPermissionsByRoleId(roleId);
+	}
+
+	@Override
+	public List<CustPermission> findAllPermissions() {
+		return custPermissionMapper.selectAll();
+	}
+
+	@Override
+	public void modifyPermissionByPrimaryKey(CustPermission custPermission) {
+		// 如果是否为导航属性为null,说明创建时没有被勾选,设置为false
+		if (custPermission.getPermissionNavi() == null) {
+			custPermission.setPermissionNavi(false);
+		}
+		// 设置权限有效
+		custPermission.setPermissionValid(true);
+		// 设置最后更新时间
+		custPermission.setPermissionLastModifyTime(new Date());
+
+		custPermissionMapper.updateByPrimaryKey(custPermission);
+	}
+
+	@Override
 	public void deletePermission(Long permissionId) {
 		custRolePermissionMapper.deleteByPermissionId(permissionId);
 		custPermissionMapper.deleteByPrimaryKey(permissionId);
@@ -69,34 +98,5 @@ public class CustPermissionManagerImpl implements CustPermissionManager {
 				deletePermission(permissionId);
 			}
 		}
-	}
-
-	@Override
-	public CustPermission findSysPermissionById(Long permissionId) {
-		return custPermissionMapper.selectByPrimaryKey(permissionId);
-	}
-
-	@Override
-	public List<CustPermission> findPermissionsByRoleId(Long roleId) {
-		return custPermissionMapper.findPermissionsByRoleId(roleId);
-	}
-
-	@Override
-	public List<CustPermission> getAllPermissions() {
-		return custPermissionMapper.selectAll();
-	}
-
-	@Override
-	public void updatePermissionByPrimaryKey(CustPermission custPermission) {
-		// 如果是否为导航属性为null,说明创建时没有被勾选,设置为false
-		if (custPermission.getPermissionNavi() == null) {
-			custPermission.setPermissionNavi(false);
-		}
-		// 设置权限有效
-		custPermission.setPermissionValid(true);
-		// 设置最后更新时间
-		custPermission.setPermissionLastModifyTime(new Date());
-
-		custPermissionMapper.updateByPrimaryKey(custPermission);
 	}
 }

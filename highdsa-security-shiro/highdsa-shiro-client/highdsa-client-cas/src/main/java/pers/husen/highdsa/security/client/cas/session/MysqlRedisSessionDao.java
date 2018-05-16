@@ -22,7 +22,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年4月20日 上午12:10:04
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class MysqlRedisSessionDao extends CachingSessionDAO {
 	private static final Logger logger = LogManager.getLogger(MysqlRedisSessionDao.class.getName());
@@ -99,7 +99,7 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 		CustSessions custSessions = new CustSessions(String.valueOf(session.getId()), sessionValue);
 		custSessions.setSessionLastModifyTime(new Date());
 		custSessions.setSessionValid(true);
-		custSessionsManager.updateBySessionId(custSessions);
+		custSessionsManager.modifyBySessionId(custSessions);
 
 		byte[] key = this.getByteKey(session.getId());
 		byte[] value = Serializer.serialize(session);

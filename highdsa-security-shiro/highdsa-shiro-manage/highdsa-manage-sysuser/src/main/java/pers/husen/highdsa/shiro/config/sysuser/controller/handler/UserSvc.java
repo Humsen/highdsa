@@ -21,7 +21,7 @@ import pers.husen.highdsa.service.mybatis.SysUserManager;
  *
  * @Created at 2018年4月16日 上午11:27:02
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 @Service
 public class UserSvc {
@@ -46,14 +46,14 @@ public class UserSvc {
 	}
 
 	public ModelAndView showUserList() {
-		List<?> list = sysUserManager.getAllUsers();
+		List<?> list = sysUserManager.findAllUsers();
 		ModelAndView mav = new ModelAndView("user-list");
 		mav.addObject("users", list);
 		return mav;
 	}
 
 	public SysUser addUser(SysUser user, Long... roleIds) {
-		SysUser sysUser = sysUserManager.addUser(user, roleIds);
+		SysUser sysUser = sysUserManager.createUserRoles(user, roleIds);
 
 		return sysUser;
 	}
@@ -75,6 +75,6 @@ public class UserSvc {
 	}
 
 	public void corelationRole(Long userId, Long... roleIds) {
-		sysUserManager.updateUserRoles(userId, roleIds);
+		sysUserManager.modifyUserRoles(userId, roleIds);
 	}
 }

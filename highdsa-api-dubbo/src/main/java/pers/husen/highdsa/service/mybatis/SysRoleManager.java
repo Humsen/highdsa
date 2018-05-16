@@ -12,7 +12,7 @@ import pers.husen.highdsa.common.entity.po.system.SysUser;
  *
  * @Created at 2018年3月29日 上午9:21:03
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public interface SysRoleManager {
 	/**
@@ -24,43 +24,21 @@ public interface SysRoleManager {
 	public int createSysRole(SysRole sysRole);
 
 	/**
-	 * 添加角色-权限之间关系
-	 * 
-	 * @param roleId
-	 * @param permissionIds
-	 */
-	public void correlationPermissions(Long roleId, Long... permissionIds);
-
-	/**
-	 * 移除角色-权限之间关系
-	 * 
-	 * @param roleId
-	 * @param permissionIds
-	 */
-	public void uncorrelationPermissions(Long roleId, Long... permissionIds);
-
-	/**
 	 * 添加角色
 	 * 
 	 * @param sysRole
 	 * @param permissionIds
 	 * @return
 	 */
-	SysRole addRole(SysRole sysRole, Long... permissionIds);
+	SysRole addRolePermissions(SysRole sysRole, Long... permissionIds);
 
 	/**
-	 * 根据id删除
+	 * 增加角色权限关联
 	 * 
 	 * @param roleId
+	 * @param permissionIds
 	 */
-	void deleteRole(Long roleId);
-
-	/**
-	 * 删除一组角色
-	 * 
-	 * @param roleIds
-	 */
-	void deleteMoreRoles(Long... roleIds);
+	void addRolePermissions(Long roleId, Long... permissionIds);
 
 	/**
 	 * 根据角色id查找角色
@@ -91,13 +69,35 @@ public interface SysRoleManager {
 	 * @param role
 	 * @param permIds
 	 */
-	void updateRole(SysRole role, Long... permIds);
+	void modifyRolePermissions(SysRole role, Long... permIds);
 
 	/**
-	 * 增加角色权限关联
+	 * 根据id删除
+	 * 
+	 * @param roleId
+	 */
+	void deleteRole(Long roleId);
+
+	/**
+	 * 删除一组角色
+	 * 
+	 * @param roleIds
+	 */
+	void deleteMoreRoles(Long... roleIds);
+
+	/**
+	 * 添加角色-权限之间关系
 	 * 
 	 * @param roleId
 	 * @param permissionIds
 	 */
-	void addRolePermissions(Long roleId, Long... permissionIds);
+	public void correlationPermissions(Long roleId, Long... permissionIds);
+
+	/**
+	 * 移除角色-权限之间关系
+	 * 
+	 * @param roleId
+	 * @param permissionIds
+	 */
+	public void uncorrelationPermissions(Long roleId, Long... permissionIds);
 }
