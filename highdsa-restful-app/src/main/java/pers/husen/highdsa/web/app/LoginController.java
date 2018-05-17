@@ -18,7 +18,7 @@ import pers.husen.highdsa.web.app.handler.LoginSvc;
  *
  * @Created at 2018年5月12日 下午5:30:05
  * 
- * @Version 1.0.5
+ * @Version 1.0.6
  */
 @Controller
 @RequestMapping(value = "/app/v1")
@@ -65,5 +65,19 @@ public class LoginController {
 	public String retrivePassword(@RequestParam("phone_number") String phoneNumber, String captcha, @RequestParam("new_password") String newPwd) throws JsonProcessingException {
 
 		return loginSvc.retrivePassword(phoneNumber, captcha, newPwd);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/user/info/phone", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	public String getUserInfoByPhone(@RequestParam("phone_number") String phoneNumber) throws JsonProcessingException {
+
+		return loginSvc.getUserInfoByPhone(phoneNumber);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/user/info/username", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	public String getUserInfoByUserName(@RequestParam("username") String userName) throws JsonProcessingException {
+
+		return loginSvc.getUserInfoByUserName(userName);
 	}
 }

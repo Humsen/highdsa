@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +32,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年4月3日 下午4:22:19
  * 
- * @Version 1.0.6
+ * @Version 1.0.7
  */
 @Service
 public class LoginSvc {
@@ -233,6 +234,61 @@ public class LoginSvc {
 			responseJson = new ResponseJson(false, "手机验证失败");
 		}
 
+		reply = objectMapper.writeValueAsString(responseJson);
+		logger.info(reply);
+
+		return reply;
+	}
+
+	/**
+	 * 根据手机号获取用户信息
+	 * 
+	 * @param phoneNumber
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	public String getUserInfoByPhone(@RequestParam("phone_number") String phoneNumber) throws JsonProcessingException {
+		String reply = null;
+		CustUser user = null;
+
+		// 手机号查询ID
+		user = custUserManager.findUserByUserPhone(phoneNumber);
+
+		// 防止空指针异常
+		if (user == null) {
+			responseJson = new ResponseJson(false, "获取用户信息失败");
+
+			return objectMapper.writeValueAsString(responseJson);
+		}
+
+		CustUserInfo userInfo = custUserInfoManager.findUserInfoById(user.getUserId());
+
+		responseJson.setSuccess(true);
+		responseJson.setMessage(userInfo);
+		reply = objectMapper.writeValueAsString(responseJson);
+		logger.info(reply);
+
+		return reply;
+	}
+
+	public String getUserInfoByUserName(String userName) throws JsonProcessingException {
+		String reply = null;
+		CustUser user = null;
+
+		// 用户名查询Id
+		user = custUserManager.findUserByUserName(userName);
+
+		// 防止空指针异常
+		if (user == null) {
+			responseJson = new ResponseJson(false, "获取用户信息失败");
+
+			return objectMapper.writeValueAsString(responseJson);
+		}
+
+		CustUserInfo userInfo = custUserInfoManager.findUserInfoById(user.getUserId());
+
+		responseJson.setSuccess(true);
+		responseJson.setMessage(userInfo);
 		reply = objectMapper.writeValueAsString(responseJson);
 		logger.info(reply);
 

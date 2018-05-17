@@ -20,11 +20,11 @@ import pers.husen.highdsa.common.constant.RedisCacheConstants;
  *
  * @Created at 2018年3月29日 下午11:30:16
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 	private static final Logger logger = LogManager.getLogger(RetryLimitHashedCredentialsMatcher.class.getName());
-	
+
 	private Cache<String, AtomicInteger> passwordRetryCache;
 
 	public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) {
@@ -40,9 +40,9 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
 		if (retryCount == null) {
 			logger.debug("retryCount 为Null, 初始化为0");
-			
+
 			retryCount = new AtomicInteger(0);
-			passwordRetryCache.put(username, retryCount);
+			passwordRetryCache.put(RedisCacheConstants.SHIRO_LOGIN_FAIL_COUNT + username, retryCount);
 		}
 		if (retryCount.incrementAndGet() > RedisCacheConstants.SHIRO_LOGIN_FAIL_MAX_COUNT) {
 			logger.warn("retryCount 大于5,登录失败超过5次");
@@ -53,7 +53,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 		boolean matches = super.doCredentialsMatch(token, info);
 		if (matches) {
 			// clear retry count
-			passwordRetryCache.remove(username);
+			passwordRetryCache.remove(RedisCacheConstants.SHIRO_LOGIN_FAIL_COUNT + username);
 		}
 		return matches;
 	}
