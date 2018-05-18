@@ -76,7 +76,7 @@ public class LoginSvc {
 	public String loginWithName(String userName, String userPassword) throws JsonProcessingException {
 		String reply = null;
 
-		CustomerAccountPasswordToken token = new CustomerAccountPasswordToken(userName, userPassword, LoginType.USERNAME);
+		CustomerAccountPasswordToken token = new CustomerAccountPasswordToken(userName, userPassword, true, LoginType.USERNAME);
 		responseJson = login(token);
 
 		reply = objectMapper.writeValueAsString(responseJson);
@@ -101,7 +101,7 @@ public class LoginSvc {
 		// logger.info("解密后的密码:{}", password);
 		logger.info("用户:{}, 密码：{}", phone, userPassword);
 
-		CustomerAccountPasswordToken token = new CustomerAccountPasswordToken(phone, userPassword, LoginType.PHONE);
+		CustomerAccountPasswordToken token = new CustomerAccountPasswordToken(phone, userPassword, true, LoginType.PHONE);
 		responseJson = login(token);
 
 		reply = objectMapper.writeValueAsString(responseJson);
@@ -121,7 +121,7 @@ public class LoginSvc {
 	public String loginWithEmail(String email, String userPassword) throws JsonProcessingException {
 		String reply = null;
 
-		CustomerAccountPasswordToken token = new CustomerAccountPasswordToken(email, userPassword, LoginType.EMAIL);
+		CustomerAccountPasswordToken token = new CustomerAccountPasswordToken(email, userPassword, true, LoginType.EMAIL);
 		responseJson = login(token);
 
 		reply = objectMapper.writeValueAsString(responseJson);
@@ -137,7 +137,6 @@ public class LoginSvc {
 	 * @return
 	 */
 	private ResponseJson login(CustomerAccountPasswordToken token) {
-		token.setRememberMe(true);
 		try {
 			SecurityUtils.getSubject().login(token);
 

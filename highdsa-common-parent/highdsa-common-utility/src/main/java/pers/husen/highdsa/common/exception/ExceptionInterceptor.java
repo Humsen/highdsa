@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,8 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import pers.husen.highdsa.common.constant.JsonKey3Value;
-import pers.husen.highdsa.common.exception.StackTrace2Str;
+import pers.husen.highdsa.common.constant.ExceptionName;
+import pers.husen.highdsa.common.entity.vo.restful.ResponseJson;
 import pers.husen.highdsa.common.exception.db.SqlException;
 
 /**
@@ -26,67 +27,91 @@ import pers.husen.highdsa.common.exception.db.SqlException;
  *
  * @Created at 2018年2月26日 下午11:29:05
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 public class ExceptionInterceptor implements HandlerExceptionResolver {
-	private final Logger logger = LogManager.getLogger(ExceptionInterceptor.class.getName());
+	private static final Logger logger = LogManager.getLogger(ExceptionInterceptor.class.getName());
+	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
-	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object object,
-			Exception exception) {
+	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object object, Exception exception) {
 		logger.fatal(StackTrace2Str.exceptionStackTrace2Str(exception));
+		ResponseJson responseJson = new ResponseJson(false);
+
 		// 判断是否ajax请求
-		//int acceptJson = request.getHeader("accept").indexOf("application/json");
-		boolean isAjax = true;
-
-		if (!isAjax) {
-			logger.fatal("不是ajax");
-			// 如果不是ajax,JSP格式返回
-			// 为安全起见,只有业务异常我们对前端可见,否则否则统一归为系统异常
-			Map<String, Object> map = new HashMap<String, Object>(200);
-			map.put("success", false);
-
+		if (!isAjax(request)) {
+			// 如果被识别为相应异常则做出相应处理, 否则统一归为系统异常
 			if (exception instanceof SqlException) {
 				response.setStatus(400);
-				map.put(JsonKey3Value.ERROR_MSG, exception.getMessage());
-				logger.error("show business exception:{}", exception.getMessage());
+
+				responseJson.setMessage(ExceptionName.SQL_EXCEPTION);
+				logger.error(StackTrace2Str.exceptionStackTrace2Str("捕获SQL异常", exception));
 			} else {
-				map.put(JsonKey3Value.ERROR_MSG, JsonKey3Value.SYS_EXCEPTION);
-				logger.error("show exception:{}", JsonKey3Value.SYS_EXCEPTION);
+				responseJson.setMessage(ExceptionName.SYS_EXCEPTION);
+				logger.error(StackTrace2Str.exceptionStackTrace2Str("捕获系统异常", exception));
 			}
 
 			// 对于非ajax请求,我们都统一跳转到error.jsp页面
-			return new ModelAndView("redirect:/error.jsp", map);
+			return new ModelAndView("redirect:/error.jsp", responseJson2Map(responseJson));
 		} else {
-			logger.fatal("是ajax");
-			Map<String, Object> map = new HashMap<String, Object>(200);
+
 			// 如果是ajax请求,JSON格式返回
 			try {
 				response.setContentType("application/json;charset=UTF-8");
 				response.setCharacterEncoding("UTF-8");
 				PrintWriter writer = response.getWriter();
 
-				map.put("success", false);
 				// 为安全起见,只有业务异常我们对前端可见,否则统一归为系统异常
 				if (exception instanceof SqlException) {
-					map.put(JsonKey3Value.ERROR_MSG, exception.getMessage());
-					logger.error("show business exception:{}", exception.getMessage());
+					responseJson.setMessage(ExceptionName.SQL_EXCEPTION);
+					logger.error(StackTrace2Str.exceptionStackTrace2Str("捕获SQL异常", exception));
 				} else {
-					map.put(JsonKey3Value.ERROR_MSG, JsonKey3Value.SYS_EXCEPTION);
-					logger.error("show exception:{}", JsonKey3Value.SYS_EXCEPTION);
+					responseJson.setMessage(ExceptionName.SYS_EXCEPTION);
+					logger.error(StackTrace2Str.exceptionStackTrace2Str("捕获系统异常", exception));
 				}
 
-				ObjectMapper mapper = new ObjectMapper();
-				writer.write(mapper.writeValueAsString(map));
+				writer.write(objectMapper.writeValueAsString(responseJson));
 				writer.flush();
 				writer.close();
+				
 				return null;
 			} catch (IOException e) {
-				logger.error("show exception error:{}", e.getMessage());
-				// map.put(OssRespCodes.ERROR_MSG, ErrorMessage.SYS_EXCEPTION);
+				logger.error(StackTrace2Str.exceptionStackTrace2Str("异常系统捕获处理时再次异常", e));
+
 				// 异常中的异常返回到错误页面
-				return new ModelAndView("redirect:/error.jsp", map);
+				return new ModelAndView("redirect:/error.jsp", responseJson2Map(responseJson));
 			}
 		}
+	}
+
+	/**
+	 * 判断是否是ajax请求
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static boolean isAjax(ServletRequest request) {
+		String header = ((HttpServletRequest) request).getHeader("X-Requested-With");
+
+		if (header != null && "XMLHttpRequest".equalsIgnoreCase(header)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	private Map<String, ?> responseJson2Map(ResponseJson responseJson) {
+		Map<?, ?> map = new HashMap<>(2);
+
+		try {
+			String jsonStr = objectMapper.writeValueAsString(responseJson);
+
+			map = objectMapper.readValue(jsonStr, Map.class);
+		} catch (IOException e) {
+			logger.fatal(StackTrace2Str.exceptionStackTrace2Str("jackson转换异常", e));
+		}
+
+		return (Map<String, ?>) map;
 	}
 }

@@ -80,9 +80,9 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 * @return
 	 */
 	private byte[] getByteKey(K key) {
-		logger.trace(key instanceof Serializable);
-		logger.trace(key instanceof String);
-		logger.trace(key.getClass().getName());
+		//logger.trace(key instanceof Serializable);
+		//logger.trace(key instanceof String);
+		//logger.trace(key.getClass().getName());
 
 		if (!(key instanceof Serializable)) {
 			throw new ParamsException("序列化参数没有实现Serializable接口");

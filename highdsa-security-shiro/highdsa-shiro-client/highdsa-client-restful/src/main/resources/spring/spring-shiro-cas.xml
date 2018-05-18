@@ -17,7 +17,7 @@
 	<!-- Realm实现 -->
 	<bean id="CustUserNameRealm" class="pers.husen.highdsa.client.restful.realm.CustUserNameRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
-		<property name="cachingEnabled" value="false" />
+		<property name="cachingEnabled" value="true" />
 		<property name="authenticationCachingEnabled" value="true" />
 		<property name="authenticationCacheName" value="authenticationCache" />
 		<property name="authorizationCachingEnabled" value="true" />
@@ -25,7 +25,7 @@
 	</bean>
 	<bean id="custUserPhoneRealm" class="pers.husen.highdsa.client.restful.realm.CustUserPhoneRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
-		<property name="cachingEnabled" value="false" />
+		<property name="cachingEnabled" value="true" />
 		<property name="authenticationCachingEnabled" value="true" />
 		<property name="authenticationCacheName" value="authenticationCache" />
 		<property name="authorizationCachingEnabled" value="true" />
@@ -33,7 +33,7 @@
 	</bean>
 	<bean id="custUserEmailRealm" class="pers.husen.highdsa.client.restful.realm.CustUserEmailRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
-		<property name="cachingEnabled" value="false" />
+		<property name="cachingEnabled" value="true" />
 		<property name="authenticationCachingEnabled" value="true" />
 		<property name="authenticationCacheName" value="authenticationCache" />
 		<property name="authorizationCachingEnabled" value="true" />
@@ -69,7 +69,7 @@
 
 	<!-- 会话DAO -->
 	<bean id="sessionDAO" class="pers.husen.highdsa.client.restful.session.MysqlRedisSessionDao">
-	<constructor-arg name="custSessionsManager" ref="custSessionsManager" />
+		<constructor-arg name="custSessionsManager" ref="custSessionsManager" />
 		<constructor-arg name="redisOperation" ref="redisOperation" />
 		<property name="activeSessionsCacheName" value="shiro_redis_session_app:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
@@ -114,10 +114,22 @@
 	<!-- Shiro的Web过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/login" />
+		<property name="loginUrl" value="/app/v1/login/**" />
+		<property name="filters">
+			<map>
+				<entry key="authc">
+					<bean class="pers.husen.highdsa.client.restful.filter.CustomAuthenticationFilter" />
+				</entry>
+				<entry key="perms">
+					<bean class="pers.husen.highdsa.client.restful.filter.CustomAuthorizationFilter" />
+				</entry>
+			</map>
+		</property>
 		<property name="filterChainDefinitions">
 			<value>
-				/** = anon
+				/app/v1/login/** = anon
+				/app/v1/user/info/* = authc,perms["user:view"]
+				/** = authc
 			</value>
 		</property>
 	</bean>

@@ -13,7 +13,7 @@ import pers.husen.highdsa.common.entity.enums.LoginType;
  * 
  * @Version 1.0.0
  */
-public class CustomerAccountPasswordToken extends UsernamePasswordToken{
+public class CustomerAccountPasswordToken extends UsernamePasswordToken {
 	private static final long serialVersionUID = -8129884664300987750L;
 
 	private LoginType loginType;
@@ -32,6 +32,77 @@ public class CustomerAccountPasswordToken extends UsernamePasswordToken{
 	}
 
 	/**
+	 * @param username
+	 * @param password
+	 * @param rememberMe
+	 * @param host
+	 */
+	public CustomerAccountPasswordToken(String username, char[] password, boolean rememberMe, String host, LoginType loginType) {
+		super(username, password, rememberMe, host);
+		this.loginType = loginType;
+	}
+
+	/**
+	 * @param username
+	 * @param password
+	 * @param rememberMe
+	 */
+	public CustomerAccountPasswordToken(String username, char[] password, boolean rememberMe, LoginType loginType) {
+		super(username, password, rememberMe);
+		this.loginType = loginType;
+	}
+
+	/**
+	 * @param username
+	 * @param password
+	 * @param host
+	 */
+	public CustomerAccountPasswordToken(String username, char[] password, String host, LoginType loginType) {
+		super(username, password, host);
+		this.loginType = loginType;
+	}
+
+	/**
+	 * @param username
+	 * @param password
+	 */
+	public CustomerAccountPasswordToken(String username, char[] password, LoginType loginType) {
+		super(username, password);
+		this.loginType = loginType;
+	}
+
+	/**
+	 * @param username
+	 * @param password
+	 * @param rememberMe
+	 * @param host
+	 */
+	public CustomerAccountPasswordToken(String username, String password, boolean rememberMe, String host, LoginType loginType) {
+		super(username, password, rememberMe, host);
+		this.loginType = loginType;
+	}
+
+	/**
+	 * @param username
+	 * @param password
+	 * @param rememberMe
+	 */
+	public CustomerAccountPasswordToken(String username, String password, boolean rememberMe, LoginType loginType) {
+		super(username, password, rememberMe);
+		this.loginType = loginType;
+	}
+
+	/**
+	 * @param username
+	 * @param password
+	 * @param host
+	 */
+	public CustomerAccountPasswordToken(String username, String password, String host, LoginType loginType) {
+		super(username, password, host);
+		this.loginType = loginType;
+	}
+
+	/**
 	 * @return the loginType
 	 */
 	public LoginType getLoginType() {
@@ -39,7 +110,8 @@ public class CustomerAccountPasswordToken extends UsernamePasswordToken{
 	}
 
 	/**
-	 * @param loginType the loginType to set
+	 * @param loginType
+	 *            the loginType to set
 	 */
 	public void setLoginType(LoginType loginType) {
 		this.loginType = loginType;

@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 import pers.husen.highdsa.common.constant.EmailConstants;
 import pers.husen.highdsa.common.constant.Encode;
-import pers.husen.highdsa.common.constant.ResponseConstants;
+import pers.husen.highdsa.common.constant.HttpConstants;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.email.SimpleHtmlEmail;
 import pers.husen.highdsa.service.email.core.SaveEmail;
@@ -30,7 +30,7 @@ import pers.husen.highdsa.service.email.core.SendEmailCore;
  *
  * @Created at 2018年2月3日 下午5:22:44
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	private static final Logger logger = LogManager.getLogger(SimpleHtmlEmailImpl.class.getName());
@@ -41,7 +41,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	/** ------------ 发送给用户 --------------- */
 
 	@Override
-	public int sendEmail4RetrivePwd(String email, int randomCode) {
+	public boolean sendEmail4RetrivePwd(String email, int randomCode) {
 		String subject = "【highdsa项目组】找回密码邮箱验证";
 		String mode = "您正在使用找回密码功能.";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>" + "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】,请于10分钟内输入,任何人都不会向您索取,请勿泄露."
@@ -53,7 +53,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	}
 
 	@Override
-	public int sendEmail4Register(String email, int randomCode) {
+	public boolean sendEmail4Register(String email, int randomCode) {
 		String subject = "【highdsa项目组】新用户注册邮箱验证";
 		String mode = "欢迎在【highdsa项目组】注册账号.";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>" + "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】,请于10分钟内输入,任何人都不会向您索取,请勿泄露."
@@ -65,7 +65,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	}
 
 	@Override
-	public int sendEmail4ModifyEmailAuth(String email, int randomCode) {
+	public boolean sendEmail4ModifyEmailAuth(String email, int randomCode) {
 		String subject = "【highdsa项目组】用户修改邮箱验证原邮箱";
 		String mode = "您正在使用修改邮箱功能.第一步,验证码您的原邮箱.";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>" + "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】,请于10分钟内输入,任何人都不会向您索取,请勿泄露."
@@ -77,7 +77,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	}
 
 	@Override
-	public int sendEmail4ModifyEmailBind(String email, int randomCode) {
+	public boolean sendEmail4ModifyEmailBind(String email, int randomCode) {
 		String subject = "【highdsa项目组】用户修改邮箱绑定新邮箱";
 		String mode = "您正在使用修改邮箱功能.第二步,绑定您的新邮箱.";
 		String content = "尊敬的用户：" + "<br/>&emsp;&emsp;您好!" + "<br/>&emsp;&emsp;" + mode + "<br/>" + "<br/>&emsp;&emsp;您的邮箱验证码【" + randomCode + "】,请于10分钟内输入,任何人都不会向您索取,请勿泄露."
@@ -89,7 +89,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	}
 
 	@Override
-	public int sendEmail2User(String userEmail, String subject, String content) {
+	public boolean sendEmail2User(String userEmail, String subject, String content) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			Session session = sendEmailCore.getSession(EmailConstants.CONFIG_FILE_2USER);
@@ -105,7 +105,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 			message.setSubject(subject);
 
 			// 设置邮件内容 html文本
-			message.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
+			message.setContent(content, HttpConstants.RESPONSE_TEXT_HTML);
 
 			// 发送信息的工具
 			Transport transport = session.getTransport();
@@ -120,12 +120,12 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 			// 保存邮件
 			new SaveEmail(message);
 
-			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
+			return true;
 		} catch (MessagingException | GeneralSecurityException | IOException e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("发送邮件给用户-->出错", e));
 		}
 
-		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
+		return false;
 	}
 
 	/** ------------------------- 分割线 ----------------------- */
@@ -133,7 +133,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	/** ------------ 发送给管理员 --------------- */
 
 	@Override
-	public int sendEmail4UserFeedback(String name, String userEmail, String phone, String content) {
+	public boolean sendEmail4UserFeedback(String name, String userEmail, String phone, String content) {
 		content = "highdsa项目组：<br/>&emsp;&emsp;你好! 我是您的机器人.<br/>&emsp;&emsp;现在有人通过您的\"联系管理员\"功能给您发邮件,详情如下：" + "<br/>" + "<br/>&emsp;&emsp;姓名：" + name + "<br/>&emsp;&emsp;手机：" + phone
 				+ "<br/>&emsp;&emsp;邮箱：" + userEmail + "<br/>&emsp;&emsp;邮件内容：<br/>&emsp;&emsp;&emsp;&emsp;" + content;
 
@@ -143,7 +143,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 	}
 
 	@Override
-	public int sendEmail2Admin(String name, String senderEmail, String phone, String content) {
+	public boolean sendEmail2Admin(String name, String senderEmail, String phone, String content) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			Session session = sendEmailCore.getSession(EmailConstants.CONFIG_FILE_2ADMIN);
@@ -159,7 +159,7 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 			message.setSubject(mailToAdminSubject);
 
 			// 设置邮件内容 普通文本
-			message.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
+			message.setContent(content, HttpConstants.RESPONSE_TEXT_HTML);
 
 			// 发送信息的工具
 			Transport transport = session.getTransport();
@@ -174,11 +174,11 @@ public class SimpleHtmlEmailImpl implements SimpleHtmlEmail {
 			// 保存邮件
 			new SaveEmail(message);
 
-			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
+			return true;
 		} catch (MessagingException | UnsupportedEncodingException | GeneralSecurityException e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("发送邮件给管理员-->出错", e));
 		}
 
-		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
+		return false;
 	}
 }

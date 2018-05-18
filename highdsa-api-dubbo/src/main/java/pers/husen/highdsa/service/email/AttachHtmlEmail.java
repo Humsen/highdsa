@@ -9,7 +9,7 @@ import java.io.File;
  *
  * @Created at 2018年2月5日 下午4:28:42
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public interface AttachHtmlEmail {
 	/**
@@ -22,7 +22,7 @@ public interface AttachHtmlEmail {
 	 *            附件文件
 	 * @return
 	 */
-	public int sendEmail2User(String mailTo, String subject, String content, File attachFile);
+	public boolean sendEmail2User(String mailTo, String subject, String content, File attachFile);
 
 	/**
 	 * /** 发送邮件给用户
@@ -39,7 +39,7 @@ public interface AttachHtmlEmail {
 	 *            附件名称
 	 * @return
 	 */
-	public int sendEmail2User(String mailTo, String subject, String content, String attachUrl, String attachName);
+	public boolean sendEmail2User(String mailTo, String subject, String content, String attachUrl, String attachName);
 
 	/**
 	 * 发送带附件的邮件给管理员
@@ -52,7 +52,7 @@ public interface AttachHtmlEmail {
 	 *            附件文件
 	 * @return
 	 */
-	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, File attachFile);
+	public boolean sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, File attachFile);
 
 	/**
 	 * 发送带附件的邮件给管理员
@@ -71,6 +71,5 @@ public interface AttachHtmlEmail {
 	 *            附件名称
 	 * @return
 	 */
-	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, String attachUrl,
-			String attachName);
+	public boolean sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, String attachUrl, String attachName);
 }

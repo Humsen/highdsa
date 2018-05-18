@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 import pers.husen.highdsa.common.constant.EmailConstants;
 import pers.husen.highdsa.common.constant.Encode;
-import pers.husen.highdsa.common.constant.ResponseConstants;
+import pers.husen.highdsa.common.constant.HttpConstants;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.email.AttachHtmlEmail;
 import pers.husen.highdsa.service.email.core.SaveEmail;
@@ -37,13 +37,13 @@ import pers.husen.highdsa.service.email.core.SendEmailCore;
  *
  * @Created at 2018年2月5日 下午5:30:54
  * 
- * @Version 1.0.3
+ * @Version 1.0.4
  */
 public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 	private static final Logger logger = LogManager.getLogger(AttachHtmlEmailImpl.class.getName());
 
 	@Override
-	public int sendEmail2User(String mailTo, String subject, String content, File attachFile) {
+	public boolean sendEmail2User(String mailTo, String subject, String content, File attachFile) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			// 获取配置文件
@@ -66,7 +66,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 添加邮件正文
 			BodyPart contentPart = new MimeBodyPart();
-			contentPart.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
+			contentPart.setContent(content, HttpConstants.RESPONSE_TEXT_HTML);
 			multipart.addBodyPart(contentPart);
 
 			// 添加附件的内容
@@ -99,16 +99,16 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 保存邮件
 			new SaveEmail(message);
 
-			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
+			return true;
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
 
-		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
+		return false;
 	}
 
 	@Override
-	public int sendEmail2User(String mailTo, String subject, String content, String attachUrl, String attachName) {
+	public boolean sendEmail2User(String mailTo, String subject, String content, String attachUrl, String attachName) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			// 获取配置文件
@@ -131,7 +131,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 添加邮件正文
 			BodyPart contentPart = new MimeBodyPart();
-			contentPart.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
+			contentPart.setContent(content, HttpConstants.RESPONSE_TEXT_HTML);
 			multipart.addBodyPart(contentPart);
 
 			// 添加附件的内容
@@ -176,16 +176,16 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 保存邮件
 			new SaveEmail(message);
 
-			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
+			return true;
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
 
-		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
+		return false;
 	}
 
 	@Override
-	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, File attachFile) {
+	public boolean sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, File attachFile) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			Session session = sendEmailCore.getSession(EmailConstants.CONFIG_FILE_2ADMIN);
@@ -207,7 +207,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 添加邮件正文
 			BodyPart contentPart = new MimeBodyPart();
-			contentPart.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
+			contentPart.setContent(content, HttpConstants.RESPONSE_TEXT_HTML);
 			multipart.addBodyPart(contentPart);
 
 			// 添加附件的内容
@@ -240,16 +240,16 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 保存邮件
 			new SaveEmail(message);
 
-			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
+			return true;
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
 
-		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
+		return false;
 	}
 
 	@Override
-	public int sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, String attachUrl, String attachName) {
+	public boolean sendEmail2Admin(String nameFrom, String mailFrom, String phoneFrom, String content, String attachUrl, String attachName) {
 		try {
 			SendEmailCore sendEmailCore = new SendEmailCore();
 			Session session = sendEmailCore.getSession(EmailConstants.CONFIG_FILE_2ADMIN);
@@ -271,7 +271,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 添加邮件正文
 			BodyPart contentPart = new MimeBodyPart();
-			contentPart.setContent(content, ResponseConstants.RESPONSE_TEXT_HTML);
+			contentPart.setContent(content, HttpConstants.RESPONSE_TEXT_HTML);
 			multipart.addBodyPart(contentPart);
 
 			// 添加附件的内容
@@ -304,11 +304,11 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 保存邮件
 			new SaveEmail(message);
 
-			return ResponseConstants.RESPONSE_OPERATION_SUCCESS;
+			return true;
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str(e));
 		}
 
-		return ResponseConstants.RESPONSE_OPERATION_FAILURE;
+		return false;
 	}
 }

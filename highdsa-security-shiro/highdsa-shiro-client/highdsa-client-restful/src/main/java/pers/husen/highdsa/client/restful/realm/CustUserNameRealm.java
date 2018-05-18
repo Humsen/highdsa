@@ -108,8 +108,8 @@ public class CustUserNameRealm extends AuthorizingRealm {
 
 		// 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
 		// 用户名, 密码, salt=username+salt, realm name
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), user.getUserPassword(), new ByteSourceSerializable(user.getUserName() + user.getUserPwdSalt()),
-				getName());
+		ByteSourceSerializable credentialsSalt = new ByteSourceSerializable(user.getUserName() + user.getUserPwdSalt());
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), user.getUserPassword(), credentialsSalt, getName());
 
 		return authenticationInfo;
 	}
