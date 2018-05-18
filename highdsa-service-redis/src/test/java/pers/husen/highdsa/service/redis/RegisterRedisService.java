@@ -20,7 +20,7 @@ public class RegisterRedisService {
 		context.start();
 
 		System.out.println("=============== redis服务已经启动... ==================");
-		
+
 		System.in.read();
 		context.close();
 	}
