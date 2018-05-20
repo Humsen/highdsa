@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.AbstractValidatingSessionManager;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
-import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.ValidatingSessionManager;
@@ -33,7 +32,7 @@ import pers.husen.highdsa.service.mybatis.CustSessionsManager;
  *
  * @Created at 2018年4月3日 下午3:49:25
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class MysqlSessionValidationScheduler implements SessionValidationScheduler {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionValidationScheduler.class.getName());
@@ -41,44 +40,15 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 	/** 客户会话管理 */
 	private CustSessionsManager custSessionsManager;
 
+	/** 会话验证管理 */
 	private ValidatingSessionManager sessionManager;
 	private ScheduledExecutorService service;
-	private long interval = DefaultSessionManager.DEFAULT_SESSION_VALIDATION_INTERVAL;
 	private boolean enabled = false;
 
-	public MysqlSessionValidationScheduler() {
+	public MysqlSessionValidationScheduler(CustSessionsManager custSessionsManager, ValidatingSessionManager sessionManager) {
 		super();
-	}
-
-	/**
-	 * @return the custSessionsManager
-	 */
-	public CustSessionsManager getCustSessionsManager() {
-		return custSessionsManager;
-	}
-
-	/**
-	 * @param custSessionsManager
-	 *            the custSessionsManager to set
-	 */
-	public void setCustSessionsManager(CustSessionsManager custSessionsManager) {
 		this.custSessionsManager = custSessionsManager;
-	}
-
-	public ValidatingSessionManager getSessionManager() {
-		return sessionManager;
-	}
-
-	public void setSessionManager(ValidatingSessionManager sessionManager) {
 		this.sessionManager = sessionManager;
-	}
-
-	public long getInterval() {
-		return interval;
-	}
-
-	public void setInterval(long interval) {
-		this.interval = interval;
 	}
 
 	@Override
@@ -97,7 +67,7 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 	public void enableSessionValidation() {
 		ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("session-validation-%d").build();
 		// Common Thread Pool
-		ExecutorService pool = new ThreadPoolExecutor(5, 200, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+		ExecutorService pool = new ThreadPoolExecutor(5, 500, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
 		pool.execute(() -> {
 			// 开始验证
 			sessionValidation();

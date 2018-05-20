@@ -26,7 +26,7 @@ import redis.clients.jedis.Jedis;
  *
  * @Created at 2018年2月28日 下午2:19:37
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 @Service("redisOperation")
 public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation {
@@ -129,6 +129,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis <String> cache exists, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("判断redis缓存是否存在出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -150,6 +152,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis <String> cache delete success, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -169,6 +173,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// TypeConvert.strArray2String(key));
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -230,6 +236,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis <String> cache exists, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("判断redis缓存是否存在出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -253,6 +261,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis <Object> cache delete success, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -757,6 +767,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis <Map> cache remove success, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -775,6 +787,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis <Map> cache remove success, key={}", key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -792,6 +806,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis <Map> cache exists, key={}, mapkey={}", key, mapKey);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("判断redis缓存是否存在出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -893,6 +909,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// mapKey={}", key, mapKey);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -911,6 +929,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// key, mapKey);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("判断redis缓存是否存在出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -929,6 +949,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis all cache delete success!");
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -947,6 +969,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis current db cache delete success!");
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("删除redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -965,6 +989,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis current db cache delete success!");
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis数据库数量出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return reply;
@@ -973,7 +999,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	@Override
 	public Set<byte[]> keys(String pattern) {
 		Set<byte[]> keys = null;
-		Jedis jedis;
+		Jedis jedis = null;
 
 		try {
 			jedis = getJedis();
@@ -982,6 +1008,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			// logger.info("redis current db cache delete success!");
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis数据库key数量出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return keys;
@@ -996,7 +1024,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	public List<Object> values(String pattern) {
 		List<Object> values = new ArrayList<Object>();
 		Set<byte[]> keys = this.keys(pattern);
-		Jedis jedis;
+		Jedis jedis = null;
 
 		try {
 			jedis = getJedis();
@@ -1006,6 +1034,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			}
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis数据库所有值", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return values;
@@ -1022,7 +1052,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	@Override
 	public byte[] get(byte[] key) {
 		byte[] value = null;
-		Jedis jedis;
+		Jedis jedis = null;
 
 		try {
 			jedis = getJedis();
@@ -1030,6 +1060,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			value = jedis.get(key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return value;
@@ -1052,6 +1084,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			jedis.set(key, value);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("设置redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return value;
@@ -1067,7 +1101,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	 */
 	@Override
 	public byte[] set(byte[] key, byte[] value, int expire) {
-		Jedis jedis;
+		Jedis jedis = null;
 
 		try {
 			jedis = getJedis();
@@ -1078,6 +1112,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			}
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("设置redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return value;
@@ -1090,7 +1126,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	 */
 	@Override
 	public void del(byte[] key) {
-		Jedis jedis;
+		Jedis jedis = null;
 
 		try {
 			jedis = getJedis();
@@ -1098,6 +1134,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			jedis.del(key);
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("设置redis缓存出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 	}
 
@@ -1106,7 +1144,7 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 	 */
 	@Override
 	public Long dbSize() {
-		Jedis jedis;
+		Jedis jedis = null;
 		Long dbSize = 0L;
 
 		try {
@@ -1115,6 +1153,8 @@ public class RedisOperationImpl extends RedisPoolsImpl implements RedisOperation
 			dbSize = jedis.dbSize();
 		} catch (Exception e) {
 			logger.error(StackTrace2Str.exceptionStackTrace2Str("获取redis缓存数量出错", e));
+		} finally {
+			returnResource(jedis);
 		}
 
 		return dbSize;

@@ -37,7 +37,8 @@
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="2592000" />
 		<!-- 30天 -->
-		<property name="domain" value="" /> <property name="path" value="/" />
+		<property name="domain" value="" />
+		<property name="path" value="/" />
 	</bean>
 
 	<!-- rememberMe管理器 -->
@@ -47,19 +48,18 @@
 		<property name="cookie" ref="rememberMeCookie" />
 	</bean>
 
-	<!-- 会话验证调度器 -->
-	<bean id="sessionValidationScheduler" class="pers.husen.highdsa.security.client.cas.session.MysqlSessionValidationScheduler">
-		<property name="custSessionsManager" ref="custSessionsManager" />
-		<property name="interval" value="1800000" />
-		<property name="sessionManager" ref="sessionManager" />
-	</bean>
-
 	<!-- 会话 DAO -->
 	<bean id="sessionDAO" class="pers.husen.highdsa.security.client.cas.session.MysqlRedisSessionDao">
 		<constructor-arg name="custSessionsManager" ref="custSessionsManager" />
 		<constructor-arg name="redisOperation" ref="redisOperation" />
 		<property name="activeSessionsCacheName" value="shiro_redis_session_customer:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
+	</bean>
+
+	<!-- 会话验证调度器 -->
+	<bean id="sessionValidationScheduler" class="pers.husen.highdsa.security.client.cas.session.MysqlSessionValidationScheduler">
+		<constructor-arg name="custSessionsManager" ref="custSessionsManager" />
+		<constructor-arg name="sessionManager" ref="sessionManager" />
 	</bean>
 
 	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
