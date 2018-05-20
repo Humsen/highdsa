@@ -15,7 +15,7 @@
 	</bean>
 
 	<!-- Realm实现 -->
-	<bean id="CustUserNameRealm" class="pers.husen.highdsa.client.restful.realm.CustUserNameRealm">
+	<bean id="custUserNameRealm" class="pers.husen.highdsa.client.restful.realm.CustUserNameRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
 		<property name="cachingEnabled" value="true" />
 		<property name="authenticationCachingEnabled" value="true" />
@@ -45,7 +45,7 @@
 
 	<!-- 会话Cookie模板 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="sid" />
+		<constructor-arg value="highdsa-sessionId-cookie" />
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="-1" />
 		<property name="domain" value="" />
@@ -69,15 +69,12 @@
 
 	<!-- 会话DAO -->
 	<bean id="sessionDAO" class="pers.husen.highdsa.client.restful.session.MysqlRedisSessionDao">
-		<constructor-arg name="custSessionsManager" ref="custSessionsManager" />
-		<constructor-arg name="redisOperation" ref="redisOperation" />
 		<property name="activeSessionsCacheName" value="shiro_redis_session_app:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
 
 	<!-- 会话验证调度器 -->
 	<bean id="sessionValidationScheduler" class="pers.husen.highdsa.client.restful.session.MysqlSessionValidationScheduler">
-		<property name="custSessionsManager" ref="custSessionsManager" />
 		<property name="interval" value="1800000" />
 		<property name="sessionManager" ref="sessionManager" />
 	</bean>
@@ -95,7 +92,7 @@
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realms">
 			<list>
-				<ref bean="CustUserNameRealm" />
+				<ref bean="custUserNameRealm" />
 				<ref bean="custUserPhoneRealm" />
 				<ref bean="custUserEmailRealm" />
 			</list>

@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import pers.husen.highdsa.common.constant.RedisCacheConstants;
 import pers.husen.highdsa.common.entity.po.customer.CustSessions;
@@ -16,7 +17,7 @@ import pers.husen.highdsa.service.mybatis.CustSessionsManager;
 import pers.husen.highdsa.service.redis.RedisOperation;
 
 /**
- * @Desc mysql 会话存储,先判断redis缓存,没有再从数据库取
+ * @Desc mysql 会话存储,先判断redis缓存,没有再从数据库取.目前未使用本地缓存
  *
  * @Author 何明胜
  *
@@ -26,51 +27,14 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  */
 public class MysqlRedisSessionDao extends CachingSessionDAO {
 	private static final Logger logger = LogManager.getLogger(MysqlRedisSessionDao.class.getName());
-
-	private CustSessionsManager custSessionsManager;
-	private RedisOperation redisOperation;
 	private static final String PREFIX = RedisCacheConstants.SHIRO_REDIS_SESSION_CUSTOMER;
-	private static final int EXPRIE = 10000;
+	/** 默认过期时间 ,单位：毫秒,总共1小时 */
+	private static final int EXPRIE = 60 * 60 * 1000;
 
-	/**
-	 * @param sysSessionsManager
-	 * @param redisOperation
-	 */
-	public MysqlRedisSessionDao(CustSessionsManager custSessionsManager, RedisOperation redisOperation) {
-		super();
-		this.custSessionsManager = custSessionsManager;
-		this.redisOperation = redisOperation;
-	}
-
-	/**
-	 * @return the redisOperation
-	 */
-	public RedisOperation getRedisOperation() {
-		return redisOperation;
-	}
-
-	/**
-	 * @param redisOperation
-	 *            the redisOperation to set
-	 */
-	public void setRedisOperation(RedisOperation redisOperation) {
-		this.redisOperation = redisOperation;
-	}
-
-	/**
-	 * @return the custSessionsManager
-	 */
-	public CustSessionsManager getCustSessionsManager() {
-		return custSessionsManager;
-	}
-
-	/**
-	 * @param custSessionsManager
-	 *            the custSessionsManager to set
-	 */
-	public void setCustSessionsManager(CustSessionsManager custSessionsManager) {
-		this.custSessionsManager = custSessionsManager;
-	}
+	@Autowired
+	private CustSessionsManager custSessionsManager;
+	@Autowired
+	private RedisOperation redisOperation;
 
 	@Override
 	protected Serializable doCreate(Session session) {
@@ -86,8 +50,8 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 
 		byte[] key = this.getByteKey(sessionId);
 		byte[] value = Serializer.serialize(session);
-		session.setTimeout(EXPRIE * 1000);
-		redisOperation.set(key, value, EXPRIE * 1000);
+		session.setTimeout(EXPRIE);
+		redisOperation.set(key, value, EXPRIE);
 
 		return sessionId;
 	}
@@ -103,8 +67,8 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 
 		byte[] key = this.getByteKey(session.getId());
 		byte[] value = Serializer.serialize(session);
-		session.setTimeout(EXPRIE * 1000);
-		redisOperation.set(key, value, EXPRIE * 1000);
+		session.setTimeout(EXPRIE);
+		redisOperation.set(key, value, EXPRIE);
 	}
 
 	@Override
@@ -132,9 +96,9 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 		if (session != null) {
 			byte[] key = this.getByteKey(session.getId());
 			byte[] value = Serializer.serialize(session);
-			session.setTimeout(EXPRIE * 1000);
+			session.setTimeout(EXPRIE);
 
-			redisOperation.set(key, value, EXPRIE * 1000);
+			redisOperation.set(key, value, EXPRIE);
 		}
 
 		return session;

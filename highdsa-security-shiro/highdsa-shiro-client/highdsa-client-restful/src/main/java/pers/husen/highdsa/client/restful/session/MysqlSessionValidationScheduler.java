@@ -18,6 +18,7 @@ import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.ValidatingSessionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ReflectionUtils;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -39,6 +40,7 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 	private static final Logger logger = LogManager.getLogger(MysqlSessionValidationScheduler.class.getName());
 
 	/** 客户会话管理 */
+	@Autowired
 	private CustSessionsManager custSessionsManager;
 
 	private ValidatingSessionManager sessionManager;
@@ -48,21 +50,6 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 
 	public MysqlSessionValidationScheduler() {
 		super();
-	}
-
-	/**
-	 * @return the custSessionsManager
-	 */
-	public CustSessionsManager getCustSessionsManager() {
-		return custSessionsManager;
-	}
-
-	/**
-	 * @param custSessionsManager
-	 *            the custSessionsManager to set
-	 */
-	public void setCustSessionsManager(CustSessionsManager custSessionsManager) {
-		this.custSessionsManager = custSessionsManager;
 	}
 
 	public ValidatingSessionManager getSessionManager() {
