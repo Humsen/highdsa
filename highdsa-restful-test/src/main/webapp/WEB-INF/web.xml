@@ -2,8 +2,8 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
 
-	<display-name>mybatis</display-name>
-	<description>mybatis消费者</description>
+	<display-name>test</display-name>
+	<description>restful test</description>
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -26,6 +26,11 @@
 		<param-name>log4jConfiguration</param-name>
 		<param-value>classpath:log4j2-web.xml</param-value>
 	</context-param>
+	<!-- 此监听器出用于主要为了解决java.beans.Introspector导致内存泄漏的问题 -->
+	<!-- 此监听器应该配置在web.xml中与Spring相关监听器中的第一个位置(也要在ContextLoaderListener的前面) -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
 	<!-- 配置log4j2的监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
@@ -34,6 +39,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+
 	<!-- 静态页面不进入SpringMVC -->
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
@@ -51,6 +57,21 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.map</url-pattern>
 	</servlet-mapping>
+
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 	<!-- SpringMVC servlet -->
 	<servlet>
 		<servlet-name>testServlet</servlet-name>
@@ -63,7 +84,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>testServlet</servlet-name>
-		<!-- <url-pattern>*.hms</url-pattern> -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 </web-app>

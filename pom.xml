@@ -25,7 +25,6 @@
 		<module>highdsa-restful-fastdfs</module>
 		<module>highdsa-restful-redis</module>
 		<module>highdsa-restful-message</module>
-		<module>highdsa-restful-shiro</module>
 		<module>highdsa-restful-test</module>
 		<module>highdsa-restful-app</module>
 		<module>highdsa-security-cas</module>

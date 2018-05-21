@@ -8,6 +8,7 @@
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
 	default-lazy-init="false">
 
+	<!-- 自动扫描的包名 -->
 	<context:component-scan base-package="pers.husen.highdsa.web.test" />
 
 	<!-- 异常处理类 -->
@@ -23,4 +24,16 @@
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+
+	<!-- 视图解释类 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+	</bean>
+
+	<!-- 对静态资源文件的访问 -->
+	<mvc:resources mapping="/images/**" location="/WEB-INF/images/" />
+	<mvc:resources mapping="/js/**" location="/WEB-INF/js/" />
+	<mvc:resources mapping="/css/**" location="/WEB-INF/css/" />
 </beans>

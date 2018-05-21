@@ -135,7 +135,7 @@ public class MysqlRedisSessionDao extends CachingSessionDAO {
 		doUpdate(session);
 		if (session instanceof ValidatingSession) {
 			if (((ValidatingSession) session).isValid()) {
-				// 不更新ehcache中的session，使它在设定的时间内过期
+				// 不更新ehcache中的session, 使它在设定的时间内过期
 				// cache(session, session.getId());
 			} else {
 				uncache(session);

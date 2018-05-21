@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.shiro.handler;
+package pers.husen.highdsa.web.test.handler;
 
 import org.apache.shiro.SecurityUtils;
 import org.pac4j.core.profile.CommonProfile;

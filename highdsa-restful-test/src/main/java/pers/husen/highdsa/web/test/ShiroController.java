@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.shiro;
+package pers.husen.highdsa.web.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pers.husen.highdsa.web.shiro.handler.ShiroSvc;
+import pers.husen.highdsa.web.test.handler.ShiroSvc;
 
 /**
  * @Desc 业务访问入口
@@ -16,7 +16,7 @@ import pers.husen.highdsa.web.shiro.handler.ShiroSvc;
  *
  * @Created at 2018年4月3日 下午4:23:54
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 @Controller
 @RequestMapping(value = "/sys/v1")
