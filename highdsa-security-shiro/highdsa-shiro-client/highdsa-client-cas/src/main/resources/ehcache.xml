@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="shirocache">
+
+    <diskStore path="java.io.tmpdir"/>
+
+	<!--  timeToIdleSeconds表示最大空闲的时间，timeToLiveSeconds表示最大存活时间，(当为0时表示可以无限闲置或存活 -->
+    <!-- 最大闲置5秒，最大存活0。结论:当存活时间不设置(0默认)，只要闲置时间内访问，可以无限存活。 -->
+   <!--  <cache name="passwordRetryCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="1"
+           overflowToDisk="false"
+           statistics="true">
+    </cache> -->
+
+   <!--  <cache name="authorizationCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="1"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+    <cache name="authenticationCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="1"
+           overflowToDisk="false"
+           statistics="true">
+    </cache> -->
+
+    <cache name="shiro-activeSessionCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="3"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+</ehcache>

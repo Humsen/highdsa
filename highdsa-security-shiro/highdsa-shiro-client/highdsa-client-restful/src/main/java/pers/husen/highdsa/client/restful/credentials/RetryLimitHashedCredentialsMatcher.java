@@ -35,14 +35,14 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 	public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
 		String username = (String) token.getPrincipal();
 		// retry count + 1
-		AtomicInteger retryCount = passwordRetryCache.get(RedisCacheConstants.SHIRO_LOGIN_FAIL_COUNT + username);
+		AtomicInteger retryCount = passwordRetryCache.get(getKey(username));
 		logger.debug("retryCount: " + retryCount);
 
 		if (retryCount == null) {
 			logger.debug("retryCount 为Null, 初始化为0");
 
 			retryCount = new AtomicInteger(0);
-			passwordRetryCache.put(RedisCacheConstants.SHIRO_LOGIN_FAIL_COUNT + username, retryCount);
+			passwordRetryCache.put(getKey(username), retryCount);
 		}
 		if (retryCount.incrementAndGet() > RedisCacheConstants.SHIRO_LOGIN_FAIL_MAX_COUNT) {
 			logger.warn("retryCount 大于5,登录失败超过5次");
@@ -53,8 +53,12 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 		boolean matches = super.doCredentialsMatch(token, info);
 		if (matches) {
 			// clear retry count
-			passwordRetryCache.remove(RedisCacheConstants.SHIRO_LOGIN_FAIL_COUNT + username);
+			passwordRetryCache.remove(getKey(username));
 		}
 		return matches;
+	}
+
+	private String getKey(String key) {
+		return RedisCacheConstants.SHIRO_LOGIN_FAIL_COUNT_APP + key;
 	}
 }

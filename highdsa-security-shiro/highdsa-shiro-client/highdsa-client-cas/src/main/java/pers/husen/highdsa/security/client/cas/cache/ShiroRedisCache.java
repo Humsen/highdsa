@@ -26,7 +26,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年3月30日 上午12:07:58
  * 
- * @Version 1.0.5
+ * @Version 1.0.6
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ShiroRedisCache<K, V> implements Cache<K, V> {
@@ -79,12 +79,12 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 * @return
 	 */
 	private byte[] getByteKey(K key) {
-		//logger.trace(key instanceof Serializable);
-		//logger.trace(key instanceof String);
-		//logger.trace(key.getClass().getName());
+		// logger.trace(key instanceof Serializable);
+		// logger.trace(key instanceof String);
+		// logger.trace(key.getClass().getName());
 
 		if (!(key instanceof Serializable)) {
-			logger.info("序列化参数没有实现Serializable接口");
+			logger.warn("序列化参数没有实现Serializable接口");
 		}
 
 		logger.debug("获取key的byte数组：" + key);

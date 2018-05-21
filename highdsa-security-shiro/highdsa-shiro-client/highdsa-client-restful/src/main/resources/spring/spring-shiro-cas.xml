@@ -41,11 +41,11 @@
 	</bean>
 
 	<!-- 会话ID生成器 -->
-	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
+	<bean id="sessionIdGenerator" class="pers.husen.highdsa.common.sequence.SequenceSessionIdGenerator" />
 
 	<!-- 会话Cookie模板 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="highdsa-sessionId-cookie" />
+		<constructor-arg value="highdsa-app-sessionId-cookie" />
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="-1" />
 		<property name="domain" value="" />
@@ -53,7 +53,7 @@
 	</bean>
 
 	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="rememberMe" />
+		<constructor-arg value="highdsa-app-rememberMe-cookie" />
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="2592000" /><!-- 30天 -->
 		<property name="domain" value="" />
@@ -68,7 +68,8 @@
 	</bean>
 
 	<!-- 会话DAO -->
-	<bean id="sessionDAO" class="pers.husen.highdsa.client.restful.session.MysqlRedisSessionDao">
+	<bean id="sessionDAO" class="pers.husen.highdsa.client.restful.session.MysqlSessionDao">
+		<constructor-arg name="custSessionsManager" ref="custSessionsManager" />
 		<property name="activeSessionsCacheName" value="shiro_redis_session_app:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
@@ -86,6 +87,8 @@
 		<property name="sessionValidationSchedulerEnabled" value="true" />
 		<property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
 		<property name="sessionDAO" ref="sessionDAO" />
+		<property name="sessionIdCookieEnabled" value="true" />
+		<property name="sessionIdCookie" ref="sessionIdCookie" />
 	</bean>
 
 	<!-- 安全管理器 -->

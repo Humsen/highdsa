@@ -17,15 +17,20 @@
 		</property>
 	</bean>
 
-	<!-- 缓存管理器 使用redis实现 -->
-	<bean id="cacheManager" class="pers.husen.highdsa.security.client.cas.cache.ShiroRedisCacheManager"></bean>
+	<!-- realm缓存管理器 使用redis实现 -->
+	<bean id="redisCacheManager" class="pers.husen.highdsa.security.client.cas.cache.ShiroRedisCacheManager"></bean>
+
+	<!-- 用户授权信息Cache,采用EhCache,本地缓存最长时间应比中央缓存时间短一些,以确保Session中doReadSession方法调用时更新中央缓存过期时间 -->
+	<bean id="ehcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache.xml" />
+	</bean>
 
 	<!-- 会话ID生成器 -->
 	<bean id="sessionIdGenerator" class="pers.husen.highdsa.common.sequence.SequenceSessionIdGenerator" />
 
 	<!-- 会话Cookie模板 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg name="name" value="highdsa-session-id" />
+		<constructor-arg name="name" value="highdsa-customer-session-id" />
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="-1" />
 		<property name="path" value="/" />
@@ -33,7 +38,7 @@
 	</bean>
 
 	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="highdsa-rememberMe-cookie" />
+		<constructor-arg value="highdsa-customer-rememberMe-cookie" />
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="2592000" />
 		<!-- 30天 -->
@@ -52,7 +57,6 @@
 	<bean id="sessionDAO" class="pers.husen.highdsa.security.client.cas.session.MysqlRedisSessionDao">
 		<constructor-arg name="custSessionsManager" ref="custSessionsManager" />
 		<constructor-arg name="redisOperation" ref="redisOperation" />
-		<property name="activeSessionsCacheName" value="shiro_redis_session_customer:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
 
@@ -62,6 +66,9 @@
 		<constructor-arg name="sessionManager" ref="sessionManager" />
 	</bean>
 
+	<!-- 自定义Session工厂方法 返回会标识是否修改主要字段的自定义Session -->
+	<bean id="sessionFactory" class="pers.husen.highdsa.security.client.cas.session.ShiroSessionFactory" />
+
 	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
 		<property name="globalSessionTimeout" value="1800000" />
 		<property name="deleteInvalidSessions" value="true" />
@@ -70,8 +77,14 @@
 		<property name="sessionValidationSchedulerEnabled" value="true" />
 		<property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
 		<property name="sessionDAO" ref="sessionDAO" />
+		<property name="sessionFactory" ref="sessionFactory" />
 		<property name="sessionIdCookieEnabled" value="true" />
 		<property name="sessionIdCookie" ref="sessionIdCookie" />
+		<property name="sessionListeners">
+			<list>
+				<bean class="pers.husen.highdsa.security.client.cas.session.ShiroSessionListener" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- 如果要实现cas的remember me的功能,需要用到下面这个bean,并设置到securityManager的subjectFactory中 -->
@@ -84,13 +97,15 @@
 		<!-- <property name="sessionMode" value="http"></property> -->
 		<property name="subjectFactory" ref="casSubjectFactory"></property>
 		<property name="sessionManager" ref="sessionManager" />
-		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheManager" ref="ehcacheManager" />
 		<property name="rememberMeManager" ref="rememberMeManager" />
 	</bean>
 
 	<!-- Realm实现 -->
 	<bean id="userRealm" class="pers.husen.highdsa.security.client.cas.realm.UserRealm">
 		<constructor-arg name="custUserManager" ref="custUserManager" />
+		<!-- 缓存管理器 -->
+		<property name="cacheManager" ref="redisCacheManager" />
 		<property name="cachingEnabled" value="true" />
 		<property name="authenticationCachingEnabled" value="true" />
 		<property name="authenticationCacheName" value="authenticationCache" />

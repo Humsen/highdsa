@@ -27,14 +27,14 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年3月30日 上午12:07:58
  * 
- * @Version 1.0.5
+ * @Version 1.0.6
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	private static final Logger logger = LogManager.getLogger(ShiroRedisCache.class.getName());
 
 	private static RedisOperation redisOperation;
-	private String keyPrefix = RedisCacheConstants.SHIRO_REDIS_CACHE;
+	private String keyPrefix = RedisCacheConstants.SHIRO_REDIS_SESSION_APP;
 
 	/**
 	 * @return the redisOperation
@@ -80,9 +80,9 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	 * @return
 	 */
 	private byte[] getByteKey(K key) {
-		//logger.trace(key instanceof Serializable);
-		//logger.trace(key instanceof String);
-		//logger.trace(key.getClass().getName());
+		// logger.trace(key instanceof Serializable);
+		// logger.trace(key instanceof String);
+		// logger.trace(key.getClass().getName());
 
 		if (!(key instanceof Serializable)) {
 			throw new ParamsException("序列化参数没有实现Serializable接口");

@@ -58,7 +58,7 @@
 	<bean id="sessionIdGenerator" class="pers.husen.highdsa.common.sequence.SequenceSessionIdGenerator" />
 
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="highdsa-session-id" />
+		<constructor-arg value="highdsa-system-session-id" />
 		<property name="httpOnly" value="false" />
 		<property name="maxAge" value="-1" />
 		<property name="path" value="/" />
@@ -66,7 +66,7 @@
 	</bean>
 
 	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="highdsa-rememberMe-cookie" />
+		<constructor-arg value="highdsa-system-rememberMe-cookie" />
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="2592000" /><!-- 30天 -->
 		<property name="domain" value="" />
@@ -81,9 +81,9 @@
 	</bean>
 
 	<!-- 会话 DAO -->
-	<bean id="sessionDAO" class="pers.husen.highdsa.security.client.pac4j.session.MysqlRedisSessionDao">
+	<bean id="sessionDAO" class="pers.husen.highdsa.security.client.pac4j.session.MysqlSessionDao">
 		<constructor-arg name="sysSessionsManager" ref="sysSessionsManager" />
-		<constructor-arg name="redisOperation" ref="redisOperation" />
+		<!-- <constructor-arg name="redisOperation" ref="redisOperation" /> -->
 		<property name="activeSessionsCacheName" value="shiro_redis_session_sys:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
@@ -124,10 +124,10 @@
 	<!-- Realm实现 -->
 	<bean id="userRealm" class="pers.husen.highdsa.security.client.pac4j.realm.UserRealm">
 		<property name="sysUserManager" ref="sysUserManager" />
-		<property name="cachingEnabled" value="false" />
-		<property name="authenticationCachingEnabled" value="false" />
+		<property name="cachingEnabled" value="true" />
+		<property name="authenticationCachingEnabled" value="true" />
 		<property name="authenticationCacheName" value="authenticationCache" />
-		<property name="authorizationCachingEnabled" value="false" />
+		<property name="authorizationCachingEnabled" value="true" />
 		<property name="authorizationCacheName" value="authorizationCache" />
 	</bean>
 

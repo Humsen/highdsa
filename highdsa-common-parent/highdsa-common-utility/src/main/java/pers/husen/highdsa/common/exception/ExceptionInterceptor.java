@@ -27,7 +27,7 @@ import pers.husen.highdsa.common.exception.db.SqlException;
  *
  * @Created at 2018年2月26日 下午11:29:05
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class ExceptionInterceptor implements HandlerExceptionResolver {
 	private static final Logger logger = LogManager.getLogger(ExceptionInterceptor.class.getName());
@@ -93,7 +93,8 @@ public class ExceptionInterceptor implements HandlerExceptionResolver {
 	public static boolean isAjax(ServletRequest request) {
 		String header = ((HttpServletRequest) request).getHeader("X-Requested-With");
 
-		if (header != null && "XMLHttpRequest".equalsIgnoreCase(header)) {
+		String xMLHttpRequest = "XMLHttpRequest";
+		if (header != null && xMLHttpRequest.equalsIgnoreCase(header)) {
 			return true;
 		}
 
