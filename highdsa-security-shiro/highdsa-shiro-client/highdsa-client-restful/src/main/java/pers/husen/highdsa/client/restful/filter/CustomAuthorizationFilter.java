@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
-import org.apache.shiro.web.util.WebUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,7 +24,7 @@ import pers.husen.highdsa.common.entity.vo.restful.ResponseJson;
  *
  * @Created at 2018年5月19日 上午4:16:45
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
 public class CustomAuthorizationFilter extends AuthorizationFilter {
 
@@ -64,8 +63,6 @@ public class CustomAuthorizationFilter extends AuthorizationFilter {
 
 		writer.flush();
 		writer.close();
-
-		WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED);
 
 		return false;
 	}

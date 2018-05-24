@@ -1,11 +1,14 @@
 package pers.husen.highdsa.web.app.handler;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.RealmSecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import pers.husen.highdsa.client.restful.realm.CustUserEmailRealm;
+import pers.husen.highdsa.client.restful.realm.CustUserNameRealm;
+import pers.husen.highdsa.client.restful.realm.CustUserPhoneRealm;
 import pers.husen.highdsa.client.restful.token.CustomerAccountPasswordToken;
 import pers.husen.highdsa.common.constant.RedisCacheConstants;
 import pers.husen.highdsa.common.entity.enums.LoginType;
@@ -32,7 +38,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年4月3日 下午4:22:19
  * 
- * @Version 1.0.7
+ * @Version 1.0.8
  */
 @Service
 public class LoginSvc {
@@ -148,10 +154,10 @@ public class LoginSvc {
 				user = custUserManager.findUserByUserName(token.getUsername());
 			} else if (token.getLoginType() == LoginType.PHONE) {
 				// 手机登录
-				user = custUserManager.findUserByUserPhone(token.getUsername());
+				user = custUserManager.findUserByUserPhone((String) token.getPrincipal());
 			} else {
 				// 邮箱登录
-				user = custUserManager.findUserByUserEmail(token.getUsername());
+				user = custUserManager.findUserByUserEmail((String) token.getPrincipal());
 			}
 
 			// 防止空指针异常
@@ -163,8 +169,6 @@ public class LoginSvc {
 			Map<String, Object> map = new HashMap<>(2);
 			Map<String, Object> userMap = new HashMap<>(8);
 			userMap.put("id", user.getUserId());
-			System.out.println(user);
-			System.out.println(userInfo);
 			userMap.put("username", userInfo.getUserNickName() == null ? user.getUserName() : userInfo.getUserNickName());
 
 			if (user.getUserEmail() != null) {
@@ -225,8 +229,24 @@ public class LoginSvc {
 			try {
 				custUserManager.modifyPasswordByUserPhone(phoneNumber, newPwd);
 
+				// 清空认证缓存
+				RealmSecurityManager securityManager = (RealmSecurityManager) SecurityUtils.getSecurityManager();
+				Collection<Realm> realms = securityManager.getRealms();
+
+				CustUser user = custUserManager.findUserByUserPhone(phoneNumber);
+				for (Realm realm : realms) {
+					if (realm instanceof CustUserPhoneRealm) {
+						((CustUserPhoneRealm) realm).clearCachedAuthenticationInfo(phoneNumber);
+					} else if (realm instanceof CustUserEmailRealm) {
+						((CustUserEmailRealm) realm).clearCachedAuthenticationInfo(user.getUserEmail());
+					} else {
+						((CustUserNameRealm) realm).clearCachedAuthenticationInfo(SecurityUtils.getSubject().getPrincipals());
+					}
+				}
+
 				responseJson = new ResponseJson(true, "修改密码成功");
 			} catch (Exception e) {
+				logger.error(StackTrace2Str.exceptionStackTrace2Str("修改密码失败", e));
 				responseJson = new ResponseJson(true, "修改密码失败");
 			}
 		} else {

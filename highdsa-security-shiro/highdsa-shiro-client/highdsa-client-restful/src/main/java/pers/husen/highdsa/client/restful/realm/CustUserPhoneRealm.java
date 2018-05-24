@@ -14,11 +14,14 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import pers.husen.highdsa.client.restful.token.CustomerAccountPasswordToken;
+import pers.husen.highdsa.common.BaseUtils;
 import pers.husen.highdsa.common.entity.enums.CustUserState;
 import pers.husen.highdsa.common.entity.enums.LoginType;
 import pers.husen.highdsa.common.entity.po.customer.CustRole;
@@ -34,10 +37,13 @@ import pers.husen.highdsa.service.mybatis.CustUserManager;
  *
  * @Created at 2018年5月14日 下午5:53:55
  * 
- * @Version 1.0.1
+ * @Version 1.0.4
  */
 public class CustUserPhoneRealm extends AuthorizingRealm {
 	private static final Logger logger = LogManager.getLogger(CustUserPhoneRealm.class.getName());
+
+	private Cache<Object, AuthenticationInfo> authenticationCache;
+	private Cache<Object, AuthorizationInfo> authorizationCache;
 
 	@Autowired
 	private CustUserManager custUserManager;
@@ -62,6 +68,11 @@ public class CustUserPhoneRealm extends AuthorizingRealm {
 		Set<String> roleNames = new HashSet<String>();
 
 		CustUser userRole = custUserManager.findRolesByUserPhone(userName);
+
+		if (userRole == null) {
+			return null;
+		}
+
 		List<CustRole> roleList = userRole.getCustRoleList();
 
 		for (CustRole role : roleList) {
@@ -77,11 +88,15 @@ public class CustUserPhoneRealm extends AuthorizingRealm {
 		Set<String> permissionNames = new HashSet<String>();
 
 		CustUser userPermission = custUserManager.findPermissionsByUserPhone(userName);
+		if (userPermission == null) {
+			return authorizationInfo;
+		}
+
 		List<CustRolePermission> rolePermissionList = userPermission.getCustRolePermissionList();
 
 		for (CustRolePermission rolePermission : rolePermissionList) {
-			permissionNames.add(rolePermission.getCustPermission().getPermissionName());
-			logger.trace("从数据库获取到的权限：" + rolePermission.getCustPermission().getPermissionName());
+			permissionNames.add(rolePermission.getCustPermission().getPermissionCode());
+			logger.trace("从数据库获取到的权限：" + rolePermission.getCustPermission().getPermissionCode());
 		}
 		// 将权限名称提供给info
 		authorizationInfo.setStringPermissions(permissionNames);
@@ -114,19 +129,31 @@ public class CustUserPhoneRealm extends AuthorizingRealm {
 		return authenticationInfo;
 	}
 
-	@Override
-	public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
-		super.clearCachedAuthorizationInfo(principals);
+	public void clearCachedAuthorizationInfo(String userPhone) {
+		if (BaseUtils.isEmpty(userPhone)) {
+			return;
+		}
+
+		Cache<Object, AuthorizationInfo> cache = getAvailableAuthorizationCache();
+		// cache instance will be non-null if caching is enabled:
+		if (cache != null) {
+			cache.remove(userPhone);
+		}
 	}
 
-	@Override
-	public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
-		super.clearCachedAuthenticationInfo(principals);
+	public void clearCachedAuthenticationInfo(String userPhone) {
+		if (BaseUtils.isNotEmpty(userPhone)) {
+			Cache<Object, AuthenticationInfo> cache = getAvailableAuthenticationCache();
+			// cache instance will be non-null if caching is enabled:
+			if (cache != null) {
+				cache.remove(userPhone);
+			}
+		}
 	}
 
-	@Override
-	public void clearCache(PrincipalCollection principals) {
-		super.clearCache(principals);
+	public void clearCache(String userPhone) {
+		this.clearCachedAuthenticationInfo(userPhone);
+		this.clearCachedAuthorizationInfo(userPhone);
 	}
 
 	public void clearAllCachedAuthorizationInfo() {
@@ -138,7 +165,63 @@ public class CustUserPhoneRealm extends AuthorizingRealm {
 	}
 
 	public void clearAllCache() {
-		clearAllCachedAuthenticationInfo();
-		clearAllCachedAuthorizationInfo();
+		this.clearAllCachedAuthenticationInfo();
+		this.clearAllCachedAuthorizationInfo();
+	}
+
+	private Cache<Object, AuthenticationInfo> getAvailableAuthenticationCache() {
+		Cache<Object, AuthenticationInfo> cache = getAuthenticationCache();
+		boolean authcCachingEnabled = isAuthenticationCachingEnabled();
+		if (cache == null && authcCachingEnabled) {
+			cache = getAuthenticationCacheLazy();
+		}
+		return cache;
+	}
+
+	private Cache<Object, AuthenticationInfo> getAuthenticationCacheLazy() {
+		if (this.authenticationCache == null) {
+
+			CacheManager cacheManager = getCacheManager();
+
+			if (cacheManager != null) {
+				String cacheName = getAuthenticationCacheName();
+				this.authenticationCache = cacheManager.getCache(cacheName);
+			}
+		}
+
+		return this.authenticationCache;
+	}
+
+	private Cache<Object, AuthorizationInfo> getAvailableAuthorizationCache() {
+		Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
+		if (cache == null && isAuthorizationCachingEnabled()) {
+			cache = getAuthorizationCacheLazy();
+		}
+		return cache;
+	}
+
+	private Cache<Object, AuthorizationInfo> getAuthorizationCacheLazy() {
+
+		if (this.authorizationCache == null) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("No authorizationCache instance set.  Checking for a cacheManager...");
+			}
+
+			CacheManager cacheManager = getCacheManager();
+
+			if (cacheManager != null) {
+				String cacheName = getAuthorizationCacheName();
+				if (logger.isDebugEnabled()) {
+					logger.debug("CacheManager [" + cacheManager + "] has been configured.  Building " + "authorization cache named [" + cacheName + "]");
+				}
+				this.authorizationCache = cacheManager.getCache(cacheName);
+			} else {
+				if (logger.isDebugEnabled()) {
+					logger.debug("No cache or cacheManager properties have been set.  Authorization cache cannot " + "be obtained.");
+				}
+			}
+		}
+
+		return this.authorizationCache;
 	}
 }

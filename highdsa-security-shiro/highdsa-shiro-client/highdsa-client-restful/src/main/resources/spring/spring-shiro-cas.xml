@@ -112,7 +112,7 @@
 	</bean>
 
 	<!-- Shiro的Web过滤器 -->
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	<bean id="shiroFilter" class="pers.husen.highdsa.client.restful.filter.ClientShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/app/v1/login/**" />
 		<property name="filters">
@@ -125,12 +125,8 @@
 				</entry>
 			</map>
 		</property>
-		<property name="filterChainDefinitions">
-			<value>
-				/app/v1/login/** = anon
-				/app/v1/user/info/* = authc,perms["user:view"]
-				/** = authc
-			</value>
+		<property name="filterChainDefinitionsLocation">
+			<value>classpath:shiro/shiro-urls.ini</value>
 		</property>
 	</bean>
 

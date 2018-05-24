@@ -34,7 +34,7 @@ import pers.husen.highdsa.service.mybatis.CustUserManager;
  *
  * @Created at 2018年3月29日 上午8:36:54
  * 
- * @Version 1.0.5
+ * @Version 1.0.7
  */
 public class CustUserNameRealm extends AuthorizingRealm {
 	private static final Logger logger = LogManager.getLogger(CustUserNameRealm.class.getName());
@@ -62,6 +62,11 @@ public class CustUserNameRealm extends AuthorizingRealm {
 		Set<String> roleNames = new HashSet<String>();
 
 		CustUser userRole = custUserManager.findRolesByUserName(userName);
+		
+		if(userRole == null) {
+			return null;
+		}
+		
 		List<CustRole> roleList = userRole.getCustRoleList();
 
 		for (CustRole role : roleList) {
@@ -77,11 +82,16 @@ public class CustUserNameRealm extends AuthorizingRealm {
 		Set<String> permissionNames = new HashSet<String>();
 
 		CustUser userPermission = custUserManager.findPermissionsByUserName(userName);
+		
+		if(userPermission == null) {
+			return authorizationInfo;
+		}
+		
 		List<CustRolePermission> rolePermissionList = userPermission.getCustRolePermissionList();
 
 		for (CustRolePermission rolePermission : rolePermissionList) {
-			permissionNames.add(rolePermission.getCustPermission().getPermissionName());
-			logger.trace("从数据库获取到的权限：" + rolePermission.getCustPermission().getPermissionName());
+			permissionNames.add(rolePermission.getCustPermission().getPermissionCode());
+			logger.trace("从数据库获取到的权限：" + rolePermission.getCustPermission().getPermissionCode());
 		}
 		// 将权限名称提供给info
 		authorizationInfo.setStringPermissions(permissionNames);

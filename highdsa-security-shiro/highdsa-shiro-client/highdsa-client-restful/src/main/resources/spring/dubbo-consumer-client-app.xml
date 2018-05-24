@@ -13,12 +13,12 @@
 	<dubbo:registry address="zookeeper://223.3.89.104:2181" />
 
 	<!-- mybatis -->
-	<dubbo:reference id="custUserInfoManager" interface="pers.husen.highdsa.service.mybatis.CustUserInfoManager" timeout="100000" check="false" />
-	<dubbo:reference id="custPermissionManager" interface="pers.husen.highdsa.service.mybatis.CustPermissionManager" timeout="100000" check="false" />
-	<dubbo:reference id="custRoleManager" interface="pers.husen.highdsa.service.mybatis.CustRoleManager" timeout="100000" check="false" />
-	<dubbo:reference id="custUserManager" interface="pers.husen.highdsa.service.mybatis.CustUserManager" timeout="100000" check="false" />
-	<dubbo:reference id="custSessionsManager" interface="pers.husen.highdsa.service.mybatis.CustSessionsManager" timeout="100000" check="false" />
+	<dubbo:reference id="custUserInfoManager" interface="pers.husen.highdsa.service.mybatis.CustUserInfoManager" check="false" />
+	<dubbo:reference id="custPermissionManager" interface="pers.husen.highdsa.service.mybatis.CustPermissionManager" check="false" />
+	<dubbo:reference id="custRoleManager" interface="pers.husen.highdsa.service.mybatis.CustRoleManager" check="false" />
+	<dubbo:reference id="custUserManager" interface="pers.husen.highdsa.service.mybatis.CustUserManager" check="false" />
+	<dubbo:reference id="custSessionsManager" interface="pers.husen.highdsa.service.mybatis.CustSessionsManager" check="false" />
 
 	<!-- redis -->
-	<dubbo:reference id="redisOperation" interface="pers.husen.highdsa.service.redis.RedisOperation" timeout="10000" check="false" />
+	<dubbo:reference id="redisOperation" interface="pers.husen.highdsa.service.redis.RedisOperation" check="false" />
 </beans>
