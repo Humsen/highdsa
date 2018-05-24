@@ -28,7 +28,7 @@ import pers.husen.highdsa.service.redis.RedisOperation;
  *
  * @Created at 2018年3月13日 上午10:11:18
  * 
- * @Version 1.0.6
+ * @Version 1.0.7
  */
 @Service
 public class SendSmsSvc {
@@ -48,7 +48,7 @@ public class SendSmsSvc {
 		logger.trace("缓存验证码:{}", chptcha);
 		// 验证码缓存到redis
 		redisOperation.set(RedisCacheConstants.REGISTER_REDIS_CODE + phoneNumber, chptcha, 3600);
-		
+
 		try {
 			SmsSendResponse smsSendResponse = sendSms.sendSmsCaptcha(phoneNumber, chptcha);
 			logger.info("返回结果为: {}", smsSendResponse);

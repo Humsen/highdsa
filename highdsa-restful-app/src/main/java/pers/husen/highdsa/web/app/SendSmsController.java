@@ -25,7 +25,7 @@ import pers.husen.highdsa.web.app.handler.SendSmsSvc;
  *
  * @Created at 2018年3月12日 下午7:15:17
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 @RestController
 @RequestMapping("/sms/v1")

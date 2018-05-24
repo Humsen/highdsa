@@ -25,7 +25,7 @@ import pers.husen.highdsa.web.message.sms.handler.SendSmsSvc;
  *
  * @Created at 2018年3月12日 下午7:15:17
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 @RestController
 @RequestMapping("/sms/v1")
@@ -35,9 +35,16 @@ public class SendSmsController {
 
 	@ResponseBody
 	@RequestMapping(value = "/captcha", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	public String sendSmsCaptcha(@RequestParam("phone_number") String phoneNumber, String chptcha) throws UnsupportedEncodingException, ClientException, IOException {
+	public String sendSmsCaptcha(@RequestParam("phone_number") String phoneNumber) throws UnsupportedEncodingException, ClientException, IOException {
 
-		return sendSmsSvc.sendSmsCaptcha(phoneNumber, chptcha);
+		return sendSmsSvc.sendSmsCaptcha(phoneNumber);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/validate", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public String validateSmsCaptcha(@RequestParam("phone_number") String phoneNumber, String captcha) throws UnsupportedEncodingException, ClientException, IOException {
+
+		return sendSmsSvc.validateSmsCaptcha(phoneNumber, captcha);
 	}
 
 	@ResponseBody
