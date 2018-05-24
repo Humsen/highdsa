@@ -30,7 +30,7 @@ import pers.husen.highdsa.service.mybatis.CustSessionsManager;
  *
  * @Created at 2018年4月3日 下午3:49:25
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 public class MysqlSessionValidationScheduler implements SessionValidationScheduler, Runnable {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionValidationScheduler.class.getName());
@@ -39,6 +39,7 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 	@Autowired
 	private CustSessionsManager custSessionsManager;
 
+	/** 会话验证管理 */
 	private ValidatingSessionManager sessionManager;
 	private ScheduledExecutorService service;
 	private long interval = DefaultSessionManager.DEFAULT_SESSION_VALIDATION_INTERVAL;
@@ -79,7 +80,7 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 	@Override
 	public void enableSessionValidation() {
 		if (this.interval > 1L) {
-			this.service = new ScheduledThreadPoolExecutor(1, new BasicThreadFactory.Builder().namingPattern("session-validation-%d").daemon(true).build());
+			this.service = new ScheduledThreadPoolExecutor(1, new BasicThreadFactory.Builder().namingPattern("app-session-validation-%d").daemon(true).build());
 
 			this.service.scheduleAtFixedRate(this, interval, interval, TimeUnit.MILLISECONDS);
 			this.enabled = true;

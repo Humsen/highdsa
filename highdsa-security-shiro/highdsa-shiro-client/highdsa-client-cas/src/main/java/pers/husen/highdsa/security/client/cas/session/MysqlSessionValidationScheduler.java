@@ -2,24 +2,21 @@ package pers.husen.highdsa.security.client.cas.session;
 
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.AbstractValidatingSessionManager;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
+import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.ValidatingSessionManager;
 import org.springframework.util.ReflectionUtils;
-
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import pers.husen.highdsa.common.entity.po.customer.CustSessions;
 import pers.husen.highdsa.common.transform.ShiroSessionSerializer;
@@ -32,9 +29,9 @@ import pers.husen.highdsa.service.mybatis.CustSessionsManager;
  *
  * @Created at 2018年4月3日 下午3:49:25
  * 
- * @Version 1.0.1
+ * @Version 1.0.2
  */
-public class MysqlSessionValidationScheduler implements SessionValidationScheduler {
+public class MysqlSessionValidationScheduler implements SessionValidationScheduler, Runnable {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionValidationScheduler.class.getName());
 
 	/** 客户会话管理 */
@@ -43,12 +40,29 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 	/** 会话验证管理 */
 	private ValidatingSessionManager sessionManager;
 	private ScheduledExecutorService service;
+	private long interval = DefaultSessionManager.DEFAULT_SESSION_VALIDATION_INTERVAL;
 	private boolean enabled = false;
 
 	public MysqlSessionValidationScheduler(CustSessionsManager custSessionsManager, ValidatingSessionManager sessionManager) {
 		super();
 		this.custSessionsManager = custSessionsManager;
 		this.sessionManager = sessionManager;
+	}
+
+	public ValidatingSessionManager getSessionManager() {
+		return sessionManager;
+	}
+
+	public void setSessionManager(ValidatingSessionManager sessionManager) {
+		this.sessionManager = sessionManager;
+	}
+
+	public long getInterval() {
+		return interval;
+	}
+
+	public void setInterval(long interval) {
+		this.interval = interval;
 	}
 
 	@Override
@@ -65,15 +79,17 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 	 */
 	@Override
 	public void enableSessionValidation() {
-		ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("session-validation-%d").build();
-		// Common Thread Pool
-		ExecutorService pool = new ThreadPoolExecutor(5, 500, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
-		pool.execute(() -> {
-			// 开始验证
-			sessionValidation();
-		});
-		// gracefully shutdown
-		pool.shutdown();
+		if (this.interval > 1L) {
+			this.service = new ScheduledThreadPoolExecutor(1, new BasicThreadFactory.Builder().namingPattern("customer-session-validation-%d").daemon(true).build());
+
+			this.service.scheduleAtFixedRate(this, interval, interval, TimeUnit.MILLISECONDS);
+			this.enabled = true;
+		}
+	}
+
+	@Override
+	public void run() {
+		sessionValidation();
 	}
 
 	/**

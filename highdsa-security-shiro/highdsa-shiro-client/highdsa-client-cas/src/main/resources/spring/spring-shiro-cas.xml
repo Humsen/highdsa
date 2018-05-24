@@ -32,7 +32,7 @@
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
 		<constructor-arg name="name" value="highdsa-customer-session-id" />
 		<property name="httpOnly" value="true" />
-		<property name="maxAge" value="-1" />
+		<property name="maxAge" value="2592000" />
 		<property name="path" value="/" />
 		<property name="domain" value="" />
 	</bean>

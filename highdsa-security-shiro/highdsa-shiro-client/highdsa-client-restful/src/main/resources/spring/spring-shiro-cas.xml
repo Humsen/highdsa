@@ -123,12 +123,16 @@
 				<entry key="perms">
 					<bean class="pers.husen.highdsa.client.restful.filter.CustomAuthorizationFilter" />
 				</entry>
+				<entry key="logout" value-ref="logoutFilter" />
 			</map>
 		</property>
 		<property name="filterChainDefinitionsLocation">
 			<value>classpath:shiro/shiro-urls.ini</value>
 		</property>
 	</bean>
+
+	<!-- 退出登录过滤器 -->
+	<bean id="logoutFilter" class="pers.husen.highdsa.client.restful.filter.CustomLogoutFilter" />
 
 	<!-- Shiro生命周期处理器 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />

@@ -19,13 +19,10 @@ import pers.husen.highdsa.service.mybatis.SysSessionsManager;
  *
  * @Created at 2018年4月20日 上午12:10:04
  * 
- * @Version 1.0.2
+ * @Version 1.0.4
  */
 public class MysqlSessionDao extends CachingSessionDAO {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionDao.class.getName());
-
-	int readCount = 0;
-	int updateCount = 0;
 
 	private SysSessionsManager sysSessionsManager;
 
@@ -54,8 +51,6 @@ public class MysqlSessionDao extends CachingSessionDAO {
 
 	@Override
 	protected void doUpdate(Session session) {
-		System.out.println("更新次数：" + (++updateCount));
-
 		// 更新数据库会话
 		String sessionValue = ShiroSessionSerializer.serialize(session);
 		SysSessions sysSessions = new SysSessions(String.valueOf(session.getId()), sessionValue);

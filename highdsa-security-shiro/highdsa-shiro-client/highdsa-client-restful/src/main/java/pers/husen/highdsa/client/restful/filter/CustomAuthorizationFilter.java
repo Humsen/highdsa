@@ -7,6 +7,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 
@@ -24,9 +26,10 @@ import pers.husen.highdsa.common.entity.vo.restful.ResponseJson;
  *
  * @Created at 2018年5月19日 上午4:16:45
  * 
- * @Version 1.0.2
+ * @Version 1.0.3
  */
 public class CustomAuthorizationFilter extends AuthorizationFilter {
+	private static final Logger logger = LogManager.getLogger(CustomAuthorizationFilter.class.getName());
 
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
@@ -59,7 +62,9 @@ public class CustomAuthorizationFilter extends AuthorizationFilter {
 		PrintWriter writer = response.getWriter();
 
 		ResponseJson responseJson = new ResponseJson(false, "您没有相应的权限!");
-		writer.write(new ObjectMapper().writeValueAsString(responseJson));
+		String reply = new ObjectMapper().writeValueAsString(responseJson);
+		logger.info(reply);
+		writer.write(reply);
 
 		writer.flush();
 		writer.close();

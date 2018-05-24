@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
@@ -24,9 +26,11 @@ import pers.husen.highdsa.common.entity.vo.restful.ResponseJson;
  *
  * @Created at 2018年5月19日 上午12:45:50
  * 
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 public class CustomAuthenticationFilter extends FormAuthenticationFilter {
+	private static final Logger logger = LogManager.getLogger(CustomAuthenticationFilter.class.getName());
+
 	/**
 	 * 只要没有登录,默认返回json
 	 */
@@ -61,7 +65,9 @@ public class CustomAuthenticationFilter extends FormAuthenticationFilter {
 			PrintWriter writer = response.getWriter();
 
 			ResponseJson responseJson = new ResponseJson(false, "您尚未登录, 请先登录!");
-			writer.write(new ObjectMapper().writeValueAsString(responseJson));
+			String reply = new ObjectMapper().writeValueAsString(responseJson);
+			logger.info(reply);
+			writer.write(reply);
 
 			writer.flush();
 			writer.close();

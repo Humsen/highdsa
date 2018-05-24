@@ -19,11 +19,11 @@ import pers.husen.highdsa.service.mybatis.CustSessionsManager;
  *
  * @Created at 2018年4月20日 上午12:10:04
  * 
- * @Version 1.0.2
+ * @Version 1.0.4
  */
 public class MysqlSessionDao extends CachingSessionDAO {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionDao.class.getName());
-	
+
 	private CustSessionsManager custSessionsManager;
 
 	/**
@@ -69,7 +69,11 @@ public class MysqlSessionDao extends CachingSessionDAO {
 		Session session = null;
 
 		if (sessionId != null) {
-			CustSessions custSessions = custSessionsManager.findBySessionId(String.valueOf(sessionId));
+			return null;
+		}
+
+		CustSessions custSessions = custSessionsManager.findBySessionId(String.valueOf(sessionId));
+		if (custSessions != null) {
 			session = ShiroSessionSerializer.deserialize(custSessions.getSessionValue());
 		}
 

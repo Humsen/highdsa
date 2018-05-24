@@ -93,16 +93,6 @@
                     <td>拥有角色</td>
                     <td>操作</td>
                 </tr>
-                <!--  <tr>
-                	<td><input type="checkbox" name="userIds" value="11"/></td>
-                    <td class="userid">1</td>
-                    <td class="username">sisu</td>
-                    <td><a href="javascript:void(0);" class="show-user-roles" >查看所有角色</a></td>
-                    <td>
-                    	<a class="glyphicon glyphicon-wrench show-userrole-form" aria-hidden="true" title="修改所有角色" href="javascript:void(0);" data-toggle="modal" data-target="#update-userrole-dialog"></a>
-                    	<a class="glyphicon glyphicon-remove delete-this-user" aria-hidden="true" title="删除用户" href="javascript:void(0);"></a>
-                    </td>
-                </tr>-->
                 <c:forEach items="${users }" var="user">
                 	<tr>
                 		<td><input type="checkbox" name="userIds" value="${user.userId }"/></td>
@@ -249,18 +239,6 @@
 			var username=$(this).parents("tr").find(".username").html();
 			var urTd=$(this).parent();
 			//请求查看用户角色
-			/*$.ajax({
-				url:"showroles.html",
-				data:{userName:username},
-				type:"POST",
-				dataType:"json",
-				success:function(data){
-					for(var i in data){
-						var role=data[i].roleName+":"+data[i].roleDesc+"<br/>";
-						urObj.append(role);
-					}
-				}
-			});*/
 			getRolesByUserName(username,function(data){
 				urTd.html("");
 				for(var i in data){

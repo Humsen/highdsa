@@ -97,16 +97,6 @@
 							<td>拥有权限</td>
 							<td>操作</td>
 						</tr>
-						<!--  <tr>
-                	<td><input type="checkbox" name="roleIds"/></td>
-                    <td class="roleid">11</td>
-                    <td>用户管理员</td>
-                    <td>用户管理</td>
-                    <td>user_admin</td>
-                    <td><a href="javascript:void(0);" class="show-role-perms" >查看所有权限</a></td>
-                    <td><a class="glyphicon glyphicon-pencil show-roleinfo-form" aria-hidden="true" title="修改角色信息" href="javascript:void(0);" data-toggle="modal" data-target="#role-form"></a>
-                    	<a class="glyphicon glyphicon-remove delete-this-role" aria-hidden="true" title="删除角色" href="javascript:void(0);"></a></td>
-                </tr>-->
 						<c:forEach items="${roles }" var="role">
 							<tr>
 								<td><input type="checkbox" name="roleIds" value="${role.roleId }" /></td>

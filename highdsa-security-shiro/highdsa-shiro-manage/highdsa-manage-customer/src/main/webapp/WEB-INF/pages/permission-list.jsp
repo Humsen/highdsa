@@ -105,16 +105,6 @@
 							<td>权限代码</td>
 							<td>操作</td>
 						</tr>
-						<!-- <tr>
-                        <td><input type="checkbox" name="permIds"/></td>
-                        <td class="permid">11</td>
-                        <td>增加</td>
-                        <td>/add</td>
-                        <td>是</td>
-                        <td>add</td>
-                        <td><a class="glyphicon glyphicon-pencil show-perminfo-form" aria-hidden="true" title="修改权限信息" href="javascript:void(0);" data-toggle="modal" data-target="#perm-form"></a>
-                    	<a class="glyphicon glyphicon-remove delete-this-perm" aria-hidden="true" title="删除权限" href="javascript:void(0);"></a></td>
-                    </tr> -->
 						<c:forEach items="${perms }" var="perm">
 							<tr>
 								<td><input type="checkbox" name="permIds" value="${perm.permissionId }" /></td>

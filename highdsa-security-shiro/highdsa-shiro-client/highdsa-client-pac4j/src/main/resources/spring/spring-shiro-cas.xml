@@ -60,7 +60,7 @@
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
 		<constructor-arg value="highdsa-system-session-id" />
 		<property name="httpOnly" value="false" />
-		<property name="maxAge" value="-1" />
+		<property name="maxAge" value="2592000" />
 		<property name="path" value="/" />
 		<property name="domain" value="" />
 	</bean>
@@ -83,8 +83,7 @@
 	<!-- 会话 DAO -->
 	<bean id="sessionDAO" class="pers.husen.highdsa.security.client.pac4j.session.MysqlSessionDao">
 		<constructor-arg name="sysSessionsManager" ref="sysSessionsManager" />
-		<!-- <constructor-arg name="redisOperation" ref="redisOperation" /> -->
-		<property name="activeSessionsCacheName" value="shiro_redis_session_sys:" />
+		<property name="activeSessionsCacheName" value="shiro_redis_session_system:" />
 		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
 	</bean>
 
@@ -155,7 +154,7 @@
 						<property name="defaultUrl" value="${sso.cas.client.callbackUrl}"></property>
 						<property name="config" ref="authcConfig"></property>
 						<property name="centralLogout" value="true"></property>
-						<property name="localLogout" value="false"></property>
+						<property name="localLogout" value="true"></property>
 					</bean>
 				</entry>
 				<!-- 拦截/login,并作一些操作，测试用，可以忽略 -->
@@ -168,7 +167,6 @@
 		<property name="filterChainDefinitionsLocation">
 			<value>classpath:shiro/shiro-urls.ini</value>
 		</property>
-		<!-- <property name="filterChainDefinitions"> <value> /** = casSecurityFilter </value> </property> -->
 	</bean>
 
 	<!-- 生命周期处理 -->
