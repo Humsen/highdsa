@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.email;
+package pers.husen.highdsa.web.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import pers.husen.highdsa.web.email.handler.AttachmentEmailSvc;
+import pers.husen.highdsa.web.app.handler.AttachmentEmailSvc;
 
 /**
  * @Desc 带附件的邮件REST API

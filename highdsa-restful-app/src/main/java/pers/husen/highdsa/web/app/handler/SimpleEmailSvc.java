@@ -1,4 +1,4 @@
-package pers.husen.highdsa.web.email.handler;
+package pers.husen.highdsa.web.app.handler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

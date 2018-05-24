@@ -18,14 +18,13 @@ public class AttachEmailParams extends EmailParams {
 	private String attachUrl;
 	/** 附件名称 */
 	private String attachName;
-	
+
 	/** 附件文件 */
 	private File attachFile;
 
 	@Override
 	public String toString() {
-		return "AttachEmailParams [attachUrl=" + attachUrl + ", attachName=" + attachName + ", attachFile=" + attachFile
-				+ ", toString()=" + super.toString() + "]";
+		return "AttachEmailParams [attachUrl=" + attachUrl + ", attachName=" + attachName + ", attachFile=" + attachFile + ", toString()=" + super.toString() + "]";
 	}
 
 	public AttachEmailParams() {
@@ -53,8 +52,7 @@ public class AttachEmailParams extends EmailParams {
 	 * @param mailFor
 	 * @param attachment
 	 */
-	public AttachEmailParams(String nameFrom, String mailFrom, String phoneFrom, String content, String mailFor,
-			String attachUrl, String attachName) {
+	public AttachEmailParams(String nameFrom, String mailFrom, String phoneFrom, String content, String mailFor, String attachUrl, String attachName) {
 		super(nameFrom, mailFrom, phoneFrom, content, mailFor);
 		this.attachUrl = attachUrl;
 		this.attachName = attachName;
@@ -68,7 +66,8 @@ public class AttachEmailParams extends EmailParams {
 	}
 
 	/**
-	 * @param attachUrl the attachUrl to set
+	 * @param attachUrl
+	 *            the attachUrl to set
 	 */
 	public void setAttachUrl(String attachUrl) {
 		this.attachUrl = attachUrl;
@@ -82,7 +81,8 @@ public class AttachEmailParams extends EmailParams {
 	}
 
 	/**
-	 * @param attachName the attachName to set
+	 * @param attachName
+	 *            the attachName to set
 	 */
 	public void setAttachName(String attachName) {
 		this.attachName = attachName;
@@ -96,7 +96,8 @@ public class AttachEmailParams extends EmailParams {
 	}
 
 	/**
-	 * @param attachFile the attachFile to set
+	 * @param attachFile
+	 *            the attachFile to set
 	 */
 	public void setAttachFile(File attachFile) {
 		this.attachFile = attachFile;

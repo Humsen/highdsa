@@ -1,10 +1,14 @@
 package pers.husen.highdsa.common.transform;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import pers.husen.highdsa.common.constant.Encode;
 
 /**
  * @Desc json和request请求参数直接相互转化
@@ -13,17 +17,18 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @Created at 2018年3月13日 下午3:43:05
  * 
- * @Version 1.0.0
+ * @Version 1.0.2
  */
 public class ConvertRequestParams {
 	/**
 	 * 请求参数的字符串形式(如name=husen&pwd=123)转化为map
 	 * 
-	 * @param param request.getQueryString()
+	 * @param param
+	 *            request.getQueryString()
 	 * @return
 	 */
-	public static Map<String, Object> paramsStr2Map(String param) {
-		Map<String, Object> map = new HashMap<String, Object>(0);
+	public static Map<String, String> paramsStr2Map(String param) {
+		Map<String, String> map = new HashMap<String, String>(10);
 
 		if (param == null || param.length() == 0) {
 			return map;
@@ -55,12 +60,42 @@ public class ConvertRequestParams {
 			sb.append("&");
 		}
 
-		int length = sb.length() - 1;
+		int length = sb.length();
 		char andChar = '&';
-		if(andChar == sb.charAt(length-1)) {
+		if (andChar == sb.charAt(length - 1)) {
 			sb.deleteCharAt(length - 1);
 		}
-		
+
+		return sb.toString();
+	}
+
+	/**
+	 * map转化为请求参数的字符串形式(如name=husen&pwd=123),并对键值对进行URL编码
+	 * 
+	 * @param map
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static String map2ParamsEncodeStr(Map<String, String> map) throws UnsupportedEncodingException {
+		if (map == null) {
+			return "";
+		}
+
+		StringBuffer sb = new StringBuffer();
+		String key = null, value = null;
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			key = URLEncoder.encode(entry.getKey(), Encode.DEFAULT_ENCODE);
+			value = URLEncoder.encode(entry.getValue(), Encode.DEFAULT_ENCODE);
+			sb.append(key + "=" + value);
+			sb.append("&");
+		}
+
+		int length = sb.length();
+		char andChar = '&';
+		if (andChar == sb.charAt(length - 1)) {
+			sb.deleteCharAt(length - 1);
+		}
+
 		return sb.toString();
 	}
 
@@ -84,7 +119,7 @@ public class ConvertRequestParams {
 				}
 			}
 		}
-		
+
 		return map;
 	}
 }

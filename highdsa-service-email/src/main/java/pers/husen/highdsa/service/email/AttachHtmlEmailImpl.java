@@ -2,7 +2,7 @@ package pers.husen.highdsa.service.email;
 
 import java.io.File;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.util.Map;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -26,7 +26,7 @@ import pers.husen.highdsa.common.constant.EmailConstants;
 import pers.husen.highdsa.common.constant.Encode;
 import pers.husen.highdsa.common.constant.HttpConstants;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
-import pers.husen.highdsa.service.email.AttachHtmlEmail;
+import pers.husen.highdsa.common.transform.ConvertRequestParams;
 import pers.husen.highdsa.service.email.core.SaveEmail;
 import pers.husen.highdsa.service.email.core.SendEmailCore;
 
@@ -37,7 +37,7 @@ import pers.husen.highdsa.service.email.core.SendEmailCore;
  *
  * @Created at 2018年2月5日 下午5:30:54
  * 
- * @Version 1.0.4
+ * @Version 1.0.6
  */
 public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 	private static final Logger logger = LogManager.getLogger(AttachHtmlEmailImpl.class.getName());
@@ -142,8 +142,9 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 				int index = attachUrl.indexOf("?");
 				// 获取查询参数
 				String queryStr = attachUrl.substring(index + 1, attachUrl.length());
-				// url转义
-				String attachUrlEncode = URLEncoder.encode(queryStr, Encode.DEFAULT_ENCODE);
+				// 对URL查询参数中键值对进行编码
+				Map<String, String> paramsMap = ConvertRequestParams.paramsStr2Map(queryStr);
+				String attachUrlEncode = ConvertRequestParams.map2ParamsEncodeStr(paramsMap);
 				// 查询参数前的所有
 				String beforeQueryStr = attachUrl.substring(0, index + 1);
 
@@ -153,7 +154,7 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 				attachmentBodyPart.setDataHandler(new DataHandler(dataSource));
 
 				// MimeUtility.encodeWord可以避免文件名乱码
-				attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachName));
+				attachmentBodyPart.setFileName(attachName);
 				multipart.addBodyPart(attachmentBodyPart);
 			}
 
@@ -256,13 +257,10 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 
 			// 创建默认的 MimeMessage 对象
 			MimeMessage message = new MimeMessage(session);
-
 			// Set From: 头部头字段
 			message.setFrom(new InternetAddress(sendEmailCore.getSenderEamilAddr(), sendEmailCore.getSenderNickName(), Encode.DEFAULT_ENCODE));
-
 			// 收件人电子邮箱
 			message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(sendEmailCore.getRecipients()));
-
 			// 设置标题
 			message.setSubject("联系管理员邮件(带附件)");
 
@@ -277,11 +275,24 @@ public class AttachHtmlEmailImpl implements AttachHtmlEmail {
 			// 添加附件的内容
 			if (attachUrl != null) {
 				BodyPart attachmentBodyPart = new MimeBodyPart();
-				DataSource source = new URLDataSource(new URL(attachUrl));
-				attachmentBodyPart.setDataHandler(new DataHandler(source));
+
+				// 查询参数的起始位置
+				int index = attachUrl.indexOf("?");
+				// 获取查询参数
+				String queryStr = attachUrl.substring(index + 1, attachUrl.length());
+				// 对URL查询参数中键值对进行编码
+				Map<String, String> paramsMap = ConvertRequestParams.paramsStr2Map(queryStr);
+				String attachUrlEncode = ConvertRequestParams.map2ParamsEncodeStr(paramsMap);
+				// 查询参数前的所有
+				String beforeQueryStr = attachUrl.substring(0, index + 1);
+
+				// 重新拼接并设置数据源
+				DataSource dataSource = new URLDataSource(new URL(beforeQueryStr + attachUrlEncode));
+
+				attachmentBodyPart.setDataHandler(new DataHandler(dataSource));
 
 				// MimeUtility.encodeWord可以避免文件名乱码
-				attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachName));
+				attachmentBodyPart.setFileName(attachName);
 				multipart.addBodyPart(attachmentBodyPart);
 			}
 

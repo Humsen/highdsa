@@ -13,13 +13,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.core.MessageCreator;
 import org.springframework.jms.listener.adapter.MessageListenerAdapter;
 import org.springframework.jms.support.converter.MessageConversionException;
 import org.springframework.stereotype.Component;
 
 import pers.husen.highdsa.common.constant.MsgQueueDefine;
 import pers.husen.highdsa.common.entity.vo.email.EmailParams;
+import pers.husen.highdsa.common.exception.HighdsaException;
 import pers.husen.highdsa.common.exception.StackTrace2Str;
 import pers.husen.highdsa.service.activemq.mqreceiver.handler.EmailQueueMsgSvc;
 
@@ -30,7 +30,7 @@ import pers.husen.highdsa.service.activemq.mqreceiver.handler.EmailQueueMsgSvc;
  *
  * @Created at 2018年3月20日 下午4:16:02
  * 
- * @Version 1.0.4
+ * @Version 1.0.5
  */
 @Component("queueMsgReceiver")
 public class EmailQueueMsgReceiver extends MessageListenerAdapter {
@@ -60,15 +60,19 @@ public class EmailQueueMsgReceiver extends MessageListenerAdapter {
 
 			message.acknowledge();
 		} catch (MessageConversionException | JMSException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			logger.warn(StackTrace2Str.exceptionStackTrace2Str("业务异常,重新放回队列", e));
+			logger.warn(StackTrace2Str.exceptionStackTrace2Str("业务异常,避免循环调用,不再重新放回队列", e));
 
 			// 业务异常,重新放回队列
-			jmsQueueTemplate.send(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, new MessageCreator() {
-				@Override
-				public Message createMessage(Session session) throws JMSException {
-					return jmsQueueTemplate.getMessageConverter().toMessage(message, session);
-				}
-			});
+			/*
+			 * jmsQueueTemplate.send(MsgQueueDefine.SIMPLE_EMAIL_QUEUE, new MessageCreator()
+			 * {
+			 * 
+			 * @Override public Message createMessage(Session session) throws JMSException {
+			 * return jmsQueueTemplate.getMessageConverter().toMessage(message, session); }
+			 * });
+			 */
+
+			throw new HighdsaException("发送普通邮件异常,避免循环调用,不再重新放回队列", e);
 		}
 	}
 }

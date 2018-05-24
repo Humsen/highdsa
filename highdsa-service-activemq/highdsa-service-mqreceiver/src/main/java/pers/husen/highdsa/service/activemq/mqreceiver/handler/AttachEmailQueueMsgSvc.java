@@ -29,7 +29,7 @@ public class AttachEmailQueueMsgSvc {
 	@Autowired
 	private AttachHtmlEmail attachHtmlEmail;
 
-	public void sendAttachmentEmail2User(AttachEmailParams attachEmailParams) throws JsonProcessingException {
+	public void sendAttachEmail2User(AttachEmailParams attachEmailParams) throws JsonProcessingException {
 		String mailTo = attachEmailParams.getMailTo();
 		String subject = attachEmailParams.getSubject();
 		String content = attachEmailParams.getContent();
@@ -53,7 +53,7 @@ public class AttachEmailQueueMsgSvc {
 
 	}
 
-	public void sendEmail2Admin(AttachEmailParams attachEmailParams) throws JsonProcessingException {
+	public void sendAttachEmail2Admin(AttachEmailParams attachEmailParams) throws JsonProcessingException {
 		String nameFrom = attachEmailParams.getNameFrom();
 		String mailFrom = attachEmailParams.getMailFrom();
 		String phoneFrom = attachEmailParams.getPhoneFrom();
