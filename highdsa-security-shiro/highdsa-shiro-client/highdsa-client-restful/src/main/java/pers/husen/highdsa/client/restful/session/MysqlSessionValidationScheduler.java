@@ -2,13 +2,11 @@ package pers.husen.highdsa.client.restful.session;
 
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
@@ -20,8 +18,6 @@ import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.ValidatingSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ReflectionUtils;
-
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import pers.husen.highdsa.common.entity.po.customer.CustSessions;
 import pers.husen.highdsa.common.transform.ShiroSessionSerializer;
@@ -36,7 +32,7 @@ import pers.husen.highdsa.service.mybatis.CustSessionsManager;
  * 
  * @Version 1.0.0
  */
-public class MysqlSessionValidationScheduler implements SessionValidationScheduler {
+public class MysqlSessionValidationScheduler implements SessionValidationScheduler, Runnable {
 	private static final Logger logger = LogManager.getLogger(MysqlSessionValidationScheduler.class.getName());
 
 	/** 客户会话管理 */
@@ -82,15 +78,17 @@ public class MysqlSessionValidationScheduler implements SessionValidationSchedul
 	 */
 	@Override
 	public void enableSessionValidation() {
-		ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("session-validation-%d").build();
-		// Common Thread Pool
-		ExecutorService pool = new ThreadPoolExecutor(5, 200, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
-		pool.execute(() -> {
-			// 开始验证
-			sessionValidation();
-		});
-		// gracefully shutdown
-		pool.shutdown();
+		if (this.interval > 1L) {
+			this.service = new ScheduledThreadPoolExecutor(1, new BasicThreadFactory.Builder().namingPattern("session-validation-%d").daemon(true).build());
+
+			this.service.scheduleAtFixedRate(this, interval, interval, TimeUnit.MILLISECONDS);
+			this.enabled = true;
+		}
+	}
+
+	@Override
+	public void run() {
+		sessionValidation();
 	}
 
 	/**
