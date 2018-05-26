@@ -97,7 +97,7 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>mappers/*</include>
+					<include>mappers/**</include>
 					<include>mybatis/*</include>
 					<include>sequence/*</include>
 					<include>mysql.properties</include>
