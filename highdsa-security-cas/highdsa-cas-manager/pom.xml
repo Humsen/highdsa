@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>pers.husen.highdsa</groupId>
 		<artifactId>highdsa-security-cas</artifactId>
-		<version>1.0.2-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>highdsa-cas-manager</artifactId>

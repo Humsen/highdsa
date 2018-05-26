@@ -12,7 +12,7 @@
 	<dubbo:registry address="zookeeper://223.3.89.104:2181" />
 
 	<!-- 用dubbo协议在20880端口暴露服务 -->
-	<dubbo:protocol name="dubbo" port="20885" dispatcher="connection" threadpool="fixed" threads="100" />
+	<dubbo:protocol name="dubbo" port="20885" dispatcher="connection" threadpool="limited" threads="500" accepts="1000" />
 
 	<!-- 定义 redis缓存接口和实现类,实现类通过注解声明 接口.超时单位：毫秒 -->
 	<dubbo:service interface="pers.husen.highdsa.service.redis.RedisPools" ref="redisPools" protocol="dubbo" timeout="100000" />
