@@ -375,7 +375,6 @@
 				<groupId>org.apereo.cas</groupId>
 				<artifactId>cas-server-core-configuration</artifactId>
 				<version>${cas.version}</version>
-				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apereo.cas</groupId>
@@ -396,7 +395,6 @@
 				<groupId>org.apereo.cas</groupId>
 				<artifactId>cas-server-webapp-config</artifactId>
 				<version>${cas.version}</version>
-				<scope>provided</scope>
 			</dependency>
 			<!-- restful -->
 			<dependency>
