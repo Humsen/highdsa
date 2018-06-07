@@ -2,7 +2,7 @@
 基于Spring、Dubbo、Spring MVC、ELK、ActiveMQ、Redis、FastDFS、Nginx、Zookeeper、RESTful、Maven、Mybatis、Druid等的一套高可用、高性能、高可扩展的分布式系统架构。
 
 ***
-
+ 
 ### 主要工程结构如下
 
 ``` lua
@@ -66,6 +66,32 @@
 
 ***
 
+### highdsa架构模型图如下
+ 
+ ![image](https://github.com/CrazyHusen/highdsa/blob/master/docs/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B%E5%9B%BE/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E7%B2%BE%E7%AE%80%E5%9B%BE.jpg)
+
+***
+
+### highdsa架构图如下
+ 
+ ![image](https://github.com/CrazyHusen/highdsa/blob/master/docs/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B%E5%9B%BE/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg)
+ 
+ ***
+ 
  ### 工程Maven模块依赖关系图如下
  
- ![image](https://github.com/CrazyHusen/highdsa/blob/master/docs/highdsa%E5%B7%A5%E7%A8%8B%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E5%9B%BE.jpg)
+ ![image](https://github.com/CrazyHusen/highdsa/blob/master/docs/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B%E5%9B%BE/Maven%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E5%9B%BE.jpg)
+ 
+ ***
+ 
+ ### highdsa RESTful请求调用链如下
+ 
+ ![image](https://github.com/CrazyHusen/highdsa/blob/master/docs/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B%E5%9B%BE/%E8%AF%B7%E6%B1%82%E8%B0%83%E7%94%A8%E9%93%BE.jpg)
+ 
+ ***
+ 
+ ### highdsa系统交互图如下
+ 
+ ![image](https://github.com/CrazyHusen/highdsa/blob/master/docs/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B%E5%9B%BE/%E7%B3%BB%E7%BB%9F%E4%BA%A4%E4%BA%92%E5%9B%BE.jpg)
+
+***
