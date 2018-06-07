@@ -1,0 +1,132 @@
+---------- FastDFS安装 --------------
+
+nginx版本：V1.12.2
+
+在root用户下执行
+
+软件版本及命名规范：
+	1)所有FastDFS相关安装包放在/mnt/fastdfs 目录下
+	2)注意手动打开防火墙端口 t:22122  s:23000 8888 
+	3)公共目录采用变量
+
+1、安装依赖
+	yum install make cmake gcc gcc-c++
+	 
+2、安装libfatscommon
+	cd /opt
+	mkdir fastdfs
+	cd fastdfs
+	yum install zip unzip
+	unzip /mnt/fastdfs/libfastcommon-master.zip -d /opt/fastdfs/
+	cd libfastcommon-master/
+	./make.sh
+	./make.sh install
+	
+	ls -l /usr/lib64/libfastcommon.so   #查看此库文件是否存在，存在则表示安装成功
+	
+3、安装FastDFS
+	unzip /mnt/fastdfs/fastdfs-master.zip 
+	cd fastdfs-master/
+	./make.sh 
+	./make.sh install
+	ls -l /usr/bin/fdfs_*  #查看一下fdfs的相关命令
+	 
+4、配置tracker
+	cp /mnt/fastdfs/config/tracker.conf /etc/fdfs/tracker.conf
+	mkdir -p /home/husen/fastdfs/tracker/
+	#/etc/init.d/fdfs_trackerd start
+	#ps -ef | grep fdfs_trackerd 
+	#chkconfig fdfs_trakcerd on
+	
+5、配置storage
+	cp /mnt/fastdfs/config/storage.conf /etc/fdfs/storage.conf
+	mkdir -p /home/husen/fastdfs/storage
+	#/etc/init.d/fdfs_storaged start
+	#ps -ef | grep fdfs_storaged  
+	#chkconfig fdfs_storaged on
+	
+6、配置client
+	# 修改以下配置，其它保持默认
+	vi /etc/fdfs/client.conf
+	base_path=/home/husen/fastdfs/client
+	mkdir /home/husen/fastdfs/client
+	tracker_server=192.168.186.13:22122
+	http.tracker_server_port=6666 # tracker 服务器的 http 端口号，必须和tracker的设置对应起来
+	
+	#/usr/bin/fdfs_upload_file /etc/fdfs/client.conf [file path]
+	
+7、安装fastdfs-nginx-module
+	#nginx module 安装
+
+	cd /opt/fastdfs
+	unzip /mnt/fastdfs/fastdfs-nginx-module-master.zip 
+	tar -zxvf /mnt/fastdfs/nginx-1.12.2.tar.gz
+	
+	### 安装nginx
+	yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel #安装依赖
+	
+	#配置依赖
+	cd nginx-1.12.2/
+	./configure --prefix=/home/husen/nginx --sbin-path=/usr/bin/nginx --add-module=/opt/fastdfs/fastdfs-nginx-module-master/src
+
+	make && make install #编译安装
+		
+	#增加配置文件
+	cp /opt/fastdfs/fastdfs-nginx-module-master/src/mod_fastdfs.conf /etc/fdfs/
+	# cd /etc/fdfs/
+	# 此处的store_path0为前面配置的fastdfs文件存储目录
+	# vi mod_fastdfs.conf 
+	cd /opt/fastdfs/fastdfs-master/conf/
+	cp http.conf mime.types /etc/fdfs/
+	
+	#软连接
+	ln -s /opt/fastdfs/storage/data  /opt/fastdfs/storage/data/M00
+	 
+-------------------------- 我是分割线   -------------------------------
+
+操作命令：
+
+1、查看当前状态
+	1)ps -ef | grep fdfs_trackerd 
+	2)ps -ef | grep fdfs
+	3)/usr/bin/fdfs_monitor /etc/fdfs/storage.conf 
+
+2、启动storage
+	/etc/init.d/fdfs_storaged start
+	
+3、启动tracker
+	/etc/init.d/fdfs_trackerd start
+	
+4)创建trackerd服务
+	ln -s /usr/bin/fdfs_trackerd /usr/local/bin
+	ln -s /usr/bin/stop.sh /usr/local/bin
+	ln -s /usr/bin/restart.sh /usr/local/bin
+	最后通过命令启动Tracker服务器：
+
+	service fdfs_trackerd start
+	
+5)开机启动
+	chkconfig --add fdfs_trackerd #添加
+	chkconfig fdfs_trackerd on #启动
+	
+6)nginx 控制
+	nginx #启动
+	ps -ef | grep nginx #查看nginx是否已启动成功
+	nginx -s stop #停止
+	nginx -s reload #重新启动
+	
+7)上传测试
+	/usr/bin/fdfs_upload_file  /etc/fdfs/client.conf  [file name]
+
+-------------------------- 我是分割线   -------------------------------
+
+注意事项： 
+A> 8888 端口值是要与/etc/fdfs/storage.conf 中的http.server_port=8888 相对应，因为 http.server_port 默认为 8888，如果想改成 80，则要对应修改过来。 
+
+B> Storage 对应有多个 group 的情况下，访问路径带 group 名，如/group1/M00/00/00/xxx，对应的 Nginx 配置为：
+
+	location ~/group([0-9])/M00 {
+		ngx_fastdfs_module;
+	}
+
+C> 如查下载时如发现老报 404， 将 nginx.conf 第一行 user nobody 修改为 user root 后重新启动。

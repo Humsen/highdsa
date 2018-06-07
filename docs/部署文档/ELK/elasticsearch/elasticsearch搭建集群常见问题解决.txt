@@ -1,0 +1,24 @@
+1、别忘了开启相应的端口9200，注意elasticsearch不能用root启动
+	
+2、ERROR: bootstrap checks failed
+	memory locking requested for elasticsearch process but memory is not locked
+	
+	解决方案：
+		A. 临时锁定内存 ulimit -l unlimited
+		B.永久
+			sudo vim /etc/security/limits.conf
+
+			添加如下内容: 
+			* soft memlock unlimited 
+			* hard memlock unlimited 
+			备注：* 代表Linux所有用户名称
+
+			保存、退出、重新登录才可生效 
+
+3、killed
+	内存不够
+	
+4、其他详见我的网站
+	https://www.hemingsheng.cn/blog.hms?blogId=37
+
+5、ES不同版本配置集群，可能会提示节点不支持。解决办法，把低版本的ES设置成主节点，并且先启动。
