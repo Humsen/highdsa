@@ -1,6 +1,10 @@
 # **highdsa** -- 分布式系统架构
 基于Spring、Dubbo、Spring MVC、ELK、ActiveMQ、Redis、FastDFS、Nginx、Zookeeper、RESTful、Maven、Mybatis、Druid等的一套高可用、高性能、高可扩展的分布式系统架构。
 
+最近新建了个QQ群，用于大家学习交流，也会分享一些资料什么的。QQ群号：805668552。
+
+[点击加入：Java全栈开发学习交流](//shang.qq.com/wpa/qunwpa?idkey=41068b9adb14521cab1ebfea385e3e4aabf466115ba5278ca4d41a605506c096)
+
 ***
  
 ### 主要工程结构如下
